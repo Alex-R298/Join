@@ -1,0 +1,15 @@
+* {
+    box-sizing: border-box;
+    font-family: "inter_24pt-Regular", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f6f7f8;
+}
+
+main {
+    max-width: 1440px;
+    margin: auto;
+}
