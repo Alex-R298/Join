@@ -1,15 +1,13 @@
 .sidebar{
   display: flex;
   flex-direction: column;
-  background: #1c034e;
+  background:#2b2f47;
   width: 30%;
 }
 
 nav {
   float: left;
-  
-  height: 800px; /* only for demonstration, should be removed */
-  background: #1c034e;
+  height: 800px;
   padding: 20px;
  }
   nav ul {
@@ -28,4 +26,54 @@ a{
 .side_bar_img {
   width: 100px;
   height: 122px;
+}
+.main_first_page_content{
+  display: flex;
+}
+.main_head_line{
+  display: flex;
+  flex-direction: row;
+}
+.main_content{
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.main_greet{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.greet_name{
+  color: #30aae0;
+}
+.help_icon{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid lightgrey;
+  background-color: white;
+  color: lightgrey;
+  font-weight: bold;
+  font-family: sans-serif;
+  cursor: default;
+}
+.name_icon{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid rgb(10, 10, 10);
+  background-color: white;
+  color: rgb(229, 0, 0);
+  font-weight: bold;
+  font-family: sans-serif;
+  cursor: default;
 }
