@@ -1,0 +1,31 @@
+.sidebar{
+  display: flex;
+  flex-direction: column;
+  background: #1c034e;
+  width: 30%;
+}
+
+nav {
+  float: left;
+  
+  height: 800px; /* only for demonstration, should be removed */
+  background: #1c034e;
+  padding: 20px;
+ }
+  nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+a{
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+}
+.sidebar_footer{
+  color: #fff;
+  font-size: 16px;
+}
+.side_bar_img {
+  width: 100px;
+  height: 122px;
+}
