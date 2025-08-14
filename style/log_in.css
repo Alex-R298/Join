@@ -7,7 +7,8 @@
 .sign-up{
     display: flex;
     gap: 35px;
-    align-items: flex-start;
+    align-items: center;
+    height: 50px;
 }
 
 .sign-up-text {
@@ -18,8 +19,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 48px;
-    
+    margin-top: 48px;   
 }
 
 .separator-line {
@@ -30,16 +30,10 @@
 }
 
 .log-in-form {
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    background-color: white;
     width: 652px;
     height: 449px;
-    border-radius: 30px;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 14px 3px #0000000A;
 }
 
 .log-in-form h1{
