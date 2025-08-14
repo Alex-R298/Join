@@ -3,46 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./scripts/logIn.js"></script>
     <link rel="stylesheet" href="./style/fonts.css">
     <link rel="stylesheet" href="./style/log_in.css">
     <link rel="stylesheet" href="./style/standard.css">
     <title>Log In</title>
 </head>
-<mai>
-    <main>
-    <header>
-        <div class ="header-log-in">
-            <img src="./assets/icons/capa_dark.svg" alt="">
-            <div class="sign-up">
-                <p class="sign-up-text">Not a Join user?</p> 
-                <button class="button-primary">Sign Up</button>
-            </div>
-        </div>
-    </header>
-    <section class="log-in-section">
-        
-        <form class="card log-in-form" action="" method="post">
-            <h1>Log In</h1>
-            <div class="separator-line"></div>
-            <div class="inputs">
-                <div class="input-with-icon">
-                    <input class="input" type="email" id="email" name="email" required placeholder="Email">
-                    <img src="./assets/icons/mail.svg" alt="">
+<body>
+    <div id="start_screen">
+        <img id="animated_logo" src="./assets/icons/capa_dark.svg" alt="Join Logo">
+    </div>
+     <div id="content_container">
+        <main>
+            
+            <header>
+                <div class="header-log-in">
+                    <img id="header_logo" src="./assets/icons/capa_dark.svg" alt="Join Logo">
+                    <div class="sign-up">
+                        <p class="sign-up-text">Not a Join user?</p> 
+                        <button class="button-primary">Sign Up</button>
+                    </div>
                 </div>
-                <div class="input-with-icon">
-                    <input class="input" type="password" id="password" name="password" required placeholder="Password">
-                    <img src="./assets/icons/lock.svg" alt="">
+            </header>
+           <section class="log-in-section">
+                <form class="card log-in-form" action="" method="post">
+                    <h1>Log In</h1>
+                    <div class="separator-line"></div>
+                    <div class="inputs">
+                        <div class="input-with-icon">
+                            <input class="input" type="email" id="email" name="email" required placeholder="Email">
+                            <img src="./assets/icons/mail.svg" alt="">
+                        </div>
+                        <div class="input-with-icon ">
+                            <input class="input" type="password" id="password" name="password" required placeholder="Password">
+                            <img src="./assets/icons/lock.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="log-in-buttons">
+                        <button class="button-primary" type="submit">Log In</button>
+                        <button class="button-secondary" type="submit">Guest Log in</button>
+                    </div>
+                </form>
+                <div class="log-in-footer">
+                    <a href="#">Privacy Policy</a> <a href="#">Legal notice</a>
                 </div>
-            </div>
-            <div class="log-in-buttons">
-                <button class="button-primary" type="submit">Log In</button>
-                <button class="button-secondary" type="submit">Guest Log in</button>
-            </div>
-        </form>
-        <div class="log-in-footer">
-         <a href="#">Privacy Policy</a> <a href="#">Legal notice</a>
-        </div>
-    </main>
+            </section>
+        </main>
+    </div>
 
 </body>
 </html>
