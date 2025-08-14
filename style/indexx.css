@@ -1,23 +1,57 @@
 
-.main_first_page_content{
+.main_first_page_content {
   display: flex;
 }
-.main_head_line{
+
+.main_head_line {
   display: flex;
   flex-direction: row;
 }
-.main_content{
+
+.main_content {
   display: flex;
   align-items: stretch;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 96px;
 }
-.main_greet{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+
+.main_greet {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.greet_name{
+
+.greet_name {
   color: #30aae0;
+}
+
+.overview {
+  gap: 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.row-1 {
+  display: flex;
+  gap: 32px;
+}
+
+.todo {
+  width: 50%;
+}
+
+.row-2 {
+
+}
+
+.row-3 {
+  display: flex;
+  gap: 32px;
+}
+
+.summary {
+  cursor: pointer;
+  box-shadow: 0px 0px 4px 0px #0000001A;
 }

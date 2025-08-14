@@ -1,4 +1,4 @@
- .header_content{
+ .header_content {
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -6,7 +6,8 @@
   width: 70%;
   float: right;
 }
-.help_icon{
+
+.help_icon {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -20,7 +21,8 @@
   font-family: sans-serif;
   cursor: default;
 }
-.name_icon{
+
+.name_icon {
   display: inline-flex;
   justify-content: center;
   align-items: center;

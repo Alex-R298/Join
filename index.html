@@ -36,14 +36,12 @@
     
 <section class="sidebar">
     <img class="side_bar_img" src="./assets/icons/capa_white.svg" alt="">
-  <nav>
-    <ul>
-      <li><a href="#"><img src="./assets/icons/summary.svg" alt="">Summary</a></li>
-      <li><a href="#"><img src="./assets/icons/add.svg" alt="">Add Task</a></li>
-      <li><a href="#"><img src="./assets/icons/board.svg" alt="">Board</a></li>
-      <li><a href="#"><img src="./assets/icons/contacts.svg" alt="">Contacts</a></li>
-    </ul>
-  </nav>
+    <div class="sidebar-menu">
+      <a href="#"><img src="./assets/icons/summary.svg" alt="">Summary</a>
+      <a href="#"><img src="./assets/icons/add.svg" alt="">Add Task</a>
+      <a href="#"><img src="./assets/icons/board.svg" alt="">Board</a>
+      <a href="#"><img src="./assets/icons/contacts.svg" alt="">Contacts</a>
+    </div>
   <div class="sidebar_footer">
     <p>Privacy Policy</p>
     <p>Legal notice</p>
@@ -57,37 +55,57 @@
 </div>
 
 <div class="main_content">
-  <button>
-    <p>1</p>
-    <p>To-do</p>
-  </button>
-  <button>
-    <p>1</p>
-    <p>done</p>
-  </button>
-  <div>
-    <button>
-      <p>1</p>
-      <p>Urgent</p>
-    </button>
-    <button>
-      <h3>Date</h3>
-      <p>Deadline</p>
-    </button>
+  <div class="overview">
+    <div class="row-1">
+      <div class="card summary todo">
+        <div class="summary-icon"></div>
+        <div class="summary-info">
+          <h1>5</h1>
+          <p>To-do</p>
+        </div>
+      </div>
+      <div class="card summary todo">
+        <div class="summary-icon"></div>
+        <div class="summary-info">
+          <h1>3</h1>
+          <p>done</p>
+        </div>
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="card summary">
+        <div class="summary-icon"></div>
+        <div class="summary-info">
+          <h1>1</h1>
+          <p>Urgent</p>
+        </div>
+        <div>
+          <h3>Date</h3>
+          <p>Deadline</p>
+        </div>
+      </div>
+    </div>
+    <div class="row-3">
+      <div class="card summary">
+        <div class="summary-info">
+          <h1>1</h1>
+          <p>task in Boad</p>
+        </div>
+      </div>
+      <div class="card summary">
+        <div class="summary-info">
+          <h1>1</h1>
+          <p>Task in progress</p>
+        </div>
+      </div>
+      <div class="card summary">
+        <div class="summary-info">
+          <h1>1</h1>
+          <p>Awaiting Feedback</p>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <button>
-    <p>5</p>
-    <p>task in Boad</p>
-  </button>
-  <button>
-    <p>2</p>
-    <p>Task in progress</p>
-  </button>
-  <button>
-    <p>2</p>
-    <p>Awaiting Feedback</p>
-  </button>
 </div>
 
 <div class="main_greet">
