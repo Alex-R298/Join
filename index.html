@@ -7,30 +7,41 @@
     <link rel="stylesheet" href="./style/style.css">
     <link rel="stylesheet" href="./style/standard.css">
     <link rel="stylesheet" href="./style/indexx.css">
+    <link rel="stylesheet" href="./style/header.css">
+    <link rel="stylesheet" href="./style/sidebar.css">
     <script src="./scripts/datePicker.js"></script>
+    <script src="./scripts/index.js"></script>
     <title>Join</title>
 </head>
 <body onload="init()">
+
   <header>
-    <div>
+    <div class="header_content">
       <p>Kanban Project Management Tool</p>
-      <div>
-      <div class="help_icon">?</div>
-      <div class="name_icon">sw</div>
-    </div>
+        <div>
+          <div class="help_icon">?</div>
+             <div class="popup name_icon" onclick="user_button_show_links()">
+                <p>SW</p>
+              <span class="popuptext" id="myPopup">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+              </span>
+            </div>
+      </div>
     </div>
   </header>
-  <main class="main_first_page_content">
-     
 
+  <main class="main_first_page_content">
+    
 <section class="sidebar">
-  <img class="side_bar_img" src="./assets/icons/capa_white.svg" alt="">
+    <img class="side_bar_img" src="./assets/icons/capa_white.svg" alt="">
   <nav>
     <ul>
-      <li><a href="#">Summary</a></li>
-      <li><a href="#">Add Task</a></li>
-      <li><a href="#">Board</a></li>
-       <li><a href="#">Contacts</a></li>
+      <li><a href="#"><img src="./assets/icons/summary.svg" alt="">Summary</a></li>
+      <li><a href="#"><img src="./assets/icons/add.svg" alt="">Add Task</a></li>
+      <li><a href="#"><img src="./assets/icons/board.svg" alt="">Board</a></li>
+      <li><a href="#"><img src="./assets/icons/contacts.svg" alt="">Contacts</a></li>
     </ul>
   </nav>
   <div class="sidebar_footer">
@@ -68,15 +79,15 @@
   <button>
     <p>5</p>
     <p>task in Boad</p>
-  </div>
+  </button>
   <button>
     <p>2</p>
     <p>Task in progress</p>
-  </div>
+  </button>
   <button>
     <p>2</p>
     <p>Awaiting Feedback</p>
-  </div>
+  </button>
 </div>
 
 <div class="main_greet">

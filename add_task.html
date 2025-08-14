@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add_task</title>
+     <link rel="stylesheet" href="./style/header.css">
+    <link rel="stylesheet" href="./style/sidebar.css">
+    <script src="./scripts/datePicker.js"></script>
+    <script src="./scripts/index.js"></script>
+    <script src="./scripts/addTask.js"></script>
+</head>
+<body>
+
+  <header>
+    <div class="header_content">
+      <p>Kanban Project Management Tool</p>
+        <div>
+          <div class="help_icon">?</div>
+             <div class="popup name_icon" onclick="user_button_show_links()">
+                <p>SW</p>
+              <span class="popuptext" id="myPopup">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+              </span>
+            </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+<section class="sidebar">
+    <img class="side_bar_img" src="./assets/icons/capa_white.svg" alt="">
+  <nav>
+    <ul>
+      <li><a href="#"><img src="./assets/icons/summary.svg" alt="">Summary</a></li>
+      <li><a href="#"><img src="./assets/icons/add.svg" alt="">Add Task</a></li>
+      <li><a href="#"><img src="./assets/icons/board.svg" alt="">Board</a></li>
+      <li><a href="#"><img src="./assets/icons/contacts.svg" alt="">Contacts</a></li>
+    </ul>
+  </nav>
+  <div class="sidebar_footer">
+    <p>Privacy Policy</p>
+    <p>Legal notice</p>
+  </div>
+</section>
+
+
+   <!-- <template id="add_task_template">-->
+        <div>
+            <h2>ADD Task</h2>
+            <p>Title</p>
+            <input type="text"placeholder="Enter task title" id="task_title">
+            <p>Description</p>
+            <textarea id="task_description" placeholder="Enter task description"></textarea>
+            <p>Due Date</p>
+                <input type="date" id="task_due_date">
+        </div>
+
+        <div>
+                <p>Priority</p>
+            <div onclick="changePriority('this')" id="task_priority">
+                <button value="low">Low</button>
+                <button value="medium">Medium</button>
+                <button value="urgent">Urgent</button>
+                </div>
+            
+                <p>Assignee to</p> 
+            <select id="task_assignee">
+                <option value="user1">User 1</option>
+                <option value="user2">User 2</option>
+                <option value="user3">User 3</option>
+            </select>
+                <p>Category</p>
+            <select id="task_category">
+                <option value="development">Development</option>
+                <option value="design">Design</option>
+                <option value="marketing">Marketing</option>
+            </select>
+            <p>Subtasks</p>
+            <input type="text" id="subtask_input" placeholder="Add new subtask">
+        </div>
+
+        <div>
+            <p>This field is required</p>
+            <button onclick="">Clear</button>
+            <button onclick="">Create Task</button>
+        </div>
+   <!--  </template>-->
+
+  </main>
+</body>
+</html>

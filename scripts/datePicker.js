@@ -1,7 +1,3 @@
-function init() {
-    datetimer();
-}
-
 function datetimer(){
     let date = document.getElementById('lblGreetings');
   const myDate = new Date();

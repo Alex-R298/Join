@@ -1,32 +1,4 @@
-.sidebar{
-  display: flex;
-  flex-direction: column;
-  background:#2b2f47;
-  width: 30%;
-}
 
-nav {
-  float: left;
-  height: 800px;
-  padding: 20px;
- }
-  nav ul {
-  list-style-type: none;
-  padding: 0;
-}
-a{
-  color: #fff;
-  text-decoration: none;
-  font-size: 18px;
-}
-.sidebar_footer{
-  color: #fff;
-  font-size: 16px;
-}
-.side_bar_img {
-  width: 100px;
-  height: 122px;
-}
 .main_first_page_content{
   display: flex;
 }
@@ -48,32 +20,4 @@ a{
 }
 .greet_name{
   color: #30aae0;
-}
-.help_icon{
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 2px solid lightgrey;
-  background-color: white;
-  color: lightgrey;
-  font-weight: bold;
-  font-family: sans-serif;
-  cursor: default;
-}
-.name_icon{
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 2px solid rgb(10, 10, 10);
-  background-color: white;
-  color: rgb(229, 0, 0);
-  font-weight: bold;
-  font-family: sans-serif;
-  cursor: default;
 }
