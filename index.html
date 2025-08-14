@@ -16,102 +16,104 @@
 <body onload="init()">
 
   <header>
-    <div class="header_content">
       <p>Kanban Project Management Tool</p>
-        <div>
-          <div class="help_icon">?</div>
-             <div class="popup name_icon" onclick="user_button_show_links()">
+        <div class="header-icons">
+          <div class="help-icon">?</div>
+             <div class="name-icon" onclick="user_button_show_links()">
                 <p>SW</p>
-              <span class="popuptext" id="myPopup">
-                <a href="#">Link 1</a>
-                <a href="#">Link 2</a>
-                <a href="#">Link 3</a>
-              </span>
             </div>
+              <div class="popup">
+                <span class="popuptext" id="myPopup">
+                  <a href="#">Help</a>
+                  <a href="#">Legal Notice</a>
+                  <a href="#">Privacy Policy</a>
+                  <a href="#">Log out</a>
+                </span>
+              </div>
       </div>
-    </div>
   </header>
 
   <main class="main_first_page_content">
     
-<section class="sidebar">
-    <img class="side_bar_img" src="./assets/icons/capa_white.svg" alt="">
-    <div class="sidebar-menu">
-      <a href="#"><img src="./assets/icons/summary.svg" alt="">Summary</a>
-      <a href="#"><img src="./assets/icons/add.svg" alt="">Add Task</a>
-      <a href="#"><img src="./assets/icons/board.svg" alt="">Board</a>
-      <a href="#"><img src="./assets/icons/contacts.svg" alt="">Contacts</a>
+    <div class="sidebar">
+      <div class="side-bar-logo">
+        <img class="side_bar_img" src="./assets/icons/capa_white.svg" alt="">
+      </div>
+      <div class="sidebar-menu">
+        <a href="#"><img src="./assets/icons/summary.svg" alt="">Summary</a>
+        <a href="#"><img src="./assets/icons/add.svg" alt="">Add Task</a>
+        <a href="#"><img src="./assets/icons/board.svg" alt="">Board</a>
+        <a href="#"><img src="./assets/icons/contacts.svg" alt="">Contacts</a>
+      </div>
+      <div class="sidebar_footer">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Legal notice</a>
+      </div>
     </div>
-  <div class="sidebar_footer">
-    <p>Privacy Policy</p>
-    <p>Legal notice</p>
-  </div>
-</section>
-<section class="main_middle_content">
-<div class="main_head_line">
-  <h1>Join 360</h1>
-  <p>Linie</p>
-  <p>Key Metrics at a Glance</p>
-</div>
 
-<div class="main_content">
-  <div class="overview">
-    <div class="row-1">
-      <div class="card summary todo">
-        <div class="summary-icon"></div>
-        <div class="summary-info">
-          <h1>5</h1>
-          <p>To-do</p>
-        </div>
+    <div class="main_content">
+      <div class="main_head_line">
+        <h1>Join 360</h1>
+        <div class="vl"></div>
+        <p>Key Metrics at a Glance</p>
       </div>
-      <div class="card summary todo">
-        <div class="summary-icon"></div>
-        <div class="summary-info">
-          <h1>3</h1>
-          <p>done</p>
+      <div class="overview">
+        <div class="row-1">
+          <div class="summary todo">
+            <div class="summary-icon">
+              <img src="./assets/icons/edit_white.svg" alt="">
+            </div>
+            <div class="summary-info">
+              <h1>5</h1>
+              <p>To-do</p>
+            </div>
+          </div>
+          <div class="summary todo">
+            <div class="summary-icon">
+              <img src="./assets/icons/check_white.svg" alt="">
+            </div>
+            <div class="summary-info">
+              <h1>3</h1>
+              <p>done</p>
+            </div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="summary">
+            <div class="summary-icon-prio">
+              <img src="./assets/icons/prio_white.svg" alt="">
+            </div>
+            <div class="summary-info">
+              <h1>1</h1>
+              <p>Urgent</p>
+            </div>
+            <div class="vl-grey"></div>
+            <div>
+              <h3>Date</h3>
+              <p>Deadline</p>
+            </div>
+          </div>
+        </div>
+        <div class="row-3">
+          <div class="summary tasks">
+              <h1>1</h1>
+              <p>Tasks in Board</p>
+          </div>
+          <div class="summary tasks">
+              <h1>1</h1>
+              <p>Tasks in Progress</p>
+          </div>
+          <div class="summary tasks">
+              <h1>1</h1>
+              <p>Awaiting Feedback</p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="row-2">
-      <div class="card summary">
-        <div class="summary-icon"></div>
-        <div class="summary-info">
-          <h1>1</h1>
-          <p>Urgent</p>
-        </div>
-        <div>
-          <h3>Date</h3>
-          <p>Deadline</p>
-        </div>
-      </div>
-    </div>
-    <div class="row-3">
-      <div class="card summary">
-        <div class="summary-info">
-          <h1>1</h1>
-          <p>task in Boad</p>
-        </div>
-      </div>
-      <div class="card summary">
-        <div class="summary-info">
-          <h1>1</h1>
-          <p>Task in progress</p>
-        </div>
-      </div>
-      <div class="card summary">
-        <div class="summary-info">
-          <h1>1</h1>
-          <p>Awaiting Feedback</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<div class="main_greet">
-<label id="lblGreetings"></label>
-</div>
-</section>
+    <div class="main_greet">
+    <label id="lblGreetings"></label>
+    </div>
   </main>
 
 </body>

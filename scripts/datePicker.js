@@ -12,5 +12,5 @@ function datetimer(){
   else if (hrs >= 17 && hrs <= 24)
     greet = 'Good Evening';
         date.innerHTML =
-    '<b>' + greet + '</b> <p class="greet_name"> and welcome Alex & Marina & Alex 🙂</p>';
+    '<h2>' + greet + '</h2> <p class="greet_name"> and welcome Alex & Marina & Alex 🙂</p>';
 }
