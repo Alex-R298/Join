@@ -4,7 +4,7 @@
     padding: 67px 77px 0 77px;
 }
 
-.sign-up{
+.sign-up {
     display: flex;
     gap: 35px;
     align-items: center;
@@ -12,7 +12,7 @@
 }
 
 .sign-up-text {
-    font-size: 20px;;
+    font-size: 20px;
 }
 
 .log-in-section {
@@ -31,13 +31,9 @@
 
 .log-in-form {
     flex-direction: column;
-    width: 652px;
-    height: 449px;
+    min-width: 450px;
+    max-width: 650px;
     box-shadow: 0px 0px 14px 3px #0000000A;
-}
-
-.log-in-form h1{
-    font-size: 61px;
 }
 
 .log-in-buttons {

@@ -69,7 +69,7 @@ h1 {
 }
 
 .button-secondary {
-    background-color: none;
+    background-color: var(--white);
     color: var(--primary);
     border: 1px solid var(--primary);
     display: flex;
