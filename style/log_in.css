@@ -54,3 +54,7 @@
     color: #A8A8A8;
     text-decoration: none;
 }
+
+[type=checkbox] {
+    margin-right: 8px;
+}
