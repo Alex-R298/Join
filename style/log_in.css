@@ -41,34 +41,6 @@
     gap: 35px;
 }
 
-.log-in-input {
-    width: 422px;
-    height: 48px;
-    border-radius: 10px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #D1D1D1;
-    font-size: 20px;
-    text-indent: 16px;
-}
-
-.log-in-inputs {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-}
-
-.input-with-icon {
-    position: relative;
-}
-
-.input-with-icon img {
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
 .log-in-footer {
     display: flex;
     justify-content: center;
