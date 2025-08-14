@@ -8,9 +8,6 @@ function initializeApp() {
         contentContainer: document.getElementById('content_container'),
         animatedLogo: document.getElementById('animated_logo'),
         headerLogo: document.getElementById('header_logo'),
-        signUp: document.querySelector('.sign-up'),
-        logInForm: document.querySelector('.log-in-form'),
-        logInFooter: document.querySelector('.log-in-footer')
     };
     
     initializeAnimation(elements);
