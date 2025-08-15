@@ -1,5 +1,5 @@
 function datetimer(){
-    let date = document.getElementById('lblGreetings');
+  let date = document.getElementById('lblGreetings');
   const myDate = new Date();
   const hrs = myDate.getHours();
 

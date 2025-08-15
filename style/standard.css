@@ -157,3 +157,12 @@ a {
     color: var(--secondary);
     text-decoration: none;
 }
+
+.main_content {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 96px;
+}

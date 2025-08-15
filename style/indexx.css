@@ -8,15 +8,6 @@
   margin-bottom: 56px;
 }
 
-.main_content {
-  display: flex;
-  align-items: stretch;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 96px;
-}
-
 .main_greet {
   display: flex;
   flex-direction: column;

@@ -15,48 +15,17 @@
   <title>Join</title>
 </head>
 
-<body>
+<body onload="init()">
 
-  <header>
-    <p>Kanban Project Management Tool</p>
-    <div class="header-icons">
-      <div class="help-icon">?</div>
-      <div class="name-icon" onclick="user_button_show_links()">
-        <p>SW</p>
-      </div>
-      <div class="popup">
-        <span class="popuptext" id="myPopup">
-          <a href="#">Help</a>
-          <a href="#">Legal Notice</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Log out</a>
-        </span>
-      </div>
-    </div>
-  </header>
-
+  <div id="header-container"></div>
   <main>
-
-    <div class="sidebar">
-      <div class="side-bar-logo">
-        <img class="side_bar_img" src="./assets/icons/capa_white.svg" alt="">
-      </div>
-      <div class="sidebar-menu">
-        <a href="#"><img src="./assets/icons/summary.svg" alt="">Summary</a>
-        <a href="#"><img src="./assets/icons/add.svg" alt="">Add Task</a>
-        <a href="#"><img src="./assets/icons/board.svg" alt="">Board</a>
-        <a href="#"><img src="./assets/icons/contacts.svg" alt="">Contacts</a>
-      </div>
-      <div class="sidebar_footer">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Legal notice</a>
-      </div>
-    </div>
+  <div id="sidebar-container"></div>
 
 
    <!-- <template id="add_task_template">-->
-        <div>
-            <h1>Add Task</h1>
+        <div class="main_content">
+          <h1>Add Task</h1>
+          <div class="inputs-left">
             <div class="inputs">
               <div class="input-with-label">
                 <label for="name">Title<span style="color: #FF8190;">*</span></label>
@@ -70,10 +39,11 @@
                 <label for="name">Due Date<span style="color: #FF8190;">*</span></label>
                 <input class="input" type="date" id="task_due_date" name="name" required placeholder="dd/mm/yyyy">
               </div>
-        </div>
+            </div>
+          </div>
 
-        <div>
-                <p>Priority</p>
+        <div class="inputs-left">
+            <p>Priority</p>
             <div onclick="changePriority('this')" id="task_priority">
                 <button value="low">Low</button>
                 <button value="medium">Medium</button>
