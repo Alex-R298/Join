@@ -9,47 +9,14 @@
     <link rel="stylesheet" href="./style/indexx.css">
     <link rel="stylesheet" href="./style/header.css">
     <link rel="stylesheet" href="./style/sidebar.css">
-    <script src="./scripts/datePicker.js"></script>
-    <script src="./scripts/index.js"></script>
+  <script src="./scripts/template.js"></script>
+  <script src="./scripts/index.js"></script>
     <title>Join</title>
 </head>
 <body onload="init()">
-
-  <header>
-      <p>Kanban Project Management Tool</p>
-        <div class="header-icons">
-          <div class="help-icon">?</div>
-             <div class="name-icon" onclick="user_button_show_links()">
-                <p>SW</p>
-            </div>
-              <div class="popup">
-                <span class="popuptext" id="myPopup">
-                  <a href="#">Help</a>
-                  <a href="#">Legal Notice</a>
-                  <a href="#">Privacy Policy</a>
-                  <a href="#">Log out</a>
-                </span>
-              </div>
-      </div>
-  </header>
-
-  <main class="main_first_page_content">
-    
-    <div class="sidebar">
-      <div class="side-bar-logo">
-        <img class="side_bar_img" src="./assets/icons/capa_white.svg" alt="">
-      </div>
-      <div class="sidebar-menu">
-        <a href="#"><img src="./assets/icons/summary.svg" alt="">Summary</a>
-        <a href="#"><img src="./assets/icons/add.svg" alt="">Add Task</a>
-        <a href="#"><img src="./assets/icons/board.svg" alt="">Board</a>
-        <a href="#"><img src="./assets/icons/contacts.svg" alt="">Contacts</a>
-      </div>
-      <div class="sidebar_footer">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Legal notice</a>
-      </div>
-    </div>
+  <div id="header-container"></div>
+  <main>
+  <div id="sidebar-container"></div>
 
     <div class="main_content">
       <div class="main_head_line">

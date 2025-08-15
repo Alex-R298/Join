@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="./style/indexx.css">
   <link rel="stylesheet" href="./style/header.css">
   <link rel="stylesheet" href="./style/sidebar.css">
-  <script src="./scripts/datePicker.js"></script>
+  <script src="./scripts/template.js"></script>
   <script src="./scripts/index.js"></script>
   <title>Join</title>
 </head>
@@ -21,7 +21,6 @@
   <main>
   <div id="sidebar-container"></div>
 
-
    <!-- <template id="add_task_template">-->
         <div class="main_content">
           <h1>Add Task</h1>
@@ -29,15 +28,15 @@
             <div class="inputs">
               <div class="input-with-label">
                 <label for="name">Title<span style="color: #FF8190;">*</span></label>
-                <input class="input" type="text" id="name" name="name" required placeholder="Enter a title">
+                <input class="input" type="text" id="title" name="title" required placeholder="Enter a title">
               </div>
               <div class="input-with-label">
                 <label for="name">Description</label>
                 <textarea id="task_description" placeholder="Enter a Description"></textarea>
               </div>
               <div class="input-with-label">
-                <label for="name">Due Date<span style="color: #FF8190;">*</span></label>
-                <input class="input" type="date" id="task_due_date" name="name" required placeholder="dd/mm/yyyy">
+                <label for="name">Due date<span style="color: #FF8190;">*</span></label>
+                <input class="input" type="date" id="datepicker" name="datepicker" required placeholder="dd/mm/yyyy">
               </div>
             </div>
           </div>

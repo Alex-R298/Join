@@ -39,6 +39,7 @@ body {
 main {
     max-width: 1440px;
     margin: auto;
+    display: flex;
 }
 
 h1 {
@@ -118,6 +119,10 @@ h2 {
     text-indent: 16px;
 }
 
+input::placeholder {
+    color: #D1D1D1;
+}
+
 .inputs {
     display: flex;
     flex-direction: column;
@@ -147,6 +152,11 @@ textarea {
     border: 1px solid #D1D1D1;
     font-size: 20px;
     text-indent: 16px;
+}
+
+textarea::placeholder {
+    color: #D1D1D1;
+    padding-top: 12px;
 }
 
 label {
