@@ -9,12 +9,21 @@
     <link rel="stylesheet" href="./style/indexx.css">
     <link rel="stylesheet" href="./style/header.css">
     <link rel="stylesheet" href="./style/sidebar.css">
+    <link rel="stylesheet" href="./style/board.css">
     <script src="./scripts/template.js"></script>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/board.js"></script>
     <title>Board</title>
 </head>
 <body onload="init();">
-    <div id="header-container"></div>
-    <div id="sidebar-container"></div>
+<!--   <div id="header-container"></div>
+    <div id="sidebar-container"></div> --> 
+
+<div class="drag-area" id="toDo" ondrop="moveTo('toDo')" ondragleave="removeHighlight('toDo')" ondragover="allowDrop(event); highlight('toDo')"></div>
+<div class="drag-area" id="inProgress" ondrop="moveTo('inProgress')" ondragleave="removeHighlight('inProgress')" ondragover="allowDrop(event); highlight('inProgress')"></div>
+<div class="drag-area" id="awaitFeedback" ondrop="moveTo('awaitFeedback')" ondragleave="removeHighlight('awaitFeedback')" ondragover="allowDrop(event); highlight('awaitFeedback')"></div>
+<div class="drag-area" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')" ondragover="allowDrop(event); highlight('done')"></div>
+
+
 </body>
 </html>

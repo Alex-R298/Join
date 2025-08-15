@@ -2,6 +2,7 @@ function init() {
   datetimer();
   loadHeader();
   loadSidebar();
+  updateHTML();
 }
 
 function user_button_show_links() {
