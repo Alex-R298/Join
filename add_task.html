@@ -1,62 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>add_task</title>
-     <link rel="stylesheet" href="./style/header.css">
-    <link rel="stylesheet" href="./style/sidebar.css">
-    <script src="./scripts/datePicker.js"></script>
-    <script src="./scripts/index.js"></script>
-    <script src="./scripts/addTask.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style/fonts.css">
+  <link rel="stylesheet" href="./style/style.css">
+  <link rel="stylesheet" href="./style/standard.css">
+  <link rel="stylesheet" href="./style/indexx.css">
+  <link rel="stylesheet" href="./style/header.css">
+  <link rel="stylesheet" href="./style/sidebar.css">
+  <script src="./scripts/datePicker.js"></script>
+  <script src="./scripts/index.js"></script>
+  <title>Join</title>
 </head>
+
 <body>
 
   <header>
-    <div class="header_content">
-      <p>Kanban Project Management Tool</p>
-        <div>
-          <div class="help_icon">?</div>
-             <div class="popup name_icon" onclick="user_button_show_links()">
-                <p>SW</p>
-              <span class="popuptext" id="myPopup">
-                <a href="#">Link 1</a>
-                <a href="#">Link 2</a>
-                <a href="#">Link 3</a>
-              </span>
-            </div>
+    <p>Kanban Project Management Tool</p>
+    <div class="header-icons">
+      <div class="help-icon">?</div>
+      <div class="name-icon" onclick="user_button_show_links()">
+        <p>SW</p>
+      </div>
+      <div class="popup">
+        <span class="popuptext" id="myPopup">
+          <a href="#">Help</a>
+          <a href="#">Legal Notice</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Log out</a>
+        </span>
       </div>
     </div>
   </header>
 
   <main>
 
-<section class="sidebar">
-    <img class="side_bar_img" src="./assets/icons/capa_white.svg" alt="">
-  <nav>
-    <ul>
-      <li><a href="#"><img src="./assets/icons/summary.svg" alt="">Summary</a></li>
-      <li><a href="#"><img src="./assets/icons/add.svg" alt="">Add Task</a></li>
-      <li><a href="#"><img src="./assets/icons/board.svg" alt="">Board</a></li>
-      <li><a href="#"><img src="./assets/icons/contacts.svg" alt="">Contacts</a></li>
-    </ul>
-  </nav>
-  <div class="sidebar_footer">
-    <p>Privacy Policy</p>
-    <p>Legal notice</p>
-  </div>
-</section>
+    <div class="sidebar">
+      <div class="side-bar-logo">
+        <img class="side_bar_img" src="./assets/icons/capa_white.svg" alt="">
+      </div>
+      <div class="sidebar-menu">
+        <a href="#"><img src="./assets/icons/summary.svg" alt="">Summary</a>
+        <a href="#"><img src="./assets/icons/add.svg" alt="">Add Task</a>
+        <a href="#"><img src="./assets/icons/board.svg" alt="">Board</a>
+        <a href="#"><img src="./assets/icons/contacts.svg" alt="">Contacts</a>
+      </div>
+      <div class="sidebar_footer">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Legal notice</a>
+      </div>
+    </div>
 
 
    <!-- <template id="add_task_template">-->
         <div>
-            <h2>ADD Task</h2>
-            <p>Title</p>
-            <input type="text"placeholder="Enter task title" id="task_title">
-            <p>Description</p>
-            <textarea id="task_description" placeholder="Enter task description"></textarea>
-            <p>Due Date</p>
-                <input type="date" id="task_due_date">
+            <h1>Add Task</h1>
+            <div class="inputs">
+              <div class="input-with-label">
+                <label for="name">Title<span style="color: #FF8190;">*</span></label>
+                <input class="input" type="text" id="name" name="name" required placeholder="Enter a title">
+              </div>
+              <div class="input-with-label">
+                <label for="name">Description</label>
+                <textarea id="task_description" placeholder="Enter a Description"></textarea>
+              </div>
+              <div class="input-with-label">
+                <label for="name">Due Date<span style="color: #FF8190;">*</span></label>
+                <input class="input" type="date" id="task_due_date" name="name" required placeholder="dd/mm/yyyy">
+              </div>
         </div>
 
         <div>
@@ -87,6 +100,7 @@
             <p>This field is required</p>
             <button onclick="">Clear</button>
             <button onclick="">Create Task</button>
+        </div>
         </div>
    <!--  </template>-->
 
