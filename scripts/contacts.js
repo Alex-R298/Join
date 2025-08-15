@@ -8,7 +8,7 @@ async function fetchContacts(path) {
     const response = await fetch(BASE_URL + path + ".json");
     const data = await response.json();
     const contactsList = document.getElementById('contacts-list');
-    const contactsListDetails = document.getElementById('contacts-metrics');
+    const contactsListDetails = document.getElementById('contacts-container-details');
 
     if (contactsList && contactsListDetails) {
         contactsList.innerHTML = getContactsTemplate(data);

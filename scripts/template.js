@@ -66,7 +66,7 @@ function createContactCard(user) {
 
 
 function showContactDetails(name, email, phone, initials, avatarColor) {
-    const contactsMetrics = document.getElementById('contacts-metrics');
+    const contactsMetrics = document.getElementById('contacts-container-details');
     if (!contactsMetrics) return;
 
     contactsMetrics.innerHTML = `
