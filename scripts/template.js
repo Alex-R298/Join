@@ -42,3 +42,64 @@ function getSidebarTemplate() {
     `;
 }
 
+
+
+function createLetterDivider(letter) {
+    return `<div class="letter-divider">${letter}</div>`;
+}
+
+
+function createContactCard(user) {
+    const avatarColor = getAvatarColor(user.name);
+    const initials = getInitials(user.name);
+
+    return `
+    <div class="contact-card" onclick="showContactDetails('${user.name}', '${user.email}', '${user.phone || ""}', '${initials}', '${avatarColor}')">
+        <div class="contact-avatar" style="background-color: ${avatarColor};">${initials}</div>
+        <div class="contact-info-container">
+            <div class="contact-name">${user.name}</div>
+            <div class="contact-email">${user.email}</div>
+        </div>
+    </div>`;
+}
+
+
+
+function showContactDetails(name, email, phone, initials, avatarColor) {
+    const contactsMetrics = document.getElementById('contacts-metrics');
+    if (!contactsMetrics) return;
+
+    contactsMetrics.innerHTML = `
+        <div class="contact-details">
+            <div class="contact-details-top">
+                <div class="contact-details-avatar" style="background-color: ${avatarColor};">${initials}</div>
+                <div class="contact-details-info">
+                    <div class="contact-details-name">${name}</div>
+                    <div class="contact-details-buttons">
+                        <button class="button-details" type="button"> 
+                            <img src="./assets/icons/edit.svg" alt=""> Edit
+                        </button>
+                        <button class="button-details" type="button"> 
+                            <img src="./assets/icons/delete.svg" alt=""> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-details-bottom">
+                <p class="contact-details-description">Contact Information</p>
+                <div class="contact-details-section">
+                    <div class="contact-details-heading">Email</div>
+                    <div class="contact-details-value" style="color: #007CEE ">${email}</div>
+                </div>
+                
+                <div class="contact-details-section">
+                    <div class="contact-details-heading">Phone</div>
+                    <div class="contact-details-value">
+                        ${phone}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}

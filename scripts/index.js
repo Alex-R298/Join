@@ -28,16 +28,16 @@ function datetimer() {
 }
 
 function loadHeader() {
-    const headerContainer = document.getElementById('header-container');
-    if (headerContainer) {
-        headerContainer.innerHTML = getHeaderTemplate();
-    }
+  const headerContainer = document.getElementById('header-container');
+  if (headerContainer) {
+    headerContainer.innerHTML = getHeaderTemplate();
+  }
 }
 
 
 function loadSidebar() {
-    const sidebarContainer = document.getElementById('sidebar-container');
-    if (sidebarContainer) {
-        sidebarContainer.innerHTML = getSidebarTemplate();
-    }
+  const sidebarContainer = document.getElementById('sidebar-container');
+  if (sidebarContainer) {
+    sidebarContainer.innerHTML = getSidebarTemplate();
+  }
 }
