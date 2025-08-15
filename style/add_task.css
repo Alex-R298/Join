@@ -1,7 +1,166 @@
 .inputs-left {
     display: flex;
+    flex-direction: column;
 }
 
 .inputs-right {
     display: flex;
+    flex-direction: column;
+}
+
+.main_content_row {
+    display: flex;
+    margin-top: 48px;
+}
+
+.priority-inputs-container {
+    display: flex;
+    align-items: start;
+    gap: 16px;
+}
+
+.urgent-container {
+    position: relative;
+}
+
+.input-priority-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-priority-icons img {
+    position: absolute;
+    right: 16px;
+    width: 20px;
+}
+
+.input-urgent {
+    width: 136px;
+    height: 56px;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    font-size: 20px;
+    text-indent: 16px;
+}
+
+.input-urgent::placeholder {
+    color: #000000;
+}
+
+.input-with-button {
+    position: relative;
+}
+
+.input-with-button button {
+    position: absolute;
+    right: 16px;
+    top: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.input-btn {
+    width: 440px;
+    height: 48px;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    font-size: 20px;
+    padding: 12px 16px;
+    display: inline-block;
+}
+
+select {
+    width: 440px;
+    height: 48px;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    font-size: 20px;
+    display: inline-block;
+    padding: 12px 16px;
+    cursor: pointer;
+}
+
+select.minimal {
+    background-image:
+        linear-gradient(45deg, transparent 50%, #2A3647 50%),
+        linear-gradient(135deg, #2A3647 50%, transparent 50%);
+    background-position:
+        calc(100% - 20px) calc(1em + 2px),
+        calc(100% - 15px) calc(1em + 2px),
+        calc(100% - 2.5em) 0.5em;
+    background-size:
+        5px 5px,
+        5px 5px,
+        1px 1.5em;
+    background-repeat: no-repeat;
+}
+
+select.minimal:focus {
+    background-image:
+        linear-gradient(45deg, #2A3647 50%, transparent 50%),
+        linear-gradient(135deg, transparent 50%, #2A3647 50%);
+    background-position:
+        calc(100% - 15px) 1em,
+        calc(100% - 20px) 1em,
+        calc(100% - 2.5em) 0.5em;
+    background-size:
+        5px 5px,
+        5px 5px,
+        1px 1.5em;
+    background-repeat: no-repeat;
+    border-color: #29ABE2;
+    outline: 0;
+}
+
+
+select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+}
+
+.vl-add-task {
+    border-left: 1px solid #D1D1D1;
+    height: 424px;
+    margin: 0 48px;
+}
+
+.create-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    width: 977px;
+    margin-top: 60px;
+}
+
+.add-task-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+.task-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.pb-16 {
+    padding-bottom: 16px;
+}
+
+.pb-8 {
+    padding-bottom: 8px;
+}
+
+input[type="date"] {
+    padding: 12px 16px;
+    text-indent: 0;
+}
+
+input[type="date"]::placeholder {
+    color: var(--lightgrey);
 }

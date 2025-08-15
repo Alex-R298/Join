@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="./style/indexx.css">
   <link rel="stylesheet" href="./style/header.css">
   <link rel="stylesheet" href="./style/sidebar.css">
+  <link rel="stylesheet" href="./style/add_task.css">
   <script src="./scripts/template.js"></script>
   <script src="./scripts/index.js"></script>
   <title>Join</title>
@@ -18,62 +19,89 @@
 <body onload="init()">
 
   <div id="header-container"></div>
-  <main>
-  <div id="sidebar-container"></div>
+  <main class="main_content">
+    <div id="sidebar-container"></div>
 
-   <!-- <template id="add_task_template">-->
-        <div class="main_content">
-          <h1>Add Task</h1>
-          <div class=""></div>
-          <div class="inputs-left">
-            <div class="inputs">
-              <div class="input-with-label">
-                <label for="name">Title<span style="color: #FF8190;">*</span></label>
-                <input class="input" type="text" id="title" name="title" required placeholder="Enter a title">
+    <!-- <template id="add_task_template">-->
+    <h1>Add Task</h1>
+    <div class="main_content_row">
+      <div class="inputs-left">
+        <div class="task-inputs">
+          <div class="input-with-label">
+            <label for="name">Title<span style="color: #FF8190;">*</span></label>
+            <input class="input" type="text" id="title" name="title" required placeholder="Enter a title">
+            <span class="input-invalid">This field is required</span>
+          </div>
+          <div class="input-with-label description-input pb-16">
+            <label for="name">Description</label>
+            <textarea id="task_description" placeholder="Enter a Description"></textarea>
+          </div>
+          <div class="input-with-label">
+            <label for="name">Due date<span style="color: #FF8190;">*</span></label>
+            <input class="input" type="date" id="datepicker" name="datepicker" required placeholder="dd/mm/yyyy">
+            <span class="input-invalid">This field is required</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="vl-add-task"></div>
+
+      <div class="inputs-right">
+        <div class="task-inputs">
+          <div class="input-with-label">
+            <label for="priority">Priority</label>
+            <div class="priority-inputs-container pb-8" onclick="changePriority('this')" id="task_priority">
+              <div class="urgent-container input-priority-icons">
+                <input class="input-urgent icon-urgent" id="urgent" name="urgent" placeholder="Urgent">
+                <img id="prio_urgent" class="" src="./assets/icons/prio_red.svg">
               </div>
-              <div class="input-with-label">
-                <label for="name">Description</label>
-                <textarea id="task_description" placeholder="Enter a Description"></textarea>
+              <div class="urgent-container input-priority-icons">
+                <input class="input-urgent icon-urgent" id="medium" name="medium" placeholder="Medium">
+                <img id="prio_medium" class="" src="./assets/icons/prio_medium_orange.svg">
               </div>
-              <div class="input-with-label">
-                <label for="name">Due date<span style="color: #FF8190;">*</span></label>
-                <input class="input" type="date" id="datepicker" name="datepicker" required placeholder="dd/mm/yyyy">
+              <div class="urgent-container input-priority-icons">
+                <input class="input-urgent icon-urgent" id="low" name="low" placeholder="Low">
+                <img id="prio_low" class="" src="./assets/icons/prio_low_green.svg">
               </div>
             </div>
           </div>
-
-        <div class="inputs-left">
-            <p>Priority</p>
-            <div onclick="changePriority('this')" id="task_priority">
-                <button value="low">Low</button>
-                <button value="medium">Medium</button>
-                <button value="urgent">Urgent</button>
-                </div>
-            
-                <p>Assignee to</p> 
-            <select id="task_assignee">
-                <option value="user1">User 1</option>
-                <option value="user2">User 2</option>
-                <option value="user3">User 3</option>
+          <div class="input-with-label pb-8">
+            <label for="assigned_task">Assigned to</label>
+            <select class="minimal" id="assigned_task" placeholder="Select concacts to assign">
+              <option value="user1">User 1</option>
+              <option value="user2">User 2</option>
+              <option value="user3">User 3</option>
             </select>
-                <p>Category</p>
-            <select id="task_category">
-                <option value="development">Development</option>
-                <option value="design">Design</option>
-                <option value="marketing">Marketing</option>
+          </div>
+          <div class="input-with-label">
+            <label for="category_task">Category<span style="color: #FF8190;">*</span></label>
+            <select class="minimal" id="category_task" required placeholder="Select task categorx">
+              <option value="development">Development</option>
+              <option value="design">Design</option>
+              <option value="marketing">Marketing</option>
             </select>
-            <p>Subtasks</p>
-            <input type="text" id="subtask_input" placeholder="Add new subtask">
+            <span class="input-invalid">This field is required</span>
+          </div>
+          <div class="input-with-label">
+            <label for="subtask_input">Subtasks</label>
+            <div class="input-with-button">
+            <input class="input-btn" type="text" id="subtask_input" placeholder="Add new subtask">
+            <button>+</button>
+          </div></div>
         </div>
 
-        <div>
-            <p>This field is required</p>
-            <button onclick="">Clear</button>
-            <button onclick="">Create Task</button>
+      </div>
+    </div>
+        <div class="create-btns">
+          <p class="short-info"><span style="color: #FF8190;">*</span>This field is required</p>
+          <div class="add-task-buttons">
+          <button class="button-secondary" onclick="">Clear</button>
+          <button class="button-primary" onclick="">Create Task</button>
+          </div>
         </div>
-        </div>
-   <!--  </template>-->
+    <!--  </template>-->
 
   </main>
 </body>
+
 </html>
