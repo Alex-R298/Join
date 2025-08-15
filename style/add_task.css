@@ -1,5 +1,7 @@
 .inputs-left {
-
+    display: flex;
 }
 
-.inputs-right {}
+.inputs-right {
+    display: flex;
+}
