@@ -1,20 +1,29 @@
  function addTask() {
 
     }
-function changePriority(selectElement) {
-    const value = selectElement.value;
+let selectedPriority = null;
 
-    if (value === "low") {
-        selectElement.style.backgroundColor = "lightgreen";
-        selectElement.style.color = "black";
-    } else if (value === "medium") {
-        selectElement.style.backgroundColor = "orange";
-        selectElement.style.color = "white";
-    } else if (value === "urgent") {
-        selectElement.style.backgroundColor = "red";
-        selectElement.style.color = "white";
-    } else {
-        selectElement.style.backgroundColor = "white";
-        selectElement.style.color = "black";
-    }
+function selectPriority(button) {
+  const buttons = document.querySelectorAll('.priority-btn');
+
+  
+  buttons.forEach(btn => {
+    btn.style.backgroundColor = '';
+    btn.style.color = '';
+  });
+
+ 
+  if (button.dataset.priority === 'urgent') {
+    button.style.backgroundColor = 'red';
+    button.style.color = 'white';
+  } else if (button.dataset.priority === 'medium') {
+    button.style.backgroundColor = 'orange';
+    button.style.color = 'white';
+  } else if (button.dataset.priority === 'low') {
+    button.style.backgroundColor = 'green';
+    button.style.color = 'white';
+  }
+
+  selectedPriority = button.dataset.priority;
+  console.log("Ausgewählte Priorität:", selectedPriority);
 }

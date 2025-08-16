@@ -2,7 +2,8 @@ function init() {
   datetimer();
   loadHeader();
   loadSidebar();
-  updateHTML();
+ 
+  addTask();
 }
 
 function user_button_show_links() {

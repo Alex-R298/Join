@@ -164,3 +164,20 @@ input[type="date"] {
 input[type="date"]::placeholder {
     color: var(--lightgrey);
 }
+
+.priority-container {
+  display: flex;
+  gap: 10px;
+}
+
+.priority-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}

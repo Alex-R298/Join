@@ -11,8 +11,9 @@
   <link rel="stylesheet" href="./style/header.css">
   <link rel="stylesheet" href="./style/sidebar.css">
   <link rel="stylesheet" href="./style/add_task.css">
-  <script src="./scripts/template.js"></script>
   <script src="./scripts/index.js"></script>
+  <script src="./scripts/template.js"></script>
+  <script src="./scripts/addTask.js"></script>
   <title>Join</title>
 </head>
 
@@ -48,23 +49,46 @@
 
       <div class="inputs-right">
         <div class="task-inputs">
-          <div class="input-with-label">
-            <label for="priority">Priority</label>
-            <div class="priority-inputs-container pb-8" onclick="changePriority('this')" id="task_priority">
-              <div class="urgent-container input-priority-icons">
-                <input class="input-urgent icon-urgent" id="urgent" name="urgent" placeholder="Urgent">
-                <img id="prio_urgent" class="" src="./assets/icons/prio_red.svg">
-              </div>
-              <div class="urgent-container input-priority-icons">
-                <input class="input-urgent icon-urgent" id="medium" name="medium" placeholder="Medium">
-                <img id="prio_medium" class="" src="./assets/icons/prio_medium_orange.svg">
-              </div>
-              <div class="urgent-container input-priority-icons">
-                <input class="input-urgent icon-urgent" id="low" name="low" placeholder="Low">
-                <img id="prio_low" class="" src="./assets/icons/prio_low_green.svg">
-              </div>
-            </div>
-          </div>
+
+          
+        <!-- prio teil
+        
+<div class="input-with-label">
+    <label for="priority">Priority</label>
+  <div class="priority-inputs-container pb-8" id="task_priority">
+    <div class="urgent-container input-priority-icons">
+      <input type="button" id="urgent" value="Urgent" class="input-urgent icon-urgent priority-low" onclick="setPriority(this)">
+      <p></p>
+      <img id="prio_urgent" src="./assets/icons/prio_red.svg">
+    </div>
+      <div class="urgent-container input-priority-icons">
+        <input type="button" id="medium" value="Medium" class="input-urgent icon-urgent priority-low" onclick="setPriority(this)">
+          <img id="prio_medium" src="./assets/icons/prio_medium_orange.svg">
+        </div>
+        <div class="urgent-container input-priority-icons">
+            <input type="button" id="low" value="Low" class="input-urgent icon-urgent priority-low" onclick="setPriority(this)">
+            <img id="prio_low" src="./assets/icons/prio_low_green.svg">
+        </div>
+    </div>
+</div>
+
+ -->
+
+ <div class="priority-container">
+  <button class="priority-btn" data-priority="urgent" onclick="selectPriority(this)">
+    <img src="./assets/icons/prio_red.svg" alt="">
+    <span>Urgent</span>
+  </button>
+  <button class="priority-btn" data-priority="medium" onclick="selectPriority(this)">
+    <img src="./assets/icons/prio_medium_orange.svg" alt="">
+    <span>Medium</span>
+  </button>
+  <button class="priority-btn" data-priority="low" onclick="selectPriority(this)">
+    <img src="./assets/icons/prio_low_green.svg" alt="">
+    <span>Low</span>
+  </button>
+</div>
+
           <div class="input-with-label pb-8">
             <label for="assigned_task">Assigned to</label>
             <select class="minimal" id="assigned_task" placeholder="Select concacts to assign">
