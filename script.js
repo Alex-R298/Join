@@ -3,6 +3,7 @@ async function init() {
   loadHeader();
   loadSidebar();
   fetchBase();
+  
 }
 
 function user_button_show_links() {

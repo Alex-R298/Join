@@ -20,13 +20,20 @@
 
 <body onload="init()">
 
-  <div id="header-container"></div>
+<!--  <div id="header-container"></div>
   <main class="main_content">
-    <div id="sidebar-container"></div>
+    <div id="sidebar-container"></div>-->
 
     <!-- <template id="add_task_template">-->
+
+                      
     <h1>Add Task</h1>
     <div class="main_content_row">
+
+
+
+      <!--linke Seite-->
+
       <div class="inputs-left">
         <div class="task-inputs">
           <div class="input-with-label">
@@ -48,25 +55,32 @@
 
       <div class="vl-add-task"></div>
 
+
+
+
+              <!--rechte Seite-->
       <div class="inputs-right">
         <div class="task-inputs">
+
+
+          
           <div class="input-with-label">
             <label for="priority">Priority</label>
-            <div class="priority-inputs-container">
-              <button class="priority-btn" data-priority="urgent" onclick="selectPriority(this)">
-                Urgent
-                <img src="./assets/icons/prio_urgent_red.svg" alt="">
-              </button>
-              <button class="priority-btn" data-priority="medium" onclick="selectPriority(this)">
-                Medium
-                <img src="./assets/icons/prio_medium_orange.svg" alt="">
-              </button>
-              <button class="priority-btn" data-priority="low" onclick="selectPriority(this)">
-                Low
-                <img src="./assets/icons/prio_low_green.svg" alt="">
-              </button>
+              <div class="priority-inputs-container">
+                <button class="priority-btn" data-priority="urgent" onclick="selectPriority(this)">
+                    Urgent
+                  <img src="./assets/icons/prio_urgent_red.svg" alt="">
+                </button>
+                <button class="priority-btn active" data-priority="medium" onclick="selectPriority(this)" style="background-color:#FFA800; color:white;"> <!--Style noch auslagern-->
+                    Medium
+                  <img src="./assets/icons/prio_medium_white.svg" alt="">
+                </button>
+                <button class="priority-btn" data-priority="low" onclick="selectPriority(this)">
+                    Low
+                  <img src="./assets/icons/prio_low_green.svg" alt="">
+                </button>
+              </div>
             </div>
-          </div>
 
           <div class="input-with-label pb-8">
             <label for="assigned_task">Assigned to</label>
@@ -96,10 +110,13 @@
 
       </div>
     </div>
+
+
+    <!--Buttons-->
     <div class="create-btns">
       <p class="short-info"><span style="color: #FF8190;">*</span>This field is required</p>
       <div class="add-task-buttons">
-        <button class="button-secondary" onclick="clear()">Clear</button>
+        <button class="button-secondary" onclick="clearInputs()">Clear</button>
         <button class="button-primary" onclick="addTask()">Create Task</button>
       </div>
     </div>

@@ -1,4 +1,4 @@
-let selectedPriority = null;
+let selectedPriority = "medium";
 
 async function fetchBase() {
   try {
@@ -15,8 +15,11 @@ async function addTask() {
   const title = document.getElementById("title").value;
   const description = document.getElementById("task_description").value;
   const dueDate = document.getElementById("datepicker").value;
-
-  const newTask = { title, description, dueDate };
+  const assignedTo = document.getElementById("assigned_task").value;   
+  const category = document.getElementById("category_task").value;
+  
+  
+  const newTask = { title, description, dueDate, priority: selectedPriority, assignedTo, category };
 
   fetch(BASE_URL + "/task.json", {
     method: "POST",
@@ -24,13 +27,10 @@ async function addTask() {
     body: JSON.stringify(newTask)
   })
   .then(res => res.json())
-  .then(data => console.log("Task gespeichert:", data))
+  clearInputs();
 }
 
-
-
-
-
+// function noch kürzen
 function selectPriority(button) {
   const buttons = document.querySelectorAll(".priority-btn");
 
@@ -69,5 +69,12 @@ function selectPriority(button) {
   }
 
   selectedPriority = button.dataset.priority;
-  console.log("Ausgewählte Priorität:", selectedPriority);
+}
+
+async function clearInputs() {
+  document.getElementById("title").value = "";
+  document.getElementById("task_description").value = "";
+  document.getElementById("datepicker").value = ""; 
+  document.getElementById("assigned_task").value = "";   
+  document.getElementById("category_task").value = "";
 }
