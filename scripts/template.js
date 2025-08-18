@@ -103,3 +103,44 @@ function showContactDetails(name, email, phone, initials, avatarColor) {
         </div>
     `;
 }
+
+
+
+function getAddContactTemplate() {
+    return `
+        <div class="add-contact-popup">
+    <button class="add-contact-close" onclick="closeAddContact()">
+        <img src="./assets/icons/close.svg" alt="">
+    </button>
+    <div class="add-contact-header">
+        <img src="./assets/icons/capa_white.svg" alt="">
+        <h1>Add Contact</h1>
+        <p>Tasks are better with a team!</p>
+        <div class="vlcontact"></div>
+    </div>
+    <div class="add-contact-body">
+        <div class="add-contact-avatar">
+            <img src="./assets/icons/person_white.svg" alt="">
+        </div>
+        <div class="inputs">
+            <div class="input-with-icon">
+                <input class="input" id="contact-name" placeholder="Name">
+                <img src="./assets/icons/person.svg" alt="">
+            </div>
+            <div class="input-with-icon">
+                <input class="input" id="contact-email" placeholder="Email">
+                <img src="./assets/icons/mail.svg" alt="">
+            </div>
+            <div class="input-with-icon">
+                <input class="input" id="contact-phone" placeholder="Phone">
+                <img src="./assets/icons/call.svg" alt="">
+            </div>
+        </div>
+        <div class="add-contact-buttons">
+            <button class="button-secondary" onclick="closeAddContact()">Cancel <img src="./assets/icons/close.svg" alt=""></button>
+            <button class="button-primary" onclick="saveContact()">Create contact <img class="check-icon" src="./assets/icons/check_white.svg" alt=""></button>
+        </div>
+    </div>
+</div>
+    `;
+}
