@@ -2,8 +2,6 @@ function onloadFunc() {
     fetchContacts("/user");
 }
 
-const BASE_URL = "https://joinstorage-e210a-default-rtdb.europe-west1.firebasedatabase.app/";
-
 async function fetchContacts(path) {
     const response = await fetch(BASE_URL + path + ".json");
     const data = await response.json();
