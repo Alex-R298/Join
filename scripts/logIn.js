@@ -42,5 +42,14 @@ function completeAnimation(elements) {
     elements.headerLogo.style.opacity = '1';
 }
 
-
 init();
+
+function checkPrivacyPolicy() {
+  const privacyPolicyCheckbox = document.getElementById("check-privacy-policy");
+
+  if (privacyPolicyCheckbox.checked) {
+
+  } else {
+
+  }
+}

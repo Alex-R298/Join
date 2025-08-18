@@ -42,11 +42,6 @@
   justify-content: center;
 }
 
-.summary-icon img {
-  width: 32px;
-  height: 32px;
-}
-
 .summary-icon-prio {
   background-color: #FF3D00;
   border-radius: 50%;
@@ -56,6 +51,11 @@
   align-items: center;
   justify-content: center;
 }
+
+.summary-icon-prio img {
+  width: 32px;
+  height: 32px;
+}  
 
 .row-2 {
   gap: 32px;
@@ -86,6 +86,56 @@
   justify-content: center;
   align-items: center;
   gap: 32px;
+}
+
+.summary:hover {
+  background-color: var(--primary);
+  transform: scale(1.05);
+  transition: transform 0.08s ease-in-out;
+  box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.summary:hover p {
+  color: var(--white);
+}
+
+.summary:hover h1 {
+  color: var(--white);
+}
+
+.summary:hover h3 {
+  color: var(--white);
+}
+
+.summary:active {
+  background-color: var(--white);
+  transform: scale(1);
+  transition: transform 0.1s ease-in-out;
+  box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.summary:active p {
+  color: #2A3647;
+}
+
+.summary:active h1 {
+  color: #2A3647;
+}
+
+.summary:active h3 {
+  color: #2A3647;
+}
+
+.summary:hover .summary-icon {
+  background-color: white;
+} 
+
+.summary:hover .summary-icon svg path {
+  fill: #2A3647;
+}
+
+.summary:hover .summary-icon svg path {
+  stroke: #2A3647;
 }
 
 .vl {
