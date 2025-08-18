@@ -8,11 +8,6 @@
     flex-direction: column;
 }
 
-.main_content_row {
-    display: flex;
-    margin-top: 48px;
-}
-
 .priority-inputs-container {
     display: flex;
     align-items: start;
