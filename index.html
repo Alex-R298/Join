@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/fonts.css">
-    <link rel="stylesheet" href="./style/style.css">
-    <link rel="stylesheet" href="./style/standard.css">
-    <link rel="stylesheet" href="./style/indexx.css">
-    <link rel="stylesheet" href="./style/header.css">
-    <link rel="stylesheet" href="./style/sidebar.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style/fonts.css">
+  <link rel="stylesheet" href="./style/style.css">
+  <link rel="stylesheet" href="./style/standard.css">
+  <link rel="stylesheet" href="./style/indexx.css">
+  <link rel="stylesheet" href="./style/header.css">
+  <link rel="stylesheet" href="./style/sidebar.css">
   <script src="./script.js"></script>
   <script src="./scripts/template.js"></script>
   <script src="./scripts/index.js"></script>
-    <title>Join</title>
+  <title>Join</title>
 </head>
+
 <body onload="init()">
   <div id="header-container"></div>
   <main>
-  <div id="sidebar-container"></div>
+    <div id="sidebar-container"></div>
 
     <div class="main_content">
       <div class="main_head_line">
@@ -29,7 +31,17 @@
         <div class="row-1">
           <div class="summary todo">
             <div class="summary-icon">
-              <img src="./assets/icons/edit_white.svg" alt="">
+              <svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <mask id="mask0_354723_6261" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="33"
+                  height="32">
+                  <rect x="0.5" width="32" height="32" fill="#D9D9D9" />
+                </mask>
+                <g mask="url(#mask0_354723_6261)">
+                  <path
+                    d="M7.16667 25.3332H9.03333L20.5333 13.8332L18.6667 11.9665L7.16667 23.4665V25.3332ZM26.2333 11.8998L20.5667 6.29984L22.4333 4.43317C22.9444 3.92206 23.5722 3.6665 24.3167 3.6665C25.0611 3.6665 25.6889 3.92206 26.2 4.43317L28.0667 6.29984C28.5778 6.81095 28.8444 7.42761 28.8667 8.14984C28.8889 8.87206 28.6444 9.48873 28.1333 9.99984L26.2333 11.8998ZM24.3 13.8665L10.1667 27.9998H4.5V22.3332L18.6333 8.19984L24.3 13.8665Z"
+                    fill="white" />
+                </g>
+              </svg>
             </div>
             <div class="summary-info">
               <h1>5</h1>
@@ -38,7 +50,11 @@
           </div>
           <div class="summary todo">
             <div class="summary-icon">
-              <img src="./assets/icons/check_white.svg" alt="">
+              <svg xmlns="http://www.w3.org/2000/svg" height="50px" viewBox="0 -960 960 960" width="50px"
+                fill="#ffffff">
+                <path
+                  d="m382-373.22 328.83-328.82Q726.78-718 748.43-718q21.66 0 37.61 15.96Q802-686.09 802-664.22t-15.96 37.83L419.61-259.52q-15.96 15.96-37.61 15.96t-37.61-15.96L173.52-430.39q-15.96-15.96-15.74-37.83.22-21.87 16.18-37.82Q189.91-522 211.78-522t37.83 15.96L382-373.22Z" />
+              </svg>
             </div>
             <div class="summary-info">
               <h1>3</h1>
@@ -64,23 +80,23 @@
         </div>
         <div class="row-3">
           <div class="summary tasks">
-              <h1>1</h1>
-              <p>Tasks in Board</p>
+            <h1>1</h1>
+            <p>Tasks in Board</p>
           </div>
           <div class="summary tasks">
-              <h1>1</h1>
-              <p>Tasks in Progress</p>
+            <h1>1</h1>
+            <p>Tasks in Progress</p>
           </div>
           <div class="summary tasks">
-              <h1>1</h1>
-              <p>Awaiting Feedback</p>
+            <h1>1</h1>
+            <p>Awaiting Feedback</p>
           </div>
         </div>
       </div>
     </div>
 
     <div class="main_greet">
-    <label id="lblGreetings"></label>
+      <label id="lblGreetings"></label>
     </div>
   </main>
 
