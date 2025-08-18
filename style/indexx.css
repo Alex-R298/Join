@@ -52,6 +52,11 @@
   justify-content: center;
 }
 
+.summary-icon-prio img {
+  width: 32px;
+  height: 32px;
+}  
+
 .row-2 {
   gap: 32px;
 }
