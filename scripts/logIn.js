@@ -44,7 +44,7 @@ function completeAnimation(elements) {
 
 init();
 
-function checkDatenschutz() {
+function checkPrivacyPolicy() {
   const privacyPolicyCheckbox = document.getElementById("check-privacy-policy");
 
   if (privacyPolicyCheckbox.checked) {
