@@ -27,6 +27,10 @@ async function addTask() {
     body: JSON.stringify(newTask)
   })
   .then(res => res.json())
+  .then(data => {
+  console.log("Task gespeichert:", data);
+  showPopup();
+})
   clearInputs();
 }
 
@@ -77,4 +81,16 @@ async function clearInputs() {
   document.getElementById("datepicker").value = ""; 
   document.getElementById("assigned_task").value = "";   
   document.getElementById("category_task").value = "";
+}
+
+function showPopup() {
+  document.getElementById("taskPopup").style.display = "flex";
+
+  setTimeout(() => {
+    closePopup();
+  }, 1500);
+}
+
+function closePopup() {
+  document.getElementById("taskPopup").style.display = "none";
 }

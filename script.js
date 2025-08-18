@@ -3,7 +3,7 @@ async function init() {
   loadHeader();
   loadSidebar();
   fetchBase();
-  
+  loadAddPage();
 }
 
 function user_button_show_links() {
@@ -40,5 +40,12 @@ function loadSidebar() {
   const sidebarContainer = document.getElementById('sidebar-container');
   if (sidebarContainer) {
     sidebarContainer.innerHTML = getSidebarTemplate();
+  }
+}
+
+function loadAddPage() {
+  const addPageContainer = document.getElementById('add_task_template');
+  if (addPageContainer) {
+    addPageContainer.innerHTML = getAddPageTemplate();
   }
 }
