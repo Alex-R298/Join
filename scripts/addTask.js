@@ -7,6 +7,7 @@ function selectPriority(button) {
   const buttons = document.querySelectorAll(".priority-btn");
 
   buttons.forEach((btn) => {
+    btn.classList.remove("active");
     btn.style.backgroundColor = "";
     btn.style.color = "";
     const img = btn.querySelector("img");
@@ -19,6 +20,7 @@ function selectPriority(button) {
     }
   });
 
+  button.classList.add("active");
   const img = button.querySelector("img");
   switch (button.dataset.priority) {
     case "urgent":
