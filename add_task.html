@@ -49,45 +49,23 @@
 
       <div class="inputs-right">
         <div class="task-inputs">
-
-          
-        <!-- prio teil
-        
-<div class="input-with-label">
-    <label for="priority">Priority</label>
-  <div class="priority-inputs-container pb-8" id="task_priority">
-    <div class="urgent-container input-priority-icons">
-      <input type="button" id="urgent" value="Urgent" class="input-urgent icon-urgent priority-low" onclick="setPriority(this)">
-      <p></p>
-      <img id="prio_urgent" src="./assets/icons/prio_red.svg">
-    </div>
-      <div class="urgent-container input-priority-icons">
-        <input type="button" id="medium" value="Medium" class="input-urgent icon-urgent priority-low" onclick="setPriority(this)">
-          <img id="prio_medium" src="./assets/icons/prio_medium_orange.svg">
-        </div>
-        <div class="urgent-container input-priority-icons">
-            <input type="button" id="low" value="Low" class="input-urgent icon-urgent priority-low" onclick="setPriority(this)">
-            <img id="prio_low" src="./assets/icons/prio_low_green.svg">
-        </div>
-    </div>
-</div>
-
- -->
-
- <div class="priority-container">
-  <button class="priority-btn" data-priority="urgent" onclick="selectPriority(this)">
-    <img src="./assets/icons/prio_red.svg" alt="">
-    <span>Urgent</span>
-  </button>
-  <button class="priority-btn" data-priority="medium" onclick="selectPriority(this)">
-    <img src="./assets/icons/prio_medium_orange.svg" alt="">
-    <span>Medium</span>
-  </button>
-  <button class="priority-btn" data-priority="low" onclick="selectPriority(this)">
-    <img src="./assets/icons/prio_low_green.svg" alt="">
-    <span>Low</span>
-  </button>
-</div>
+          <div class="input-with-label">
+            <label for="priority">Priority</label>
+            <div class="priority-inputs-container">
+              <button class="priority-btn" data-priority="urgent" onclick="selectPriority(this)">
+                Urgent
+                <img src="./assets/icons/prio_urgent_red.svg" alt="">
+              </button>
+              <button class="priority-btn" data-priority="medium" onclick="selectPriority(this)">
+                Medium
+                <img src="./assets/icons/prio_medium_orange.svg" alt="">
+              </button>
+              <button class="priority-btn" data-priority="low" onclick="selectPriority(this)">
+                Low
+                <img src="./assets/icons/prio_low_green.svg" alt="">
+              </button>
+            </div>
+          </div>
 
           <div class="input-with-label pb-8">
             <label for="assigned_task">Assigned to</label>
@@ -109,20 +87,21 @@
           <div class="input-with-label">
             <label for="subtask_input">Subtasks</label>
             <div class="input-with-button">
-            <input class="input-btn" type="text" id="subtask_input" placeholder="Add new subtask">
-            <button>+</button>
-          </div></div>
+              <input class="input-btn" type="text" id="subtask_input" placeholder="Add new subtask">
+              <button>+</button>
+            </div>
+          </div>
         </div>
 
       </div>
     </div>
-        <div class="create-btns">
-          <p class="short-info"><span style="color: #FF8190;">*</span>This field is required</p>
-          <div class="add-task-buttons">
-          <button class="button-secondary" onclick="">Clear</button>
-          <button class="button-primary" onclick="">Create Task</button>
-          </div>
-        </div>
+    <div class="create-btns">
+      <p class="short-info"><span style="color: #FF8190;">*</span>This field is required</p>
+      <div class="add-task-buttons">
+        <button class="button-secondary" onclick="">Clear</button>
+        <button class="button-primary" onclick="">Create Task</button>
+      </div>
+    </div>
     <!--  </template>-->
 
   </main>
