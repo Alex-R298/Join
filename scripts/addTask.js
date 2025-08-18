@@ -1,7 +1,40 @@
- function addTask() {
-    }
+
+//const BASE_URL = "https://joinstorage-e210a-default-rtdb.europe-west1.firebasedatabase.app/";
 
 let selectedPriority = null;
+
+
+
+async function fetchBase() {
+  try {
+    const res = await fetch(BASE_URL + "/task.json");
+    const data = await res.json();
+    console.log("Aktuelle Tasks:", data);
+  } catch (err) {
+    console.error("Fehler beim Laden:", err);
+  }
+}
+
+
+async function addTask() {
+  const title = document.getElementById("title").value;
+  const description = document.getElementById("task_description").value;
+  const dueDate = document.getElementById("datepicker").value;
+
+  const newTask = { title, description, dueDate };
+
+  fetch(BASE_URL + "/task.json", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newTask)
+  })
+  .then(res => res.json())
+  .then(data => console.log("Task gespeichert:", data))
+}
+
+
+
+
 
 function selectPriority(button) {
   const buttons = document.querySelectorAll(".priority-btn");

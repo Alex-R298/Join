@@ -2,7 +2,7 @@ async function init() {
   datetimer();
   loadHeader();
   loadSidebar();
-  fetchen();
+  fetchBase();
 }
 
 function user_button_show_links() {
