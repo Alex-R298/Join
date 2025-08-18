@@ -96,7 +96,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: background-color 3s ease-in-out;
+    transition: background-color 1s ease-in-out;
 }
 
 #animated_logo {
@@ -105,12 +105,12 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1000;
-    transition: all 3s ease-in-out;
+    transition: all 1s ease-in-out;
 }
 
 #content_container {
     opacity: 0;
-    transition: opacity 3s ease-in-out;
+    transition: opacity 1s ease-in-out;
 }
 
 [type=checkbox] {
