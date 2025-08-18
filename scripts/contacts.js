@@ -72,3 +72,26 @@ function sortContacts(data) {
 }
 
 
+function addContact() {
+    const addOverlay = document.getElementById("overlay-add-contact");
+    if (addOverlay) {
+        addOverlay.innerHTML = getAddContactTemplate();
+        addOverlay.style.display = "flex";
+        setTimeout(() => {
+            addOverlay.classList.add('visible');
+        }, 10);
+    }
+}
+
+
+
+
+function closeAddContact() {
+    const addOverlay = document.getElementById("overlay-add-contact");
+    if (addOverlay) {
+        addOverlay.classList.remove('visible');
+        setTimeout(() => {
+            addOverlay.style.display = "none";
+        }, 300);
+    }
+}

@@ -208,3 +208,149 @@
     font-size: 16px;
     color: black;
 }
+
+#overlay-add-contact {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    display: none;
+     opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#overlay-add-contact.visible {
+    opacity: 1;
+}
+
+
+
+.add-contact-popup {
+    position: relative;
+    width: 1212px;
+    height: 592px;
+    background: white;
+    border-radius: 30px;
+    display: flex;
+    align-items: stretch;
+    z-index: 1000;
+    animation: slideInFromRight 0.5s ease forwards;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.add-contact-popup.closing {
+    animation: slideOutToRight 0.5s ease forwards;
+}
+
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+.d_none {
+    display: none
+}
+
+.add-contact-header {
+    background-color: var(--primary);
+    width: 467px;
+    height: 100%;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    padding: 160px 48px 66px 48px;
+    gap: 12px;
+}
+
+.add-contact-header h1 {
+    color: white;
+    font-size: 61px;
+}
+
+.add-contact-header p{
+    color: white;
+    font-size: 27px;
+}
+
+.add-contact-header img {
+    width: 55.599586486816406px;
+    height: 66.48291015625px;
+}
+
+.add-contact-body {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    justify-content: center;
+    position: relative;
+    padding-left: 272px;
+}
+
+.vlcontact {
+   border-bottom: 3px solid #29ABE2;
+    width: 90px;
+}
+
+.add-contact-close {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    z-index: 1001;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+}
+
+.add-contact-close:hover {
+    transition: background 0.2s ease;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.add-contact-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 47px;
+    background-color:  #d1d1d1;
+    box-shadow: inset 0 0 0 4px white;
+    border: none;
+    outline: none;
+    position: absolute;
+    left: 56px;
+    top: 46%;
+    transform: translateY(-50%); 
+    margin-left: 20px; 
+}
+
+.add-contact-buttons {
+    display: flex;
+    margin-top: 40px;
+    gap: 20px;
+}
+
+.check-icon {
+    width: 16px;
+    height: 16px;
+}

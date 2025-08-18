@@ -20,12 +20,13 @@
 <body onload="onloadFunc(); init();">
     <div id="header-container"></div>
     <div id="sidebar-container"></div>
+    <div id="overlay-add-contact" class="d_none"></div>
 
     <div class="main-container" style="display: flex;">
         <div class="content-wrapper">
             <div class="contacts-container">
                 <div class="button-contact-wrapper">
-                    <button class="button-primary button-contact">Add new contact <img
+                    <button  onclick="addContact()" class="button-primary button-contact">Add new contact <img
                             src="./assets/icons/person_add.svg" alt=""> </button>
                 </div>
                 <div class="contacts-list-wrapper">

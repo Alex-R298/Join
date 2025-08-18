@@ -208,6 +208,11 @@ a {
     padding: 96px;
 }
 
+.main_content_row {
+    display: flex;
+    margin-top: 48px;
+}
+
 .short-info {
     font-size: 16px;
 }
