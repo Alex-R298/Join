@@ -1,8 +1,41 @@
- function addTask() {
-    }
+let selectedPriority = "medium";
 
-let selectedPriority = null;
+async function fetchBase() {
+  try {
+    const res = await fetch(BASE_URL + ".json");
+    const data = await res.json();
+    console.log(data);
+    console.log("Aktuelle Tasks:", data);
+  } catch (err) {
+    console.error("Fehler beim Laden:", err);
+  }
+}
 
+
+async function addTask() {
+  const title = document.getElementById("title").value;
+  const description = document.getElementById("task_description").value;
+  const dueDate = document.getElementById("datepicker").value;
+  const assignedTo = document.getElementById("assigned_task").value;   
+  const category = document.getElementById("category_task").value;
+  
+  
+  const newTask = { title, description, dueDate, priority: selectedPriority, assignedTo, category };
+
+  fetch(BASE_URL + "/task.json", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newTask)
+  })
+  .then(res => res.json())
+  .then(data => {
+  console.log("Task gespeichert:", data);
+  showPopup();
+})
+  clearInputs();
+}
+
+// function noch kürzen
 function selectPriority(button) {
   const buttons = document.querySelectorAll(".priority-btn");
 
@@ -41,5 +74,24 @@ function selectPriority(button) {
   }
 
   selectedPriority = button.dataset.priority;
-  console.log("Ausgewählte Priorität:", selectedPriority);
+}
+
+async function clearInputs() {
+  document.getElementById("title").value = "";
+  document.getElementById("task_description").value = "";
+  document.getElementById("datepicker").value = ""; 
+  document.getElementById("assigned_task").value = "";   
+  document.getElementById("category_task").value = "";
+}
+
+function showPopup() {
+  document.getElementById("taskPopup").style.display = "flex";
+
+  setTimeout(() => {
+    closePopup();
+  }, 1500);
+}
+
+function closePopup() {
+  document.getElementById("taskPopup").style.display = "none";
 }

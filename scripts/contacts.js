@@ -2,8 +2,6 @@ function onloadFunc() {
     fetchContacts("/user");
 }
 
-const BASE_URL = "https://joinstorage-e210a-default-rtdb.europe-west1.firebasedatabase.app/";
-
 async function fetchContacts(path) {
     const response = await fetch(BASE_URL + path + ".json");
     const data = await response.json();
@@ -72,3 +70,26 @@ function sortContacts(data) {
 }
 
 
+function addContact() {
+    const addOverlay = document.getElementById("overlay-add-contact");
+    if (addOverlay) {
+        addOverlay.innerHTML = getAddContactTemplate();
+        addOverlay.style.display = "flex";
+        setTimeout(() => {
+            addOverlay.classList.add('visible');
+        }, 10);
+    }
+}
+
+
+
+
+function closeAddContact() {
+    const addOverlay = document.getElementById("overlay-add-contact");
+    if (addOverlay) {
+        addOverlay.classList.remove('visible');
+        setTimeout(() => {
+            addOverlay.style.display = "none";
+        }, 300);
+    }
+}

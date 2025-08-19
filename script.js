@@ -2,7 +2,8 @@ async function init() {
   datetimer();
   loadHeader();
   loadSidebar();
-  fetchen();
+  fetchBase();
+  loadAddPage();
 }
 
 function user_button_show_links() {
@@ -39,5 +40,16 @@ function loadSidebar() {
   const sidebarContainer = document.getElementById('sidebar-container');
   if (sidebarContainer) {
     sidebarContainer.innerHTML = getSidebarTemplate();
+  }
+}
+
+async function loadAddPage() {
+  const res = await fetchBase(BASE_URL + "/user.json");
+  let currentUser = data.name
+  console.log(currentUser);
+  
+  const addPageContainer = document.getElementById('add_task_template');
+  if (addPageContainer) {
+    addPageContainer.innerHTML = getAddPageTemplate(currentUser);
   }
 }
