@@ -22,19 +22,53 @@
     <main class="main_content">
         <div id="sidebar-container"></div>
 
-        <h1>Add Task</h1>
-        <div class="main_content_row">
-
-            <div class="drag-area" id="toDo" ondrop="moveTo('toDo')" ondragleave="removeHighlight('toDo')"
-                ondragover="allowDrop(event); highlight('toDo')"></div>
-            <div class="drag-area" id="inProgress" ondrop="moveTo('inProgress')"
-                ondragleave="removeHighlight('inProgress')" ondragover="allowDrop(event); highlight('inProgress')">
+        <div class="site-title"><h1>Board</h1> 
+            <div class="task-actions">
+            <div class="searchbar">
+                <input class="search-input" type="search" placeholder="Find Task">
+                <button class="search-btn"><img src="./assets/icons/search.svg"></button>
             </div>
-            <div class="drag-area" id="awaitFeedback" ondrop="moveTo('awaitFeedback')"
-                ondragleave="removeHighlight('awaitFeedback')"
-                ondragover="allowDrop(event); highlight('awaitFeedback')"></div>
-            <div class="drag-area" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')"
-                ondragover="allowDrop(event); highlight('done')"></div>
+            <button class="button-add-task">Add task <img src="./assets/icons/add_white.svg"></button></div></div>
+        <div class="main_content_row gap-26">
+
+            <div class="area-todo">
+                <div class="column-header"><p class="board-title">To do</p><button class="add"><svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 1.5V9.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                    <path d="M9 5.57544L1 5.57544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                </svg></button></div>
+                <div class="drag-area" id="toDo" ondrop="moveTo('toDo')" ondragleave="removeHighlight('toDo')" ondragover="allowDrop(event); highlight('toDo')">
+                <div class="empty-container">
+                    <p class="empty-container-text">No Tasks To do</p>
+                </div>
+                </div>
+            </div>
+
+            <div class="area-inprogress">
+                <div class="column-header"><p class="board-title">In progress</p><button class="add"><svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 1.5V9.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                    <path d="M9 5.57544L1 5.57544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                </svg></button></div>
+                <div class="drag-area" id="inProgress" ondrop="moveTo('inProgress')"
+                    ondragleave="removeHighlight('inProgress')" ondragover="allowDrop(event); highlight('inProgress')">
+                </div>
+            </div>
+            <div class="area-awaitfeedback">
+                <div class="column-header"><p class="board-title">Await feedback</p><button class="add"><svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 1.5V9.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                    <path d="M9 5.57544L1 5.57544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                </svg></button></div>
+                <div class="drag-area" id="awaitFeedback" ondrop="moveTo('awaitFeedback')"
+                    ondragleave="removeHighlight('awaitFeedback')"
+                    ondragover="allowDrop(event); highlight('awaitFeedback')"></div>
+            </div>
+            <div class="area-done">
+                <div class="column-header"><p class="board-title">Done</p><button class="add"><svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 1.5V9.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                    <path d="M9 5.57544L1 5.57544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+                </svg></button></div>
+                <div class="drag-area" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')"
+                    ondragover="allowDrop(event); highlight('done')"></div>
+            </div>
 
         </div>
     </main>
