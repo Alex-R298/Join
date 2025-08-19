@@ -79,3 +79,17 @@ function highlight(id) {
 function removeHighlight(id) {
     document.getElementById(id).classList.remove('drag-area-highlight');
 }
+
+function showAddTaskOverlay() {
+    document.getElementById("add-task-overlay").classList.remove("d-none");
+    document.getElementById("add-task-container").innerHTML = getAddPageTemplate();
+    document.getElementById("btn-overlay-close").classList.remove("d-none");
+    document.body.style.overflow = "hidden";
+}
+
+function closeAddTaskOverlay(){
+    const addTaskOverlay = document.getElementById("add-task-overlay");
+
+    document.body.style.overflow = "auto";
+    addTaskOverlay.classList.add("d-none");
+}
