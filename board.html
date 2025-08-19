@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="./style/header.css">
     <link rel="stylesheet" href="./style/sidebar.css">
     <link rel="stylesheet" href="./style/board.css">
+    <link rel="stylesheet" href="./style/add_task.css">
     <script src="./scripts/config.js"></script>
     <script src="./scripts/template.js"></script>
     <script src="./script.js"></script>
@@ -33,7 +34,7 @@
         <div class="main_content_row gap-26">
 
             <div class="area-todo">
-                <div class="column-header"><p class="board-title">To do</p><button class="add"><svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div class="column-header"><p class="board-title">To do</p><button class="add" onclick="showAddTaskOverlay()"><svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 1.5V9.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                     <path d="M9 5.57544L1 5.57544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                 </svg></button></div>
@@ -45,7 +46,7 @@
             </div>
 
             <div class="area-inprogress">
-                <div class="column-header"><p class="board-title">In progress</p><button class="add"><svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div class="column-header"><p class="board-title">In progress</p><button class="add" onclick="showAddTaskOverlay()"><svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 1.5V9.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                     <path d="M9 5.57544L1 5.57544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                 </svg></button></div>
@@ -54,7 +55,7 @@
                 </div>
             </div>
             <div class="area-awaitfeedback">
-                <div class="column-header"><p class="board-title">Await feedback</p><button class="add"><svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div class="column-header"><p class="board-title">Await feedback</p><button class="add" onclick="showAddTaskOverlay()"><svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 1.5V9.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                     <path d="M9 5.57544L1 5.57544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                 </svg></button></div>
@@ -63,7 +64,7 @@
                     ondragover="allowDrop(event); highlight('awaitFeedback')"></div>
             </div>
             <div class="area-done">
-                <div class="column-header"><p class="board-title">Done</p><button class="add"><svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div class="column-header"><p class="board-title">Done</p><button class="add" onclick="showAddTaskOverlay()"><svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 1.5V9.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                     <path d="M9 5.57544L1 5.57544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                 </svg></button></div>
@@ -73,6 +74,9 @@
 
         </div>
     </main>
+    <div id="add-task-overlay" class="overlay d-none" onclick="closeAddTaskOverlay()">
+        <div id="add-task-container" class="add-task-content"></div>
+    </div>
 </body>
 
 </html>
