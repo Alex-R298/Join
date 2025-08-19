@@ -43,9 +43,13 @@ function loadSidebar() {
   }
 }
 
-function loadAddPage() {
+async function loadAddPage() {
+  const res = await fetchBase(BASE_URL + "/user.json");
+  let currentUser = data.name
+  console.log(currentUser);
+  
   const addPageContainer = document.getElementById('add_task_template');
   if (addPageContainer) {
-    addPageContainer.innerHTML = getAddPageTemplate();
+    addPageContainer.innerHTML = getAddPageTemplate(currentUser);
   }
 }

@@ -2,8 +2,9 @@ let selectedPriority = "medium";
 
 async function fetchBase() {
   try {
-    const res = await fetch(BASE_URL + "/task.json");
+    const res = await fetch(BASE_URL + ".json");
     const data = await res.json();
+    console.log(data);
     console.log("Aktuelle Tasks:", data);
   } catch (err) {
     console.error("Fehler beim Laden:", err);

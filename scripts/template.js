@@ -145,7 +145,7 @@ function getAddContactTemplate() {
     `;
 }
 
-function getAddPageTemplate(){
+function getAddPageTemplate(user){
     return `
      <h1>Add Task</h1>
     <div class="main_content_row">
@@ -210,6 +210,7 @@ function getAddPageTemplate(){
               <option value="user3">User 3</option>
             </select>
           </div>
+
           <div class="input-with-label">
             <label for="category_task">Category<span style="color: #FF8190;">*</span></label>
             <select class="minimal" id="category_task" required placeholder="Select task categorx">
