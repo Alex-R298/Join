@@ -7,10 +7,12 @@ async function fetchContacts(path) {
     const data = await response.json();
     const contactsList = document.getElementById('contacts-list');
     const contactsListDetails = document.getElementById('contacts-container-details');
+    const editContact = document.getElementById('overlay-add-contact');
 
-    if (contactsList && contactsListDetails) {
+    if (contactsList && contactsListDetails && editContact) {
         contactsList.innerHTML = getContactsTemplate(data);
         contactsListDetails.innerHTML = "";
+        editContact.innerHTML = editContactTemplate();
     }
 }
 
@@ -49,7 +51,6 @@ function getContactsTemplate(data) {
     }
     let template = '';
     let currentLetter = '';
-
     sortedContacts.forEach(user => {
         const firstLetter = user.name.charAt(0).toUpperCase();
         if (firstLetter !== currentLetter) {
@@ -75,6 +76,7 @@ function addContact() {
     if (addOverlay) {
         addOverlay.innerHTML = getAddContactTemplate();
         addOverlay.style.display = "flex";
+        addOverlay.style.visibility = "visible";
         setTimeout(() => {
             addOverlay.classList.add('visible');
         }, 10);
@@ -83,13 +85,63 @@ function addContact() {
 
 
 
-
 function closeAddContact() {
     const addOverlay = document.getElementById("overlay-add-contact");
     if (addOverlay) {
+        const popup = addOverlay.querySelector('.add-contact-popup');
+        if (popup) {
+            popup.classList.add('closing');
+        }
         addOverlay.classList.remove('visible');
         setTimeout(() => {
-            addOverlay.style.display = "none";
-        }, 300);
+            addOverlay.style.visibility = "hidden";
+        }, 500);
     }
 }
+
+
+function editContact(name, email, phone, initials, avatarColor) {
+    const editOverlay = document.getElementById("overlay-add-contact");
+    if (editOverlay) {
+        editOverlay.innerHTML = editContactTemplate(name, email, phone, initials, avatarColor);
+        editOverlay.style.display = "flex";
+        editOverlay.style.visibility = "visible";
+        setTimeout(() => {
+            editOverlay.classList.add('visible');
+        }, 10);
+    }
+}
+
+
+
+
+function createdContact() { 
+    const createdContact = document.getElementById("created-contact");
+    const addOverlay = document.getElementById("overlay-add-contact");
+    if (createdContact) {
+        createdContact.innerHTML = createdContactTemplate();
+        createdContact.style.display = "flex";
+        createdContact.style.visibility = "visible";
+        createdContact.classList.add('visible');
+        if (addOverlay) {
+            addOverlay.classList.remove('visible');
+            setTimeout(() => {
+                addOverlay.style.visibility = "hidden";
+                addOverlay.style.display = "none";
+            }, 200);
+        }
+    }
+}
+
+function closeCreatedContact() {
+    const createdContact = document.getElementById("created-contact");
+    if (createdContact) {
+        createdContact.classList.remove('visible');
+        setTimeout(() => {
+            createdContact.style.visibility = "hidden";
+            createdContact.style.display = "none";
+        }, 1000);
+    }
+}
+
+

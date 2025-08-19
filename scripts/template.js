@@ -76,7 +76,7 @@ function showContactDetails(name, email, phone, initials, avatarColor) {
                 <div class="contact-details-info">
                     <div class="contact-details-name">${name}</div>
                     <div class="contact-details-buttons">
-                        <button class="button-details" type="button"> 
+                        <button onclick="editContact('${name}', '${email}', '${phone}', '${initials}', '${avatarColor}')" class="button-details" type="button"> 
                             <img src="./assets/icons/edit.svg" alt=""> Edit
                         </button>
                         <button class="button-details" type="button"> 
@@ -138,12 +138,60 @@ function getAddContactTemplate() {
         </div>
         <div class="add-contact-buttons">
             <button class="button-secondary" onclick="closeAddContact()">Cancel <img src="./assets/icons/close.svg" alt=""></button>
-            <button class="button-primary" onclick="saveContact()">Create contact <img class="check-icon" src="./assets/icons/check_white.svg" alt=""></button>
+            <button class="button-primary" onclick="createdContact()">Create contact <img class="check-icon" src="./assets/icons/check_white.svg" alt=""></button>
         </div>
     </div>
 </div>
     `;
 }
+
+
+function editContactTemplate(name = '', email = '', phone = '', initials = '', avatarColor = '') {
+    return `
+        <div class="add-contact-popup">
+            <button class="add-contact-close" onclick="closeAddContact()">
+                <img src="./assets/icons/close.svg" alt="">
+            </button>
+            <div class="add-contact-header">
+                <img src="./assets/icons/capa_white.svg" alt="">
+                <h1>Edit contact</h1>
+                <div class="vlcontact"></div>
+            </div>
+            <div class="add-contact-body">
+                <div class="add-contact-avatar" style="${avatarColor ? `background-color: ${avatarColor};` : ''}">
+                    ${initials ? initials : '<img src="./assets/icons/person_white.svg" alt="">'}
+                </div>
+                <div class="inputs">
+                    <div class="input-with-icon">
+                        <input class="input" id="contact-name" placeholder="Name" value="${name}">
+                        <img src="./assets/icons/person.svg" alt="">
+                    </div>
+                    <div class="input-with-icon">
+                        <input class="input" id="contact-email" placeholder="Email" value="${email}">
+                        <img src="./assets/icons/mail.svg" alt="">
+                    </div>
+                    <div class="input-with-icon">
+                        <input class="input" id="contact-phone" placeholder="Phone" value="${phone}">
+                        <img src="./assets/icons/call.svg" alt="">
+                    </div>
+                </div>
+                <div class="add-contact-buttons">
+                    <button class="button-secondary" onclick="deleteContact()">Delete</button>
+                    <button class="button-primary" onclick="updateContact()">Save <img class="check-icon" src="./assets/icons/check_white.svg" alt=""></button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function createdContactTemplate() {
+    return `
+        <div class="created-contact-popup">
+            <p>Contact successfully created</p>
+        </div>
+    `;
+}
+
 
 function getAddPageTemplate(user){
     return `
