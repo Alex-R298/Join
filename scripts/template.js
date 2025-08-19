@@ -193,7 +193,7 @@ function createdContactTemplate() {
 }
 
 
-function getAddPageTemplate(user){
+function getAddPageTemplate(){
     return `
      <h1>Add Task</h1>
     <div class="main_content_row">
