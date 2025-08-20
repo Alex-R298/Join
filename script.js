@@ -44,10 +44,15 @@ function loadSidebar() {
 }
 
 async function loadAddPage() {
+  const res = await fetch(BASE_URL + "/user.json");
+  const data = await res.json();
+  const usersArray = Object.values(data).filter(item => item.name); 
+   console.log("data:", usersArray);       
   
   
+    
   const addPageContainer = document.getElementById('add_task_template');
   if (addPageContainer) {
-    addPageContainer.innerHTML = getAddPageTemplate();
+    addPageContainer.innerHTML = getAddPageTemplate(usersArray);
   }
 }

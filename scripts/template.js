@@ -226,7 +226,7 @@ function createdContactTemplate() {
     `;
 }
 
-function getAddPageTemplate(){
+function getAddPageTemplate(usersArray){
     return `
     <div class="add-task-header">
         <h1>Add Task</h1>
@@ -276,14 +276,23 @@ function getAddPageTemplate(){
         </div>
       </div>
 
+
+
+
+
+
+
+      
       <div class="input-with-label pb-8">
         <label for="assigned_task">Assigned to</label>
         <select class="minimal" id="assigned_task" placeholder="Select contacts to assign">
-          <option value="user1">User 1</option>
-          <option value="user2">User 2</option>
-          <option value="user3">User 3</option>
+          <option ${usersArray.map(n => `<option value="user1">${n.name}</option>`).join(' ')} ></option>
         </select>
       </div>
+
+
+
+
 
       <div class="input-with-label">
         <label for="category_task">Category<span style="color: #FF8190;">*</span></label>
