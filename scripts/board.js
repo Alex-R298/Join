@@ -1,45 +1,3 @@
-let todos = [{
-    'id': 0,
-    'title': 'Putzen',
-    'category': 'toDo'
-}, 
-{
-    'id': 1,
-    'title': 'Kochen',
-    'category': 'toDo'
-},
- {
-    'id': 2,
-    'title': 'laufen',
-    'category': 'inProgress'
-},
-{
-    'id': 3,
-    'title': 'bauen',
-    'category': 'inProgress'
-},
-{
-    'id': 4,
-    'title': 'schwimmen',
-    'category': 'awaitFeedback'
-},
-{
-    'id': 5,
-    'title': 'gehen',
-    'category': 'awaitFeedback'
-},
-{
-    'id': 6,
-    'title': 'diesdas',
-    'category': 'done'
-},
-{
-    'id': 7,
-    'title': 'schlafen',
-    'category': 'done'
-}
-];
-
 
 // To do / In progress / Await feedback / Done
 
@@ -80,16 +38,31 @@ function removeHighlight(id) {
     document.getElementById(id).classList.remove('drag-area-highlight');
 }
 
-function showAddTaskOverlay() {
-    document.getElementById("add-task-overlay").classList.remove("d-none");
-    document.getElementById("add-task-container").innerHTML = getAddPageTemplate();
-    document.getElementById("btn-overlay-close").classList.remove("d-none");
+
+async function showAddTaskOverlay() {
+    const overlay = document.getElementById("add-task-overlay");
+    const container = document.getElementById("add-task-container");
+
+    overlay.classList.remove("d-none");
     document.body.style.overflow = "hidden";
+
+    container.addEventListener("click", (e) => e.stopPropagation());
+    overlay.addEventListener("click", closeAddTaskOverlay);
+
+    const usersArray = await loadUsers();
+    container.innerHTML = getAddPageTemplate(usersArray);
+
+}
+ async function loadUsers() {
+    const res = await fetch(BASE_URL + "/user.json");
+    const data = await res.json();
+
+    return Object.values(data).filter(user => user.name);
 }
 
-function closeAddTaskOverlay(){
-    const addTaskOverlay = document.getElementById("add-task-overlay");
 
+function closeAddTaskOverlay() {
+    const overlay = document.getElementById("add-task-overlay");
+    overlay.classList.add("d-none");
     document.body.style.overflow = "auto";
-    addTaskOverlay.classList.add("d-none");
 }

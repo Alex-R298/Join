@@ -286,8 +286,8 @@ function getAddPageTemplate(usersArray = []) {
       <div class="input-with-label pb-8">
         <label for="assigned_task">Assigned to</label>
         <select class="minimal" id="assigned_task" placeholder="Select contacts to assign">
-          <option ${usersArray.map(n => `<option value="user1">${n.name}</option>`).join(' ')} ></option>
-        </select>
+            ${usersArray.map(u => `<option value="${u.email}">${u.name}</option>`).join('')}
+            </select>
       </div>
 
 
