@@ -226,7 +226,7 @@ function createdContactTemplate() {
     `;
 }
 
-function getAddPageTemplate(usersArray){
+function getAddPageTemplate(usersArray = []) {
     return `
     <div class="add-task-header">
         <h1>Add Task</h1>
