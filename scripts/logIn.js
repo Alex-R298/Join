@@ -31,10 +31,10 @@ function startLogoAnimation(elements) {
     elements.contentContainer.style.opacity = '1';
     elements.startScreen.style.backgroundColor = 'rgba(255, 255, 255, 0)';
     
-   setTimeout(() => elements.signUp.style.opacity = '1', 500);
-    setTimeout(() => elements.logInForm.style.opacity = '1', 1000);
-    setTimeout(() => elements.logInFooter.style.opacity = '1', 1500);
-    setTimeout(() => completeAnimation(elements), 3000);
+//    setTimeout(() => elements.signUp.style.opacity = '1', 500);
+//     setTimeout(() => elements.logInForm.style.opacity = '1', 1000);
+//     setTimeout(() => elements.logInFooter.style.opacity = '1', 1500);
+    setTimeout(() => completeAnimation(elements), 1500);
 }
 
 function completeAnimation(elements) {
