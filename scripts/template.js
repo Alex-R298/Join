@@ -50,7 +50,7 @@ function createContactCard(user) {
     const initials = getInitials(user.name);
 
     return `
-    <div class="contact-card" onclick="showContactDetails('${user.name}', '${user.email}', '${user.phone || ""}', '${initials}', '${avatarColor}')">
+    <div class="contact-card" onclick="showContactDetails('${user.id}', '${user.name}', '${user.email}', '${user.phone || ""}', '${initials}', '${avatarColor}')" data-contact-id="${user.id}">
         <div class="contact-avatar" style="background-color: ${avatarColor};">${initials}</div>
         <div class="contact-info-container">
             <div class="contact-name">${user.name}</div>
@@ -59,38 +59,35 @@ function createContactCard(user) {
     </div>`;
 }
 
-function showContactDetails(name, email, phone, initials, avatarColor) {
-    const contactsMetrics = document.getElementById('contacts-container-details');
-    if (!contactsMetrics) return;
 
-    contactsMetrics.innerHTML = `
+
+function generateContactDetailsHTML(contactId, name, email, phone, initials, avatarColor) {
+    return `
         <div class="contact-details">
             <div class="contact-details-top">
                 <div class="contact-details-avatar" style="background-color: ${avatarColor};">${initials}</div>
                 <div class="contact-details-info">
                     <div class="contact-details-name">${name}</div>
                     <div class="contact-details-buttons">
-                        <button onclick="editContact('${name}', '${email}', '${phone}', '${initials}', '${avatarColor}')" class="button-details" type="button"> 
+                        <button onclick="editContact('${contactId}', '${name}', '${email}', '${phone}', '${initials}', '${avatarColor}')" class="button-details" type="button">
                             <img src="./assets/icons/edit.svg" alt=""> Edit
                         </button>
-                        <button class="button-details" type="button"> 
+                        <button onclick="deleteContact('${contactId}')" class="button-details" type="button">
                             <img src="./assets/icons/delete.svg" alt=""> Delete
                         </button>
                     </div>
                 </div>
             </div>
-            
             <div class="contact-details-bottom">
                 <p class="contact-details-description">Contact Information</p>
                 <div class="contact-details-section">
                     <div class="contact-details-heading">Email</div>
                     <div class="contact-details-value" style="color: #007CEE ">${email}</div>
                 </div>
-                
                 <div class="contact-details-section">
                     <div class="contact-details-heading">Phone</div>
                     <div class="contact-details-value">
-                        ${phone}
+                        ${phone || "Not specified"}
                     </div>
                 </div>
             </div>
@@ -137,7 +134,8 @@ function getAddContactTemplate() {
     `;
 }
 
-function editContactTemplate(name = '', email = '', phone = '', initials = '', avatarColor = '') {
+
+function editContactTemplate(contactId = '', name = '', email = '', phone = '', initials = '', avatarColor = '') {
     return `
         <div class="add-contact-popup">
             <button class="add-contact-close" onclick="closeAddContact()">
@@ -167,8 +165,8 @@ function editContactTemplate(name = '', email = '', phone = '', initials = '', a
                     </div>
                 </div>
                 <div class="add-contact-buttons">
-                    <button class="button-secondary" onclick="deleteContact()">Delete</button>
-                    <button class="button-primary" onclick="updateContact()">Save <img class="check-icon" src="./assets/icons/check_white.svg" alt=""></button>
+                    <button class="button-secondary" onclick="deleteContact('${contactId}')">Delete</button>
+                    <button class="button-primary" onclick="updateContact('${contactId}')" class="check-icon">Save <img src="./assets/icons/check_white.svg" alt=""></button>
                 </div>
             </div>
         </div>
@@ -222,8 +220,7 @@ function getAddPageTemplate(){
             Urgent
             <img src="./assets/icons/prio_urgent_red.svg" alt="">
           </button>
-          <button class="priority-btn active" data-priority="medium" onclick="selectPriority(this)"
-            style="background-color:#FFA800; color:white;"> <!--Style noch auslagern-->
+          <button class="priority-btn active priority-medium" data-priority="medium" onclick="selectPriority(this)">
             Medium
             <img src="./assets/icons/prio_medium_white.svg" alt="">
           </button>
@@ -236,7 +233,7 @@ function getAddPageTemplate(){
 
       <div class="input-with-label pb-8">
         <label for="assigned_task">Assigned to</label>
-        <select class="minimal" id="assigned_task" placeholder="Select concacts to assign">
+        <select class="minimal" id="assigned_task" placeholder="Select contacts to assign">
           <option value="user1">User 1</option>
           <option value="user2">User 2</option>
           <option value="user3">User 3</option>
@@ -245,7 +242,7 @@ function getAddPageTemplate(){
 
       <div class="input-with-label">
         <label for="category_task">Category<span style="color: #FF8190;">*</span></label>
-        <select class="minimal" id="category_task" required placeholder="Select task categorx">
+        <select class="minimal" id="category_task" required placeholder="Select task category">
           <option value="development">Development</option>
           <option value="design">Design</option>
           <option value="marketing">Marketing</option>

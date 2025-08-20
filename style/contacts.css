@@ -61,6 +61,19 @@
 }
 
 
+.contact-card.selected {
+    background-color: var(--primary);
+}
+
+.contact-card.selected .contact-name {
+    color: white;
+}
+
+.contact-card.selected .contact-email {
+    color: #007CEE;
+}
+
+
 .contact-avatar {
     width: 42px;
     height: 42px;
