@@ -134,16 +134,15 @@ input::placeholder {
     color: var(--lightgrey);
 }
 
-/* input:invalid {
+.invalid {
     border: 1px solid var(--error-red);
-} */
+}
 
 .input-invalid {
     color: var(--error-red);
     font-size: 12px;
     margin-top: 4px;
     display: block;
-    visibility: hidden;
 }
 
 input:invalid + span::after {
