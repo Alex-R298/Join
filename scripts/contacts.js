@@ -44,7 +44,8 @@ async function saveContactToFirebase(contact) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(contact)
     });
-    
+
+    showSuccessMessage();
     closeAddContactQuick();
   await fetchContacts("/user");
   displayNewContact(newContactId, contact);
