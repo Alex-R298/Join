@@ -45,20 +45,20 @@ function createLetterDivider(letter) {
     return `<div class="letter-divider">${letter}</div>`;
 }
 
-function createContactCard(user) {
-    const avatarColor = getAvatarColor(user.name);
-    const initials = getInitials(user.name);
 
+function createContactCard(contact) {
+    const avatarColor = getAvatarColor(contact.name);
+    const initials = getInitials(contact.name);
+    
     return `
-    <div class="contact-card" onclick="showContactDetails('${user.id}', '${user.name}', '${user.email}', '${user.phone || ""}', '${initials}', '${avatarColor}')" data-contact-id="${user.id}">
+    <div class="contact-card" onclick="showContactDetails('${contact.id}', '${contact.name}', '${contact.email}', '${contact.phone || ""}', '${initials}', '${avatarColor}')" data-contact-id="${contact.id}">
         <div class="contact-avatar" style="background-color: ${avatarColor};">${initials}</div>
         <div class="contact-info-container">
-            <div class="contact-name">${user.name}</div>
-            <div class="contact-email">${user.email}</div>
+            <div class="contact-name">${contact.name}</div>
+            <div class="contact-email">${contact.email}</div>
         </div>
     </div>`;
 }
-
 
 
 function generateContactDetailsHTML(contactId, name, email, phone, initials, avatarColor) {
@@ -94,6 +94,51 @@ function generateContactDetailsHTML(contactId, name, email, phone, initials, ava
         </div>
     `;
 }
+
+
+function displayContactDetails(contactId, contact, initials = null, avatarColor = null, animate = true) {
+        initials = getInitials(contact.name);
+        avatarColor = getAvatarColor(contact.name);
+        const animationClass = animate ? 'animate' : 'no-animation';
+    const detailsHTML = `
+        <div class="contact-details ${animationClass}">
+            <div class="contact-details-top">
+                <div class="contact-details-avatar" style="background-color: ${avatarColor};">${initials}</div>
+                <div class="contact-details-info">
+                    <div class="contact-details-name">${contact.name}</div>
+                    <div class="contact-details-buttons">
+                        <button onclick="editContact('${contactId}', '${contact.name}', '${contact.email}', '${contact.phone || ""}', '${initials}', '${avatarColor}')" class="button-details" type="button">
+                            <img src="./assets/icons/edit.svg" alt=""> Edit
+                        </button>
+                        <button onclick="deleteContact('${contactId}')" class="button-details" type="button">
+                            <img src="./assets/icons/delete.svg" alt=""> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-details-bottom">
+                <p class="contact-details-description">Contact Information</p>
+                <div class="contact-details-section">
+                    <div class="contact-details-heading">Email</div>
+                    <div class="contact-details-value" style="color: #007CEE ">${contact.email}</div>
+                </div>
+                
+                <div class="contact-details-section">
+                    <div class="contact-details-heading">Phone</div>
+                    <div class="contact-details-value">
+                        ${contact.phone || "Not specified"}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    const contactsMetrics = document.getElementById('contacts-container-details');
+    contactsMetrics.innerHTML = detailsHTML;
+    
+}
+
+
 
 function getAddContactTemplate() {
     return `

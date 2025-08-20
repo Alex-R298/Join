@@ -16,10 +16,14 @@ async function fetchContacts(path) {
         editContact.innerHTML = editContactTemplate();
     }
 
+    if (contactsListDetails && !document.querySelector('.contact-card.selected')) {
+            contactsListDetails.innerHTML = "";
+        }
+
 }
 
 
-function createdContact() { 
+ function createdContact() { 
     const nameInput = document.getElementById('contact-name');
     const emailInput = document.getElementById('contact-email');
     const phoneInput = document.getElementById('contact-phone');
@@ -39,17 +43,25 @@ function createdContact() {
 
 
 async function saveContactToFirebase(contact) {
-    await fetch(BASE_URL + "/user.json", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(contact)
-    });
+    try {
+        const response = await fetch(BASE_URL + "/user.json", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(contact)
+        });
+        
+        const data = await response.json();
+        const newContactId = data.name;
 
-    showSuccessMessage();
-    closeAddContactQuick();
-  await fetchContacts("/user");
-  displayNewContact(newContactId, contact);
+        showSuccessMessage();
+        await fetchContacts("/user");
+        displayContactDetails(newContactId, contact, null, null, false);
+        markContactCard(newContactId);
+    } catch (error) {
+        console.error("Error saving contact:", error);
+    }
 }
+
 
 
 async function deleteContact(contactId) {
@@ -67,19 +79,23 @@ async function updateContact(contactId) {
     const nameInput = document.getElementById('contact-name');
     const emailInput = document.getElementById('contact-email');
     const phoneInput = document.getElementById('contact-phone');
+    
     if (!nameInput || !nameInput.value.trim() || !emailInput || !emailInput.value.trim()) {
         alert('Please fill in at least name and email!');
         return;
     }
+    
     const updatedContact = {
         name: nameInput.value.trim(),
         email: emailInput.value.trim(),
         phone: phoneInput ? phoneInput.value.trim() : '',
         updatedAt: new Date().toISOString()
     };
+    
     closeAddContactQuick();
-     sendUpdatedContactToFirebase(contactId, updatedContact);
-     editContact();
+    await sendUpdatedContactToFirebase(contactId, updatedContact);
+    displayContactDetails(contactId, updatedContact, null, null, false);
+    markContactCard(contactId);
 }
 
 
@@ -92,7 +108,6 @@ async function sendUpdatedContactToFirebase(contactId, updatedContact) {
     
     closeAddContact();
   await fetchContacts("/user");
-    showLatestContact(contactId);
 }
 
 
@@ -105,8 +120,7 @@ function showContactDetails(contactId, name, email, phone, initials, avatarColor
     if (clickedCard) {
         clickedCard.classList.add('selected');
     }
-    const contactsMetrics = document.getElementById('contacts-container-details');
-    contactsMetrics.innerHTML = generateContactDetailsHTML(contactId, name, email, phone, initials, avatarColor);
+    displayContactDetails(contactId, { name, email, phone }, initials, avatarColor);
 }
 
 
@@ -137,33 +151,28 @@ function getInitials(name) {
 
 function getContactsTemplate(data) {
     if (!data) return "<p>Keine Kontakte gefunden</p>";
-    
-    let template = '';
-    let currentLetter = '';
     const sortedContacts = [];
     for (const contactId in data) {
         const contact = data[contactId];
         if (contact && contact.name && contact.email) {
             sortedContacts.push({
-                id: contactId, 
+                id: contactId,
                 ...contact
             });
         }
     }
-    
     sortedContacts.sort((a, b) => a.name.localeCompare(b.name, 'de'));
+    let template = '';
+    let currentLetter = '';
     
     sortedContacts.forEach(contact => {
         const firstLetter = contact.name.charAt(0).toUpperCase();
-        
         if (firstLetter !== currentLetter) {
             template += createLetterDivider(firstLetter);
             currentLetter = firstLetter;
         }
-        
         template += createContactCard(contact);
     });
-    
     return template || "<p>Keine gültigen Kontakte gefunden</p>";
 }
 
