@@ -23,22 +23,100 @@ async function fetchContacts(path) {
 }
 
 
- function createdContact() { 
+function createdContact() { 
     const nameInput = document.getElementById('contact-name');
     const emailInput = document.getElementById('contact-email');
     const phoneInput = document.getElementById('contact-phone');
-    if (!nameInput || !nameInput.value.trim() || !emailInput || !emailInput.value.trim()) {
-        alert('Please fill in at least name and email!');
-        return;
+    if (!validateContactInputs(nameInput, emailInput, phoneInput)) {
+        return; 
     }
     const newContact = {
         name: nameInput.value.trim(),
         email: emailInput.value.trim(),
-        phone: phoneInput ? phoneInput.value.trim() : '',
+        phone: phoneInput.value.trim(),
         createdAt: new Date().toISOString()
     };
     closeAddContactQuick();
     saveContactToFirebase(newContact);
+}
+
+
+function validateContactInputs(nameInput, emailInput, phoneInput) {
+    let isValid = true;
+    isValid = validateName(nameInput) && isValid;
+    isValid = validateEmail(emailInput) && isValid;
+    isValid = validatePhone(phoneInput) && isValid;
+    return isValid;
+}
+
+
+function validateName(nameInput) {
+    if (!nameInput.value.trim() || !nameInput.value.includes(' ')) {
+        nameInput.style.borderColor = 'red';
+        showValidationError('contact-name-error', 'Bitte Vor- und Nachname eingeben');
+        return false;
+    } else {
+        nameInput.style.borderColor = '';
+        hideValidationError('contact-name-error');
+        return true;
+    }
+}
+
+
+function validateEmail(emailInput) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailInput.value.trim() || !emailRegex.test(emailInput.value)) {
+        emailInput.style.borderColor = 'red';
+        showValidationError('contact-email-error', 'Bitte eine gültige E-Mail-Adresse eingeben');
+        return false;
+    } else {
+        emailInput.style.borderColor = '';
+        hideValidationError('contact-email-error');
+        return true;
+    }
+}
+
+
+function validatePhone(phoneInput) {
+    if (!phoneInput.value.trim()) {
+        hideValidationError('contact-phone-error');
+        return true;
+    }
+    const phoneRegex = /^\d{11}$/;
+    if (!phoneRegex.test(phoneInput.value.replace(/\s/g, ''))) {
+        phoneInput.style.borderColor = 'red';
+        showValidationError('contact-phone-error', 'Bitte eine gültige Telefonnummer mit 11 Ziffern eingeben');
+        return false;
+    } else {
+        phoneInput.style.borderColor = '';
+        hideValidationError('contact-phone-error');
+        return true;
+    }
+}
+
+
+function showValidationError(errorId, message) {
+    let errorElement = document.getElementById(errorId);
+    if (!errorElement) {
+        errorElement = document.createElement('div');
+        errorElement.id = errorId;
+        errorElement.className = 'validation-error';
+        errorElement.style.color = 'red';
+        errorElement.style.fontSize = '12px';
+        const inputId = errorId.replace('-error', '');
+        const inputElement = document.getElementById(inputId);
+        inputElement.parentNode.appendChild(errorElement);
+    }
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+}
+
+
+function hideValidationError(errorId) {
+    const errorElement = document.getElementById(errorId);
+    if (errorElement) {
+        errorElement.style.display = 'none';
+    }
 }
 
 
@@ -49,10 +127,8 @@ async function saveContactToFirebase(contact) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(contact)
         });
-        
         const data = await response.json();
         const newContactId = data.name;
-
         showSuccessMessage();
         await fetchContacts("/user");
         displayContactDetails(newContactId, contact, null, null, false);
@@ -79,24 +155,22 @@ async function updateContact(contactId) {
     const nameInput = document.getElementById('contact-name');
     const emailInput = document.getElementById('contact-email');
     const phoneInput = document.getElementById('contact-phone');
-    
     if (!nameInput || !nameInput.value.trim() || !emailInput || !emailInput.value.trim()) {
         alert('Please fill in at least name and email!');
         return;
     }
-    
     const updatedContact = {
         name: nameInput.value.trim(),
         email: emailInput.value.trim(),
         phone: phoneInput ? phoneInput.value.trim() : '',
         updatedAt: new Date().toISOString()
     };
-    
     closeAddContactQuick();
     await sendUpdatedContactToFirebase(contactId, updatedContact);
     displayContactDetails(contactId, updatedContact, null, null, false);
     markContactCard(contactId);
 }
+
 
 
 async function sendUpdatedContactToFirebase(contactId, updatedContact) {
@@ -149,22 +223,22 @@ function getInitials(name) {
 }
 
 
-function getContactsTemplate(data) {
-    if (!data) return "<p>Keine Kontakte gefunden</p>";
+function prepareContactsData(data) {
     const sortedContacts = [];
-    for (const contactId in data) {
+    for (const contactId in data || {}) {
         const contact = data[contactId];
-        if (contact && contact.name && contact.email) {
-            sortedContacts.push({
-                id: contactId,
-                ...contact
-            });
+        if (contact?.name && contact?.email) {
+            sortedContacts.push({ id: contactId, ...contact });
         }
     }
-    sortedContacts.sort((a, b) => a.name.localeCompare(b.name, 'de'));
-    let template = '';
+    return sortedContacts.sort((a, b) => a.name.localeCompare(b.name, 'de'));
+}
+
+
+function getContactsTemplate(data) {
+    const sortedContacts = prepareContactsData(data);
+    let template = sortedContacts.length ? '' : "<p>Keine Kontakte gefunden</p>";
     let currentLetter = '';
-    
     sortedContacts.forEach(contact => {
         const firstLetter = contact.name.charAt(0).toUpperCase();
         if (firstLetter !== currentLetter) {
@@ -173,7 +247,7 @@ function getContactsTemplate(data) {
         }
         template += createContactCard(contact);
     });
-    return template || "<p>Keine gültigen Kontakte gefunden</p>";
+    return template;
 }
 
 
