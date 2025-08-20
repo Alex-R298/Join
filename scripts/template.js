@@ -239,7 +239,7 @@ function getAddPageTemplate(){
       <div class="input-with-label">
         <label for="name">Title<span style="color: #FF8190;">*</span></label>
         <input class="input" type="text" id="title" name="title" required placeholder="Enter a title">
-        <span class="input-invalid">This field is required</span>
+        <span class="input-invalid d-none">This field is required</span>
       </div>
       <div class="input-with-label description-input pb-16">
         <label for="name">Description</label>
@@ -248,7 +248,7 @@ function getAddPageTemplate(){
       <div class="input-with-label">
         <label for="name">Due date<span style="color: #FF8190;">*</span></label>
         <input class="input" type="date" id="datepicker" name="datepicker" required placeholder="dd/mm/yyyy">
-        <span class="input-invalid">This field is required</span>
+        <span id="date-error-message" class="input-invalid d-none">This field is required</span>
       </div>
     </div>
   </div>
@@ -292,7 +292,7 @@ function getAddPageTemplate(){
           <option value="design">Design</option>
           <option value="marketing">Marketing</option>
         </select>
-        <span class="input-invalid">This field is required</span>
+        <span class="input-invalid d-none">This field is required</span>
       </div>
       <div class="input-with-label">
         <label for="subtask_input">Subtasks</label>
