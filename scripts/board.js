@@ -38,28 +38,27 @@ function removeHighlight(id) {
     document.getElementById(id).classList.remove('drag-area-highlight');
 }
 
+async function loadUsers() {
+    const res = await fetch(BASE_URL + "/user.json");
+    const data = await res.json();
+
+    return Object.values(data).filter((user) => user.name);
+}
 
 async function showAddTaskOverlay() {
     const overlay = document.getElementById("add-task-overlay");
     const container = document.getElementById("add-task-container");
     
+    const usersArray = await loadUsers();
+
     overlay.classList.remove("d-none");
     document.body.style.overflow = "hidden";
 
+    container.innerHTML = getAddPageTemplate(usersArray);
+    
     container.addEventListener("click", (e) => e.stopPropagation());
     overlay.addEventListener("click", closeAddTaskOverlay);
-
-    const usersArray = await loadUsers();
-    container.innerHTML = getAddPageTemplate(usersArray);
-
 }
- async function loadUsers() {
-    const res = await fetch(BASE_URL + "/user.json");
-    const data = await res.json();
-
-    return Object.values(data).filter(user => user.name);
-}
-
 
 function closeAddTaskOverlay() {
     const overlay = document.getElementById("add-task-overlay");
