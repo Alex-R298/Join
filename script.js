@@ -47,6 +47,23 @@ async function loadAddPage() {
     const res = await fetch(BASE_URL + "/user.json");
     const data = await res.json();
     const usersArray = Object.values(data).filter(item => item.name);
+
+
+      let addPageContainer = document.getElementById('add_task_template');
+      let addBoardOverlay = document.getElementById('add-task-overlay');
+
+
+      if (addPageContainer) {
+        addPageContainer.innerHTML = getAddPageTemplate(usersArray)
+      } else if (addBoardOverlay) {
+        addBoardOverlay.innerHTML = getAddPageTemplate(usersArray);
+      }
+
+      
+
+
+
+        console.log("info", data);
         
-    return usersArray;
+   return usersArray;
   }

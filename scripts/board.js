@@ -42,7 +42,7 @@ function removeHighlight(id) {
 async function showAddTaskOverlay() {
     const overlay = document.getElementById("add-task-overlay");
     const container = document.getElementById("add-task-container");
-
+    
     overlay.classList.remove("d-none");
     document.body.style.overflow = "hidden";
 
