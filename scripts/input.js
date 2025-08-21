@@ -4,6 +4,14 @@ function validateName(nameInput) {
         showValidationError(nameInput.id + '-error', 'Bitte Vor- und Nachname eingeben');
         return false;
     } else {
+        const nameParts = nameInput.value.trim().split(' ');
+        const formattedName = nameParts.map(part => {
+            if (part.length > 0) {
+                return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
+            }
+            return part;
+        }).join(' ');
+        nameInput.value = formattedName;
         nameInput.style.borderColor = '';
         hideValidationError(nameInput.id + '-error');
         return true;

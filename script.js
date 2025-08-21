@@ -10,6 +10,14 @@ function user_button_show_links() {
   document.getElementById("myPopup").classList.toggle("show");
 }
 
+
+function getInitials(name) {
+    return name.split(' ')
+        .map(part => part.charAt(0))
+        .join('')
+        .toUpperCase();
+}
+
 function datetimer() {
   let date = document.getElementById("lblGreetings");
   if (date) {
@@ -21,11 +29,19 @@ function datetimer() {
     if (hrs < 12) greet = "Good Morning";
     else if (hrs >= 12 && hrs <= 17) greet = "Good Afternoon";
     else if (hrs >= 17 && hrs <= 24) greet = "Good Evening";
-    date.innerHTML = `
-      <h2>${greet}</h2>
-      <p class="greet_name">and welcome Alex & Marina & Alex 🙂</p>
-    `;
+    const userName = sessionStorage.getItem('userName');
+    if (userName) {
+      date.innerHTML = `
+        <h2>${greet},</h2>
+        <p class="greet_name">${userName}</p>
+      `;
+      } else {
+      date.innerHTML = `
+        <h2>${greet}!</h2>
+      `;
   }
+}
+
 }
 
 function loadHeader() {

@@ -84,6 +84,13 @@ function prepareSuccessElements(signedUp, overlaySignup) {
     signedUp.classList.add('visible');
 }
 
+
 function redirectToLogin() {
-    window.location.href = "log_in.html";
+    window.location.replace("log_in.html");
 }
+
+window.onload = function() {
+    if (sessionStorage.getItem('currentUser')) {
+        window.location.replace("index.html");
+    }
+};

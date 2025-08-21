@@ -1,12 +1,14 @@
 
 function getHeaderTemplate() {
+    const userName = sessionStorage.getItem('userName') || 'Guest User';
+    const initials = getInitials(userName);
     return `
         <header>
             <p>Kanban Project Management Tool</p>
             <div class="header-icons">
                 <div class="help-icon">?</div>
                 <div class="name-icon" onclick="user_button_show_links()">
-                    <p>SW</p>
+                    <p>${initials}</p>
                 </div>
                 <div class="popup">
                     <span class="popuptext" id="myPopup">

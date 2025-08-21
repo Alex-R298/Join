@@ -55,12 +55,59 @@ function checkPrivacyPolicy() {
 }
 
 
-function login() {
+async function login(event) {
+    if (event) event.preventDefault();
     const emailInput = document.getElementById('login-email');
     const passwordInput = document.getElementById('login-password');
     
-    let isValid = validateEmail(emailInput) && 
-                  validatePassword(passwordInput);
+    if (!validateLoginInputs(emailInput, passwordInput)) {
+        return;
+    }
+    const userExists = await checkUserCredentials(emailInput.value, passwordInput.value);
     
-    if (!isValid) return;
+    if (userExists) {
+        redirectToSummary();
+    }
 }
+
+
+function validateLoginInputs(emailInput, passwordInput) {
+    let isValid = true;
+    isValid = validateEmail(emailInput) && isValid;
+    isValid = validatePassword(passwordInput) && isValid;
+    return isValid;
+}
+
+
+async function checkUserCredentials(email, password) {
+    try {
+        const response = await fetch(BASE_URL + "/user.json");
+        const users = await response.json();
+        for (const userId in users) {
+            const user = users[userId];
+            if (user.email === email && user.password === password) {
+                sessionStorage.setItem('currentUser', userId);
+                sessionStorage.setItem('userName', user.name);
+                return true;
+            }
+        }
+        return false;
+    } catch (error) {
+        console.error("Fehler beim Überprüfen der Anmeldedaten:", error);
+        return false;
+    }
+}
+
+
+
+
+function redirectToSummary() {
+    window.location.replace("index.html");
+}
+
+
+window.onload = function() {
+    if (sessionStorage.getItem('currentUser')) {
+        window.location.replace("index.html");
+    }
+};
