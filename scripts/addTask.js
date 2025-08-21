@@ -149,3 +149,20 @@ function checkDate() {
   }
 }
 
+// Subtask
+
+
+function createListItem(value) {
+  return `<li>${value}</li>`; 
+}
+
+function addSubtask(){
+  let input = document.getElementById("subtask_input");
+  let list = document.getElementById("myList");
+  let value = input.value.trim();
+
+  if (value) {
+    list.innerHTML += createListItem(value)
+    input.value = "";
+  }
+}
