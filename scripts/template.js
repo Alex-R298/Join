@@ -226,6 +226,14 @@ function createdContactTemplate() {
     `;
 }
 
+function signedUpTemplate() {
+    return `
+        <div class="signed-up-popup">
+            <p>Your Signed Up successfully</p>
+        </div>
+    `;
+}
+
 function getAddPageTemplate(usersArray = []) {
     return `
     <div class="add-task-header">

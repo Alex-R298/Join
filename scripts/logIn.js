@@ -53,3 +53,14 @@ function checkPrivacyPolicy() {
 
   }
 }
+
+
+function login() {
+    const emailInput = document.getElementById('login-email');
+    const passwordInput = document.getElementById('login-password');
+    
+    let isValid = validateEmail(emailInput) && 
+                  validatePassword(passwordInput);
+    
+    if (!isValid) return;
+}

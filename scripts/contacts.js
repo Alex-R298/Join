@@ -41,6 +41,8 @@ function createdContact() {
 }
 
 
+
+
 function validateContactInputs(nameInput, emailInput, phoneInput) {
     let isValid = true;
     isValid = validateName(nameInput) && isValid;
@@ -49,75 +51,6 @@ function validateContactInputs(nameInput, emailInput, phoneInput) {
     return isValid;
 }
 
-
-function validateName(nameInput) {
-    if (!nameInput.value.trim() || !nameInput.value.includes(' ')) {
-        nameInput.style.borderColor = 'red';
-        showValidationError('contact-name-error', 'Bitte Vor- und Nachname eingeben');
-        return false;
-    } else {
-        nameInput.style.borderColor = '';
-        hideValidationError('contact-name-error');
-        return true;
-    }
-}
-
-
-function validateEmail(emailInput) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailInput.value.trim() || !emailRegex.test(emailInput.value)) {
-        emailInput.style.borderColor = 'red';
-        showValidationError('contact-email-error', 'Bitte eine gültige E-Mail-Adresse eingeben');
-        return false;
-    } else {
-        emailInput.style.borderColor = '';
-        hideValidationError('contact-email-error');
-        return true;
-    }
-}
-
-
-function validatePhone(phoneInput) {
-    if (!phoneInput.value.trim()) {
-        hideValidationError('contact-phone-error');
-        return true;
-    }
-    const phoneRegex = /^\d{11}$/;
-    if (!phoneRegex.test(phoneInput.value.replace(/\s/g, ''))) {
-        phoneInput.style.borderColor = 'red';
-        showValidationError('contact-phone-error', 'Bitte eine gültige Telefonnummer mit 11 Ziffern eingeben');
-        return false;
-    } else {
-        phoneInput.style.borderColor = '';
-        hideValidationError('contact-phone-error');
-        return true;
-    }
-}
-
-
-function showValidationError(errorId, message) {
-    let errorElement = document.getElementById(errorId);
-    if (!errorElement) {
-        errorElement = document.createElement('div');
-        errorElement.id = errorId;
-        errorElement.className = 'validation-error';
-        errorElement.style.color = 'red';
-        errorElement.style.fontSize = '12px';
-        const inputId = errorId.replace('-error', '');
-        const inputElement = document.getElementById(inputId);
-        inputElement.parentNode.appendChild(errorElement);
-    }
-    errorElement.textContent = message;
-    errorElement.style.display = 'block';
-}
-
-
-function hideValidationError(errorId) {
-    const errorElement = document.getElementById(errorId);
-    if (errorElement) {
-        errorElement.style.display = 'none';
-    }
-}
 
 
 async function saveContactToFirebase(contact) {

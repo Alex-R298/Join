@@ -121,3 +121,85 @@
     display: block;
 }
 
+
+#overlay-signup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+#overlay-signup.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+#signed-up {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+#signed-up.visible {
+    visibility: visible;
+}
+
+@keyframes slideInFromBottom {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    15% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    85% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+}
+
+
+
+
+.signed-up-popup {
+    background-color: var(--primary);
+    color: white;
+    width: 326px;
+    height: 74px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    animation: slideInFromBottom 2s ease forwards; 
+}
+
+
+
+.signed-up-popup p {
+    color: white;
+    font-size: 20px;
+}
