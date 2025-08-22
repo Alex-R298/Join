@@ -117,6 +117,10 @@ button {
     align-items: center;
 }
 
+select {
+    background-color: var(--white);
+}
+
 input {
     cursor: pointer;
 }

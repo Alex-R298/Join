@@ -4,6 +4,7 @@ async function init() {
   loadSidebar();
   fetchBase();
   loadAddPage();
+  renderTasks();
 }
 
 function user_button_show_links() {

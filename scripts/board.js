@@ -1,6 +1,7 @@
 
 // To do / In progress / Await feedback / Done
 
+
 let currentDraggedElement;
 
 function updateHTML() {
@@ -44,6 +45,38 @@ async function loadUsers() {
 
     return Object.values(data).filter((user) => user.name);
 }
+
+async function loadTasks() {
+  const res = await fetch(BASE_URL + "/task.json");
+  const data = await res.json();
+
+   console.log("Tasks geladen:", data); // prüfen, was zurückkommt
+
+   if (!data) return [];
+
+  // Alle Tasks in ein Array umwandeln
+  const tasks = Object.entries(data).map(([id, task]) => ({ id, ...task }));
+  return tasks;
+}
+
+function getBadgeData(task) {
+    const category = task.category || "unknown"; 
+  return {
+    text: category
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" "),
+    className: category.toLowerCase().replace(/\s+/g, "-"),
+  };
+}
+
+async function renderTasks() {
+  const taskBoard = document.getElementById("toDo");
+
+  const tasks = await loadTasks(); // Tasks von Firebase laden
+  taskBoard.innerHTML = tasks.map(taskOnBoardTemplate).join("");
+}
+
 
 async function showAddTaskOverlay() {
     const overlay = document.getElementById("add-task-overlay");

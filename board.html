@@ -14,12 +14,10 @@
     <link rel="stylesheet" href="./style/add_task.css">
  
     <script src="./scripts/config.js"></script>
+    <script src="./script.js"></script>
     <script src="./scripts/board.js"></script>
-       <script src="./script.js"></script>
-     <script src="./scripts/addTask.js"></script>
+    <script src="./scripts/addTask.js"></script>
     <script src="./scripts/template.js"></script>
- 
-   
    
     <title>Board</title>
 </head>
@@ -36,9 +34,9 @@
                 <button class="search-btn"><img src="./assets/icons/search.svg"></button>
             </div>
             <button class="button-add-task" onclick="showAddTaskOverlay()">Add task <img src="./assets/icons/add_white.svg"></button></div></div>
-        <div class="main_content_row gap-26">
+        <div class="main_content_row gap-26" id="task-board" onload="renderTasks()">
 
-            <div class="area-todo">
+            <div class="area-todo" id="open_tasks">
                 <div class="column-header"><p class="board-title">To do</p><button class="add" onclick="showAddTaskOverlay()"><svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 1.5V9.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                     <path d="M9 5.57544L1 5.57544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />

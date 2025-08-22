@@ -40,7 +40,7 @@ async function addTask() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newTask),
     });
-
+    
     if (!response.ok) {
       throw new Error("HTTP error " + response.status);
     }
@@ -56,6 +56,12 @@ async function addTask() {
   } finally {
     clearInputs();
   }
+}
+
+async function loadTasksDebug(){
+  const res = await fetch(BASE_URL + "/task.json");
+  const data = await res.json();
+  // console.log(data);
 }
 
 // function noch kürzen

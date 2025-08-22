@@ -285,24 +285,13 @@ function getAddPageTemplate(usersArray = []) {
           </button>
         </div>
       </div>
-
-
-
-
-
-
-
-      
+  
       <div class="input-with-label pb-8">
         <label for="assigned_task">Assigned to</label>
         <select class="minimal" id="assigned_task" placeholder="Select contacts to assign">
             ${usersArray.map(u => `<option value="${u.email}">${u.name}</option>`).join('')}
             </select>
       </div>
-
-
-
-
 
       <div class="input-with-label">
         <label for="category_task">Category<span style="color: #FF8190;">*</span></label>
@@ -314,9 +303,6 @@ function getAddPageTemplate(usersArray = []) {
         <span class="input-invalid d-none">This field is required</span>
       </div>
 
-
-
-
       <div class="input-with-label">
         <label for="subtask_input">Subtasks</label>
         <div class="input-with-button">
@@ -325,19 +311,9 @@ function getAddPageTemplate(usersArray = []) {
           <ul id="myList"></ul>
         </div>
       </div>
-
-
-
-
     </div>
   </div>
 </div>
-
-
-
-
-
-<!--Buttons-->
 
 <div class="create-btns">
   <p class="short-info"><span style="color: #FF8190;">*</span>This field is required</p>
@@ -346,5 +322,27 @@ function getAddPageTemplate(usersArray = []) {
     <button class="button-primary" onclick="addTask()">Create Task</button>
   </div>
 </div>
+    `;
+}
+
+function taskOnBoardTemplate(task) {
+    const badge = getBadgeData(task);
+
+    return `
+        <div class="task-container" draggable="true" ondragstart="startDragging('${task.id}')">
+        <div class="badge ${badge.className}">${badge.text}</div>
+        <div class="task-infos">
+            <p class="task-title">${task.title}</p>
+            <p class="task-description">${task.description}</p>
+        </div>
+        <div class="task-progress">
+            <div class="progress-bar" style="width: 0%"></div>
+            <p class="subtasks">0/2 Subtasks</p>
+        </div>
+        <div class="task-footer">
+            <div class="task-editors"></div>
+            <div class="task-priority-icon"></div>
+        </div>
+    </div>
     `;
 }
