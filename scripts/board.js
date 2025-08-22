@@ -3,6 +3,7 @@
 
 
 let currentDraggedElement;
+let allTasks = [];
 
 function updateHTML() {
   const categories = ["toDo", "inProgress", "awaitFeedback", "done"];
@@ -77,10 +78,12 @@ function getBadgeData(task) {
 async function renderTasks() {
   const taskBoard = document.getElementById("toDo");
   const tasks = await loadTasks();
+  allTasks = tasks;
 
   taskBoard.innerHTML = tasks.map(taskOnBoardTemplate).join("");
+
     tasks.forEach((task) => {
-      renderAssignedAvatarData(task.assignedTo, task.id);
+      renderAssignedUserData(task.assignedTo, task.id);
     });
 }
 
@@ -97,21 +100,33 @@ async function loadContacts() {
   }, {});
 }
 
-function renderAssignedAvatar(email) {
-  if (!email) return ""; // if no mail, then there's no avatar
+function getName(userName) {
+  if (!userName) return "";
 
-  const contact = contactsMap[email]; // get contact via email
-  const name = contact ? contact.name : email.split("@")[0];
+  const cleaned = userName.replace(/[._]/g, " ");
 
-  const initials = getInitials(name);
-  const color = getAvatarColor(name);
-
-  return { initials, color };
+  return cleaned
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
 
-function renderAssignedAvatarData(email, taskId) {
+function renderAssignedUser(email) {
+    if (!email) return ""; // if no mail, then there's no avatar
+
+    const contact = contactsMap[email]; // get contact via email
+    const userName = contact ? contact.name : email.split("@")[0];
+
+    const name = getName(userName);
+    const initials = getInitials(name);
+    const color = getAvatarColor(name);
+
+    return { initials, color, name };
+}
+
+function renderAssignedUserData(email, taskId) {
   if (!email) return ""; // if there's no assignedTo
-  const { initials, color } = renderAssignedAvatar(email);
+  const { initials, color } = renderAssignedUser(email);
   const container = document.getElementById(`editor-${taskId}`);
 
   if (container) {
@@ -119,9 +134,20 @@ function renderAssignedAvatarData(email, taskId) {
   }
 }
 
-function getPriorityIcon(priority) {
-  if (!priority) return "";
-  return `./assets/icons/prio_${priority}_${priority === "urgent" ? "red" : priority === "medium" ? "orange" : "green"}.svg`;
+function getPriorityData(priority) {
+  if (!priority) return { text: "", icon: "" };
+
+  const colors = {
+    urgent: "red",
+    medium: "orange",
+    low: "green",
+  };
+
+  const text = priority.charAt(0).toUpperCase() + priority.slice(1);
+
+  const icon = `./assets/icons/prio_${priority}_${colors[priority]}.svg`;
+
+  return { text, icon };
 }
 
 async function showAddTaskOverlay() {
@@ -140,8 +166,37 @@ async function showAddTaskOverlay() {
     overlay.addEventListener("click", closeAddTaskOverlay);
 }
 
+function openTaskOverlay(taskId) {
+    const overlay = document.getElementById("detailed-task-overlay");
+    const container = document.getElementById("task-detail-container");
+    const task = allTasks.find((t) => t.id === taskId); // tasks ist dein Array aus Firebase
+
+    if (!task) return;
+
+    overlay.classList.remove("d-none");
+    container.innerHTML = taskDetailOverlayTemplate(task);
+
+    container.addEventListener("click", (e) => e.stopPropagation());
+    overlay.addEventListener("click", closeTaskOverlay);
+}
+
+function closeTaskOverlay() {
+    document.getElementById("detailed-task-overlay").classList.add("d-none");
+}
+
 function closeAddTaskOverlay() {
     const overlay = document.getElementById("add-task-overlay");
     overlay.classList.add("d-none");
     document.body.style.overflow = "auto";
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return "";
+
+  const date = new Date(dateStr);
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); 
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
 }

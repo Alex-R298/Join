@@ -326,10 +326,10 @@ function getAddPageTemplate(usersArray = []) {
 
 function taskOnBoardTemplate(task) {
     const badge = getBadgeData(task);
-    const priorityIcon = getPriorityIcon(task.priority);
+    const { icon: priorityIcon } = getPriorityData(task.priority);
 
     return `
-        <div class="task-container" draggable="true" ondragstart="startDragging('${task.id}')">
+        <div class="task-container" draggable="true" ondragstart="startDragging('${task.id}')" onclick="openTaskOverlay('${task.id}')">
         <div class="badge ${badge.className}">${badge.text}</div>
         <div class="task-infos">
             <p class="task-title">${task.title}</p>
@@ -342,6 +342,49 @@ function taskOnBoardTemplate(task) {
         <div class="task-footer">
             <div id="editor-${task.id}" class="task-editors"></div>
             <div class="task-priority-icon"><img src="${priorityIcon}" alt="Priority"></div>
+        </div>
+    </div>
+    `;
+}
+
+function taskDetailOverlayTemplate(task) {
+    const badge = getBadgeData(task);
+    const { text: priorityText, icon: priorityIcon } = getPriorityData(task.priority);
+    const dueDate = formatDate(task.dueDate);
+    const assignedUser = renderAssignedUser(task.assignedTo);
+
+  return `
+        <div class="add-task-header">
+            <div class="badge ${badge.className}">${badge.text}</div>
+            <button id="btn-overlay-close" class="btn-overlay-close" onclick="closeTaskOverlay()"><img src="./assets/icons/close.svg"></button>
+        </div>
+        <h1>${task.title}</h1>
+        <p>${task.description}</p>
+        <div class="task-required-infos">
+            <div class="detail-row">
+                <span class="label">Due Date:</span>
+                <span class="value">${formatDate(task.dueDate)}</span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Priority:</span>
+                <span class="value">${priorityText}
+            <img src="${priorityIcon}" alt="${priorityText}" class="prio-icon" /></span>
+            </div>
+        </div>
+            <div class="assigned-to-container">
+                <span class="label">Assigned To:</span>
+                <div class="assigned-user">
+                        <div class="contact-avatar" style="background-color:${
+                          assignedUser.color
+                        }">${assignedUser.initials}</div>
+                        <span class="assigned-name">${assignedUser.name}</span>
+                </div>
+            </div>
+            <div class="subtasks-container">
+                <span class="label">Subtasks</span>
+                <div class="subtasks">
+                </div>
+            </div>
         </div>
     </div>
     `;

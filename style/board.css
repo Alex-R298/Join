@@ -237,6 +237,7 @@
     flex-direction: column;
     gap: 24px;
     box-shadow: 0px 0px 10px 3px #00000014;
+    cursor: pointer;
 }
 
 .task-title {
@@ -278,4 +279,43 @@
 
 .task-priority-icon {
     width: 32px;
+}
+
+.show-task-content {
+    background-color: var(--white);
+    width: 525px;
+    height: auto;
+    border-radius: 30px;
+    box-shadow: 0px 0px 4px 0px #0000001A;
+    padding: 48px 40px;
+    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    color: #000;
+}
+
+.task-required-infos {
+    display: grid;
+    grid-template-columns: 120px auto;
+    gap: 24px 16px;
+}
+
+.detail-row {
+    display: contents;
+}
+
+.label {
+    color: #2A3647;
+}
+
+.assigned-user {
+    display: flex;
+    align-items: center;
+    padding: 7px 16px;
+}
+
+.assigned-to-container {
+    display: flex;
+    flex-direction: column;
 }
