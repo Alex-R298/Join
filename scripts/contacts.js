@@ -88,9 +88,8 @@ async function updateContact(contactId) {
     const nameInput = document.getElementById('contact-name');
     const emailInput = document.getElementById('contact-email');
     const phoneInput = document.getElementById('contact-phone');
-    if (!nameInput || !nameInput.value.trim() || !emailInput || !emailInput.value.trim()) {
-        alert('Please fill in at least name and email!');
-        return;
+    if (!validateContactInputs(nameInput, emailInput, phoneInput)) {
+        return; 
     }
     const updatedContact = {
         name: nameInput.value.trim(),
