@@ -1,5 +1,24 @@
 let selectedPriority = "medium";
 
+const priorityConfig = {
+  urgent: {
+    defaultIcon: "./assets/icons/prio_urgent_red.svg",
+    activeIcon: "./assets/icons/prio_urgent_white.svg",
+    bg: "#FF3D00"
+  },
+  medium: {
+    defaultIcon: "./assets/icons/prio_medium_orange.svg",
+    activeIcon: "./assets/icons/prio_medium_white.svg",
+    bg: "#FFA800"
+  },
+  low: {
+    defaultIcon: "./assets/icons/prio_low_green.svg",
+    activeIcon: "./assets/icons/prio_low_white.svg",
+    bg: "#7AE229"
+  }
+};
+
+
 async function fetchBase() {
   try {
     const res = await fetch(BASE_URL + ".json");
@@ -65,45 +84,34 @@ async function loadTasksDebug(){
 }
 
 // function noch kürzen
+
+function activMediumBtn(){
+  document.addEventListener("DOMContentLoaded", () => {
+  selectPriority(document.querySelector('[data-priority="medium"]'));
+});
+
+}
+
 function selectPriority(button) {
   const buttons = document.querySelectorAll(".priority-btn");
 
   buttons.forEach((btn) => {
+    const confi = priorityConfig[btn.dataset.priority];
     btn.classList.remove("active");
     btn.style.backgroundColor = "";
     btn.style.color = "";
-    const img = btn.querySelector("img");
-    if (btn.dataset.priority === "urgent") {
-      img.src = "./assets/icons/prio_urgent_red.svg";
-    } else if (btn.dataset.priority === "medium") {
-      img.src = "./assets/icons/prio_medium_orange.svg";
-    } else if (btn.dataset.priority === "low") {
-      img.src = "./assets/icons/prio_low_green.svg";
-    }
+    btn.querySelector("img").src = confi.defaultIcon;
   });
 
+  const confi = priorityConfig[button.dataset.priority];
   button.classList.add("active");
-  const img = button.querySelector("img");
-  switch (button.dataset.priority) {
-    case "urgent":
-      button.style.backgroundColor = "#FF3D00";
-      button.style.color = "white";
-      img.src = "./assets/icons/prio_urgent_white.svg"; 
-      break;
-    case "medium":
-      button.style.backgroundColor = "#FFA800";
-      button.style.color = "white";
-      img.src = "./assets/icons/prio_medium_white.svg"; 
-      break;
-    case "low":
-      button.style.backgroundColor = "#7AE229";
-      button.style.color = "white";
-      img.src = "./assets/icons/prio_low_white.svg";
-      break;
-  }
+  button.style.backgroundColor = confi.bg;
+  button.style.color = "white";
+  button.querySelector("img").src = confi.activeIcon;
 
   selectedPriority = button.dataset.priority;
 }
+
 
 async function clearInputs() {
   document.getElementById("title").value = "";

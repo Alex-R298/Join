@@ -5,6 +5,7 @@ async function init() {
   fetchBase();
   loadAddPage();
   renderTasks();
+  activMediumBtn();
 }
 
 function user_button_show_links() {

@@ -207,3 +207,23 @@ input[type="date"]::placeholder {
   text-align: center;
 
 }
+.priority-btn {
+  background-color: transparent;
+  color: black;
+}
+
+.priority-btn.active {
+  color: white;
+}
+
+.priority-btn[data-priority="urgent"].active {
+  background-color: #FF3D00;
+}
+
+.priority-btn[data-priority="medium"].active {
+  background-color: #FFA800;
+}
+
+.priority-btn[data-priority="low"].active {
+  background-color: #7AE229;
+}

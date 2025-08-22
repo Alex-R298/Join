@@ -271,14 +271,15 @@ function getAddPageTemplate(usersArray = []) {
       <div class="input-with-label">
         <label for="priority">Priority</label>
         <div class="priority-inputs-container">
-          <button class="priority-btn" data-priority="urgent" onclick="selectPriority(this)">
+            <button class="priority-btn" data-priority="urgent" onclick="selectPriority(this)">
             Urgent
             <img src="./assets/icons/prio_urgent_red.svg" alt="">
-          </button>
-          <button class="priority-btn active priority-medium" data-priority="medium" onclick="selectPriority(this)">
-            Medium
-            <img src="./assets/icons/prio_medium_white.svg" alt="">
-          </button>
+            </button>
+            <button class="priority-btn active" data-priority="medium">
+                Medium
+                <img src="./assets/icons/prio_medium_white.svg" alt="">
+            </button>
+
           <button class="priority-btn" data-priority="low" onclick="selectPriority(this)">
             Low
             <img src="./assets/icons/prio_low_green.svg" alt="">
