@@ -303,9 +303,6 @@ function getAddPageTemplate(usersArray = []) {
         <span class="input-invalid d-none">This field is required</span>
       </div>
 
-
-
-
       <div class="input-with-label">
         <label for="subtask_input">Subtasks</label>
         <div class="input-with-button">
@@ -314,9 +311,6 @@ function getAddPageTemplate(usersArray = []) {
           <ul id="myList"></ul>
         </div>
       </div>
-
-
-
 
     </div>
   </div>
@@ -332,10 +326,10 @@ function getAddPageTemplate(usersArray = []) {
 }
 
 function taskOnBoardTemplate(task) {
-    const badge = getBadgeData(task);
-    const { icon: priorityIcon } = getPriorityData(task.priority);
+  const badge = getBadgeData(task);
+  const { icon: priorityIcon } = getPriorityData(task.priority);
 
-    return `
+  return `
         <div class="task-container" draggable="true" ondragstart="startDragging('${task.id}')" onclick="openTaskOverlay('${task.id}')">
         <div class="badge ${badge.className}">${badge.text}</div>
         <div class="task-infos">
@@ -355,10 +349,12 @@ function taskOnBoardTemplate(task) {
 }
 
 function taskDetailOverlayTemplate(task) {
-    const badge = getBadgeData(task);
-    const { text: priorityText, icon: priorityIcon } = getPriorityData(task.priority);
-    const dueDate = formatDate(task.dueDate);
-    const assignedUser = renderAssignedUser(task.assignedTo);
+  const badge = getBadgeData(task);
+  const { text: priorityText, icon: priorityIcon } = getPriorityData(
+    task.priority
+  );
+  const dueDate = formatDate(task.dueDate);
+  const assignedUser = renderAssignedUser(task.assignedTo);
 
   return `
         <div class="add-task-header">
