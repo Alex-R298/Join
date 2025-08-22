@@ -10,7 +10,7 @@ function getHeaderTemplate() {
                 <div class="name-icon" onclick="user_button_show_links()">
                     <p>${initials}</p>
                 </div>
-                <div class="popup">
+                <div class="popup-header">
                     <span class="popuptext" id="myPopup">
                         <a href="help.html">Help</a>
                         <a href="legal_notice.html">Legal Notice</a>

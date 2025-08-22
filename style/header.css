@@ -47,7 +47,7 @@ header {
   color: #29ABE2;
 }
 
-.popup {
+.popup-header {
   position: relative;
   display: inline-block;
   cursor: pointer;
