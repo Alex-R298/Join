@@ -217,13 +217,14 @@
     font-size: 16px;
 }
 
-.badge.userstory {
+.badge.user-story {
     background-color: #0038FF;
     width: 113px;
 }
 
-.badge.techincal-task {
+.badge.technical-task {
     background-color: #1FD7C1;
+    width: 144px;
 }
 
 .task-container {
@@ -253,4 +254,28 @@
 .subtasks {
     color: #000;
     font-size: 12px;
+}
+
+.task-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.editor-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-right: 15px;
+    flex-shrink: 0;
+    font-size: 12px;
+    border: 1px solid #fff;
+    outline: none;
+}
+
+.task-priority-icon {
+    width: 32px;
 }

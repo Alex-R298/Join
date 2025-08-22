@@ -296,9 +296,8 @@ function getAddPageTemplate(usersArray = []) {
       <div class="input-with-label">
         <label for="category_task">Category<span style="color: #FF8190;">*</span></label>
         <select class="minimal" id="category_task" required placeholder="Select task category">
-          <option value="development">Development</option>
-          <option value="design">Design</option>
-          <option value="marketing">Marketing</option>
+          <option value="user-story">User Story</option>
+          <option value="technical-task">Technical Task</option>
         </select>
         <span class="input-invalid d-none">This field is required</span>
       </div>
@@ -327,6 +326,7 @@ function getAddPageTemplate(usersArray = []) {
 
 function taskOnBoardTemplate(task) {
     const badge = getBadgeData(task);
+    const priorityIcon = getPriorityIcon(task.priority);
 
     return `
         <div class="task-container" draggable="true" ondragstart="startDragging('${task.id}')">
@@ -340,8 +340,8 @@ function taskOnBoardTemplate(task) {
             <p class="subtasks">0/2 Subtasks</p>
         </div>
         <div class="task-footer">
-            <div class="task-editors"></div>
-            <div class="task-priority-icon"></div>
+            <div id="editor-${task.id}" class="task-editors"></div>
+            <div class="task-priority-icon"><img src="${priorityIcon}" alt="Priority"></div>
         </div>
     </div>
     `;

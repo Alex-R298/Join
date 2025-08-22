@@ -61,22 +61,68 @@ async function loadTasks() {
 
 function getBadgeData(task) {
     const category = task.category || "unknown"; 
-  return {
-    text: category
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" "),
-    className: category.toLowerCase().replace(/\s+/g, "-"),
-  };
+  // Text für das Badge: Bindestriche → Leerzeichen, jedes Wort groß
+  const text = category
+    .replace(/-/g, " ")                       // Bindestriche zu Leerzeichen
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
+  // CSS-Klasse: alles klein, Leerzeichen durch Bindestriche ersetzen
+  const className = category.toLowerCase().replace(/\s+/g, "-");
+
+  return { text, className };
 }
 
 async function renderTasks() {
   const taskBoard = document.getElementById("toDo");
+  const tasks = await loadTasks();
 
-  const tasks = await loadTasks(); // Tasks von Firebase laden
   taskBoard.innerHTML = tasks.map(taskOnBoardTemplate).join("");
+    tasks.forEach((task) => {
+      renderAssignedAvatarData(task.assignedTo, task.id);
+    });
 }
 
+let contactsMap = {};
+
+async function loadContacts() {
+  const res = await fetch(BASE_URL + "/user.json");
+  const data = await res.json();
+
+  // Map: email -> contact
+  contactsMap = Object.values(data || {}).reduce((acc, contact) => {
+    acc[contact.email] = contact;
+    return acc;
+  }, {});
+}
+
+function renderAssignedAvatar(email) {
+  if (!email) return ""; // if no mail, then there's no avatar
+
+  const contact = contactsMap[email]; // get contact via email
+  const name = contact ? contact.name : email.split("@")[0];
+
+  const initials = getInitials(name);
+  const color = getAvatarColor(name);
+
+  return { initials, color };
+}
+
+function renderAssignedAvatarData(email, taskId) {
+  if (!email) return ""; // if there's no assignedTo
+  const { initials, color } = renderAssignedAvatar(email);
+  const container = document.getElementById(`editor-${taskId}`);
+
+  if (container) {
+    container.innerHTML += `<div class="editor-avatar" style="background-color:${color}">${initials}</div>`;
+  }
+}
+
+function getPriorityIcon(priority) {
+  if (!priority) return "";
+  return `./assets/icons/prio_${priority}_${priority === "urgent" ? "red" : priority === "medium" ? "orange" : "green"}.svg`;
+}
 
 async function showAddTaskOverlay() {
     const overlay = document.getElementById("add-task-overlay");
