@@ -83,8 +83,6 @@ async function loadTasksDebug(){
   // console.log(data);
 }
 
-// function noch kürzen
-
 function activMediumBtn(){
   document.addEventListener("DOMContentLoaded", () => {
   selectPriority(document.querySelector('[data-priority="medium"]'));
