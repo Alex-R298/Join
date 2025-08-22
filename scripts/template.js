@@ -271,14 +271,15 @@ function getAddPageTemplate(usersArray = []) {
       <div class="input-with-label">
         <label for="priority">Priority</label>
         <div class="priority-inputs-container">
-          <button class="priority-btn" data-priority="urgent" onclick="selectPriority(this)">
+            <button class="priority-btn" data-priority="urgent" onclick="selectPriority(this)">
             Urgent
             <img src="./assets/icons/prio_urgent_red.svg" alt="">
-          </button>
-          <button class="priority-btn active priority-medium" data-priority="medium" onclick="selectPriority(this)">
-            Medium
-            <img src="./assets/icons/prio_medium_white.svg" alt="">
-          </button>
+            </button>
+            <button class="priority-btn active" data-priority="medium">
+                Medium
+                <img src="./assets/icons/prio_medium_white.svg" alt="">
+            </button>
+
           <button class="priority-btn" data-priority="low" onclick="selectPriority(this)">
             Low
             <img src="./assets/icons/prio_low_green.svg" alt="">
@@ -302,6 +303,9 @@ function getAddPageTemplate(usersArray = []) {
         <span class="input-invalid d-none">This field is required</span>
       </div>
 
+
+
+
       <div class="input-with-label">
         <label for="subtask_input">Subtasks</label>
         <div class="input-with-button">
@@ -310,10 +314,13 @@ function getAddPageTemplate(usersArray = []) {
           <ul id="myList"></ul>
         </div>
       </div>
+
+
+
+
     </div>
   </div>
 </div>
-
 <div class="create-btns">
   <p class="short-info"><span style="color: #FF8190;">*</span>This field is required</p>
   <div class="add-task-buttons">
