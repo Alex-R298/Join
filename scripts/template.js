@@ -15,7 +15,7 @@ function getHeaderTemplate() {
                         <a href="help.html">Help</a>
                         <a href="legal_notice.html">Legal Notice</a>
                         <a href="privacy_policy.html">Privacy Policy</a>
-                        <a href="log_in.html">Log out</a>
+                        <a href="#" onclick="logOut();">Log out</a>
                     </span>
                 </div>
             </div>

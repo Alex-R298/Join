@@ -79,3 +79,63 @@ async function loadAddPage() {
         
    return usersArray;
   }
+
+
+
+// (function() {
+//     const currentPage = window.location.pathname;
+//     const protectedPages = [
+//         'board.html', 
+//         'contacts.html', 
+//         'index.html',
+//         'legal_notice.html',
+//         'help.html',
+//         'privacy_policy.html',
+//         'add_task.html'
+//     ];
+    
+//     const isProtectedPage = protectedPages.some(page => 
+//         currentPage.endsWith(page) || currentPage.includes(page)
+//     );
+    
+
+//     if (isProtectedPage && !sessionStorage.getItem('currentUser')) {
+//         document.documentElement.style.display = 'none';
+//         window.location.replace("log_in.html");
+//     }
+// })();
+
+
+
+function logOut() {
+    document.documentElement.style.display = 'none';
+    sessionStorage.clear();
+    window.location.replace("log_in.html");
+    window.addEventListener('popstate', function() {
+        window.location.replace("log_in.html");
+    });
+    
+    return false;
+}
+
+
+// document.addEventListener('DOMContentLoaded', function() {
+//     const currentPage = window.location.pathname;
+//     const protectedPages = [
+//         'board.html', 
+//         'contacts.html', 
+//         'index.html',
+//         'legal_notice.html',
+//         'help.html',
+//         'privacy_policy.html',
+//         'add_task.html'
+//     ];
+    
+//     const isProtectedPage = protectedPages.some(page => 
+//         currentPage.endsWith(page) || currentPage.includes(page)
+//     );
+    
+//     if (isProtectedPage && !sessionStorage.getItem('currentUser')) {
+//         window.location.replace("log_in.html");
+//     }
+// });

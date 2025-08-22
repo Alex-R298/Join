@@ -104,16 +104,23 @@ async function updateContact(contactId) {
 }
 
 
-
-async function sendUpdatedContactToFirebase(contactId, updatedContact) {
-    await fetch(`${BASE_URL}/user/${contactId}.json`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedContact)
-    });
-    
-    closeAddContact();
-  await fetchContacts("/user");
+async function sendUpdatedContactToFirebase(contactId, updatedFields) {
+    try {
+        const response = await fetch(`${BASE_URL}/user/${contactId}.json`);
+        const currentContact = await response.json();
+        const updatedContact = {
+            ...currentContact,
+            ...updatedFields
+        };
+        await fetch(`${BASE_URL}/user/${contactId}.json`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedContact)
+        });
+        await fetchContacts("/user");
+    } catch (error) {
+        console.error("Error updating contact:", error);
+    }
 }
 
 
