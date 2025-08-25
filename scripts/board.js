@@ -164,6 +164,10 @@ async function showAddTaskOverlay() {
     
     container.addEventListener("click", (e) => e.stopPropagation());
     overlay.addEventListener("click", closeAddTaskOverlay);
+
+    setTimeout(() => {
+        overlay.classList.add("visible");
+    }, 10);
 }
 
 function openTaskOverlay(taskId) {
@@ -178,16 +182,38 @@ function openTaskOverlay(taskId) {
 
     container.addEventListener("click", (e) => e.stopPropagation());
     overlay.addEventListener("click", closeTaskOverlay);
+
+    setTimeout(() => {
+        overlay.classList.add("visible");
+    }, 10);
 }
 
+
+
+
 function closeTaskOverlay() {
-    document.getElementById("detailed-task-overlay").classList.add("d-none");
+    const overlay = document.getElementById("detailed-task-overlay");
+    const container = document.getElementById("task-detail-container");
+    container.classList.add("closing");
+    overlay.classList.remove("visible");
+    setTimeout(() => {
+        overlay.classList.add("d-none");
+        document.body.style.overflow = "auto";
+        container.classList.remove("closing");
+    }, 500);
 }
+
 
 function closeAddTaskOverlay() {
     const overlay = document.getElementById("add-task-overlay");
-    overlay.classList.add("d-none");
-    document.body.style.overflow = "auto";
+    const container = document.getElementById("add-task-container");
+    container.classList.add("closing");
+    overlay.classList.remove("visible");
+    setTimeout(() => {
+        overlay.classList.add("d-none");
+        document.body.style.overflow = "auto";
+        container.classList.remove("closing");
+    }, 500);
 }
 
 function formatDate(dateStr) {

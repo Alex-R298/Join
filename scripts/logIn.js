@@ -2,6 +2,7 @@ function init() {
     document.addEventListener('DOMContentLoaded', initializeApp);
 }
 
+
 function initializeApp() {
     const elements = {
         startScreen: document.getElementById('start_screen'),
@@ -9,37 +10,47 @@ function initializeApp() {
         animatedLogo: document.getElementById('animated_logo'),
         headerLogo: document.getElementById('header_logo'),
     };
-    
+    elements.originalWidth = 273; 
+    elements.originalHeight = 334; 
+    elements.targetWidth = 101; 
+    elements.targetHeight = 122;
+    elements.headerLogo.style.visibility = 'hidden';
+    elements.animationDuration = 0.8;
     initializeAnimation(elements);
     setTimeout(() => startLogoAnimation(elements), 500);
 }
 
 function initializeAnimation(elements) {
     elements.contentContainer.style.opacity = '0';
-    elements.headerLogo.style.opacity = '0';
     elements.animatedLogo.style.transform = 'translate(-50%, -50%)';
     elements.contentContainer.style.display = 'block';
+    elements.animatedLogo.style.width = elements.originalWidth + 'px';
+    elements.animatedLogo.style.height = elements.originalHeight + 'px';
+    elements.animatedLogo.style.display = 'block';
+    elements.startScreen.style.display = 'flex';
+    elements.animatedLogo.style.transition = `transform ${elements.animationDuration}s ease, width ${elements.animationDuration}s ease, height ${elements.animationDuration}s ease`;
 }
 
 function startLogoAnimation(elements) {
     const headerRect = elements.headerLogo.getBoundingClientRect();
     const targetX = (headerRect.left + headerRect.width/2) / window.innerWidth * 100;
     const targetY = (headerRect.top + headerRect.height/2) / window.innerHeight * 100;
-    
     elements.animatedLogo.style.transform = `translate(-50%, -50%) translate(${targetX - 50}vw, ${targetY - 50}vh)`;
-    elements.animatedLogo.style.width = elements.headerLogo.width + 'px';
+    elements.animatedLogo.style.width = elements.targetWidth + 'px';
+    elements.animatedLogo.style.height = elements.targetHeight + 'px';
     elements.contentContainer.style.opacity = '1';
+    elements.contentContainer.style.transition = 'opacity 0.6s ease';
     elements.startScreen.style.backgroundColor = 'rgba(255, 255, 255, 0)';
-    
-//    setTimeout(() => elements.signUp.style.opacity = '1', 500);
-//     setTimeout(() => elements.logInForm.style.opacity = '1', 1000);
-//     setTimeout(() => elements.logInFooter.style.opacity = '1', 1500);
-    setTimeout(() => completeAnimation(elements), 1500);
+    elements.startScreen.style.transition = 'background-color 1.5s ease';
+    setTimeout(() => {
+        completeAnimation(elements);
+    }, elements.animationDuration * 1000 + 100);
 }
 
 function completeAnimation(elements) {
+    elements.animatedLogo.style.display = 'none';
     elements.startScreen.style.display = 'none';
-    elements.headerLogo.style.opacity = '1';
+    elements.headerLogo.style.visibility = 'visible';
 }
 
 init();

@@ -251,10 +251,12 @@ function showSuccessMessage() {
             setTimeout(() => {
                 addOverlay.style.visibility = "hidden";
                 addOverlay.style.display = "none";
-            }, 200);
+            }, 300);
         }
     }
 }
+
+
 
 
 function closeCreatedContact() {

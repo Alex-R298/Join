@@ -1,12 +1,43 @@
+// async function init() {
+//   datetimer();
+//   loadHeader();
+//   loadSidebar();
+//   fetchBase();
+//   loadAddPage();
+//   renderTasks();
+//   activMediumBtn();
+// }
+
 async function init() {
-  datetimer();
-  loadHeader();
-  loadSidebar();
-  fetchBase();
-  loadAddPage();
-  renderTasks();
-  activMediumBtn();
+  if (typeof datetimer === 'function') {
+    datetimer();
+  }
+  
+  if (typeof loadHeader === 'function') {
+    loadHeader();
+  }
+  
+  if (typeof loadSidebar === 'function') {
+    loadSidebar();
+  }
+  
+  if (typeof fetchBase === 'function') {
+    fetchBase();
+  }
+  
+  if (typeof loadAddPage === 'function') {
+    loadAddPage();
+  }
+  
+  if (typeof renderTasks === 'function') {
+    renderTasks();
+  }
+  
+  if (typeof activMediumBtn === 'function') {
+    activMediumBtn();
+  }
 }
+
 
 function user_button_show_links() {
   document.getElementById("myPopup").classList.toggle("show");
