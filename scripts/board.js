@@ -102,6 +102,9 @@ async function moveTo(category) {
   const taskIndex = allTasks.findIndex(task => task.id === currentDraggedElement);
   if (taskIndex !== -1) {
     allTasks[taskIndex].category = category;
+    if (typeof updateDashboardCounts === 'function') {
+      updateDashboardCounts();
+    }
     updateHTML();
     
     if (isLocalStorageAvailable()) {
@@ -211,6 +214,9 @@ async function renderTasks() {
     const tasks = await loadTasks();
     allTasks = tasks;
     await setSpecialCategories();
+    if (typeof updateDashboardCounts === 'function') {
+      updateDashboardCounts();
+    }
   } catch (error) {
   }
 }
