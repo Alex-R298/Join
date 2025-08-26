@@ -2,11 +2,12 @@
 function getHeaderTemplate() {
     const userName = sessionStorage.getItem('userName') || 'Guest User';
     const initials = getInitials(userName);
+    const isHelpPage = window.location.pathname.endsWith("help.html");
     return `
         <header>
             <p>Kanban Project Management Tool</p>
             <div class="header-icons">
-                <a class="help-icon" href="help.html"></a>
+                <a id="help-link" class="help-icon ${isHelpPage ? 'd-none' : ''}" href="help.html"></a>
                 <div class="name-icon" onclick="user_button_show_links()">
                     <p>${initials}</p>
                 </div>
