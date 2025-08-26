@@ -70,9 +70,9 @@
 
 * {
     box-sizing: border-box;
-    font-family: "inter_24pt-Regular", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 20px;
-    color: var(--primary);
+    color: #000;
     line-height: 120%;
     margin: 0;
     padding: 0;
