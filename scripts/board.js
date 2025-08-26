@@ -61,10 +61,36 @@ function renderTasksInContainer(container, tasks) {
 }
 
 
+// function renderEmptyContainer(container, containerId) {
+//   container.innerHTML = `
+//     <div class="empty-container">
+//       <p class="empty-container-text">No Tasks ${containerId}</p>
+//     </div>`;
+// }
+
 function renderEmptyContainer(container, containerId) {
+  let displayText;
+  
+  switch (containerId) {
+    case 'toDo':
+      displayText = 'No Tasks To Do';
+      break;
+    case 'inProgress':
+      displayText = 'No Tasks Progress';
+      break;
+    case 'awaitFeedback':
+      displayText = 'No Tasks Await Feedback';
+      break;
+    case 'done':
+      displayText = 'No Tasks Done';
+      break;
+    default:
+      displayText = `No Tasks ${containerId}`;
+  }
+  
   container.innerHTML = `
     <div class="empty-container">
-      <p class="empty-container-text">No Tasks ${containerId}</p>
+      <p class="empty-container-text">${displayText}</p>
     </div>`;
 }
 
