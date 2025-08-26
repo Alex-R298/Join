@@ -11,22 +11,27 @@ header {
 .header-icons {
   display: flex;
   align-items: center;
+  justify-content: end;
   gap: 16px;
 }
 
 .help-icon {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
   width: 32px;
   height: 32px;
-  border-radius: 50%;
-  border: 2px solid lightgrey;
   background-color: white;
-  color: lightgrey;
-  font-weight: bold;
-  font-family: sans-serif;
-  cursor: default;
+  background-image: url(../assets/icons/help.svg);
+  background-size: 20px 20px;
+  background-position: 6px 6px;
+  background-repeat: no-repeat;
+  border: unset;
+  display: block;
+  padding: 0;
+}
+
+.help-icon:hover {
+  background-size: 24px 24px;
+  background-position: 4px 4px;
+  background-color: white;
 }
 
 .name-icon {

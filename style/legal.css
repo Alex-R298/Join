@@ -50,3 +50,23 @@
 .join-hl {
     color: #29ABE2;
 }
+
+.help-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.arrow-back {
+    border: unset;
+    background-color: transparent;
+    background-image: url(../assets/icons/arrow-left-line.svg);
+    background-position: 1px;
+    width: 32px;
+    height: 32px;
+}
+
+.arrow-back:hover {
+    background-color: #eee;
+    border-radius: 42px;
+    background-image: url(../assets/icons/arrow-left-line_v2.svg);
+}

@@ -6,7 +6,7 @@ function getHeaderTemplate() {
         <header>
             <p>Kanban Project Management Tool</p>
             <div class="header-icons">
-                <div class="help-icon">?</div>
+                <a class="help-icon" href="help.html"></a>
                 <div class="name-icon" onclick="user_button_show_links()">
                     <p>${initials}</p>
                 </div>
