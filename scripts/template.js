@@ -326,27 +326,31 @@ function getAddPageTemplate(usersArray = []) {
     `;
 }
 
-function taskOnBoardTemplate(task) {
-  const badge = getBadgeData(task);
-  const { icon: priorityIcon } = getPriorityData(task.priority);
 
+function taskOnBoardTemplate(task) {
+  const title = task.title || 'Untitled';
+  const description = task.description || 'No description';
+  const priority = task.priority || 'medium';
+  const badgeCategory = task.originalCategory || task.category;
+  const badge = getBadgeData({ ...task, category: badgeCategory });
+  const { icon: priorityIcon } = getPriorityData(priority);
   return `
-        <div class="task-container" draggable="true" ondragstart="startDragging('${task.id}')" onclick="openTaskOverlay('${task.id}')">
-        <div class="badge ${badge.className}">${badge.text}</div>
-        <div class="task-infos">
-            <p class="task-title">${task.title}</p>
-            <p class="task-description">${task.description}</p>
-        </div>
-        <div class="task-progress">
-            <div class="progress-bar" style="width: 0%"></div>
-            <p class="subtasks">0/2 Subtasks</p>
-        </div>
-        <div class="task-footer">
-            <div id="editor-${task.id}" class="task-editors"></div>
-            <div class="task-priority-icon"><img src="${priorityIcon}" alt="Priority"></div>
-        </div>
+    <div class="task-container" draggable="true" ondragstart="startDragging('${task.id}')" onclick="openTaskOverlay('${task.id}')">
+      <div class="badge ${badge.className}">${badge.text}</div>
+      <div class="task-infos">
+        <p class="task-title">${title}</p>
+        <p class="task-description">${description}</p>
+      </div>
+      <div class="task-progress">
+        <div class="progress-bar" style="width: 0%"></div>
+        <p class="subtasks">0/2 Subtasks</p>
+      </div>
+      <div class="task-footer">
+        <div id="editor-${task.id}" class="task-editors"></div>
+        <div class="task-priority-icon"><img src="${priorityIcon}" alt="Priority"></div>
+      </div>
     </div>
-    `;
+  `;
 }
 
 function taskDetailOverlayTemplate(task) {

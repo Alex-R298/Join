@@ -36,6 +36,12 @@ async function init() {
   if (typeof activMediumBtn === 'function') {
     activMediumBtn();
   }
+
+  // Zuerst Kontakte laden
+    await loadContacts();
+    
+    // Dann Tasks laden und rendern
+    await renderTasks();
 }
 
 

@@ -5,40 +5,126 @@
 let currentDraggedElement;
 let allTasks = [];
 
+async function resetTaskCategories() {
+  try {
+    const res = await fetch(BASE_URL + "/task.json");
+    const data = await res.json();
+    
+    if (!data) return;
+    allTasks = allTasks.map(task => {
+      if (data[task.id]) {
+        return {
+          ...task,
+          category: data[task.id].category
+        };
+      }
+      return task;
+    });
+    
+    console.log("Task-Kategorien zurückgesetzt:", allTasks);
+    updateHTML();
+  } catch (error) {
+    console.error("Fehler beim Zurücksetzen der Kategorien:", error);
+  }
+}
+
 function updateHTML() {
-  const categories = ["toDo", "inProgress", "awaitFeedback", "done"];
-  categories.forEach(cat => {
-    const container = document.getElementById(cat);
+  const containers = ["toDo", "inProgress", "awaitFeedback", "done"];
+  containers.forEach(containerId => {
+    const container = document.getElementById(containerId);
+    if (!container) return;
     container.innerHTML = "";
-    todos.filter(t => t.category === cat)
-         .forEach(todo => container.innerHTML += generateTodoHTML(todo));
+    const tasksForContainer = allTasks.filter(task => task.category === containerId);
+    if (tasksForContainer.length === 0) {
+      renderEmptyContainer(container, containerId);
+    } else {
+      renderTasksInContainer(container, tasksForContainer);
+    }
   });
 }
+
+
+function renderTasksInContainer(container, tasks) {
+  tasks.forEach(task => {
+    container.innerHTML += taskOnBoardTemplate(task);
+  });
+  
+  tasks.forEach(task => {
+    if (task.assignedTo) {
+      const editorContainer = document.getElementById(`editor-${task.id}`);
+      if (editorContainer) {
+        editorContainer.innerHTML = "";
+        renderAssignedUserData(task.assignedTo, task.id);
+      }
+    }
+  });
+}
+
+
+function renderEmptyContainer(container, containerId) {
+  container.innerHTML = `
+    <div class="empty-container">
+      <p class="empty-container-text">No Tasks ${containerId}</p>
+    </div>`;
+}
+
 
 function startDragging(id) {
     currentDraggedElement = id;
 }
 
-function generateTodoHTML(element) {
-    return `<div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">${element['title']}</div>`;
-}
 
 function allowDrop(ev) {
     ev.preventDefault();
 }
 
-function moveTo(category) {
-    todos[currentDraggedElement]['category'] = category;
+
+async function moveTo(category) {
+  const taskIndex = allTasks.findIndex(task => task.id === currentDraggedElement);
+  if (taskIndex !== -1) {
+    allTasks[taskIndex].category = category;
     updateHTML();
+    
+    if (isLocalStorageAvailable()) {
+      saveCategoriesToLocalStorage();
+    } else {
+      try {
+        await saveTaskToFirebase(currentDraggedElement, category);
+      } catch (error) {
+      }
+    }
+  }
 }
+
+
+// Hilfsfunktion zum Aktualisieren eines einzelnen Containers
+function updateContainer(category) {
+  const container = document.getElementById(category);
+  if (!container) {
+    console.error(`Container mit ID ${category} nicht gefunden`);
+    return;
+  }
+  
+  container.innerHTML = "";
+  
+  const tasksInCategory = allTasks.filter(t => t.category === category);
+  console.log(`Tasks in Kategorie ${category} nach Update:`, tasksInCategory.length);
+  
+  tasksInCategory.forEach(todo => {
+    container.innerHTML += taskOnBoardTemplate(todo);
+  });
+}
+
 
 function highlight(id) {
     document.getElementById(id).classList.add('drag-area-highlight');
 }
 
+
 function removeHighlight(id) {
     document.getElementById(id).classList.remove('drag-area-highlight');
 }
+
 
 async function loadUsers() {
     const res = await fetch(BASE_URL + "/user.json");
@@ -47,18 +133,43 @@ async function loadUsers() {
     return Object.values(data).filter((user) => user.name);
 }
 
+
 async function loadTasks() {
-  const res = await fetch(BASE_URL + "/task.json");
-  const data = await res.json();
-
-   console.log("Tasks geladen:", data); // prüfen, was zurückkommt
-
-   if (!data) return [];
-
-  // Alle Tasks in ein Array umwandeln
-  const tasks = Object.entries(data).map(([id, task]) => ({ id, ...task }));
-  return tasks;
+  try {
+    const res = await fetch(BASE_URL + "/task.json");
+    const data = await res.json();
+    if (!data) return [];
+    const tasks = Object.entries(data).map(([id, task]) => {
+      const originalCategory = task.category;
+      const normalizedCategory = normalizeCategory(originalCategory);
+      
+      return {
+        id,
+        ...task,
+        category: normalizedCategory,
+        originalCategory: originalCategory
+      };
+    });
+    
+    return tasks;
+  } catch (error) {
+    return [];
+  }
 }
+
+
+function normalizeCategory(category) {
+  if (category === 'technical-task' || category === 'user-story') {
+    return 'toDo';
+  }
+  
+  if (!['toDo', 'inProgress', 'awaitFeedback', 'done'].includes(category)) {
+    return 'toDo';
+  }
+  
+  return category;
+}
+
 
 function getBadgeData(task) {
     const category = task.category || "unknown"; 
@@ -75,17 +186,16 @@ function getBadgeData(task) {
   return { text, className };
 }
 
+
 async function renderTasks() {
-  const taskBoard = document.getElementById("toDo");
-  const tasks = await loadTasks();
-  allTasks = tasks;
-
-  taskBoard.innerHTML = tasks.map(taskOnBoardTemplate).join("");
-
-    tasks.forEach((task) => {
-      renderAssignedUserData(task.assignedTo, task.id);
-    });
+  try {
+    const tasks = await loadTasks();
+    allTasks = tasks;
+    await setSpecialCategories();
+  } catch (error) {
+  }
 }
+
 
 let contactsMap = {};
 
@@ -100,6 +210,7 @@ async function loadContacts() {
   }, {});
 }
 
+
 function getName(userName) {
   if (!userName) return "";
 
@@ -110,6 +221,7 @@ function getName(userName) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 }
+
 
 function renderAssignedUser(email) {
     if (!email) return ""; // if no mail, then there's no avatar
@@ -124,6 +236,7 @@ function renderAssignedUser(email) {
     return { initials, color, name };
 }
 
+
 function renderAssignedUserData(email, taskId) {
   if (!email) return ""; // if there's no assignedTo
   const { initials, color } = renderAssignedUser(email);
@@ -133,6 +246,7 @@ function renderAssignedUserData(email, taskId) {
     container.innerHTML += `<div class="editor-avatar" style="background-color:${color}">${initials}</div>`;
   }
 }
+
 
 function getPriorityData(priority) {
   if (!priority) return { text: "", icon: "" };
@@ -149,6 +263,7 @@ function getPriorityData(priority) {
 
   return { text, icon };
 }
+
 
 async function showAddTaskOverlay() {
     const overlay = document.getElementById("add-task-overlay");
@@ -187,8 +302,6 @@ function openTaskOverlay(taskId) {
         overlay.classList.add("visible");
     }, 10);
 }
-
-
 
 
 function closeTaskOverlay() {

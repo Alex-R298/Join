@@ -1,6 +1,6 @@
 .drag-area {
     width: 246px;
-    height: 400px;
+    height: 800px;
     margin-bottom: 50px;
     display: flex;
     align-items: flex-start;
@@ -12,9 +12,9 @@
     gap: 26px;
 }
 
-.drag-area-highlight {
+/* .drag-area-highlight {
     background-color: rgba(0, 0, 0, 0.2);
-}
+} */
 
 .todo {
     background-color: white;
@@ -326,4 +326,8 @@
 .assigned-to-container {
     display: flex;
     flex-direction: column;
+}
+
+.empty-container-text {
+    font-size: 16px;
 }
