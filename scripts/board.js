@@ -61,13 +61,6 @@ function renderTasksInContainer(container, tasks) {
 }
 
 
-// function renderEmptyContainer(container, containerId) {
-//   container.innerHTML = `
-//     <div class="empty-container">
-//       <p class="empty-container-text">No Tasks ${containerId}</p>
-//     </div>`;
-// }
-
 function renderEmptyContainer(container, containerId) {
   let displayText;
   
