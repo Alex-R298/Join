@@ -21,8 +21,7 @@
     <script src="./scripts/template.js"></script>
     <script src="./scripts/contacts.js"></script>
     <script src="./scripts/boardStorage.js"></script>
-    <script src="./scripts/summary.js"></script>
-
+    <script src="./scripts/summary.js"></script>   
     <title>Board</title>
 </head>
 
@@ -45,7 +44,7 @@
                     <path d="M5 1.5V9.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                     <path d="M9 5.57544L1 5.57544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                 </svg></button></div>
-                <div class="drag-area" id="toDo" ondrop="moveTo('toDo')" ondragleave="removeHighlight('toDo')" ondragover="allowDrop(event); highlight('toDo')">
+                <div class="drag-area" id="toDo" ondrop="moveTo('toDo', event)" ondragleave="removeHighlight('toDo')" ondragover="allowDrop(event); highlight('toDo')">
                 <div class="empty-container">
                     <p class="empty-container-text">No Tasks To do</p>
                 </div>
@@ -57,7 +56,7 @@
                     <path d="M5 1.5V9.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                     <path d="M9 5.57544L1 5.57544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                 </svg></button></div>
-                <div class="drag-area" id="inProgress" ondrop="moveTo('inProgress')"
+                <div class="drag-area" id="inProgress" ondrop="moveTo('inProgress', event)"
                     ondragleave="removeHighlight('inProgress')" ondragover="allowDrop(event); highlight('inProgress')">
                 </div>
             </div>
@@ -66,7 +65,7 @@
                     <path d="M5 1.5V9.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                     <path d="M9 5.57544L1 5.57544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                 </svg></button></div>
-                <div class="drag-area" id="awaitFeedback" ondrop="moveTo('awaitFeedback')"
+                <div class="drag-area" id="awaitFeedback" ondrop="moveTo('awaitFeedback', event)"
                     ondragleave="removeHighlight('awaitFeedback')"
                     ondragover="allowDrop(event); highlight('awaitFeedback')"></div>
             </div>
@@ -75,7 +74,7 @@
                     <path d="M5 1.5V9.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                     <path d="M9 5.57544L1 5.57544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                 </svg></button></div>
-                <div class="drag-area" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')"
+                <div class="drag-area" id="done" ondrop="moveTo('done', event)" ondragleave="removeHighlight('done')"
                     ondragover="allowDrop(event); highlight('done')"></div>
             </div>
 

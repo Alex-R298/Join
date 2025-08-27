@@ -39,11 +39,11 @@ async function init() {
 
   setActiveNavigation();
 
-  // Zuerst Kontakte laden
     await loadContacts();
     
-    // Dann Tasks laden und rendern
     await renderTasks();
+
+    initializeHighlightContainers();
 }
 
 

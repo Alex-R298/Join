@@ -335,7 +335,7 @@ function taskOnBoardTemplate(task) {
   const badge = getBadgeData({ ...task, category: badgeCategory });
   const { icon: priorityIcon } = getPriorityData(priority);
   return `
-    <div class="task-container" draggable="true" ondragstart="startDragging('${task.id}')" onclick="openTaskOverlay('${task.id}')">
+    <div class="task-container" id="${task.id}" draggable="true" ondragstart="startDragging('${task.id}', event)" ondragend="cancelDragging()"  onclick="openTaskOverlay('${task.id}')">
       <div class="badge ${badge.className}">${badge.text}</div>
       <div class="task-infos">
         <p class="task-title">${title}</p>

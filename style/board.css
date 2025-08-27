@@ -8,6 +8,18 @@
     gap: 16px;
 }
 
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(85, 85, 87, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(69, 137, 255, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(69, 137, 255, 0);
+    }
+}
+
 .gap-26 {
     gap: 26px;
 }

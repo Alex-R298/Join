@@ -1,8 +1,9 @@
 
 // To do / In progress / Await feedback / Done
 
-
-let currentDraggedElement;
+let currentDraggedElement = null;
+let draggedTaskHeight = 0;
+let removedTaskElement = null;
 let allTasks = [];
 
 async function resetTaskCategories() {
@@ -28,11 +29,16 @@ async function resetTaskCategories() {
   }
 }
 
+
 function updateHTML() {
   const containers = ["toDo", "inProgress", "awaitFeedback", "done"];
   containers.forEach(containerId => {
     const container = document.getElementById(containerId);
     if (!container) return;
+    const highlightContainer = document.getElementById(`highlight-${containerId}`);
+    if (highlightContainer && container.contains(highlightContainer)) {
+      container.removeChild(highlightContainer);
+    }
     container.innerHTML = "";
     const tasksForContainer = allTasks.filter(task => task.category === containerId);
     if (tasksForContainer.length === 0) {
@@ -40,9 +46,11 @@ function updateHTML() {
     } else {
       renderTasksInContainer(container, tasksForContainer);
     }
+    if (highlightContainer) {
+      container.appendChild(highlightContainer);
+    }
   });
 }
-
 
 function renderTasksInContainer(container, tasks) {
   tasks.forEach(task => {
@@ -88,70 +96,157 @@ function renderEmptyContainer(container, containerId) {
 }
 
 
-function startDragging(id) {
-    currentDraggedElement = id;
+function allowDrop(event) {
+  event.preventDefault();
 }
 
 
-function allowDrop(ev) {
-    ev.preventDefault();
-}
 
-
-async function moveTo(category) {
-  const taskIndex = allTasks.findIndex(task => task.id === currentDraggedElement);
-  if (taskIndex !== -1) {
-    allTasks[taskIndex].category = category;
-    if (typeof updateDashboardCounts === 'function') {
-      updateDashboardCounts();
-    }
-    updateHTML();
-    
-    if (isLocalStorageAvailable()) {
-      saveCategoriesToLocalStorage();
+async function moveTo(category, event) {
+    event.preventDefault();
+    let taskId;
+    if (event.dataTransfer) {
+        taskId = event.dataTransfer.getData('text/plain');
     } else {
-      try {
-        await saveTaskToFirebase(currentDraggedElement, category);
-      } catch (error) {
-      }
+        taskId = currentDraggedElement;
     }
-  }
+    if (!taskId) {
+        return;
+    }
+    try {
+        const taskIndex = allTasks.findIndex(task => task.id === taskId);
+        if (taskIndex === -1) {
+            return;
+        }
+        allTasks[taskIndex].category = category;
+        updateHTML();
+        const containers = ["toDo", "inProgress", "awaitFeedback", "done"];
+        containers.forEach(id => removeHighlight(id));
+        if (isLocalStorageAvailable()) {
+            saveCategoriesToLocalStorage();
+        } else {
+            try {
+                await saveTaskToFirebase(taskId, category);
+            } catch (error) {
+            }
+        }
+        if (typeof updateDashboardCounts === 'function') {
+            updateDashboardCounts();
+        }
+    } catch (error) {
+    } finally {
+        currentDraggedElement = null;
+    }
 }
 
 
-// Hilfsfunktion zum Aktualisieren eines einzelnen Containers
 function updateContainer(category) {
   const container = document.getElementById(category);
   if (!container) {
     console.error(`Container mit ID ${category} nicht gefunden`);
     return;
   }
-  
   container.innerHTML = "";
-  
   const tasksInCategory = allTasks.filter(t => t.category === category);
   console.log(`Tasks in Kategorie ${category} nach Update:`, tasksInCategory.length);
-  
   tasksInCategory.forEach(todo => {
     container.innerHTML += taskOnBoardTemplate(todo);
   });
 }
 
 
-function highlight(id) {
-    document.getElementById(id).classList.add('drag-area-highlight');
+function startDragging(id, event) {
+    currentDraggedElement = id;
+    const taskIndex = allTasks.findIndex(task => task.id === id);
+    if (taskIndex !== -1) {
+        originalTaskCategory = allTasks[taskIndex].category;
+    }
+    const taskElement = event.target.closest('.task-container');
+    if (taskElement) {
+        draggedTaskHeight = taskElement.offsetHeight;
+        if (event.dataTransfer) {
+            event.dataTransfer.setDragImage(taskElement, 0, 0);
+        }
+        if (event.dataTransfer) {
+            event.dataTransfer.setData('text/plain', id);
+        }
+        setTimeout(() => {
+            if (currentDraggedElement === id) {
+                removedTaskElement = taskElement;
+                if (taskElement.parentNode) {
+                    taskElement.parentNode.removeChild(taskElement);
+                }
+            }
+        }, 1);
+    }
 }
 
 
+function cancelDragging() {
+    if (currentDraggedElement && removedTaskElement) {
+        const container = document.getElementById(originalTaskCategory);
+        if (container) {
+            container.appendChild(removedTaskElement);
+        }
+        
+        removedTaskElement = null;
+    }
+    const containers = ["toDo", "inProgress", "awaitFeedback", "done"];
+    containers.forEach(id => removeHighlight(id));
+    currentDraggedElement = null;
+    originalTaskCategory = null;
+}
+
+
+function initializeHighlightContainers() {
+  const containers = ["toDo", "inProgress", "awaitFeedback", "done"];
+  containers.forEach(containerId => {
+    const container = document.getElementById(containerId);
+    if (!container) {
+      return;
+    }
+    let existingHighlight = document.getElementById(`highlight-${containerId}`);
+    if (existingHighlight) {
+      return;
+    }
+    const highlightContainer = document.createElement('div');
+    highlightContainer.className = 'highlight-container';
+    highlightContainer.id = `highlight-${containerId}`;
+    highlightContainer.style.width = '100%';
+    highlightContainer.style.border = '1px dashed #a8a8a8';
+    highlightContainer.style.borderRadius = '24px';
+    highlightContainer.style.backgroundColor = '#e7e7e7';
+    highlightContainer.style.margin = '10px 0';
+    highlightContainer.style.animation = 'pulse 1.5s infinite';
+    highlightContainer.style.height = '100px';
+    highlightContainer.style.display = 'none';
+    highlightContainer.style.justifyContent = 'center';
+    highlightContainer.style.alignItems = 'center';
+    highlightContainer.style.pointerEvents = 'none';
+    container.appendChild(highlightContainer);
+  });
+}
+
+
+function highlight(id) {
+  const highlightContainer = document.getElementById(`highlight-${id}`);
+  if (highlightContainer) {
+    highlightContainer.style.height = draggedTaskHeight > 0 ? `${draggedTaskHeight}px` : '100px';
+    highlightContainer.style.display = 'flex';
+  }
+}
+
 function removeHighlight(id) {
-    document.getElementById(id).classList.remove('drag-area-highlight');
+  const highlightContainer = document.getElementById(`highlight-${id}`);
+  if (highlightContainer) {
+    highlightContainer.style.display = 'none';
+  }
 }
 
 
 async function loadUsers() {
     const res = await fetch(BASE_URL + "/user.json");
     const data = await res.json();
-
     return Object.values(data).filter((user) => user.name);
 }
 
@@ -184,11 +279,9 @@ function normalizeCategory(category) {
   if (category === 'technical-task' || category === 'user-story') {
     return 'toDo';
   }
-  
   if (!['toDo', 'inProgress', 'awaitFeedback', 'done'].includes(category)) {
     return 'toDo';
   }
-  
   return category;
 }
 
