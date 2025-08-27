@@ -354,7 +354,8 @@ function taskOnBoardTemplate(task) {
 }
 
 function taskDetailOverlayTemplate(task) {
-  const badge = getBadgeData(task);
+  const badgeCategory = task.originalCategory || task.category;
+  const badge = getBadgeData({ ...task, category: badgeCategory });
   const { text: priorityText, icon: priorityIcon } = getPriorityData(
     task.priority
   );
