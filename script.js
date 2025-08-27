@@ -37,6 +37,8 @@ async function init() {
     activMediumBtn();
   }
 
+  setActiveNavigation();
+
   // Zuerst Kontakte laden
     await loadContacts();
     
@@ -176,3 +178,28 @@ function logOut() {
 //         window.location.replace("log_in.html");
 //     }
 // });
+
+function setActiveNavigation() {
+  const navLinks = document.querySelectorAll(".sidebar a");
+
+  const currentPage = window.location.pathname.split("/").pop() || "index.html";
+
+  // remove active
+  navLinks.forEach((link) => {
+    link.classList.remove("active");
+  });
+
+  // find link and add active
+  navLinks.forEach((link) => {
+    const href = link.getAttribute("href");
+
+    // is link current page?
+    if (
+      href === currentPage ||
+      (currentPage === "" && href === "index.html") ||
+      (currentPage === "index.html" && href === "index.html")
+    ) {
+      link.classList.add("active");
+    }
+  });
+}
