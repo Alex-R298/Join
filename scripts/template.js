@@ -304,14 +304,21 @@ function getAddPageTemplate(usersArray = []) {
         <span class="input-invalid d-none">This field is required</span>
       </div>
 
+
+
       <div class="input-with-label">
         <label for="subtask_input">Subtasks</label>
         <div class="input-with-button">
           <input class="input-btn" type="text" id="subtask_input" placeholder="Add new subtask">
-          <button onclick="addSubtask()">+</button>
+        <div class="subtask_buttons">
+        <button onclick="">&#10003;</button>
+        <button onclick="">X</button>
+        </div>
           <ul id="myList"></ul>
         </div>
       </div>
+
+<button onclick="addSubtask()">+</button>
 
     </div>
   </div>

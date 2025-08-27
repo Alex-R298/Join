@@ -113,9 +113,6 @@ async function loadAddPage() {
       } else if (addBoardOverlay) {
         addBoardOverlay.innerHTML = getAddPageTemplate(usersArray);
       }
-
-        console.log("info", data);
-        
    return usersArray;
   }
 
