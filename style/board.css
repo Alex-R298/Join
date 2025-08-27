@@ -1,11 +1,13 @@
 .drag-area {
     width: 246px;
-    height: 600px;
+    min-height: 100%;
+    height: auto;
     margin-bottom: 50px;
     display: flex;
     align-items: flex-start;
     flex-direction: column;
     gap: 16px;
+    flex-grow: 1;
 }
 
 @keyframes pulse {
