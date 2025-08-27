@@ -247,3 +247,21 @@ input[type="date"]::placeholder {
   cursor: pointer;
   font-size: 20px;
 }
+
+/* Subtask_list */
+
+.subtask-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.subtask-actions button {
+  margin-left: 6px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 16px;
+}

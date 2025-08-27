@@ -165,7 +165,14 @@ function checkDate() {
 
 
 function createListItem(value) {
-  return `<li>${value}</li>`; 
+  return `
+    <li class="subtask-item">
+      <span class="subtask-text">${value}</span>
+      <div class="subtask-actions">
+        <button class="edit-btn" onclick="editSubtask(this)">✎</button>
+        <button class="delete-btn" onclick="deleteSubtask(this)">🗑</button>
+      </div>
+    </li>`; 
 }
 
 function addSubtask(){
@@ -200,4 +207,47 @@ function clearInput(){
   let input = document.getElementById("subtask_input");
   input.value = "";
   changeButtons();
+}
+
+function editSubtask(button) {
+  let li = button.closest("li");
+  let span = li.querySelector(".subtask-text");
+
+  let input = document.createElement("input");
+  input.type = "text";
+  input.value = span.textContent;  
+  input.className = "edit-input";
+
+  
+  li.replaceChild(input, span);
+  input.focus();
+
+  
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      saveEdit(input, li);
+    }
+  });
+
+  
+  input.addEventListener("blur", function () {
+    saveEdit(input, li);
+  });
+}
+
+function saveEdit(input, li) {
+  let newValue = input.value.trim();
+  if (newValue !== "") {
+    let span = document.createElement("span");
+    span.className = "subtask-text";
+    span.textContent = newValue;
+    li.replaceChild(span, input);
+  } else {
+    
+    li.remove();
+  }
+}
+function deleteSubtask(button) {
+  let li = button.closest("li"); 
+  if (li) li.remove();
 }
