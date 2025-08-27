@@ -166,13 +166,13 @@ function checkDate() {
 
 function createListItem(value) {
   return `
-    <li class="subtask-item">
-      <span class="subtask-text">${value}</span>
-      <div class="subtask-actions">
-        <button class="edit-btn" onclick="editSubtask(this)">✎</button>
-        <button class="delete-btn" onclick="deleteSubtask(this)">🗑</button>
-      </div>
-    </li>`; 
+      <div class="subtask-listelement">
+      <p class="list">${value}</p>
+      <div class="subtask-edit-btns d-none">
+          <button class="icon-btn" onclick="editSubtask(this)"><img src="./assets/icons/edit.svg"></button>
+          <div class="vl-small">
+          <button class="icon-btn" onclick="deleteSubtask(this)"><img src="./assets/icons/delete.svg"></button>
+      </div>`; 
 }
 
 function addSubtask(){
@@ -250,4 +250,29 @@ function saveEdit(input, li) {
 function deleteSubtask(button) {
   let li = button.closest("li"); 
   if (li) li.remove();
+}
+
+
+function addSubtaskHoverEffectsWithDelegation() {
+  document.body.addEventListener("mouseover", function (e) {
+    const subtaskElement = e.target.closest(".subtask-listelement");
+    if (subtaskElement) {
+      const editButtons = subtaskElement.querySelector(".subtask-edit-btns");
+      if (editButtons) {
+        editButtons.classList.remove("d-none");
+      }
+    }
+  });
+
+  document.body.addEventListener("mouseout", function (e) {
+    const subtaskElement = e.target.closest(".subtask-listelement");
+    if (subtaskElement) {
+      if (!subtaskElement.contains(e.relatedTarget)) {
+        const editButtons = subtaskElement.querySelector(".subtask-edit-btns");
+        if (editButtons) {
+          editButtons.classList.add("d-none");
+        }
+      }
+    }
+  });
 }
