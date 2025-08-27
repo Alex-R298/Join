@@ -291,7 +291,9 @@ function getAddPageTemplate(usersArray = []) {
       <div class="input-with-label pb-8">
         <label for="assigned_task">Assigned to</label>
         <select class="minimal" id="assigned_task" placeholder="Select contacts to assign">
-            ${usersArray.map(u => `<option value="${u.email}">${u.name}</option>`).join('')}
+            ${usersArray
+              .map((u) => `<option value="${u.email}">${u.name}</option>`)
+              .join("")}
             </select>
       </div>
 
@@ -315,7 +317,8 @@ function getAddPageTemplate(usersArray = []) {
         <button id="acceptButton" onclick="addSubtask()" style="display: none;">&#10003;</button>
         <button id="clearButton" onclick="clearInput()" style="display: none;">X</button>
         </div>
-          <ul id="myList"></ul>
+        <div id="myList" class="subtasks-list">
+            </div>
         </div>
       </div>
 

@@ -250,18 +250,47 @@ input[type="date"]::placeholder {
 
 /* Subtask_list */
 
-.subtask-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 4px 8px;
-  border-bottom: 1px solid #ddd;
+.subtasks-list {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    margin-top: 8px;
 }
 
-.subtask-actions button {
-  margin-left: 6px;
-  cursor: pointer;
-  border: none;
-  background: none;
-  font-size: 16px;
+.subtask-listelement {
+    padding: 6px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.subtask-listelement:hover {
+    border-radius: 10px;
+    background-color: #eee;
+}
+
+.subtask-edit-btns {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    width: 24px;
+    height: 24px;
+}
+
+.vl-small {
+    height: 24px;
+    border-left: 1px solid #D1D1D1;
+}
+
+.list {
+    list-style: disc;
+    display: list-item;
+    margin-left: 16px;
+    font-size: 16px;
 }
