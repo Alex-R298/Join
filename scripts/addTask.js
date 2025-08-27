@@ -178,3 +178,26 @@ function addSubtask(){
     input.value = "";
   }
 }
+
+function changeButtons() {
+  let acceptButton = document.getElementById("acceptButton");
+  let addButton = document.getElementById("addButton");
+  let clearButton = document.getElementById("clearButton");
+  let input = document.getElementById("subtask_input");
+
+  if (input.value.trim() !== "") {
+    addButton.style.display = "none";
+    acceptButton.style.display = "inline-block";
+    clearButton.style.display = "inline-block";
+  } else {
+    addButton.style.display = "inline-block";
+    acceptButton.style.display = "none";
+    clearButton.style.display = "none";
+  }
+}
+
+function clearInput(){
+  let input = document.getElementById("subtask_input");
+  input.value = "";
+  changeButtons();
+}
