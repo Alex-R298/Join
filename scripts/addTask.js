@@ -23,8 +23,7 @@ async function fetchBase() {
   try {
     const res = await fetch(BASE_URL + ".json");
     const data = await res.json();
-    console.log(data);
-    console.log("Aktuelle Tasks:", data);
+   
   } catch (err) {
     console.error("Fehler beim Laden:", err);
   }
@@ -80,7 +79,6 @@ async function addTask() {
 async function loadTasksDebug(){
   const res = await fetch(BASE_URL + "/task.json");
   const data = await res.json();
-  // console.log(data);
 }
 
 function activMediumBtn(){
@@ -164,16 +162,7 @@ function checkDate() {
 // Subtask
 
 
-function createListItem(value) {
-  return `
-      <div class="subtask-listelement">
-      <p class="list">${value}</p>
-      <div class="subtask-edit-btns d-none">
-          <button class="icon-btn" onclick="editSubtask(this)"><img src="./assets/icons/edit.svg"></button>
-          <div class="vl-small">
-          <button class="icon-btn" onclick="deleteSubtask(this)"><img src="./assets/icons/delete.svg"></button>
-      </div>`; 
-}
+
 
 function addSubtask(){
   let input = document.getElementById("subtask_input");
@@ -184,6 +173,7 @@ function addSubtask(){
     list.innerHTML += createListItem(value)
     input.value = "";
   }
+  changeButtons();
 }
 
 function changeButtons() {
@@ -218,21 +208,96 @@ function editSubtask(button) {
   input.value = span.textContent;  
   input.className = "edit-input";
 
-  
   li.replaceChild(input, span);
   input.focus();
 
-  
   input.addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
       saveEdit(input, li);
     }
   });
-
-  
   input.addEventListener("blur", function () {
     saveEdit(input, li);
   });
+}
+function createListItem(value) {
+  return `
+    <li class="subtask-listelement" onclick="handleSubtaskClick(event, this)">
+  <span class="subtask-text">${value}</span>
+  <div class="subtask-edit-btns d-none">
+    <button class="icon-btn edit-btn" onclick="editSubtask(this)">
+      <img src="./assets/icons/edit.svg" alt="Edit">
+    </button>
+    <div class="vl-small"></div>
+    <button class="icon-btn delete-btn" onclick="deleteSubtask(this)">
+      <img src="./assets/icons/delete.svg" alt="Delete">
+    </button>
+  </div>
+</li>
+
+  `;
+}
+
+function handleSubtaskClick(event, li) {
+  if (event.target.closest(".icon-btn.delete-btn") || event.target.closest(".icon-btn.delete-btn img")) return;
+
+  let editBtn = li.querySelector(".icon-btn.edit-btn");
+  let editImg = editBtn.querySelector("img");
+
+  if (editImg.src.includes("check.svg")) {
+    stopEditMode(li);
+  } else {
+    startEditMode(li);
+  }
+}
+
+function startEditMode(li) {
+  let editBtn = li.querySelector(".icon-btn.edit-btn");
+  let deleteBtn = li.querySelector(".icon-btn.delete-btn");
+  let separator = li.querySelector(".vl-small");
+
+  let editImg = editBtn.querySelector("img");
+  editImg.src = "./assets/icons/check.svg";
+  editImg.alt = "Check";
+
+  let parent = editBtn.parentNode;
+  parent.insertBefore(deleteBtn, editBtn);
+  parent.insertBefore(separator, editBtn);
+
+  let span = li.querySelector(".subtask-text");
+  if (!span) return;
+
+  let input = document.createElement("input");
+  input.type = "text";
+  input.value = span.textContent;
+  input.className = "edit-input";
+  li.replaceChild(input, span);
+  input.focus();
+
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") saveEdit(input, li);
+  });
+  input.addEventListener("blur", function () {
+    saveEdit(input, li);
+  });
+}
+
+function stopEditMode(li) {
+  let editBtn = li.querySelector(".icon-btn.edit-btn");
+  let deleteBtn = li.querySelector(".icon-btn.delete-btn");
+  let separator = li.querySelector(".vl-small");
+
+  let editImg = editBtn.querySelector("img");
+  editImg.src = "./assets/icons/edit.svg";
+  editImg.alt = "Edit";
+
+  let parent = editBtn.parentNode;
+
+  parent.insertBefore(editBtn, parent.firstChild);
+  parent.insertBefore(separator, deleteBtn);
+
+  let input = li.querySelector(".edit-input");
+  if (input) saveEdit(input, li);
 }
 
 function saveEdit(input, li) {

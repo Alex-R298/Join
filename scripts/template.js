@@ -317,8 +317,8 @@ function getAddPageTemplate(usersArray = []) {
         <button id="acceptButton" onclick="addSubtask()" style="display: none;">&#10003;</button>
         <button id="clearButton" onclick="clearInput()" style="display: none;">X</button>
         </div>
+        </div>
         <div id="myList" class="subtasks-list">
-            </div>
         </div>
       </div>
 
