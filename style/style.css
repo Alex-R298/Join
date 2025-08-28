@@ -23,6 +23,35 @@
     --error-red: #FF8190;
 }
 
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(168, 168, 168, 0.7);
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 0 0 10px rgba(168, 168, 168, 0);
+        transform: scale(1.02);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(168, 168, 168, 0);
+        transform: scale(1);
+    }
+}
+
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-10px);
+        opacity: 0.8;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
 
 @keyframes slideOutToRight {
     0% {

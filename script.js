@@ -38,12 +38,11 @@ async function init() {
   }
 
   setActiveNavigation();
-
+  clearAllContainers();
     await loadContacts();
     
     await renderTasks();
-
-    initializeHighlightContainers();
+    updateHTML();
 }
 
 

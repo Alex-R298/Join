@@ -26,27 +26,45 @@ async function resetTaskCategories() {
   }
 }
 
+function clearAllContainers() {
+    const containers = ["toDo", "inProgress", "awaitFeedback", "done"];
+    containers.forEach(containerId => {
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.innerHTML = '';
+        }
+    });
+}
+
+
 
 function updateHTML() {
-  const containers = ["toDo", "inProgress", "awaitFeedback", "done"];
-  containers.forEach(containerId => {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    const highlightContainer = document.getElementById(`highlight-${containerId}`);
-    if (highlightContainer && container.contains(highlightContainer)) {
-      container.removeChild(highlightContainer);
-    }
-    container.innerHTML = "";
-    const tasksForContainer = allTasks.filter(task => task.category === containerId);
-    if (tasksForContainer.length === 0) {
-      renderEmptyContainer(container, containerId);
-    } else {
-      renderTasksInContainer(container, tasksForContainer);
-    }
-    if (highlightContainer) {
-      container.appendChild(highlightContainer);
-    }
-  });
+    ["toDo", "inProgress", "awaitFeedback", "done"].forEach(containerId => {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        const tasksForContainer = allTasks.filter(task => task.category === containerId);
+        const placeholder = container.querySelector('.drag-placeholder');
+        container.innerHTML = '';
+        if (tasksForContainer.length === 0) {
+            container.innerHTML = `<div class="empty-container"><p class="empty-container-text">${getEmptyText(containerId)}</p></div>`;
+        } else {
+            tasksForContainer.forEach(task => {
+                container.insertAdjacentHTML('beforeend', taskOnBoardTemplate(task));
+                if (task.assignedTo) renderAssignedUserData(task.assignedTo, task.id);
+            });
+        }
+        if (placeholder) container.appendChild(placeholder);
+    });
+}
+
+function getEmptyText(containerId) {
+    const texts = {
+        'toDo': 'No Tasks To Do',
+        'inProgress': 'No Tasks In Progress',
+        'awaitFeedback': 'No Tasks Await Feedback',
+        'done': 'No Tasks Done'
+    };
+    return texts[containerId] || `No Tasks ${containerId}`;
 }
 
 function renderTasksInContainer(container, tasks) {
@@ -66,31 +84,51 @@ function renderTasksInContainer(container, tasks) {
 }
 
 
-function renderEmptyContainer(container, containerId) {
-  let displayText;
-  
-  switch (containerId) {
-    case 'toDo':
-      displayText = 'No Tasks To Do';
-      break;
-    case 'inProgress':
-      displayText = 'No Tasks Progress';
-      break;
-    case 'awaitFeedback':
-      displayText = 'No Tasks Await Feedback';
-      break;
-    case 'done':
-      displayText = 'No Tasks Done';
-      break;
-    default:
-      displayText = `No Tasks ${containerId}`;
-  }
-  
-  container.innerHTML = `
-    <div class="empty-container">
-      <p class="empty-container-text">${displayText}</p>
-    </div>`;
+
+function renderTasksInContainer(container, tasks) {
+    const placeholder = container.querySelector('.drag-placeholder');
+    container.innerHTML = '';
+    tasks.forEach(task => {
+        container.insertAdjacentHTML('beforeend', taskOnBoardTemplate(task));
+        if (task.assignedTo) {
+            const editorContainer = document.getElementById(`editor-${task.id}`);
+            if (editorContainer) {
+                editorContainer.innerHTML = "";
+                renderAssignedUserData(task.assignedTo, task.id);
+            }
+        }
+    });
+    if (placeholder) container.appendChild(placeholder);
 }
+
+
+
+function parseHTML(html) {
+    const template = document.createElement('template');
+    template.innerHTML = html.trim();
+    return template.content.firstChild;
+}
+
+
+function updateEmptyContainers() {
+    ["toDo", "inProgress", "awaitFeedback", "done"].forEach(containerId => {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        const hasTasks = container.querySelector('.task-container');
+        const emptyContainer = container.querySelector('.empty-container');
+        if (!hasTasks && !emptyContainer) {
+            const emptyDiv = document.createElement('div');
+            emptyDiv.className = 'empty-container';
+            emptyDiv.innerHTML = `<p class="empty-container-text">${getEmptyText(containerId)}</p>`;
+            container.appendChild(emptyDiv);
+        } else if (!hasTasks && emptyContainer) {
+            emptyContainer.style.display = 'flex';
+        } else if (hasTasks && emptyContainer) {
+            emptyContainer.remove();
+        }
+    });
+}
+
 
 
 function updateContainer(category) {
@@ -171,6 +209,7 @@ async function renderTasks() {
     const tasks = await loadTasks();
     allTasks = tasks;
     await setSpecialCategories();
+    updateHTML();
     if (typeof updateDashboardCounts === 'function') {
       updateDashboardCounts();
     }

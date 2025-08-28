@@ -10,25 +10,39 @@
     flex-grow: 1;
 }
 
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(85, 85, 87, 0.4);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(69, 137, 255, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(69, 137, 255, 0);
-    }
+
+.drag-area>* {
+    transition: transform 0.3s ease;
 }
+
+
+.drag-placeholder {
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.drag-placeholder.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
 
 .gap-26 {
     gap: 26px;
 }
 
-/* .drag-area-highlight {
-    background-color: rgba(0, 0, 0, 0.2);
-} */
+
+.drag-placeholder {
+    transition: transform 0.2s ease;
+}
+
+
+.task-container.dragging {
+    opacity: 0.5;
+
+}
+
 
 .todo {
     background-color: white;
@@ -244,6 +258,7 @@
     width: 144px;
 }
 
+
 .task-container {
     background-color: #fff;
     width: 252px;
@@ -255,7 +270,40 @@
     gap: 24px;
     box-shadow: 0px 0px 10px 3px #00000014;
     cursor: pointer;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, scale 0.2s ease;
 }
+
+.task-container:active {
+    scale: 1.05;
+    box-shadow: 0px 5px 20px 5px #00000025;
+    cursor: grabbing;
+}
+
+
+.task-container.dragging {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+
+.task-container:not(.dragging) {
+    animation: slideDown 0.3s ease;
+}
+
+
+.task-container:hover:not(.dragging) {
+    transform: translateY(-2px);
+    box-shadow: 0px 5px 15px 3px #00000020;
+}
+
+
+
+.drag-placeholder.visible {
+    animation: pulse 2s infinite;
+}
+
 
 .task-title {
     font-size: 16px;
