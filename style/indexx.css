@@ -76,6 +76,11 @@
   text-align: center;
 }
 
+.summary-content {
+  display: flex;
+  gap: 80px;
+}
+
 .summary {
   cursor: pointer;
   box-shadow: 0px 0px 4px 0px #0000001A;
