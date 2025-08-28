@@ -276,7 +276,7 @@ function getAddPageTemplate(usersArray = []) {
             Urgent
             <img src="./assets/icons/prio_urgent_red.svg" alt="">
             </button>
-            <button class="priority-btn active" data-priority="medium">
+            <button class="priority-btn active" data-priority="medium" onclick="selectPriority(this)">
                 Medium
                 <img src="./assets/icons/prio_medium_white.svg" alt="">
             </button>
