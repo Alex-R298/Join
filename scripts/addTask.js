@@ -35,6 +35,7 @@ async function addTask() {
   const dueDate = document.getElementById("datepicker").value;
   const assignedTo = document.getElementById("assigned_task").value;
   const category = document.getElementById("category_task").value;
+  const subtaskElements = document.querySelectorAll(".subtask-text");
 
   try {
     // validate date
@@ -49,7 +50,9 @@ async function addTask() {
       dueDate,
       priority: selectedPriority,
       assignedTo,
-      category,
+      category,  
+      subtaskElements: Array.from(subtaskElements).map(el => el.textContent),
+      // AlexderRusse Note subTaskElements ggf. nochmal anpassen weil Array 
     };
 
     // Wait for POST-Request
@@ -115,6 +118,7 @@ async function clearInputs() {
   document.getElementById("datepicker").value = ""; 
   document.getElementById("assigned_task").value = "";   
   document.getElementById("category_task").value = "";
+  document.getElementById("myList").innerHTML = "";
 }
 
 function showPopup() {
@@ -162,15 +166,13 @@ function checkDate() {
 // Subtask
 
 
-
-
 function addSubtask(){
   let input = document.getElementById("subtask_input");
   let list = document.getElementById("myList");
   let value = input.value.trim();
 
   if (value) {
-    list.innerHTML += createListItem(value)
+    list.innerHTML += createListItemTemplate(value)
     input.value = "";
   }
   changeButtons();
@@ -220,23 +222,7 @@ function editSubtask(button) {
     saveEdit(input, li);
   });
 }
-function createListItem(value) {
-  return `
-    <li class="subtask-listelement" onclick="handleSubtaskClick(event, this)">
-  <span class="subtask-text">${value}</span>
-  <div class="subtask-edit-btns d-none">
-    <button class="icon-btn edit-btn" onclick="editSubtask(this)">
-      <img src="./assets/icons/edit.svg" alt="Edit">
-    </button>
-    <div class="vl-small"></div>
-    <button class="icon-btn delete-btn" onclick="deleteSubtask(this)">
-      <img src="./assets/icons/delete.svg" alt="Delete">
-    </button>
-  </div>
-</li>
 
-  `;
-}
 
 function handleSubtaskClick(event, li) {
   if (event.target.closest(".icon-btn.delete-btn") || event.target.closest(".icon-btn.delete-btn img")) return;

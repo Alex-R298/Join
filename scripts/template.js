@@ -337,6 +337,23 @@ function getAddPageTemplate(usersArray = []) {
     `;
 }
 
+function createListItemTemplate(value) {
+  return `
+    <li class="subtask-listelement" onclick="handleSubtaskClick(event, this)">
+  <span class="subtask-text">${value}</span>
+  <div class="subtask-edit-btns d-none">
+    <button class="icon-btn edit-btn" onclick="editSubtask(this)">
+      <img src="./assets/icons/edit.svg" alt="Edit">
+    </button>
+    <div class="vl-small"></div>
+    <button class="icon-btn delete-btn" onclick="deleteSubtask(this)">
+      <img src="./assets/icons/delete.svg" alt="Delete">
+    </button>
+  </div>
+</li>
+
+  `;
+}
 
 function taskOnBoardTemplate(task) {
   const title = task.title || 'Untitled';
