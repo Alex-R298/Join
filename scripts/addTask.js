@@ -30,54 +30,47 @@ async function fetchBase() {
 }
 
 async function addTask() {
-  const title = document.getElementById("title").value;
-  const description = document.getElementById("task_description").value;
-  const dueDate = document.getElementById("datepicker").value;
-  const assignedTo = document.getElementById("assigned_task").value;
-  const category = document.getElementById("category_task").value;
-  const subtaskElements = document.querySelectorAll(".subtask-text");
-
-  try {
-    // validate date
-    if (!checkDate()) {
-      throw new Error("Ungültiges Datum");
+    const title = document.getElementById("title").value;
+    const description = document.getElementById("task_description").value;
+    const dueDate = document.getElementById("datepicker").value;
+    const assignedTo = document.getElementById("assigned_task").value;
+    const category = document.getElementById("category_task").value;
+    const subtaskElements = document.querySelectorAll(".subtask-text");
+    try {
+        if (!checkDate()) {
+            throw new Error("Ungültiges Datum");
+        }
+        const newTask = {
+            title,
+            description,
+            dueDate,
+            priority: selectedPriority,
+            assignedTo,
+            category,  
+            subtaskElements: Array.from(subtaskElements).map(el => ({
+                text: el.textContent,
+                completed: false
+            })),
+        };
+        const response = await fetch(BASE_URL + "/task.json", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newTask),
+        });
+        if (!response.ok) {
+            throw new Error("HTTP error " + response.status);
+        }
+        const data = await response.json();
+        console.log("Task gespeichert:", data);
+        await renderTasks();
+        updateHTML(); 
+        showPopup();
+    } catch (error) {
+        console.error("Fehler beim Speichern der Task:", error);
+        showErrorPopup("Fehler beim Speichern der Aufgabe!");
+    } finally {
+        clearInputs();
     }
-    // Perform more validations
-
-    const newTask = {
-      title,
-      description,
-      dueDate,
-      priority: selectedPriority,
-      assignedTo,
-      category,  
-      subtaskElements: Array.from(subtaskElements).map(el => el.textContent),
-      // AlexderRusse Note subTaskElements ggf. nochmal anpassen weil Array 
-    };
-
-    // Wait for POST-Request
-    const response = await fetch(BASE_URL + "/task.json", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newTask),
-    });
-    
-    if (!response.ok) {
-      throw new Error("HTTP error " + response.status);
-    }
-
-    // Wait for JSON-Response
-    const data = await response.json();
-    console.log("Task gespeichert:", data);
-    await renderTasks();
-    updateHTML(); 
-    showPopup();
-  } catch (error) {
-    console.error("Fehler beim Speichern der Task:", error);
-    showErrorPopup("Fehler beim Speichern der Aufgabe!");
-  } finally {
-    clearInputs();
-  }
 }
 
 async function loadTasksDebug(){
@@ -114,20 +107,23 @@ function selectPriority(button) {
 
 
 async function clearInputs() {
-  document.getElementById("title").value = "";
-  document.getElementById("task_description").value = "";
-  document.getElementById("datepicker").value = ""; 
-  document.getElementById("assigned_task").value = "";   
-  document.getElementById("category_task").value = "";
-  document.getElementById("myList").innerHTML = "";
+    document.getElementById("title").value = "";
+    document.getElementById("task_description").value = "";
+    document.getElementById("datepicker").value = ""; 
+    document.getElementById("assigned_task").value = "";   
+    document.getElementById("category_task").value = "";
+    document.getElementById("myList").innerHTML = "";
+    const subtaskContainer = document.getElementById("subtask-container");
+    if (subtaskContainer) {
+        subtaskContainer.innerHTML = "";
+    }
 }
 
 function showPopup() {
-  document.getElementById("taskPopup").style.display = "flex";
-
-  setTimeout(() => {
-    closePopup();
-  }, 1500);
+    document.getElementById("taskPopup").style.display = "flex";
+    setTimeout(() => {
+        closePopup();
+    }, 1500);
 }
 
 function closePopup() {

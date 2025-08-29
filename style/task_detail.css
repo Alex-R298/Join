@@ -1,0 +1,110 @@
+.edit-task-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px 0;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.edit-task-header {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.assigned-section {
+    position: relative;
+}
+
+.assigned-dropdown {
+    position: relative;
+}
+
+.dropdown-input {
+    cursor: pointer;
+    padding-right: 40px;
+}
+
+.dropdown-arrow {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-arrow.open {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.assigned-dropdown {
+    position: relative;
+    z-index: 1;
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 260px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #d1d1d1;
+    border-radius: 8px;
+    margin-top: 8px;
+    z-index: 10;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.assigned-avatars {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.edit-task-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 24px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.add-subtask-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+
+.dropdown-spacer {
+    height: 200px;
+    display: none;
+}
+
+.assigned-dropdown:has(.user-dropdown[style*="block"]) + .assigned-avatars + .dropdown-spacer {
+    display: block;
+}
+
+.assigned-user-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    justify-content: space-between;
+}
+
+.assigned-user-item:hover {
+    background: #f0f0f0;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
