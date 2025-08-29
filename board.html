@@ -25,10 +25,11 @@
     <script src="./scripts/drag_and_drop.js"></script>
     <script src="./scripts/board_templates.js"></script>
     <script src="./scripts/addTask.js"></script>
+    <script src="./scripts/liveSearch.js"></script>
     <script src="./scripts/editTask.js"></script>
     <title>Board</title>
 </head>
-
+x
 <body onload="init();">
     <div id="header-container"></div>
     <main class="main_content">
@@ -37,8 +38,8 @@
         <div class="site-title"><h1>Board</h1> 
             <div class="task-actions">
             <div class="searchbar">
-                <input class="search-input" type="search" placeholder="Find Task">
-                <button class="search-btn"><img src="./assets/icons/search.svg"></button>
+                <input id="searchInputBoards" class="search-input" type="search" placeholder="Find Task">
+                <button onclick=" liveSearchBoards()" class="search-btn"><img src="./assets/icons/search.svg"></button>
             </div>
             <button class="button-add-task" onclick="showAddTaskOverlay()">Add task <img src="./assets/icons/add_white.svg"></button></div></div>
         <div class="main_content_row gap-26" id="task-board" onload="renderTasks()">
