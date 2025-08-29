@@ -3,6 +3,33 @@
 
 let allTasks = [];
 
+
+
+// Live Search Funktionnen 
+
+
+function liveSearchBoards() {
+    let input = document.getElementById('searchInputBoards');
+
+    input.addEventListener('input', async () => {
+        const query = input.value.trim().toLowerCase();
+        if (query.length < 2) {
+            loadTasks();
+    }
+    await filterTasks(query);
+});
+}
+
+
+ async function filterTasks(query) {
+  let filteredTasks = allTasks.filter(task => {
+    let title = task.title.toLowerCase();
+    return title.includes(query);
+  });
+    updateHTML(filteredTasks);
+}
+// Ende! 
+
 async function resetTaskCategories() {
   try {
     const res = await fetch(BASE_URL + "/task.json");
@@ -36,15 +63,14 @@ function clearAllContainers() {
     });
 }
 
-
-
-function updateHTML() {
+function updateHTML(tasks = allTasks) {
     ["toDo", "inProgress", "awaitFeedback", "done"].forEach(containerId => {
         const container = document.getElementById(containerId);
         if (!container) return;
-        const tasksForContainer = allTasks.filter(task => task.category === containerId);
+        const tasksForContainer = tasks.filter(task => task.category === containerId);
         const placeholder = container.querySelector('.drag-placeholder');
         container.innerHTML = '';
+
         if (tasksForContainer.length === 0) {
             container.innerHTML = `<div class="empty-container"><p class="empty-container-text">${getEmptyText(containerId)}</p></div>`;
         } else {
@@ -53,9 +79,12 @@ function updateHTML() {
                 if (task.assignedTo) renderAssignedUserData(task.assignedTo, task.id);
             });
         }
+
         if (placeholder) container.appendChild(placeholder);
     });
 }
+
+
 
 function getEmptyText(containerId) {
     const texts = {
