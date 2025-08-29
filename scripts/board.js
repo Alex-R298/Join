@@ -161,7 +161,12 @@ async function loadTasks() {
     const tasks = Object.entries(data).map(([id, task]) => {
       const originalCategory = task.category;
       const normalizedCategory = normalizeCategory(originalCategory);
-      
+      if (task.subtaskElements && typeof task.subtaskElements[0] === 'string') {
+                task.subtaskElements = task.subtaskElements.map(text => ({
+                    text: text,
+                    completed: false
+                }));
+            }
       return {
         id,
         ...task,
@@ -176,6 +181,137 @@ async function loadTasks() {
   }
 }
 
+async function toggleSubtask(taskId, subtaskIndex) {
+    const task = allTasks.find(t => t.id === taskId);
+    if (!task) return;
+    
+    if (typeof task.subtaskElements[0] === 'string') {
+        task.subtaskElements = task.subtaskElements.map(text => ({
+            text: text,
+            completed: false
+        }));
+    }
+    
+    task.subtaskElements[subtaskIndex].completed = !task.subtaskElements[subtaskIndex].completed;
+    await saveTaskToFirebase(task);
+}
+
+function filterUsers(searchTerm) {
+    const userItems = document.querySelectorAll('.assigned-user-item');
+    const search = searchTerm.toLowerCase();
+    
+    userItems.forEach(item => {
+        const name = item.getAttribute('data-name');
+        if (name.includes(search)) {
+            item.style.display = 'flex';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+function toggleUserDropdown() {
+    const dropdown = document.getElementById('user-dropdown');
+    const arrow = document.querySelector('.dropdown-arrow');
+    const input = document.getElementById('assigned-input');
+    
+    if (dropdown.style.display === 'none') {
+        dropdown.style.display = 'block';
+        arrow.classList.add('open');
+        input.removeAttribute('readonly'); // Erlaube Eingabe für Suche
+        input.focus();
+    } else {
+        dropdown.style.display = 'none';
+        arrow.classList.remove('open');
+        input.setAttribute('readonly', true);
+        input.value = ''; // Leere Suchfeld
+        // Zeige alle User wieder
+        document.querySelectorAll('.assigned-user-item').forEach(item => {
+            item.style.display = 'flex';
+        });
+    }
+}
+
+async function saveTaskToFirebase(task) {
+    const response = await fetch(`${BASE_URL}/task/${task.id}.json`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(task)
+    });
+    return response.ok;
+}
+
+async function editTask(taskId) {
+    const task = allTasks.find(t => t.id === taskId);
+    if (!task) return;
+    
+    const container = document.getElementById("task-detail-container");
+    const usersArray = await loadUsers();
+    selectedPriority = task.priority;
+    container.innerHTML = getEditTaskTemplate(task, usersArray);
+
+     addSubtaskHoverEffectsWithDelegation();
+}
+
+async function deleteTask(taskId) {
+    const response = await fetch(`${BASE_URL}/task/${taskId}.json`, {
+        method: "DELETE"
+    });
+    if (response.ok) {
+        allTasks = allTasks.filter(t => t.id !== taskId);
+        updateHTML();
+        closeTaskOverlay();
+    }
+}
+
+async function saveEditedTask(taskId) {
+    const task = allTasks.find(t => t.id === taskId);
+    if (!task) return;
+    
+    const assignedCheckboxes = document.querySelectorAll('#user-dropdown input[type="checkbox"]:checked');
+    const assignedUsers = Array.from(assignedCheckboxes).map(cb => cb.value);
+    const subtaskElements = [];
+    const subtaskItems = document.querySelectorAll('#myList .subtask-text');
+    subtaskItems.forEach(item => {
+        subtaskElements.push({
+            text: item.textContent,
+            completed: false
+        });
+    });
+    
+    task.title = document.getElementById('edit-title').value;
+    task.description = document.getElementById('edit-description').value;
+    task.dueDate = document.getElementById('edit-datepicker').value;
+    task.priority = selectedPriority;
+    task.assignedTo = assignedUsers.length > 0 ? assignedUsers[0] : null;
+    task.subtaskElements = subtaskElements;
+    
+    await saveTaskToFirebase(task);
+    closeTaskOverlay();
+    updateHTML();
+}
+
+
+function updateAssignedAvatars() {
+    const checkedBoxes = document.querySelectorAll('#user-dropdown input[type="checkbox"]:checked');
+    const avatarsContainer = document.getElementById('assigned-avatars');
+    
+    avatarsContainer.innerHTML = '';
+    
+    checkedBoxes.forEach(checkbox => {
+        const userItem = checkbox.closest('.assigned-user-item');
+        const avatar = userItem.querySelector('.contact-avatar').cloneNode(true);
+        avatarsContainer.appendChild(avatar);
+    });
+}
+
+function closeEditTaskOverlay() {
+    const overlay = document.getElementById("edit-task-overlay");
+    overlay.classList.remove("visible");
+    setTimeout(() => {
+        overlay.classList.add("d-none");
+    }, 500);
+}
 
 function normalizeCategory(category) {
   if (category === 'technical-task' || category === 'user-story') {

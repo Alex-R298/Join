@@ -393,3 +393,15 @@
 .empty-container-text {
     font-size: 16px;
 }
+
+.spacer {
+    background-color: #D1D1D1;
+    width: 1px; 
+    height: 24px;
+    margin: 0 12px;
+}
+
+.task-details-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
