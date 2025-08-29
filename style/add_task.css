@@ -186,7 +186,6 @@ input[type="date"]::placeholder {
     box-shadow: 0px 4px 4px 0px #00000040;
 }
 
-
 /* Pop Up*/
 .popup {
   display: none; 
@@ -207,10 +206,6 @@ input[type="date"]::placeholder {
   border-radius: 10px;
   text-align: center;
 
-}
-.priority-btn {
-  background-color: transparent;
-  color: black;
 }
 
 .priority-btn.active {
@@ -294,3 +289,107 @@ input[type="date"]::placeholder {
     margin-left: 16px;
     font-size: 16px;
 }
+
+.custom-select-container {
+    position: relative;
+    width: 100%;
+}
+
+.custom-select {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    min-height: 40px;
+}
+
+.custom-select:hover {
+    border-color: #999;
+}
+
+.select-placeholder {
+    color: #666;
+}
+
+.dropdown-arrow {
+    font-size: 12px;
+    color: #666;
+    transition: transform 0.2s;
+}
+
+.custom-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background: white;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.assigne-option {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.custom-option:hover {
+    background-color: #f5f5f5;
+}
+
+.custom-option:last-child {
+    border-radius: 0 0 4px 4px;
+}
+
+.assignee {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 16px;
+    height: 56px;
+}
+
+.assignee.selected {
+    background-color: #2A3647;
+}
+
+.assignee.selected .assigned-name {
+    color: white;
+}
+
+.contact-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.assigned-name {
+    color: #333;
+    font-weight: 400;
+}
+
+.contact-displays {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.selected-assignee-avatars {
+    display: flex;
+    gap: 8px;
+}
+

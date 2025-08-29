@@ -288,14 +288,34 @@ function getAddPageTemplate(usersArray = []) {
         </div>
       </div>
   
-      <div class="input-with-label pb-8">
+      <div class="input-with-label">
         <label for="assigned_task">Assigned to</label>
-        <select class="minimal" id="assigned_task" placeholder="Select contacts to assign">
+        <div class="custom-select-container">
+            <div class="custom-select" id="assigned_task" onclick="toggleUserDropdown()">
+                <span class="select-placeholder">Select contacts to assign</span>
+                <span class="dropdown-arrow">▼</span>
+            </div>
+            <div class="custom-options d-none" id="assigne-options">
             ${usersArray
-              .map((u) => `<option value="${u.email}">${u.name}</option>`)
-              .join("")}
-            </select>
+            .map((user) => {
+                const assignedUser = renderAssignedUser(user.email);
+                return `
+                        <div class="assigne-option" data-value="${user.email}" onclick="selectUser('${user.email}')">
+                            <div class="assignee">
+                                <div class="contact-displays">
+                                    <div class="contact-avatar" style="background-color:${assignedUser.color}">${assignedUser.initials}</div>
+                                    <span class="assigned-name">${user.name}</span>
+                                </div>
+                                <input type="checkbox" id="${user.email}" name="${user.email}" value="${user.email}" onchange="updateAssignedUsers()">
+                            </div>
+                        </div>
+                    `;
+                    })
+                    .join("")}
+            </div>
+        </div>
       </div>
+      <div id="selected-assignees" class="selected-assignee-avatars"></div>
 
       <div class="input-with-label">
         <label for="category_task">Category<span style="color: #FF8190;">*</span></label>
@@ -305,8 +325,6 @@ function getAddPageTemplate(usersArray = []) {
         </select>
         <span class="input-invalid d-none">This field is required</span>
       </div>
-
-
 
       <div class="input-with-label">
         <label for="subtask_input">Subtasks</label>
@@ -321,8 +339,6 @@ function getAddPageTemplate(usersArray = []) {
         <div id="myList" class="subtasks-list">
         </div>
       </div>
-
-
 
     </div>
   </div>

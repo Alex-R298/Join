@@ -1,29 +1,29 @@
+// import { renderAssignedUser } from "./board.js";
+
 let selectedPriority = "medium";
 
 const priorityConfig = {
   urgent: {
     defaultIcon: "./assets/icons/prio_urgent_red.svg",
     activeIcon: "./assets/icons/prio_urgent_white.svg",
-    bg: "#FF3D00"
+    bg: "#FF3D00",
   },
   medium: {
     defaultIcon: "./assets/icons/prio_medium_orange.svg",
     activeIcon: "./assets/icons/prio_medium_white.svg",
-    bg: "#FFA800"
+    bg: "#FFA800",
   },
   low: {
     defaultIcon: "./assets/icons/prio_low_green.svg",
     activeIcon: "./assets/icons/prio_low_white.svg",
-    bg: "#7AE229"
-  }
+    bg: "#7AE229",
+  },
 };
-
 
 async function fetchBase() {
   try {
     const res = await fetch(BASE_URL + ".json");
     const data = await res.json();
-   
   } catch (err) {
     console.error("Fehler beim Laden:", err);
   }
@@ -50,9 +50,9 @@ async function addTask() {
       dueDate,
       priority: selectedPriority,
       assignedTo,
-      category,  
-      subtaskElements: Array.from(subtaskElements).map(el => el.textContent),
-      // AlexderRusse Note subTaskElements ggf. nochmal anpassen weil Array 
+      category,
+      subtaskElements: Array.from(subtaskElements).map((el) => el.textContent),
+      // AlexderRusse Note subTaskElements ggf. nochmal anpassen weil Array
     };
 
     // Wait for POST-Request
@@ -61,7 +61,7 @@ async function addTask() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newTask),
     });
-    
+
     if (!response.ok) {
       throw new Error("HTTP error " + response.status);
     }
@@ -70,7 +70,7 @@ async function addTask() {
     const data = await response.json();
     console.log("Task gespeichert:", data);
     await renderTasks();
-    updateHTML(); 
+    updateHTML();
     showPopup();
   } catch (error) {
     console.error("Fehler beim Speichern der Task:", error);
@@ -80,16 +80,15 @@ async function addTask() {
   }
 }
 
-async function loadTasksDebug(){
+async function loadTasksDebug() {
   const res = await fetch(BASE_URL + "/task.json");
   const data = await res.json();
 }
 
-function activMediumBtn(){
+function activMediumBtn() {
   document.addEventListener("DOMContentLoaded", () => {
-  selectPriority(document.querySelector('[data-priority="medium"]'));
-});
-
+    selectPriority(document.querySelector('[data-priority="medium"]'));
+  });
 }
 
 function selectPriority(button) {
@@ -112,12 +111,11 @@ function selectPriority(button) {
   selectedPriority = button.dataset.priority;
 }
 
-
 async function clearInputs() {
   document.getElementById("title").value = "";
   document.getElementById("task_description").value = "";
-  document.getElementById("datepicker").value = ""; 
-  document.getElementById("assigned_task").value = "";   
+  document.getElementById("datepicker").value = "";
+  document.getElementById("assigned_task").value = "";
   document.getElementById("category_task").value = "";
   document.getElementById("myList").innerHTML = "";
 }
@@ -166,14 +164,13 @@ function checkDate() {
 
 // Subtask
 
-
-function addSubtask(){
+function addSubtask() {
   let input = document.getElementById("subtask_input");
   let list = document.getElementById("myList");
   let value = input.value.trim();
 
   if (value) {
-    list.innerHTML += createListItemTemplate(value)
+    list.innerHTML += createListItemTemplate(value);
     input.value = "";
   }
   changeButtons();
@@ -196,7 +193,7 @@ function changeButtons() {
   }
 }
 
-function clearInput(){
+function clearInput() {
   let input = document.getElementById("subtask_input");
   input.value = "";
   changeButtons();
@@ -208,7 +205,7 @@ function editSubtask(button) {
 
   let input = document.createElement("input");
   input.type = "text";
-  input.value = span.textContent;  
+  input.value = span.textContent;
   input.className = "edit-input";
 
   li.replaceChild(input, span);
@@ -224,9 +221,12 @@ function editSubtask(button) {
   });
 }
 
-
 function handleSubtaskClick(event, li) {
-  if (event.target.closest(".icon-btn.delete-btn") || event.target.closest(".icon-btn.delete-btn img")) return;
+  if (
+    event.target.closest(".icon-btn.delete-btn") ||
+    event.target.closest(".icon-btn.delete-btn img")
+  )
+    return;
 
   let editBtn = li.querySelector(".icon-btn.edit-btn");
   let editImg = editBtn.querySelector("img");
@@ -295,15 +295,13 @@ function saveEdit(input, li) {
     span.textContent = newValue;
     li.replaceChild(span, input);
   } else {
-    
     li.remove();
   }
 }
 function deleteSubtask(button) {
-  let li = button.closest("li"); 
+  let li = button.closest("li");
   if (li) li.remove();
 }
-
 
 function addSubtaskHoverEffectsWithDelegation() {
   document.body.addEventListener("mouseover", function (e) {
@@ -324,6 +322,65 @@ function addSubtaskHoverEffectsWithDelegation() {
         if (editButtons) {
           editButtons.classList.add("d-none");
         }
+      }
+    }
+  });
+}
+
+function toggleUserDropdown() {
+  const options = document.getElementById("assigne-options");
+  options.classList.toggle("d-none");
+}
+
+function selectUser(email) {
+  const assignedUser = renderAssignedUser(email);
+  const selectElement = document.getElementById("assigned_task");
+
+  selectElement.setAttribute("data-selected", email);
+}
+
+document.addEventListener("click", function (event) {
+  const dropdown = document.querySelector(".custom-select-container");
+  const userOptions = document.getElementById("assigne-options");
+
+  if (dropdown && userOptions && !dropdown.contains(event.target)) {
+    userOptions.classList.add("d-none");
+  }
+});
+
+
+function getSelectedUser() {
+  const selectElement = document.getElementById("assigned_task");
+  return selectElement.getAttribute("data-selected") || "";
+}
+
+function updateAssignedUsers() {
+  const selectedAssignees = document.getElementById("selected-assignees");
+  const checkboxes = document.querySelectorAll(
+    '#assigne-options input[type="checkbox"]'
+  );
+
+  selectedAssignees.innerHTML = "";
+
+  checkboxes.forEach((cb) => {
+    if (cb.checked) {
+      const userEmail = cb.value;
+      const assignedUser = renderAssignedUser(userEmail);
+
+      const assigneeOption = cb.closest(".assignee");
+      if (assigneeOption) {
+        assigneeOption.classList.add("selected");
+      }
+
+      selectedAssignees.innerHTML += `
+        <div class="contact-avatar" style="background-color:${assignedUser.color}">
+          ${assignedUser.initials}
+        </div>
+      `;
+    } else {
+      const assigneeOption = cb.closest(".assignee");
+      if (assigneeOption) {
+        assigneeOption.classList.remove("selected");
       }
     }
   });
