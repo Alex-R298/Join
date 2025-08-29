@@ -1,6 +1,6 @@
 function toggleEditUserDropdown() {
     const dropdown = document.getElementById('edit-user-dropdown');
-    const arrow = document.querySelector('.dropdown-arrow');
+    const arrow = document.querySelector('#edit-assigned-input + .dropdown-arrow');
     const input = document.getElementById('edit-assigned-input');
     
     if (dropdown.style.display === "none" || dropdown.style.display === "") {

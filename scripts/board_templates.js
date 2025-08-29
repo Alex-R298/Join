@@ -180,7 +180,7 @@ function getEditTaskTemplate(task, usersArray = []) {
     </div>
     <div class="edit-task-content">
         <div class="input-with-label">
-            <label for="edit-title">Title<span style="color: #FF8190;">*</span></label>
+            <label for="edit-title">Title</label>
             <input class="input" type="text" id="edit-title" value="${task.title}" required>
         </div>
         
@@ -190,7 +190,7 @@ function getEditTaskTemplate(task, usersArray = []) {
         </div>
         
         <div class="input-with-label">
-            <label for="edit-datepicker">Due date<span style="color: #FF8190;">*</span></label>
+            <label for="edit-datepicker">Due date</label>
             <input class="input" type="date" id="edit-datepicker" value="${task.dueDate}" required>
         </div>
         
@@ -222,7 +222,7 @@ function getEditTaskTemplate(task, usersArray = []) {
                            placeholder="Select contacts to assign" 
                            onclick="toggleEditUserDropdown()"
                            oninput="filterEditUsers(this.value)">
-                    <img src="./assets/icons/arrow_drop_down.svg" class="dropdown-arrow" onclick="toggleEditUserDropdown()">
+                    <img src="./assets/icons/arrow_drop_downarea.svg" class="dropdown-arrow" onclick="toggleEditUserDropdown()">
                     
                     <div id="edit-user-dropdown" class="user-dropdown" style="display: none;">
                         ${usersArray.map(user => `
@@ -290,7 +290,7 @@ function getEditTaskTemplate(task, usersArray = []) {
     </div>
     
     <div class="edit-task-footer">
-        <button class="button-primary" onclick="saveEditedTask('${task.id}')">OK</button>
+        <button class="button-primary" onclick="saveEditedTask('${task.id}')">OK <img src="./assets/icons/check_white.svg" alt=""></button>
     </div>
     `;
 }

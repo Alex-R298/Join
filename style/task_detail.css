@@ -27,8 +27,8 @@
 
 .dropdown-arrow {
     position: absolute;
-    right: 12px;
     top: 50%;
+    right: 50px;
     transform: translateY(-50%);
     cursor: pointer;
     transition: transform 0.3s ease;
@@ -56,20 +56,27 @@
     margin-top: 8px;
     z-index: 10;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 422px;
 }
 
 .assigned-avatars {
     display: flex;
-    gap: 8px;
     margin-top: 12px;
     flex-wrap: wrap;
+}
+
+.assigned-avatars .contact-avatar {
+    margin-left: -8px;
+    margin-right: 0;
+}
+
+.assigned-avatars .contact-avatar:first-child {
+    margin-left: 0;
 }
 
 .edit-task-footer {
     display: flex;
     justify-content: flex-end;
-    padding-top: 24px;
-    border-top: 1px solid #e0e0e0;
 }
 
 .add-subtask-btn {
@@ -87,16 +94,17 @@
     display: none;
 }
 
-.assigned-section:has(.user-dropdown:not(.d-none)) .dropdown-spacer {
+.assigned-dropdown:has(.user-dropdown[style*="block"]) + .assigned-avatars + .dropdown-spacer {
     display: block;
 }
 
 .assigned-user-item {
     display: flex;
     align-items: center;
-    padding: 8px 12px;
+    padding: 8px 20px;
     cursor: pointer;
     justify-content: space-between;
+    
 }
 
 .assigned-user-item:hover {
