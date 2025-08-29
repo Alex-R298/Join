@@ -237,7 +237,8 @@ function signedUpTemplate() {
     `;
 }
 
-function getAddPageTemplate(usersArray = []) {
+function getAddPageTemplate(task, usersArray = []) {
+    const assignedUsers = task.assignedTo ? (Array.isArray(task.assignedTo) ? task.assignedTo : [task.assignedTo]) : []; 
     return `
     <div class="add-task-header">
         <h1>Add Task</h1>
@@ -289,33 +290,63 @@ function getAddPageTemplate(usersArray = []) {
       </div>
   
       <div class="input-with-label">
-        <label for="assigned_task">Assigned to</label>
-        <div class="custom-select-container">
-            <div class="custom-select" id="assigned_task" onclick="toggleUserDropdown()">
-                <span class="select-placeholder">Select contacts to assign</span>
-                <span class="dropdown-arrow">▼</span>
-            </div>
-            <div class="custom-options d-none" id="assigne-options">
-            ${usersArray
-            .map((user) => {
-                const assignedUser = renderAssignedUser(user.email);
-                return `
-                        <div class="assigne-option" data-value="${user.email}" onclick="selectUser('${user.email}')">
-                            <div class="assignee">
-                                <div class="contact-displays">
-                                    <div class="contact-avatar" style="background-color:${assignedUser.color}">${assignedUser.initials}</div>
-                                    <span class="assigned-name">${user.name}</span>
-                                </div>
-                                <input type="checkbox" id="${user.email}" name="${user.email}" value="${user.email}" onchange="updateAssignedUsers()">
-                            </div>
+        <label for="assigned-input">Assigned to</label>
+        <div class="assigned-dropdown">
+            <input class="input dropdown-input" 
+                   type="text" 
+                   id="assigned-input" 
+                   placeholder="Select contacts to assign" 
+                   onclick="toggleUserDropdown()"
+                   oninput="filterUsers(this.value)">
+            <img src="./assets/icons/arrow_drop_down.svg" class="dropdown-arrow" onclick="toggleUserDropdown()">
+            
+            <div id="user-dropdown" class="user-dropdown" style="display: none;">
+                ${usersArray
+                  .map(
+                    (user) => `
+                    <div class="assigned-user-item" data-name="${user.name.toLowerCase()}">
+                        <div class="user-info">
+                            <div class="contact-avatar" style="background-color:${getAvatarColor(
+                              user.name
+                            )}">${getInitials(user.name)}</div>
+                            <span>${user.name}</span>
                         </div>
-                    `;
-                    })
-                    .join("")}
+                        <div class="custom-checkbox">
+                            <input type="checkbox"
+                                   id="user-${user.email}"
+                                   value="${user.email}"
+                                   onchange="updateAssignedAvatars()"
+                                   ${
+                                     assignedUsers.includes(user.email)
+                                       ? "checked"
+                                       : ""
+                                   }>
+                            <label for="user-${
+                              user.email
+                            }" class="checkbox-label">
+                                <span class="checkbox-custom"></span>
+                            </label>
+                        </div>
+                    </div>
+                `
+                  )
+                  .join("")}
             </div>
         </div>
       </div>
-      <div id="selected-assignees" class="selected-assignee-avatars"></div>
+              <div id="assigned-avatars" class="assigned-avatars">
+            ${assignedUsers
+              .map((email) => {
+                const user = usersArray.find((u) => u.email === email);
+                if (user) {
+                  return `<div class="contact-avatar" style="background-color:${getAvatarColor(
+                    user.name
+                  )}">${getInitials(user.name)}</div>`;
+                }
+                return "";
+              })
+              .join("")}
+        </div>
 
       <div class="input-with-label">
         <label for="category_task">Category<span style="color: #FF8190;">*</span></label>
