@@ -110,33 +110,49 @@ function getEditTaskTemplate(task, usersArray = []) {
     <div class="edit-task-content">
         <div class="input-with-label">
             <label for="edit-title">Title<span style="color: #FF8190;">*</span></label>
-            <input class="input" type="text" id="edit-title" value="${task.title}" required>
+            <input class="input" type="text" id="edit-title" value="${
+              task.title
+            }" required>
         </div>
         
         <div class="input-with-label">
             <label for="edit-description">Description</label>
-            <textarea id="edit-description">${task.description || ''}</textarea>
+            <textarea id="edit-description">${task.description || ""}</textarea>
         </div>
         
         <div class="input-with-label">
             <label for="edit-datepicker">Due date<span style="color: #FF8190;">*</span></label>
-            <input class="input" type="date" id="edit-datepicker" value="${task.dueDate}" required>
+            <input class="input" type="date" id="edit-datepicker" value="${
+              task.dueDate
+            }" required>
         </div>
         
         <div class="input-with-label">
             <label for="priority-section">Priority</label>
             <div class="priority-inputs-container" id="priority-section">
-                <button class="priority-btn ${task.priority === 'urgent' ? 'active' : ''}" data-priority="urgent" onclick="selectPriority(this)">
+                <button class="priority-btn ${
+                  task.priority === "urgent" ? "active" : ""
+                }" data-priority="urgent" onclick="selectPriority(this)">
                     Urgent
-                    <img src="./assets/icons/prio_urgent_${task.priority === 'urgent' ? 'white' : 'red'}.svg" alt="">
+                    <img src="./assets/icons/prio_urgent_${
+                      task.priority === "urgent" ? "white" : "red"
+                    }.svg" alt="">
                 </button>
-                <button class="priority-btn ${task.priority === 'medium' ? 'active' : ''}" data-priority="medium" onclick="selectPriority(this)">
+                <button class="priority-btn ${
+                  task.priority === "medium" ? "active" : ""
+                }" data-priority="medium" onclick="selectPriority(this)">
                     Medium
-                    <img src="./assets/icons/prio_medium_${task.priority === 'medium' ? 'white' : 'orange'}.svg" alt="">
+                    <img src="./assets/icons/prio_medium_${
+                      task.priority === "medium" ? "white" : "orange"
+                    }.svg" alt="">
                 </button>
-                <button class="priority-btn ${task.priority === 'low' ? 'active' : ''}" data-priority="low" onclick="selectPriority(this)">
+                <button class="priority-btn ${
+                  task.priority === "low" ? "active" : ""
+                }" data-priority="low" onclick="selectPriority(this)">
                     Low
-                    <img src="./assets/icons/prio_low_${task.priority === 'low' ? 'white' : 'green'}.svg" alt="">
+                    <img src="./assets/icons/prio_low_${
+                      task.priority === "low" ? "white" : "green"
+                    }.svg" alt="">
                 </button>
             </div>
         </div>
@@ -151,13 +167,17 @@ function getEditTaskTemplate(task, usersArray = []) {
                    placeholder="Select contacts to assign" 
                    onclick="toggleUserDropdown()"
                    oninput="filterUsers(this.value)">
-            <img src="./assets/icons/arrow_drop_down.svg" class="dropdown-arrow" onclick="toggleUserDropdown()">
+            <img src="./assets/icons/arrow_drop_downarea.svg" class="dropdown-arrow" onclick="toggleUserDropdown()">
             
             <div id="user-dropdown" class="user-dropdown d-none">
-                ${usersArray.map(user => `
+                ${usersArray
+                  .map(
+                    (user) => `
                     <div class="assigned-user-item" data-name="${user.name.toLowerCase()}">
                         <div class="user-info">
-                            <div class="contact-avatar" style="background-color:${getAvatarColor(user.name)}">${getInitials(user.name)}</div>
+                            <div class="contact-avatar" style="background-color:${getAvatarColor(
+                              user.name
+                            )}">${getInitials(user.name)}</div>
                             <span>${user.name}</span>
                         </div>
                         <div class="custom-checkbox">
@@ -165,24 +185,36 @@ function getEditTaskTemplate(task, usersArray = []) {
                                    id="user-${user.email}"
                                    value="${user.email}"
                                    onchange="updateAssignedAvatars()"
-                                   ${assignedUsers.includes(user.email) ? 'checked' : ''}>
-                            <label for="user-${user.email}" class="checkbox-label">
+                                   ${
+                                     assignedUsers.includes(user.email)
+                                       ? "checked"
+                                       : ""
+                                   }>
+                            <label for="user-${
+                              user.email
+                            }" class="checkbox-label">
                                 <span class="checkbox-custom"></span>
                             </label>
                         </div>
                     </div>
-                `).join('')}
+                `
+                  )
+                  .join("")}
             </div>
         </div>
         
         <div id="assigned-avatars" class="assigned-avatars">
-            ${assignedUsers.map(email => {
-                const user = usersArray.find(u => u.email === email);
+            ${assignedUsers
+              .map((email) => {
+                const user = usersArray.find((u) => u.email === email);
                 if (user) {
-                    return `<div class="contact-avatar" style="background-color:${getAvatarColor(user.name)}">${getInitials(user.name)}</div>`;
+                  return `<div class="contact-avatar" style="background-color:${getAvatarColor(
+                    user.name
+                  )}">${getInitials(user.name)}</div>`;
                 }
-                return '';
-            }).join('')}
+                return "";
+              })
+              .join("")}
         </div>
         
         <div class="dropdown-spacer"></div> <!-- Spacer für Dropdown -->
@@ -200,9 +232,15 @@ function getEditTaskTemplate(task, usersArray = []) {
                 </div>
             </div>
             <ul id="myList" class="subtasks-list">
-                ${task.subtaskElements ? task.subtaskElements.map((subtask, index) => `
+                ${
+                  task.subtaskElements
+                    ? task.subtaskElements
+                        .map(
+                          (subtask, index) => `
                     <li class="subtask-listelement" onclick="handleSubtaskClick(event, this)">
-                        <span class="subtask-text">${subtask.text || subtask}</span>
+                        <span class="subtask-text">${
+                          subtask.text || subtask
+                        }</span>
                         <div class="subtask-edit-btns d-none">
                             <button class="icon-btn edit-btn" type="button" onclick="event.stopPropagation();">
                                 <img src="./assets/icons/edit.svg" alt="Edit">
@@ -213,13 +251,19 @@ function getEditTaskTemplate(task, usersArray = []) {
                             </button>
                         </div>
                     </li>
-                `).join('') : ''}
+                `
+                        )
+                        .join("")
+                    : ""
+                }
             </ul>
         </div>
     </div>
     
     <div class="edit-task-footer">
-        <button class="button-primary" onclick="saveEditedTask('${task.id}')">OK</button>
+        <button class="button-primary" onclick="saveEditedTask('${
+          task.id
+        }')">OK</button>
     </div>
     `;
 }

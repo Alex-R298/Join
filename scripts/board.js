@@ -215,22 +215,23 @@ function toggleUserDropdown() {
     const arrow = document.querySelector('.dropdown-arrow');
     const input = document.getElementById('assigned-input');
     
-    if (dropdown.style.display === 'none') {
-        dropdown.style.display = 'block';
-        arrow.classList.add('open');
-        input.removeAttribute('readonly'); // Erlaube Eingabe für Suche
-        input.focus();
+    if (dropdown.classList.contains("d-none")) {
+      dropdown.classList.remove("d-none");
+      arrow.classList.add("open");
+      input.removeAttribute("readonly");
+      input.focus();
     } else {
-        dropdown.style.display = 'none';
-        arrow.classList.remove('open');
-        input.setAttribute('readonly', true);
-        input.value = ''; // Leere Suchfeld
-        // Zeige alle User wieder
-        document.querySelectorAll('.assigned-user-item').forEach(item => {
-            item.style.display = 'flex';
-        });
+    dropdown.classList.add("d-none");
+    arrow.classList.remove("open");
+    input.setAttribute("readonly", true);
+    input.value = "";
+      // Zeige alle User wieder
+      document.querySelectorAll(".assigned-user-item").forEach((item) => {
+        item.style.display = "flex";
+      });
     }
 }
+
 
 async function saveTaskToFirebase(task) {
     const response = await fetch(`${BASE_URL}/task/${task.id}.json`, {
