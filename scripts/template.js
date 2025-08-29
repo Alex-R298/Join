@@ -238,7 +238,7 @@ function signedUpTemplate() {
 }
 
 function getAddPageTemplate(task, usersArray = []) {
-    const assignedUsers = task.assignedTo ? (Array.isArray(task.assignedTo) ? task.assignedTo : [task.assignedTo]) : []; 
+    const assignedUsers = task.assignedTo ? (Array.isArray(task.assignedTo) ? task.assignedTo : [task.assignedTo]) : [];
     return `
     <div class="add-task-header">
         <h1>Add Task</h1>
@@ -249,16 +249,16 @@ function getAddPageTemplate(task, usersArray = []) {
   <div class="inputs-left">
     <div class="task-inputs">
       <div class="input-with-label">
-        <label for="name">Title<span style="color: #FF8190;">*</span></label>
+        <label for="title">Title<span style="color: #FF8190;">*</span></label>
         <input class="input" type="text" id="title" name="title" required placeholder="Enter a title">
         <span class="input-invalid d-none">This field is required</span>
       </div>
       <div class="input-with-label description-input pb-16">
-        <label for="name">Description</label>
+        <label for="description">Description</label>
         <textarea id="task_description" placeholder="Enter a Description"></textarea>
       </div>
       <div class="input-with-label">
-        <label for="name">Due date<span style="color: #FF8190;">*</span></label>
+        <label for="datepicker">Due date<span style="color: #FF8190;">*</span></label>
         <input class="input" type="date" id="datepicker" name="datepicker" required placeholder="dd/mm/yyyy">
         <span id="date-error-message" class="input-invalid d-none">This field is required</span>
       </div>
@@ -290,17 +290,17 @@ function getAddPageTemplate(task, usersArray = []) {
       </div>
   
       <div class="input-with-label">
-        <label for="assigned-input">Assigned to</label>
+        <label for="assignee-input">Assigned to</label>
         <div class="assigned-dropdown">
-            <input class="input dropdown-input" 
+            <input class="input input-assignees dropdown-input" 
                    type="text" 
-                   id="assigned-input" 
+                   id="assignee-input" 
                    placeholder="Select contacts to assign" 
-                   onclick="toggleUserDropdown()"
-                   oninput="filterUsers(this.value)">
-            <img src="./assets/icons/arrow_drop_down.svg" class="dropdown-arrow" onclick="toggleUserDropdown()">
+                   onclick="toggleAssigneeDropdown()"
+                   oninput="filterAssignees(this.value)">
+            <img src="./assets/icons/arrow_drop_downarea.svg" class="dropdown-arrow" onclick="toggleAssigneeDropdown()">
             
-            <div id="user-dropdown" class="user-dropdown" style="display: none;">
+            <div id="assignee-dropdown" class="user-dropdown d-none">
                 ${usersArray
                   .map(
                     (user) => `
@@ -315,7 +315,7 @@ function getAddPageTemplate(task, usersArray = []) {
                             <input type="checkbox"
                                    id="user-${user.email}"
                                    value="${user.email}"
-                                   onchange="updateAssignedAvatars()"
+                                   onchange="updateAssigneeAvatars()"
                                    ${
                                      assignedUsers.includes(user.email)
                                        ? "checked"
@@ -327,8 +327,7 @@ function getAddPageTemplate(task, usersArray = []) {
                                 <span class="checkbox-custom"></span>
                             </label>
                         </div>
-                    </div>
-                `
+                    </div> `
                   )
                   .join("")}
             </div>
@@ -347,10 +346,12 @@ function getAddPageTemplate(task, usersArray = []) {
               })
               .join("")}
         </div>
+        <div class="dropdown-spacer"></div> 
 
       <div class="input-with-label">
         <label for="category_task">Category<span style="color: #FF8190;">*</span></label>
-        <select class="minimal" id="category_task" required placeholder="Select task category">
+        <select class="minimal" id="category_task" required>
+        <option value="" disabled selected>Select task category</option>
           <option value="user-story">User Story</option>
           <option value="technical-task">Technical Task</option>
         </select>

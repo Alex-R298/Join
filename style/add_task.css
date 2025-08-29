@@ -67,6 +67,10 @@
   font-size: 20px;
 }
 
+.input-assignees {
+    width: 440px;
+}
+
 select {
     width: 440px;
     height: 48px;

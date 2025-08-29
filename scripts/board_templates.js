@@ -153,7 +153,7 @@ function getEditTaskTemplate(task, usersArray = []) {
                    oninput="filterUsers(this.value)">
             <img src="./assets/icons/arrow_drop_down.svg" class="dropdown-arrow" onclick="toggleUserDropdown()">
             
-            <div id="user-dropdown" class="user-dropdown" style="display: none;">
+            <div id="user-dropdown" class="user-dropdown d-none">
                 ${usersArray.map(user => `
                     <div class="assigned-user-item" data-name="${user.name.toLowerCase()}">
                         <div class="user-info">

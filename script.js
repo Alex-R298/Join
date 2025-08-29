@@ -99,20 +99,28 @@ function loadSidebar() {
   }
 }
 
-async function loadAddPage() {
+async function loadAddPage(task = {}) {
+  try {
     const res = await fetch(BASE_URL + "/user.json");
     const data = await res.json();
-    const usersArray = Object.values(data).filter(item => item.name);
+    const usersArray = Object.values(data).filter((user) => user.name);
 
-    let addPageContainer = document.getElementById('add_task_template');
+    let addPageContainer = document.getElementById("add_task_template");
     let addBoardOverlay = document.getElementById("add-task-container");
 
-      if (addPageContainer) {
-        addPageContainer.innerHTML = getAddPageTemplate(usersArray)
-      } else if (addBoardOverlay) {
-        addBoardOverlay.innerHTML = getAddPageTemplate(usersArray);
-      }
-   return usersArray;
+    if (addPageContainer) {
+      addPageContainer.innerHTML = getAddPageTemplate(task, usersArray);
+    } else if (addBoardOverlay) {
+      addBoardOverlay.innerHTML = getAddPageTemplate(task, usersArray);
+    }
+
+    updateAssigneeAvatars();
+
+    return usersArray;
+  } catch (error) {
+    console.error("Fehler beim Laden der Add Page:", error);
+    return [];
+  }
   }
 
 
