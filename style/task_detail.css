@@ -87,7 +87,7 @@
     display: none;
 }
 
-.assigned-dropdown:has(.user-dropdown[style*="block"]) + .assigned-avatars + .dropdown-spacer {
+.assigned-section:has(.user-dropdown:not(.d-none)) .dropdown-spacer {
     display: block;
 }
 
