@@ -68,8 +68,9 @@ async function addTask() {
 
     // Wait for JSON-Response
     const data = await response.json();
-
     console.log("Task gespeichert:", data);
+    await renderTasks();
+    updateHTML(); 
     showPopup();
   } catch (error) {
     console.error("Fehler beim Speichern der Task:", error);
