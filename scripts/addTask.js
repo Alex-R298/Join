@@ -31,7 +31,10 @@ async function addTask() {
     const title = document.getElementById("title").value;
     const description = document.getElementById("task_description").value;
     const dueDate = document.getElementById("datepicker").value;
-    const assignedTo = document.getElementById("assigned_task").value;
+    const checkedUsers = Array.from(
+    document.querySelectorAll('input[type="checkbox"][id^="user-"]:checked')
+    ).map(cb => cb.value);
+
     const category = document.getElementById("category_task").value;
     const subtaskElements = document.querySelectorAll(".subtask-text");
     try {
@@ -43,7 +46,7 @@ async function addTask() {
             description,
             dueDate,
             priority: selectedPriority,
-            assignedTo,
+            assignedTo: checkedUsers,
             category,  
             subtaskElements: Array.from(subtaskElements).map(el => ({
                 text: el.textContent,
