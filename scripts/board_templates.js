@@ -33,11 +33,10 @@ function taskOnBoardTemplate(task) {
 function taskDetailOverlayTemplate(task) {
     const badgeCategory = task.originalCategory || task.category;
     const badge = getBadgeData({ ...task, category: badgeCategory });
-    const { text: priorityText, icon: priorityIcon } = getPriorityData(
-        task.priority
-    );
+    const { text: priorityText, icon: priorityIcon } = getPriorityData(task.priority);
     const dueDate = formatDate(task.dueDate);
-    const assignedUser = renderAssignedUser(task.assignedTo);
+    const assignedUser = task.assignedTo || []; 
+
     return `
         <div class="add-task-header">
             <div class="badge ${badge.className}">${badge.text}</div>
@@ -53,15 +52,27 @@ function taskDetailOverlayTemplate(task) {
             <div class="detail-row">
                 <span class="label">Priority:</span>
                 <span class="value">${priorityText}
-            <img src="${priorityIcon}" alt="${priorityText}" class="prio-icon" /></span>
+                    <img src="${priorityIcon}" alt="${priorityText}" class="prio-icon" />
+                </span>
             </div>
         </div>
         <div class="assigned-to-container">
             <span class="label">Assigned To:</span>
-            <div class="assigned-user">
-                <div class="contact-avatar" style="background-color:${assignedUser.color}">${assignedUser.initials}</div>
-                <span class="assigned-name">${assignedUser.name}</span>
-            </div>
+                ${
+                    assignedUser.length === 0
+                        ? '<span class="no-assigned">No users assigned</span>'
+                        : assignedUser  
+                              .map(email => {
+                                  const { initials, color, name } = renderAssignedUser(email);
+                                  return `
+                                      <div class="assigned-user">
+                                          <div class="contact-avatar" style="background-color:${color}">${initials}</div>
+                                          <span class="assigned-name">${name}</span>
+                                      </div>
+                                  `;
+                              })
+                              .join('')
+                }
         </div>
         <div class="subtasks-container">
             <span class="label">Subtasks</span>
@@ -101,56 +112,6 @@ function renderSubtasks(subtasks, taskId) {
 }
 
 
-function taskDetailOverlayTemplate(task) {
-    const badgeCategory = task.originalCategory || task.category;
-    const badge = getBadgeData({ ...task, category: badgeCategory });
-    const { text: priorityText, icon: priorityIcon } = getPriorityData(
-        task.priority
-    );
-    const dueDate = formatDate(task.dueDate);
-    const assignedUser = renderAssignedUser(task.assignedTo);
-    return `
-        <div class="add-task-header">
-            <div class="badge ${badge.className}">${badge.text}</div>
-            <button id="btn-overlay-close" class="btn-overlay-close" onclick="closeTaskOverlay()"><img src="./assets/icons/close.svg"></button>
-        </div>
-        <h1>${task.title}</h1>
-        <p>${task.description}</p>
-        <div class="task-required-infos">
-            <div class="detail-row">
-                <span class="label">Due Date:</span>
-                <span class="value">${formatDate(task.dueDate)}</span>
-            </div>
-            <div class="detail-row">
-                <span class="label">Priority:</span>
-                <span class="value">${priorityText}
-            <img src="${priorityIcon}" alt="${priorityText}" class="prio-icon" /></span>
-            </div>
-        </div>
-        <div class="assigned-to-container">
-            <span class="label">Assigned To:</span>
-            <div class="assigned-user">
-                <div class="contact-avatar" style="background-color:${assignedUser.color}">${assignedUser.initials}</div>
-                <span class="assigned-name">${assignedUser.name}</span>
-            </div>
-        </div>
-        <div class="subtasks-container">
-            <span class="label">Subtasks</span>
-            <div class="subtasks" id="subtasks-${task.id}">
-                ${renderSubtasks(task.subtaskElements, task.id)}
-            </div>
-        </div>
-        <div class="task-details-buttons">
-            <button onclick="deleteTask('${task.id}')" class="button-details" type="button">
-                <img src="./assets/icons/delete.svg" alt=""> Delete
-            </button>
-            <div class="spacer"></div>
-            <button onclick="editTask('${task.id}')" class="button-details" type="button">
-                <img src="./assets/icons/edit.svg" alt=""> Edit
-            </button>
-        </div>
-    `;
-}
 
 function renderSubtasks(subtasks, taskId) {
     if (!subtasks || subtasks.length === 0) return '';

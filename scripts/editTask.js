@@ -165,6 +165,34 @@ function deleteEditSubtask(button) {
     if (li) li.remove();
 }
 
+
+// async function saveEditedTask(taskId) {
+//     const task = allTasks.find(t => t.id === taskId);
+//     if (!task) return;
+    
+//     const assignedCheckboxes = document.querySelectorAll('#edit-user-dropdown input[type="checkbox"]:checked');
+//     const assignedUsers = Array.from(assignedCheckboxes).map(cb => cb.value);
+//     const subtaskElements = [];
+//     const subtaskItems = document.querySelectorAll('#editMyList .subtask-text');
+//     subtaskItems.forEach(item => {
+//         subtaskElements.push({
+//             text: item.textContent,
+//             completed: false
+//         });
+//     });
+    
+//     task.title = document.getElementById('edit-title').value;
+//     task.description = document.getElementById('edit-description').value;
+//     task.dueDate = document.getElementById('edit-datepicker').value;
+//     task.priority = selectedPriority;
+//     task.assignedTo = assignedUsers.length > 0 ? assignedUsers[0] : null;
+//     task.subtaskElements = subtaskElements;
+    
+//     await saveTaskToFirebase(task);
+//     closeTaskOverlay();
+//     updateHTML();
+// }
+
 // 3. ANGEPASSTE saveEditedTask Funktion
 async function saveEditedTask(taskId) {
     const task = allTasks.find(t => t.id === taskId);
@@ -185,7 +213,7 @@ async function saveEditedTask(taskId) {
     task.description = document.getElementById('edit-description').value;
     task.dueDate = document.getElementById('edit-datepicker').value;
     task.priority = selectedPriority;
-    task.assignedTo = assignedUsers.length > 0 ? assignedUsers[0] : null;
+    task.assignedTo = assignedUsers.length > 0 ? [...assignedUsers] : [];
     task.subtaskElements = subtaskElements;
     
     await saveTaskToFirebase(task);

@@ -63,6 +63,27 @@ function clearAllContainers() {
     });
 }
 
+// function updateHTML(tasks = allTasks) {
+//     ["toDo", "inProgress", "awaitFeedback", "done"].forEach(containerId => {
+//         const container = document.getElementById(containerId);
+//         if (!container) return;
+//         const tasksForContainer = tasks.filter(task => task.category === containerId);
+//         const placeholder = container.querySelector('.drag-placeholder');
+//         container.innerHTML = '';
+
+//         if (tasksForContainer.length === 0) {
+//             container.innerHTML = `<div class="empty-container"><p class="empty-container-text">${getEmptyText(containerId)}</p></div>`;
+//         } else {
+//             tasksForContainer.forEach(task => {
+//                 container.insertAdjacentHTML('beforeend', taskOnBoardTemplate(task));
+//                 if (task.assignedTo) renderAssignedUserData(task.assignedTo, task.id);
+//             });
+//         }
+
+//         if (placeholder) container.appendChild(placeholder);
+//     });
+// }
+
 function updateHTML(tasks = allTasks) {
     ["toDo", "inProgress", "awaitFeedback", "done"].forEach(containerId => {
         const container = document.getElementById(containerId);
@@ -76,7 +97,11 @@ function updateHTML(tasks = allTasks) {
         } else {
             tasksForContainer.forEach(task => {
                 container.insertAdjacentHTML('beforeend', taskOnBoardTemplate(task));
-                if (task.assignedTo) renderAssignedUserData(task.assignedTo, task.id);
+                if (Array.isArray(task.assignedTo)) {
+                    task.assignedTo.forEach(email => {
+                        renderAssignedUserData(email, task.id);
+                    });
+                }
             });
         }
 
@@ -240,7 +265,9 @@ function normalizeCategory(category) {
 
 
 function getBadgeData(task) {
-    const category = task.category || "unknown"; 
+    console.log("Task in getBadgeData:", task); // ← DEBUG: Was kommt hier an?
+    const category = task.originalCategory || task.category || "unknown";
+    console.log("Category used:", category);
   // Text für das Badge: Bindestriche → Leerzeichen, jedes Wort groß
   const text = category
     .replace(/-/g, " ")                       // Bindestriche zu Leerzeichen
@@ -295,11 +322,27 @@ function getName(userName) {
 }
 
 
-function renderAssignedUser(email) {
-    if (!email) return ""; // if no mail, then there's no avatar
+// function renderAssignedUser(email) {
+//     if (!email) return ""; // if no mail, then there's no avatar
 
-    const contact = contactsMap[email]; // get contact via email
-    const userName = contact ? contact.name : email.split("@")[0];
+//     const contact = contactsMap[email]; // get contact via email
+//     const userName = contact ? contact.name : email.split("@")[0];
+
+//     const name = getName(userName);
+//     const initials = getInitials(name);
+//     const color = getAvatarColor(name);
+
+//     return { initials, color, name };
+// }
+
+function renderAssignedUser(email) {
+    if (typeof email !== 'string' || !email) {
+        console.warn('Invalid or missing email:', email);
+        return { initials: '??', color: '#ccc', name: 'Unknown' };
+    }
+
+    const contact = contactsMap[email];
+    const userName = contact ? contact.name : email.split('@')[0];
 
     const name = getName(userName);
     const initials = getInitials(name);
@@ -309,14 +352,29 @@ function renderAssignedUser(email) {
 }
 
 
-function renderAssignedUserData(email, taskId) {
-  if (!email) return ""; // if there's no assignedTo
-  const { initials, color } = renderAssignedUser(email);
-  const container = document.getElementById(`editor-${taskId}`);
 
-  if (container) {
-    container.innerHTML += `<div class="editor-avatar" style="background-color:${color}">${initials}</div>`;
-  }
+// function renderAssignedUserData(email, taskId) {
+//   if (!email) return ""; // if there's no assignedTo
+//   const { initials, color } = renderAssignedUser(email);
+//   const container = document.getElementById(`editor-${taskId}`);
+
+//   if (container) {
+//     container.innerHTML += `<div class="editor-avatar" style="background-color:${color}">${initials}</div>`;
+//   }
+// }
+
+function renderAssignedUserData(email, taskId) {
+    if (typeof email !== 'string' || !email) {
+        console.warn('Invalid or missing email in renderAssignedUserData:', email);
+        return "";
+    }
+
+    const { initials, color } = renderAssignedUser(email);
+    const container = document.getElementById(`editor-${taskId}`);
+
+    if (container) {
+        container.innerHTML += `<div class="editor-avatar" style="background-color:${color}">${initials}</div>`;
+    }
 }
 
 
