@@ -31,11 +31,10 @@ async function addTask() {
     const title = document.getElementById("title").value;
     const description = document.getElementById("task_description").value;
     const dueDate = document.getElementById("datepicker").value;
+    const category = document.getElementById("category_task").value;
     const checkedUsers = Array.from(
     document.querySelectorAll('input[type="checkbox"][id^="user-"]:checked')
     ).map(cb => cb.value);
-
-    const category = document.getElementById("category_task").value;
     const subtaskElements = document.querySelectorAll(".subtask-text");
     try {
         if (!checkDate()) {
@@ -47,7 +46,7 @@ async function addTask() {
             dueDate,
             priority: selectedPriority,
             assignedTo: checkedUsers,
-            category,  
+            category,
             subtaskElements: Array.from(subtaskElements).map(el => ({
                 text: el.textContent,
                 completed: false
@@ -66,11 +65,11 @@ async function addTask() {
         await renderTasks();
         updateHTML(); 
         showPopup();
+        clearInputs();
+        
     } catch (error) {
         console.error("Fehler beim Speichern der Task:", error);
         showErrorPopup("Fehler beim Speichern der Aufgabe!");
-    } finally {
-        clearInputs();
     }
 }
 
@@ -105,23 +104,46 @@ function selectPriority(button) {
   selectedPriority = button.dataset.priority;
 }
 
+// async function clearInputs() {
+//     document.getElementById("title").value = "";
+//     document.getElementById("task_description").value = "";
+//     document.getElementById("datepicker").value = ""; 
+//     document.getElementById("assigned_task").value = "";   
+//     document.getElementById("category_task").value = "";
+//     document.getElementById("myList").innerHTML = "";
+//     const subtaskContainer = document.getElementById("subtask-container");
+//     if (subtaskContainer) {
+//         subtaskContainer.innerHTML = "";
+//     }
+//   document.getElementById("title").value = "";
+//   document.getElementById("task_description").value = "";
+//   document.getElementById("datepicker").value = "";
+//   document.getElementById("assigned_task").value = "";
+//   document.getElementById("category_task").value = "";
+//   document.getElementById("myList").innerHTML = "";
+// }
+
 async function clearInputs() {
     document.getElementById("title").value = "";
     document.getElementById("task_description").value = "";
-    document.getElementById("datepicker").value = ""; 
-    document.getElementById("assigned_task").value = "";   
+    document.getElementById("datepicker").value = "";
+    document.getElementById("assigned_task").value = "";
     document.getElementById("category_task").value = "";
     document.getElementById("myList").innerHTML = "";
+    
     const subtaskContainer = document.getElementById("subtask-container");
     if (subtaskContainer) {
         subtaskContainer.innerHTML = "";
     }
-  document.getElementById("title").value = "";
-  document.getElementById("task_description").value = "";
-  document.getElementById("datepicker").value = "";
-  document.getElementById("assigned_task").value = "";
-  document.getElementById("category_task").value = "";
-  document.getElementById("myList").innerHTML = "";
+    selectedPriority = "medium";
+    selectPriority(document.querySelector('[data-priority="medium"]'));
+    document.querySelectorAll('input[type="checkbox"][id^="user-"]').forEach(cb => {
+        cb.checked = false;
+    });
+    const avatarsContainer = document.getElementById("assigned-avatars");
+    if (avatarsContainer) {
+        avatarsContainer.innerHTML = "";
+    }
 }
 
 function showPopup() {

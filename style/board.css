@@ -342,6 +342,21 @@
     outline: none;
 }
 
+.task-editors {
+    display: flex;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.task-editors .editor-avatar {
+    margin-left: -8px;
+    margin-right: 0;
+}
+
+.task-editors .editor-avatar:first-child {
+    margin-left: 0;
+}
+
 .task-priority-icon {
     width: 32px;
 }
