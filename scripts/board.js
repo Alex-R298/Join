@@ -13,7 +13,7 @@ function liveSearchBoards() {
     input.addEventListener('input', async () => {
         const query = input.value.trim().toLowerCase();
         if (query.length < 2) {
-            updateHTML();
+            loadTasks();
     }
     await filterTasks(query);
 });
@@ -45,7 +45,7 @@ async function resetTaskCategories() {
       return task;
     });
     
-    console.log("Task-Kategorien zurückgesetzt:", allTasks);
+   // console.log("Task-Kategorien zurückgesetzt:", allTasks);
     updateHTML();
   } catch (error) {
     console.error("Fehler beim Zurücksetzen der Kategorien:", error);
@@ -192,7 +192,8 @@ function updateContainer(category) {
   }
   container.innerHTML = "";
   const tasksInCategory = allTasks.filter(t => t.category === category);
-  console.log(`Tasks in Kategorie ${category} nach Update:`, tasksInCategory.length);
+   
+   //console.log(`Tasks in Kategorie ${category} nach Update:`, tasksInCategory.length);
   tasksInCategory.forEach(todo => {
     container.innerHTML += taskOnBoardTemplate(todo);
   });
@@ -264,9 +265,11 @@ function normalizeCategory(category) {
 
 
 function getBadgeData(task) {
-    console.log("Task in getBadgeData:", task); // ← DEBUG: Was kommt hier an?
+    
+   // console.log("Task in getBadgeData:", task); // ← DEBUG: Was kommt hier an?
     const category = task.originalCategory || task.category || "unknown";
-    console.log("Category used:", category);
+   
+   //  console.log("Category used:", category);
   // Text für das Badge: Bindestriche → Leerzeichen, jedes Wort groß
   const text = category
     .replace(/-/g, " ")                       // Bindestriche zu Leerzeichen
