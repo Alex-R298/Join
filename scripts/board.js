@@ -7,14 +7,13 @@ let allTasks = [];
 
 // Live Search Funktionnen 
 
-
 function liveSearchBoards() {
     let input = document.getElementById('searchInputBoards');
 
     input.addEventListener('input', async () => {
         const query = input.value.trim().toLowerCase();
         if (query.length < 2) {
-            loadTasks();
+            updateHTML();
     }
     await filterTasks(query);
 });

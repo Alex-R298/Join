@@ -30,7 +30,7 @@
     <title>Board</title>
 </head>
 x
-<body onload="init();">
+<body onload="init(), liveSearchBoards();">
     <div id="header-container"></div>
     <main class="main_content">
         <div id="sidebar-container"></div>
@@ -39,7 +39,7 @@ x
             <div class="task-actions">
             <div class="searchbar">
                 <input id="searchInputBoards" class="search-input" type="search" placeholder="Find Task">
-                <button onclick=" liveSearchBoards()" class="search-btn"><img src="./assets/icons/search.svg"></button>
+                <button onclick="liveSearchBoards()" class="search-btn"><img src="./assets/icons/search.svg"></button>
             </div>
             <button class="button-add-task" onclick="showAddTaskOverlay()">Add task <img src="./assets/icons/add_white.svg"></button></div></div>
         <div class="main_content_row gap-26" id="task-board" onload="renderTasks()">
