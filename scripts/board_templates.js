@@ -2,8 +2,8 @@ function taskOnBoardTemplate(task) {
     const title = task.title || 'Untitled';
     const description = task.description || 'No description';
     const priority = task.priority || 'medium';
-    const status = task.status;
-    const badge = getBadgeData({ ...task, category});
+    const status = task.status || 'toDO';
+    const category = getCategoryData(task, task.status);
     const { icon: priorityIcon } = getPriorityData(priority);
     const { progressPercent, progressText } = calculateSubtaskProgress(task);
     return `
@@ -14,7 +14,7 @@ function taskOnBoardTemplate(task) {
       ondragstart="startDragging('${task.id}', event)" 
       ondragend="cancelDragging()"
       onclick="openTaskOverlay('${task.id}')">
-      <div class="badge ${badge.className}">${badge.text}</div>
+      <div class="badge ${category.className}">${category.text}</div>
       <div class="task-infos">
         <p class="task-title">${title}</p>
         <p class="task-description">${description}</p>
@@ -35,14 +35,14 @@ function taskOnBoardTemplate(task) {
 
 function taskDetailOverlayTemplate(task) {
     const status = task.status;
-    const badge = getBadgeData({ ...task, category});
+    const category = getCategoryData(task);
     const { text: priorityText, icon: priorityIcon } = getPriorityData(task.priority);
     const dueDate = formatDate(task.dueDate);
     const assignedUser = task.assignedTo || []; 
 
     return `
         <div class="add-task-header">
-            <div class="badge ${badge.className}">${badge.text}</div>
+            <div class="badge ${category.className}">${category.text}</div>
             <button id="btn-overlay-close" class="btn-overlay-close" onclick="closeTaskOverlay()"><img src="./assets/icons/close.svg"></button>
         </div>
         <h1>${task.title}</h1>
@@ -62,19 +62,20 @@ function taskDetailOverlayTemplate(task) {
         <div class="assigned-to-container">
             <span class="label">Assigned To:</span>
                 ${
-                    assignedUser.length === 0
-                        ? '<span class="no-assigned">No users assigned</span>'
-                        : assignedUser  
-                              .map(email => {
-                                  const { initials, color, name } = renderAssignedUser(email);
-                                  return `
+                  assignedUser.length === 0
+                    ? '<span class="no-assigned">No users assigned</span>'
+                    : assignedUser
+                        .map((email) => {
+                          const { initials, color, name } =
+                            renderAssignedUser(email);
+                          return `
                                       <div class="assigned-user">
                                           <div class="contact-avatar" style="background-color:${color}">${initials}</div>
                                           <span class="assigned-name">${name}</span>
                                       </div>
                                   `;
-                              })
-                              .join('')
+                        })
+                        .join("")
                 }
         </div>
         <div class="subtasks-container">
@@ -84,11 +85,15 @@ function taskDetailOverlayTemplate(task) {
             </div>
         </div>
         <div class="task-details-buttons">
-            <button onclick="deleteTask('${task.id}')" class="button-details" type="button">
+            <button onclick="deleteTask('${
+              task.id
+            }')" class="button-details" type="button">
                 <img src="./assets/icons/delete.svg" alt=""> Delete
             </button>
             <div class="spacer"></div>
-            <button onclick="editTask('${task.id}')" class="button-details" type="button">
+            <button onclick="editTask('${
+              task.id
+            }')" class="button-details" type="button">
                 <img src="./assets/icons/edit.svg" alt=""> Edit
             </button>
         </div>

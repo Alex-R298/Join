@@ -252,7 +252,7 @@ async function toggleSubtask(taskId, subtaskIndex) {
 }
 
 
-function getBadgeData(task) {
+function getCategoryData(task) {
     
   const category = task.category;
    

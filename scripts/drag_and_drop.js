@@ -12,7 +12,7 @@ function allowDrop(event) {
 function startDragging(id, event) {
     currentDraggedElement = id;
     const taskIndex = allTasks.findIndex(task => task.id === id);
-    if (taskIndex !== -1) taskStatus = allTasks[taskIndex].category;
+    if (taskIndex !== -1) taskStatus = allTasks[taskIndex].status;
     else return;
     const taskElement = event.target.closest('.task-container');
     if (!taskElement) return;
@@ -117,7 +117,7 @@ function getDragAfterElement(container, y) {
 }
 
 
-async function moveTo(category, event) {
+async function moveTo(status, event) {
     event.preventDefault();
     let taskId = event.dataTransfer ? event.dataTransfer.getData('text/plain') : currentDraggedElement;
     if (!taskId) return;
@@ -126,10 +126,10 @@ async function moveTo(category, event) {
     replacePlaceholderWithTask(draggingItem);
     animateTaskIn(draggingItem);
     cleanupDragState();
-    updateTaskCategory(taskId, category);
+    updateTaskStatus(taskId, status);
     updateAllTasksFromDOM();
     setTimeout(() => updateEmptyContainers(), 400);
-    await saveTask(taskId, category);
+    await saveTask(taskId, status);
     if (typeof updateDashboardCounts === 'function') updateDashboardCounts();
     currentDraggedElement = null;
 }
@@ -163,19 +163,19 @@ function cleanupDragState() {
 }
 
 
-function updateTaskCategory(taskId, category) {
+function updateTaskStatus(taskId, status) {
     const taskIndex = allTasks.findIndex(task => task.id === taskId);
     if (taskIndex !== -1) {
-        allTasks[taskIndex].category = category;
+        allTasks[taskIndex].status = status;
     }
 }
 
 
-async function saveTask(taskId, category) {
+async function saveTask(taskId, status) {
     if (isLocalStorageAvailable()) {
-        saveCategoriesToLocalStorage();
+        saveStatusToLocalStorage();
     } else {
-        await saveTaskToFirebase(taskId, category);
+        await saveTaskToFirebase(taskId, status);
     }
 }
 
@@ -190,7 +190,7 @@ function updateAllTasksFromDOM() {
             const taskId = taskElement.id.replace('task-', '');
             const task = allTasks.find(t => t.id === taskId);
             if (task) {
-                task.category = containerId;
+                task.status = containerId;
                 task.order = index;
                 newAllTasks.push(task);
             }
