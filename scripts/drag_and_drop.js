@@ -163,26 +163,86 @@ function cleanupDragState() {
 }
 
 
-function updateTaskStatus(taskId, status) {
+// function updateTaskStatus(taskId, status) {
+//     const taskIndex = allTasks.findIndex(task => task.id === taskId);
+//     if (taskIndex !== -1) {
+//         allTasks[taskIndex].status = status;
+//     }
+// }
+
+
+// async function saveTask(taskId, status) {
+//     if (isLocalStorageAvailable()) {
+//         saveStatusToLocalStorage();
+//     } else {
+//         await saveTaskToFirebase(taskId, status);
+//     }
+// }
+
+
+// function updateAllTasksFromDOM() {
+//     const containers = ["toDo", "inProgress", "awaitFeedback", "done"];
+//     let newAllTasks = [];
+//     containers.forEach(containerId => {
+//         const container = document.getElementById(containerId);
+//         const tasksInContainer = [...container.querySelectorAll('.task-container')];
+//         tasksInContainer.forEach((taskElement, index) => {
+//             const taskId = taskElement.id.replace('task-', '');
+//             const task = allTasks.find(t => t.id === taskId);
+//             if (task) {
+//                 task.status = containerId;
+//                 task.order = index;
+//                 newAllTasks.push(task);
+//             }
+//         });
+//     });
+//     allTasks = newAllTasks;
+// }
+
+// Status ändern UND speichern
+async function updateTaskStatus(taskId, status) {
     const taskIndex = allTasks.findIndex(task => task.id === taskId);
     if (taskIndex !== -1) {
         allTasks[taskIndex].status = status;
+        
+        // Sofort in beide Speicher speichern
+        try {
+            await saveTaskToFirebase(allTasks[taskIndex]);
+            if (isLocalStorageAvailable()) {
+                saveStatusToLocalStorage();
+            }
+            updateHTML();
+        } catch (error) {
+            console.error('Fehler beim Speichern:', error);
+        }
     }
 }
 
-
+// Beide Speicher verwenden (nicht entweder-oder)
 async function saveTask(taskId, status) {
-    if (isLocalStorageAvailable()) {
-        saveStatusToLocalStorage();
-    } else {
-        await saveTaskToFirebase(taskId, status);
+    const task = allTasks.find(t => t.id === taskId);
+    if (!task) return;
+    
+    task.status = status;
+    
+    try {
+        // Immer Firebase (Hauptspeicher)
+        await saveTaskToFirebase(task);
+        
+        // Zusätzlich localStorage
+        if (isLocalStorageAvailable()) {
+            saveStatusToLocalStorage();
+        }
+    } catch (error) {
+        console.error('Fehler beim Speichern:', error);
     }
 }
 
-
-function updateAllTasksFromDOM() {
+// DOM-Update mit Speicherung
+async function updateAllTasksFromDOM() {
     const containers = ["toDo", "inProgress", "awaitFeedback", "done"];
     let newAllTasks = [];
+    
     containers.forEach(containerId => {
         const container = document.getElementById(containerId);
         const tasksInContainer = [...container.querySelectorAll('.task-container')];
@@ -196,7 +256,21 @@ function updateAllTasksFromDOM() {
             }
         });
     });
+    
     allTasks = newAllTasks;
+    
+    // Alle geänderten Tasks speichern
+    for (const task of allTasks) {
+        try {
+            await saveTaskToFirebase(task);
+        } catch (error) {
+            console.error(`Fehler beim Speichern von Task ${task.id}:`, error);
+        }
+    }
+    
+    if (isLocalStorageAvailable()) {
+        saveStatusToLocalStorage();
+    }
 }
 
 
