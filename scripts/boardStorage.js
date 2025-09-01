@@ -49,21 +49,19 @@ async function setTaskStatus() {
   if (savedStatus) {
     allTasks.forEach(task => {
       if (savedStatus[task.id]) {
-        task.status = savedStatus[task.id].status;
+          if (!task.status || task.status === "undefined") {
+            task.status = savedStatus[task.id].status;
+          }
       }
     });
   } else {
     const tasksToModify = allTasks.slice(0, 2);
     
     if (tasksToModify.length >= 2) {
-      tasksToModify[0].status = "toDo";
-      
-      tasksToModify[1].status = "toDo";
-      
+      if (!tasksToModify[0].status) tasksToModify[0].status = "toDo"; 
+      if (!tasksToModify[1].status) tasksToModify[1].status = "toDo";
       saveStatusToLocalStorage();
     }
   }
-  
-  updateHTML();
 }
 
