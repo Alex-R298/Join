@@ -4,11 +4,11 @@
 function updateDashboardCounts() {
   if (!document.querySelector('.summary-info h1')) return;
   
-  const todoCount = allTasks.filter(task => task.category === 'toDo').length;
-  const inProgressCount = allTasks.filter(task => task.category === 'inProgress').length;
-  const awaitFeedbackCount = allTasks.filter(task => task.category === 'awaitFeedback').length;
-  const doneCount = allTasks.filter(task => task.category === 'done').length;
-  
+  const todoCount = allTasks.filter(task => task.status === 'toDo').length;
+  const inProgressCount = allTasks.filter(task => task.status === 'inProgress').length;
+  const awaitFeedbackCount = allTasks.filter(task => task.status === 'awaitFeedback').length;
+  const doneCount = allTasks.filter(task => task.status === 'done').length;
+
   const urgentTasks = allTasks.filter(task => task.priority === 'urgent');
   const urgentCount = urgentTasks.length;
   
