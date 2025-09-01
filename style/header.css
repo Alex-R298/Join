@@ -6,6 +6,9 @@ header {
   background-color: white;
   box-shadow: 0px 4px 4px 0px #0000001A;
   padding: 20px 40px 20px 348px;
+  position: absolute;
+  width: 100%;
+  top: 0;
 }
 
 .header-icons {
