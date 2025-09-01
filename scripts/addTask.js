@@ -211,7 +211,7 @@ function changeButtons() {
   let addButton = document.getElementById("addButton");
   let clearButton = document.getElementById("clearButton");
   let input = document.getElementById("subtask_input");
-  let balken = document.getElementById("balken");
+  let balken = document.getElementById("pipe");
 
   if (input.value.trim() !== "") {
     addButton.style.display = "none";
