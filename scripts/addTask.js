@@ -155,7 +155,11 @@ function showPopup() {
 
 function closePopup() {
   document.getElementById("taskPopup").style.display = "none";
+  if (document.getElementById("add-task-overlay")) {
+    closeAddTaskOverlay();
+  }
 }
+
 
 function getTodaysDate() {
   const today = new Date();

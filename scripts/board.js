@@ -446,18 +446,6 @@ function closeTaskOverlay() {
 }
 
 
-function closeAddTaskOverlay() {
-    const overlay = document.getElementById("add-task-overlay");
-    const container = document.getElementById("add-task-container");
-    container.classList.add("closing");
-    overlay.classList.remove("visible");
-    setTimeout(() => {
-        overlay.classList.add("d-none");
-        document.body.style.overflow = "auto";
-        container.classList.remove("closing");
-    }, 500);
-}
-
 function formatDate(dateStr) {
   if (!dateStr) return "";
 

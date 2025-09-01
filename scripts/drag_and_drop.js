@@ -1,6 +1,6 @@
 let currentDraggedElement = null;
 let draggedTaskHeight = 0;
-let originalTaskCategory = null;
+let taskStatus = null;
 let placeholderElement = null;
 
 
@@ -12,7 +12,7 @@ function allowDrop(event) {
 function startDragging(id, event) {
     currentDraggedElement = id;
     const taskIndex = allTasks.findIndex(task => task.id === id);
-    if (taskIndex !== -1) originalTaskCategory = allTasks[taskIndex].category;
+    if (taskIndex !== -1) taskStatus = allTasks[taskIndex].category;
     else return;
     const taskElement = event.target.closest('.task-container');
     if (!taskElement) return;

@@ -58,8 +58,8 @@ async function setSpecialCategories() {
     const tasksToModify = allTasks.slice(0, 2);
     
     if (tasksToModify.length >= 2) {
-      tasksToModify[0].originalCategory = "technical-task";
-      tasksToModify[0].category = "toDo";
+      tasksToModify[0].originalCategory = "technical-task"; // die muss gar nicht geändert werden, kann also eigentlich raus
+      tasksToModify[0].category = "toDo"; // sollte lieber "status" sein. Ergibt vom naming mehr Sinn
       
       tasksToModify[1].originalCategory = "user-story";
       tasksToModify[1].category = "toDo";
