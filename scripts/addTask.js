@@ -47,7 +47,7 @@ async function addTask() {
           priority: selectedPriority,
           assignedTo: checkedUsers,
           category,
-          status: "toDo",
+          status: currentTaskStatus,
           subtaskElements: Array.from(subtaskElements).map((el) => ({
             text: el.textContent,
             completed: false,

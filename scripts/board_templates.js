@@ -5,7 +5,7 @@ function taskOnBoardTemplate(task) {
     const status = task.status || 'toDO';
     const category = getCategoryData(task, task.status);
     const { icon: priorityIcon } = getPriorityData(priority);
-    const { progressPercent, progressText } = calculateSubtaskProgress(task);
+    const { progressPercent, progressText, progressClass} = calculateSubtaskProgress(task);
     return `
     <div 
       id="task-${task.id}" 
@@ -19,7 +19,7 @@ function taskOnBoardTemplate(task) {
         <p class="task-title">${title}</p>
         <p class="task-description">${description}</p>
       </div>
-      <div class="task-progress">
+      <div class="${progressClass}">
         <div class="progress-bar">
           <div class="progress" style="width: ${progressPercent}%;"></div>
         </div>
