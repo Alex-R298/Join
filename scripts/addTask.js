@@ -279,6 +279,7 @@ function startEditMode(li) {
   let editImg = editBtn.querySelector("img");
   editImg.src = "./assets/icons/check.svg";
   editImg.alt = "Check";
+  editImg.classList.add("check_icon_subtask");
 
   let parent = editBtn.parentNode;
   parent.insertBefore(deleteBtn, editBtn);
