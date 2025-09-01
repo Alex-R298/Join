@@ -211,15 +211,18 @@ function changeButtons() {
   let addButton = document.getElementById("addButton");
   let clearButton = document.getElementById("clearButton");
   let input = document.getElementById("subtask_input");
+  let balken = document.getElementById("balken");
 
   if (input.value.trim() !== "") {
     addButton.style.display = "none";
     acceptButton.style.display = "inline-block";
     clearButton.style.display = "inline-block";
+    balken.style.display = "inline-block";
   } else {
     addButton.style.display = "inline-block";
     acceptButton.style.display = "none";
     clearButton.style.display = "none";
+    balken.style.display = "none";
   }
 }
 
