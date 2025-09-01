@@ -5,6 +5,7 @@ function taskOnBoardTemplate(task) {
     const badgeCategory = task.originalCategory || task.category;
     const badge = getBadgeData({ ...task, category: badgeCategory });
     const { icon: priorityIcon } = getPriorityData(priority);
+    const { progressPercent, progressText } = calculateSubtaskProgress(task);
     return `
     <div 
       id="task-${task.id}" 
@@ -19,8 +20,10 @@ function taskOnBoardTemplate(task) {
         <p class="task-description">${description}</p>
       </div>
       <div class="task-progress">
-        <div class="progress-bar" style="width: 0%"></div>
-        <p class="subtasks">0/2 Subtasks</p>
+        <div class="progress-bar">
+          <div class="progress" style="width: ${progressPercent}%;"></div>
+        </div>
+        <p class="subtasks">${progressText}</p>
       </div>
       <div class="task-footer">
         <div id="editor-${task.id}" class="task-editors"></div>

@@ -471,3 +471,26 @@ function formatDate(dateStr) {
 
   return `${day}/${month}/${year}`;
 }
+
+function calculateSubtaskProgress(task) {
+  // are there subtasks?
+  const subtasks = task.subtaskElements || task.subTasks;
+
+  // if there are no subtasks
+  if (!subtasks || subtasks.length === 0) {
+    return {
+      progressPercent: 0,
+      progressText: "No Subtasks",
+    };
+  }
+
+  const total = subtasks.length;
+  const done = subtasks.filter((subtask) => subtask.done === true).length;
+  const progressPercent = total > 0 ? Math.round((done / total) * 100) : 0;
+  const progressText = `${done}/${total} Subtasks`;
+
+  return {
+    progressPercent,
+    progressText,
+  };
+}
