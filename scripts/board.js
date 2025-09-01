@@ -401,12 +401,9 @@ async function showAddTaskOverlay() {
     const overlay = document.getElementById("add-task-overlay");
     const container = document.getElementById("add-task-container");
     
-    const usersArray = await loadUsers();
-    
     overlay.classList.remove("d-none");
     document.body.style.overflow = "hidden";
     
-    container.innerHTML = getAddPageTemplate(usersArray);
     document.getElementById("btn-overlay-close").classList.remove("d-none");
     
     container.addEventListener("click", (e) => e.stopPropagation());
