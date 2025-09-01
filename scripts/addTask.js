@@ -192,6 +192,74 @@ function checkDate() {
   }
 }
 
+
+
+function validateAddTask() {
+    const isTitleValid = checkTitle();
+    const isDateValid = checkDate();
+    const isCategoryValid = checkCategory();
+    
+    return isTitleValid && isDateValid && isCategoryValid;
+}
+
+function checkTitle() {
+  const titleRef = document.getElementById("title");
+  const errorTitleRef = document.getElementById("title-error-message");
+  const inputValue = titleRef.value.trim();
+
+  if (!inputValue) {
+    titleRef.classList.add("invalid");
+    errorTitleRef.classList.remove("d-none");
+    return false;
+  } else {
+    titleRef.classList.remove("invalid");
+    errorTitleRef.classList.add("d-none");
+    return true;
+  }
+}
+
+
+function checkDate() {
+  const dateRef = document.getElementById("datepicker");
+  const errorDateRef = document.getElementById("date-error-message");
+  const inputValue = dateRef.value.trim();
+  const todayStr = getTodaysDate();
+
+  if (!inputValue || inputValue < todayStr) {
+    dateRef.classList.add("invalid");
+    errorDateRef.classList.remove("d-none");
+    return false;
+  } else {
+    dateRef.classList.remove("invalid");
+    errorDateRef.classList.add("d-none");
+    return true;
+  }
+}
+
+
+function checkCategory() {
+  const categoryRef = document.getElementById("category_task");
+  const errorCategoryRef = document.getElementById("category-error-message");
+  const inputValue = categoryRef.value.trim();
+
+  if (!inputValue) {
+    categoryRef.classList.add("invalid");
+    errorCategoryRef.classList.remove("d-none");
+    return false;
+  } else {
+    categoryRef.classList.remove("invalid");
+    errorCategoryRef.classList.add("d-none");
+    return true;
+  }
+}
+
+function handleAddTask() {
+    if (validateAddTask()) {
+        addTask();
+    }
+}
+
+
 // Subtask
 
 function addSubtask() {

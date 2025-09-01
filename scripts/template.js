@@ -251,7 +251,7 @@ function getAddPageTemplate(task, usersArray = []) {
       <div class="input-with-label">
         <label for="title">Title<span style="color: #FF8190;">*</span></label>
         <input class="input" type="text" id="title" name="title" required placeholder="Enter a title">
-        <span class="input-invalid d-none">This field is required</span>
+        <span id="title-error-message" class="input-invalid d-none">This field is required</span>
       </div>
       <div class="input-with-label description-input pb-16">
         <label for="description">Description</label>
@@ -355,7 +355,7 @@ function getAddPageTemplate(task, usersArray = []) {
           <option value="user-story">User Story</option>
           <option value="technical-task">Technical Task</option>
         </select>
-        <span class="input-invalid d-none">This field is required</span>
+        <span id="category-error-message" class="input-invalid d-none">This field is required</span>
       </div>
 
       <div class="input-with-label">
@@ -384,7 +384,7 @@ function getAddPageTemplate(task, usersArray = []) {
   <p class="short-info"><span style="color: #FF8190;">*</span>This field is required</p>
   <div class="add-task-buttons">
     <button class="button-secondary" onclick="clearInputs()">Clear</button>
-    <button class="button-primary" onclick="addTask()">Create Task</button>
+    <button class="button-primary"  onclick="handleAddTask()">Create Task</button>
   </div>
 </div>
     `;

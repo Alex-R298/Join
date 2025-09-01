@@ -12,10 +12,10 @@
     <script src="./scripts/input.js"></script>
     <script src="./scripts/config.js"></script>
     <script src="./scripts/template.js"></script>
-    <title>Log In</title>
+    <title>Sign Up</title>
 </head>
 <body>
-    <main class="main-login">
+    <div class="main-login">
     <div id="overlay-signup" class="d-none"></div>
     <div id="signed-up" class="d-none"></div>
         <header>
@@ -23,10 +23,13 @@
                 <img src="./assets/icons/capa_dark.svg" alt="">
         </header>
         <section class="log-in-section">
-
             <form class="card log-in-form" action="" method="post">
-                <h1>Sign Up</h1>
-                <div class="separator-line"></div>
+                 <div class="form-header">
+                    <img class="back-arrow" src="./assets/icons/arrow-left-line.svg" alt="" onclick="window.location.href='log_in.html'">
+                        <h1 class="form-title">Sign Up</h1>
+        
+                </div>
+    <div class="separator-line"></div>
                 <div class="inputs">
                     <div class="input-with-icon">
                         <input class="input" type="text" id="signup-name" name="name" required placeholder="Name">
@@ -57,7 +60,7 @@
             <div class="log-in-footer">
                 <a href="privacy_policy_before.html">Privacy Policy</a> <a href="legal_notice_before.html">Legal notice</a>
             </div>
-    </main>
+    </div>
 
     </body>
 

@@ -1,3 +1,11 @@
+.main-login {
+       display: flex;
+    flex-direction: column;
+    max-width: 1440px;
+    justify-content: center;
+    margin: auto;
+}
+
 .header-log-in {
     display: flex;
     justify-content: space-between;
@@ -117,10 +125,6 @@
     margin-right: 8px;
 }
 
-.main-login  {
-    display: block;
-}
-
 
 #overlay-signup {
     position: fixed;
@@ -202,4 +206,33 @@
 .signed-up-popup p {
     color: white;
     font-size: 20px;
+}
+
+
+
+.form-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    margin-right: 22px;
+}
+
+.back-arrow {
+    grid-column: 1; 
+    cursor: pointer;
+    justify-self: start; 
+    transition: all 0.3s ease;
+}
+
+.back-arrow:hover {
+    transform: scale(1.05);
+}
+
+.form-title {
+    grid-column: 2; 
+    text-align: center; 
+    margin: 0; 
+    width: 100%;
 }
