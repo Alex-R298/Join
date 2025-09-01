@@ -363,10 +363,14 @@ function getAddPageTemplate(task, usersArray = []) {
         <div class="input-with-button">
           <input oninput="changeButtons()" class="input-btn" type="text" id="subtask_input" placeholder="Add new subtask">
         <div class="subtask_buttons">
-        <button id="addButton" onclick="addSubtask()">+</button>
-        <button id="clearButton" onclick="clearInput()" style="display: none;">X</button>
+        <button id="addButton" onclick="addSubtask()"><img src="./assets/icons/plus.svg" alt="cancel" width="16" height="16"></button>
+        <button id="clearButton" onclick="clearInput()" style="display: none;">
+        <img src="./assets/icons/cancel.svg" alt="cancel" width="20" height="20">
+        </button>
         <div id="pipe" style="display: none;" class="vl-small"></div>
-        <button id="acceptButton" onclick="addSubtask()" style="display: none;">&#10003;</button>
+        <button id="acceptButton" onclick="addSubtask()" style="display: none;">
+        <img src="./assets/icons/check.svg" alt="check" width="16" height="16">
+        </button>
         </div>
         </div>
         <div id="myList" class="subtasks-list">
