@@ -325,6 +325,7 @@
 .task-footer {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .editor-avatar {
@@ -344,7 +345,6 @@
 
 .task-editors {
     display: flex;
-    margin-top: 12px;
     flex-wrap: wrap;
 }
 

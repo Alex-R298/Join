@@ -382,21 +382,22 @@ function getPriorityData(priority) {
 }
 
 
-async function showAddTaskOverlay() {
-    const overlay = document.getElementById("add-task-overlay");
-    const container = document.getElementById("add-task-container");
-    
-    overlay.classList.remove("d-none");
-    document.body.style.overflow = "hidden";
-    
-    document.getElementById("btn-overlay-close").classList.remove("d-none");
-    
-    container.addEventListener("click", (e) => e.stopPropagation());
-    overlay.addEventListener("click", closeAddTaskOverlay);
+async function showAddTaskOverlay(status = 'toDo') {
+  currentTaskStatus = status;
+  const overlay = document.getElementById("add-task-overlay");
+  const container = document.getElementById("add-task-container");
+  
+  overlay.classList.remove("d-none");
+  document.body.style.overflow = "hidden";
+  
+  document.getElementById("btn-overlay-close").classList.remove("d-none");
+  
+  container.addEventListener("click", (e) => e.stopPropagation());
+  overlay.addEventListener("click", closeAddTaskOverlay);
 
-    setTimeout(() => {
-        overlay.classList.add("visible");
-    }, 10);
+  setTimeout(() => {
+      overlay.classList.add("visible");
+  }, 10);
 }
 
 function openTaskOverlay(taskId) {
@@ -451,16 +452,18 @@ function calculateSubtaskProgress(task) {
     return {
       progressPercent: 0,
       progressText: "No Subtasks",
+      progressClass: "d-none",
     };
   }
 
   const total = subtasks.length;
-  const done = subtasks.filter((subtask) => subtask.done === true).length;
+  const done = subtasks.filter((subtask) => subtask.completed === true).length;
   const progressPercent = total > 0 ? Math.round((done / total) * 100) : 0;
   const progressText = `${done}/${total} Subtasks`;
 
   return {
     progressPercent,
     progressText,
+    progressClass: "task-progress",
   };
 }
