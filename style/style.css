@@ -123,8 +123,9 @@ body {
 
 main {
     max-width: 1440px;
-    margin: auto;
+    position: relative;
     display: flex;
+    margin-top: 80px;
 }
 
 h1 {
