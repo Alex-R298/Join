@@ -41,16 +41,17 @@ async function addTask() {
             throw new Error("Ungültiges Datum");
         }
         const newTask = {
-            title,
-            description,
-            dueDate,
-            priority: selectedPriority,
-            assignedTo: checkedUsers,
-            category,
-            subtaskElements: Array.from(subtaskElements).map(el => ({
-                text: el.textContent,
-                completed: false
-            })),
+          title,
+          description,
+          dueDate,
+          priority: selectedPriority,
+          assignedTo: checkedUsers,
+          category,
+          status: "toDo",
+          subtaskElements: Array.from(subtaskElements).map((el) => ({
+            text: el.textContent,
+            completed: false,
+          })),
         };
         const response = await fetch(BASE_URL + "/task.json", {
             method: "POST",

@@ -29,7 +29,7 @@ function liveSearchBoards() {
 }
 // Ende! 
 
-async function resetTaskCategories() {
+async function resetTaskStatus() {
   try {
     const res = await fetch(BASE_URL + "/task.json");
     const data = await res.json();
@@ -39,7 +39,7 @@ async function resetTaskCategories() {
       if (data[task.id]) {
         return {
           ...task,
-          category: data[task.id].category
+          status: data[task.id].status
         };
       }
       return task;
@@ -87,7 +87,7 @@ function updateHTML(tasks = allTasks) {
     ["toDo", "inProgress", "awaitFeedback", "done"].forEach(containerId => {
         const container = document.getElementById(containerId);
         if (!container) return;
-        const tasksForContainer = tasks.filter(task => task.category === containerId);
+        const tasksForContainer = tasks.filter(task => task.status === containerId);
         const placeholder = container.querySelector('.drag-placeholder');
         container.innerHTML = '';
 
@@ -184,17 +184,17 @@ function updateEmptyContainers() {
 
 
 
-function updateContainer(category) {
-  const container = document.getElementById(category);
+function updateContainer(status) {
+  const container = document.getElementById(status);
   if (!container) {
-    console.error(`Container mit ID ${category} nicht gefunden`);
+    console.error(`Container mit ID ${status} nicht gefunden`);
     return;
   }
   container.innerHTML = "";
-  const tasksInCategory = allTasks.filter(t => t.category === category);
+  const tasksInStatus = allTasks.filter(t => t.status === status);
    
-   //console.log(`Tasks in Kategorie ${category} nach Update:`, tasksInCategory.length);
-  tasksInCategory.forEach(todo => {
+   //console.log(`Tasks in Kategorie ${status} nach Update:`, tasksInStatus.length);
+  tasksInStatus.forEach(todo => {
     container.innerHTML += taskOnBoardTemplate(todo);
   });
 }
@@ -213,8 +213,8 @@ async function loadTasks() {
     const data = await res.json();
     if (!data) return [];
     const tasks = Object.entries(data).map(([id, task]) => {
-      const originalCategory = task.category;
-      const normalizedCategory = normalizeCategory(originalCategory);
+      const category = task.category;
+      const status = task.status  || "toDo";
       if (task.subtaskElements && typeof task.subtaskElements[0] === 'string') {
                 task.subtaskElements = task.subtaskElements.map(text => ({
                     text: text,
@@ -224,8 +224,8 @@ async function loadTasks() {
       return {
         id,
         ...task,
-        category: normalizedCategory,
-        originalCategory: originalCategory
+        category,
+        status,
       };
     });
     
@@ -234,6 +234,7 @@ async function loadTasks() {
     return [];
   }
 }
+
 
 async function toggleSubtask(taskId, subtaskIndex) {
     const task = allTasks.find(t => t.id === taskId);
@@ -251,26 +252,10 @@ async function toggleSubtask(taskId, subtaskIndex) {
 }
 
 
-
-
-function normalizeCategory(category) {
-  if (category === 'technical-task' || category === 'user-story') {
-    return 'toDo';
-  }
-  if (!['toDo', 'inProgress', 'awaitFeedback', 'done'].includes(category)) {
-    return 'toDo';
-  }
-  return category;
-}
-
-
 function getBadgeData(task) {
     
-   // console.log("Task in getBadgeData:", task); // ← DEBUG: Was kommt hier an?
-    const category = task.originalCategory || task.category || "unknown";
+  const category = task.category;
    
-   //  console.log("Category used:", category);
-  // Text für das Badge: Bindestriche → Leerzeichen, jedes Wort groß
   const text = category
     .replace(/-/g, " ")                       // Bindestriche zu Leerzeichen
     .split(" ")
@@ -288,7 +273,7 @@ async function renderTasks() {
   try {
     const tasks = await loadTasks();
     allTasks = tasks;
-    await setSpecialCategories();
+    await setTaskStatus();
     updateHTML();
     if (typeof updateDashboardCounts === 'function') {
       updateDashboardCounts();

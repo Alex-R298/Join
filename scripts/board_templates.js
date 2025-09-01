@@ -2,8 +2,8 @@ function taskOnBoardTemplate(task) {
     const title = task.title || 'Untitled';
     const description = task.description || 'No description';
     const priority = task.priority || 'medium';
-    const badgeCategory = task.originalCategory || task.category;
-    const badge = getBadgeData({ ...task, category: badgeCategory });
+    const status = task.status;
+    const badge = getBadgeData({ ...task, category});
     const { icon: priorityIcon } = getPriorityData(priority);
     const { progressPercent, progressText } = calculateSubtaskProgress(task);
     return `
@@ -34,8 +34,8 @@ function taskOnBoardTemplate(task) {
 }
 
 function taskDetailOverlayTemplate(task) {
-    const badgeCategory = task.originalCategory || task.category;
-    const badge = getBadgeData({ ...task, category: badgeCategory });
+    const status = task.status;
+    const badge = getBadgeData({ ...task, category});
     const { text: priorityText, icon: priorityIcon } = getPriorityData(task.priority);
     const dueDate = formatDate(task.dueDate);
     const assignedUser = task.assignedTo || []; 

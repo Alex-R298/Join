@@ -1,16 +1,15 @@
 
-function saveCategoriesToLocalStorage() {
+function saveStatusToLocalStorage() {
   try {
-    const categories = {};
+    const status = {};
     allTasks.forEach(task => {
-      categories[task.id] = {
-        category: task.category,
-        originalCategory: task.originalCategory || task.category
+      status[task.id] = {
+        status: task.status
       };
     });
     
-    const categoriesJSON = JSON.stringify(categories);
-    localStorage.setItem('taskCategories', categoriesJSON);
+    const statusJSON = JSON.stringify(status);
+    localStorage.setItem('taskStatus', statusJSON);
     return true;
   } catch (error) {
     return false;
@@ -18,12 +17,12 @@ function saveCategoriesToLocalStorage() {
 }
 
 
-function loadCategoriesFromLocalStorage() {
+function loadStatusFromLocalStorage() {
   try {
-    const categoriesJSON = localStorage.getItem('taskCategories');
-    if (!categoriesJSON) return null;
+    const statusJSON = localStorage.getItem("taskStatus");
+    if (!statusJSON) return null;
     
-    return JSON.parse(categoriesJSON);
+    return JSON.parse(statusJSON);
   } catch (error) {
     return null;
   }
@@ -42,29 +41,26 @@ function isLocalStorageAvailable() {
 }
 
 
-async function setSpecialCategories() {
+async function setTaskStatus() {
   if (!isLocalStorageAvailable()) return;
   
-  const savedCategories = loadCategoriesFromLocalStorage();
+  const savedStatus = loadStatusFromLocalStorage();
   
-  if (savedCategories) {
+  if (savedStatus) {
     allTasks.forEach(task => {
-      if (savedCategories[task.id]) {
-        task.category = savedCategories[task.id].category;
-        task.originalCategory = savedCategories[task.id].originalCategory;
+      if (savedStatus[task.id]) {
+        task.status = savedStatus[task.id].status;
       }
     });
   } else {
     const tasksToModify = allTasks.slice(0, 2);
     
     if (tasksToModify.length >= 2) {
-      tasksToModify[0].originalCategory = "technical-task"; // die muss gar nicht geändert werden, kann also eigentlich raus
-      tasksToModify[0].category = "toDo"; // sollte lieber "status" sein. Ergibt vom naming mehr Sinn
+      tasksToModify[0].status = "toDo";
       
-      tasksToModify[1].originalCategory = "user-story";
-      tasksToModify[1].category = "toDo";
+      tasksToModify[1].status = "toDo";
       
-      saveCategoriesToLocalStorage();
+      saveStatusToLocalStorage();
     }
   }
   
