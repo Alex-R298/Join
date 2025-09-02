@@ -116,3 +116,17 @@
     align-items: center;
     gap: 8px;
 }
+
+
+.task-description-container {
+    width: 100%;
+    overflow: hidden;
+    margin: 16px 0;
+}
+
+.task-description-container p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    margin: 0;
+    line-height: 1.5;
+}

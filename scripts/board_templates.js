@@ -46,7 +46,9 @@ function taskDetailOverlayTemplate(task) {
             <button id="btn-overlay-close" class="btn-overlay-close" onclick="closeTaskOverlay()"><img src="./assets/icons/close.svg"></button>
         </div>
         <h1>${task.title}</h1>
-        <p>${task.description}</p>
+        <div class="task-description-container">
+            <p>${task.description}</p>
+        </div>
         <div class="task-required-infos">
             <div class="detail-row">
                 <span class="label">Due Date:</span>
