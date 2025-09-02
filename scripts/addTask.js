@@ -105,47 +105,6 @@ function selectPriority(button) {
   selectedPriority = button.dataset.priority;
 }
 
-// async function clearInputs() {
-//     document.getElementById("title").value = "";
-//     document.getElementById("task_description").value = "";
-//     document.getElementById("datepicker").value = ""; 
-//     document.getElementById("assigned_task").value = "";   
-//     document.getElementById("category_task").value = "";
-//     document.getElementById("myList").innerHTML = "";
-//     const subtaskContainer = document.getElementById("subtask-container");
-//     if (subtaskContainer) {
-//         subtaskContainer.innerHTML = "";
-//     }
-//   document.getElementById("title").value = "";
-//   document.getElementById("task_description").value = "";
-//   document.getElementById("datepicker").value = "";
-//   document.getElementById("assigned_task").value = "";
-//   document.getElementById("category_task").value = "";
-//   document.getElementById("myList").innerHTML = "";
-// }
-
-async function clearInputs() {
-    document.getElementById("title").value = "";
-    document.getElementById("task_description").value = "";
-    document.getElementById("datepicker").value = "";
-    document.getElementById("assigned_task").value = "";
-    document.getElementById("category_task").value = "";
-    document.getElementById("myList").innerHTML = "";
-    
-    const subtaskContainer = document.getElementById("subtask-container");
-    if (subtaskContainer) {
-        subtaskContainer.innerHTML = "";
-    }
-    selectedPriority = "medium";
-    selectPriority(document.querySelector('[data-priority="medium"]'));
-    document.querySelectorAll('input[type="checkbox"][id^="user-"]').forEach(cb => {
-        cb.checked = false;
-    });
-    const avatarsContainer = document.getElementById("assigned-avatars");
-    if (avatarsContainer) {
-        avatarsContainer.innerHTML = "";
-    }
-}
 
 function showPopup() {
     document.getElementById("taskPopup").style.display = "flex";
@@ -186,54 +145,90 @@ function validateAddTask() {
 }
 
 function checkTitle() {
-  const titleRef = document.getElementById("title");
-  const errorTitleRef = document.getElementById("title-error-message");
-  const inputValue = titleRef.value.trim();
+    const titleRef = document.getElementById("title");
+    const errorTitleRef = document.getElementById("title-error-message");
+    const inputValue = titleRef.value.trim();
 
-  if (!inputValue) {
-    titleRef.classList.add("invalid");
-    errorTitleRef.classList.remove("d-none");
-    return false;
-  } else {
-    titleRef.classList.remove("invalid");
-    errorTitleRef.classList.add("d-none");
-    return true;
-  }
+    if (!inputValue) {
+        titleRef.classList.add("invalid");
+        errorTitleRef.classList.remove("d-none");
+        return false;
+    } else {
+        titleRef.classList.remove("invalid");
+        errorTitleRef.classList.add("d-none");
+        return true;
+    }
 }
-
 
 function checkDate() {
-  const dateRef = document.getElementById("datepicker");
-  const errorDateRef = document.getElementById("date-error-message");
-  const inputValue = dateRef.value.trim();
-  const todayStr = getTodaysDate();
+    const dateRef = document.getElementById("datepicker");
+    const errorDateRef = document.getElementById("date-error-message");
+    const inputValue = dateRef.value.trim();
+    const todayStr = getTodaysDate();
 
-  if (!inputValue || inputValue < todayStr) {
-    dateRef.classList.add("invalid");
-    errorDateRef.classList.remove("d-none");
-    return false;
-  } else {
-    dateRef.classList.remove("invalid");
-    errorDateRef.classList.add("d-none");
-    return true;
-  }
+    if (!inputValue || inputValue < todayStr) {
+        dateRef.classList.add("invalid");
+        errorDateRef.classList.remove("d-none");
+        return false;
+    } else {
+        dateRef.classList.remove("invalid");
+        errorDateRef.classList.add("d-none");
+        return true;
+    }
 }
 
-
 function checkCategory() {
-  const categoryRef = document.getElementById("category_task");
-  const errorCategoryRef = document.getElementById("category-error-message");
-  const inputValue = categoryRef.value.trim();
+    const categoryRef = document.getElementById("category_task");
+    const errorCategoryRef = document.getElementById("category-error-message");
+    const inputValue = categoryRef.value.trim();
 
-  if (!inputValue) {
-    categoryRef.classList.add("invalid");
-    errorCategoryRef.classList.remove("d-none");
-    return false;
-  } else {
-    categoryRef.classList.remove("invalid");
-    errorCategoryRef.classList.add("d-none");
-    return true;
-  }
+    if (!inputValue) {
+        categoryRef.classList.add("invalid");
+        errorCategoryRef.classList.remove("d-none");
+        return false;
+    } else {
+        categoryRef.classList.remove("invalid");
+        errorCategoryRef.classList.add("d-none");
+        return true;
+    }
+}
+
+function resetValidationState() {
+    document.querySelectorAll('.invalid').forEach(element => {
+        element.classList.remove('invalid');
+    });
+    
+    document.querySelectorAll('[id$="-error-message"]').forEach(errorElement => {
+        errorElement.classList.add('d-none');
+    });
+}
+
+async function clearInputs() {
+    document.getElementById("title").value = "";
+    document.getElementById("task_description").value = "";
+    document.getElementById("datepicker").value = "";
+    document.getElementById("assignee-input").value = "";
+    document.getElementById("category_task").value = "";
+    document.getElementById("myList").innerHTML = "";
+    
+    const subtaskContainer = document.getElementById("subtask-container");
+    if (subtaskContainer) {
+        subtaskContainer.innerHTML = "";
+    }
+    
+    selectedPriority = "medium";
+    selectPriority(document.querySelector('[data-priority="medium"]'));
+    
+    document.querySelectorAll('input[type="checkbox"][id^="user-"]').forEach(cb => {
+        cb.checked = false;
+    });
+    
+    const avatarsContainer = document.getElementById("assigned-avatars");
+    if (avatarsContainer) {
+        avatarsContainer.innerHTML = "";
+    }
+    
+    resetValidationState();
 }
 
 function handleAddTask() {

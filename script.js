@@ -213,6 +213,8 @@ function closeAddTaskOverlay() {
   const container = document.getElementById("add-task-container");
   container.classList.add("closing");
   overlay.classList.remove("visible");
+  clearInputs();
+  resetValidationState();
   setTimeout(() => {
     overlay.classList.add("d-none");
     document.body.style.overflow = "auto";
