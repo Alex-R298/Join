@@ -175,23 +175,6 @@ function setMinDate() {
   dateInput.min = getTodaysDate();
 }
 
-function checkDate() {
-  const dateRef = document.getElementById("datepicker");
-  const errorDateRef = document.getElementById("date-error-message");
-  const inputValue = dateRef.value.trim();
-  const todayStr = getTodaysDate();
-
-  if (!inputValue || inputValue < todayStr) {
-    dateRef.classList.add("invalid");
-    errorDateRef.classList.remove("d-none");
-    return false;
-  } else {
-    dateRef.classList.remove("invalid");
-    errorDateRef.classList.add("d-none");
-    return true;
-  }
-}
-
 
 
 function validateAddTask() {
