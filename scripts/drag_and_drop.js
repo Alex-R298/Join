@@ -136,12 +136,13 @@ async function moveTo(status, event) {
 
 
 function replacePlaceholderWithTask(draggingItem) {
-    draggingItem.style.transition = 'none';
-    draggingItem.style.transform = 'scale(0.8)';
-    draggingItem.style.opacity = '0';
     if (placeholderElement && placeholderElement.parentNode) {
         placeholderElement.parentNode.replaceChild(draggingItem, placeholderElement);
         placeholderElement = null;
+        draggingItem.style.transition = 'all 0.3s ease';
+        draggingItem.style.transform = 'scale(1)';
+        draggingItem.style.opacity = '1';
+        draggingItem.classList.remove('dragging');
     }
 }
 
