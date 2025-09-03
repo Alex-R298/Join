@@ -5,7 +5,8 @@ function getHeaderTemplate() {
     const isHelpPage = window.location.pathname.endsWith("help.html");
     return `
         <header>
-            <p>Kanban Project Management Tool</p>
+            <img class="join_logo_dark_header" src="./assets/icons/capa_dark.svg" alt="dark icon">
+            <p class="header_title_p_tag">Kanban Project Management Tool</p>
             <div class="header-icons">
                 <a id="help-link" class="help-icon ${isHelpPage ? 'd-none' : ''}" href="help.html"></a>
                 <div class="name-icon" onclick="user_button_show_links()">

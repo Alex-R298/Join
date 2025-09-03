@@ -121,3 +121,33 @@ header {
 .show {
   visibility: visible;
 }
+.join_logo_dark_header{
+  display: none;
+}
+
+@media screen and (max-width: 428px){
+  header{
+    width: 428px;
+    height: 80px;
+    padding: 0px 10px 0px 10px;
+  }
+  .header_title_p_tag {
+    display: none;
+  }
+  .join_logo_dark_header{
+    display: block;
+    height: 39px;
+    width: 32px;
+}
+.help-icon {
+  display: none;
+}
+.name-icon{
+  width: 40px;
+  height: 40px;
+}
+.popuptext{
+  width: 150px;
+  height: 204px;
+}
+}
