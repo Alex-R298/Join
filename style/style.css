@@ -154,6 +154,7 @@ h3 {
 
 button {
     cursor: pointer;
+    border: unset;
 }
 
 .button-primary {
@@ -165,7 +166,6 @@ button {
     gap: 10px;
     padding: 15px 24px;
     border-radius: 8px;
-    border: none;
 }
 
 .button-primary:hover {
@@ -209,6 +209,15 @@ button {
     display: flex;
     align-items: center;
     gap: 5px;
+}
+
+.button-details:hover {
+    color: var(--secondary);
+}
+
+.button-details img {
+    width: 24px;
+    height: 24px;
 }
 
 .card {
@@ -291,9 +300,8 @@ textarea {
     border-radius: 10px;
     border: 1px solid var(--lightgrey);
     font-size: 20px;
-    text-indent: 16px;
     cursor: pointer;
-    padding: 16px;
+    padding: 0px 16px;
 }
 
 textarea:focus {
@@ -335,21 +343,31 @@ a {
 
 
 .subtask-item {
-    margin: 8px 0;
+    padding: 6px 16px 6px 16px;
+    cursor: pointer;
 }
+
+.subtask-item:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
 .custom-checkbox {
     display: flex;
     align-items: center;
 }
+
 .custom-checkbox input[type="checkbox"] {
     display: none;
 }
+
 .checkbox-label {
     display: flex;
     align-items: center;
     cursor: pointer;
     position: relative;
+    margin-bottom: 0px;
 }
+
 .checkbox-custom {
     width: 16px;
     height: 16px;
@@ -396,6 +414,7 @@ a {
 .custom-checkbox input[type="checkbox"]:checked + .checkbox-label .checkbox-custom::after {
     opacity: 1;
 }
+
 .subtask-text {
     color: #2A3647;
     font-size: 16px;

@@ -230,21 +230,39 @@ input[type="date"]::placeholder {
 
 /* Subtask */
 
-
-.subtask_buttons {
+.subtask-buttons {
   position: absolute;
   top: 50%;
   right: 10px;
   display: flex;
-  gap: 6px;
+  gap: 4px;
   transform: translateY(-50%); 
+  height: 24px;
 }
 
-.subtask_buttons button {
+.subtask-button {
   border: none;
-  background: transparent;
+  background: none;
   cursor: pointer;
   font-size: 20px;
+}
+
+.subtask-button:hover {
+    transition: background 0.2s ease;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+}
+
+.subtask-add-button {
+    background: transparent;
+}
+
+.subtask-add-button:hover {
+    background: transparent;
+}
+
+.subtask-add-button:hover img {
+    transform: scale(1.02);
 }
 
 /* Subtask_list */
@@ -293,6 +311,7 @@ input[type="date"]::placeholder {
     margin-left: 16px;
     font-size: 16px;
 }
+
 .check_icon_subtask {
     width: 16px;
     height: 16px;

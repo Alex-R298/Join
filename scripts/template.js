@@ -362,14 +362,14 @@ function getAddPageTemplate(task, usersArray = []) {
         <label for="subtask_input">Subtasks</label>
         <div class="input-with-button">
           <input oninput="changeButtons()" class="input-btn" type="text" id="subtask_input" placeholder="Add new subtask">
-        <div class="subtask_buttons">
-        <button id="addButton" onclick="addSubtask()"><img src="./assets/icons/plus.svg" alt="cancel" width="16" height="16"></button>
-        <button id="clearButton" onclick="clearInput()" style="display: none;">
-        <img src="./assets/icons/cancel.svg" alt="cancel" width="20" height="20">
+        <div class="subtask-buttons">
+        <button id="addButton" onclick="addSubtask()" class="subtask-add-button"></button>
+        <button id="clearButton" onclick="clearInput()" style="display: none;" class="subtask-button">
+        <img src="./assets/icons/cancel.svg" alt="cancel">
         </button>
         <div id="pipe" style="display: none;" class="vl-small"></div>
-        <button id="acceptButton" onclick="addSubtask()" style="display: none;">
-        <img src="./assets/icons/check.svg" alt="check" width="16" height="16">
+        <button id="acceptButton" onclick="addSubtask()" style="display: none;" class="subtask-button">
+        <img src="./assets/icons/check_subtask.svg" alt="check">
         </button>
         </div>
         </div>
@@ -393,16 +393,16 @@ function getAddPageTemplate(task, usersArray = []) {
 function createListItemTemplate(value) {
   return `
     <li class="subtask-listelement" onclick="handleSubtaskClick(event, this)">
-  <span class="subtask-text">${value}</span>
-  <div class="subtask-edit-btns d-none">
-    <button class="icon-btn edit-btn" onclick="editSubtask(this)">
-      <img src="./assets/icons/edit.svg" alt="Edit">
-    </button>
-    <div class="vl-small"></div>
-    <button class="icon-btn delete-btn" onclick="deleteSubtask(this)">
-      <img src="./assets/icons/delete.svg" alt="Delete">
-    </button>
-  </div>
+    <span class="subtask-text list">${value}</span>
+    <div class="subtask-edit-btns d-none">
+        <button class="icon-btn edit-btn" onclick="editSubtask(this)">
+        <img src="./assets/icons/edit.svg" alt="Edit">
+        </button>
+        <div class="vl-small"></div>
+        <button class="icon-btn delete-btn" onclick="deleteSubtask(this)">
+        <img src="./assets/icons/delete.svg" alt="Delete">
+        </button>
+    </div>
 </li>
   `;
 }

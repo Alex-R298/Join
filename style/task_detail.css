@@ -28,7 +28,7 @@
 .dropdown-arrow {
     position: absolute;
     top: 50%;
-    right: 50px;
+    right: 10px;
     transform: translateY(-50%);
     cursor: pointer;
     transition: transform 0.3s ease;
@@ -53,21 +53,16 @@
     background: white;
     border: 1px solid #d1d1d1;
     border-radius: 8px;
-    margin-top: 8px;
     z-index: 10;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    width: 422px;
+    width: 440px;
 }
 
 .assigned-avatars {
     display: flex;
-    margin-top: 12px;
     flex-wrap: wrap;
-}
-
-.assigned-avatars .contact-avatar {
-    margin-left: -8px;
-    margin-right: 0;
+    margin-right: 0 !important;
+    gap: 8px;
 }
 
 .assigned-avatars .contact-avatar:first-child {

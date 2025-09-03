@@ -413,6 +413,7 @@
     display: flex;
     align-items: center;
     padding: 7px 16px;
+    gap: 16px;
 }
 
 .assigned-to-container {
