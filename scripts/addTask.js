@@ -1,4 +1,10 @@
 let selectedPriority = "medium";
+let currentTaskStatus = "todo";
+
+
+function setTaskStatus(status) {
+    currentTaskStatus = status;
+}
 
 const priorityConfig = {
   urgent: {
@@ -70,7 +76,6 @@ async function addTask() {
         
     } catch (error) {
         console.error("Fehler beim Speichern der Task:", error);
-        showErrorPopup("Fehler beim Speichern der Aufgabe!");
     }
 }
 
