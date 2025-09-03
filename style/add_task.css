@@ -300,11 +300,6 @@ input[type="date"]::placeholder {
     height: 24px;
 }
 
-.vl-small {
-    height: 24px;
-    border-left: 1px solid #D1D1D1;
-}
-
 .list {
     list-style: disc;
     display: list-item;

@@ -239,7 +239,7 @@ input {
 }
 
 .input {
-    width: 422px;
+    width: 440px;
     height: 48px;
     border-radius: 10px;
     border: 1px solid var(--lightgrey);
@@ -291,11 +291,16 @@ input:focus {
 .input-with-label {
     display: flex;
     flex-direction: column;
+    width: 400px;
 }
 
+.vl-small {
+    height: 24px;
+    border-left: 1px solid #D1D1D1;
+}
 
 textarea {
-    width: 422px;
+    width: 440px;
     height: 120px;
     border-radius: 10px;
     border: 1px solid var(--lightgrey);
@@ -349,6 +354,7 @@ a {
 
 .subtask-item:hover {
     background: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
 .custom-checkbox {
@@ -418,4 +424,12 @@ a {
 .subtask-text {
     color: #2A3647;
     font-size: 16px;
+}
+
+.edit-icon:hover path {
+    fill: var(--secondary);
+}
+
+.delete-icon:hover path {
+    fill: var(--secondary);
 }

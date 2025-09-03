@@ -52,15 +52,18 @@ function changeEditButtons() {
     let addButton = document.getElementById("editAddButton");
     let clearButton = document.getElementById("editClearButton");
     let input = document.getElementById("edit-subtask-input");
+    let divider = document.getElementById("vertical-divider");
 
     if (input.value.trim() !== "") {
-        addButton.style.display = "none";
-        acceptButton.style.display = "inline-block";
-        clearButton.style.display = "inline-block";
+        addButton.classList.add("d-none");
+        divider.classList.remove("d-none");
+        acceptButton.classList.remove("d-none");
+        clearButton.classList.remove("d-none");
     } else {
-        addButton.style.display = "inline-block";
-        acceptButton.style.display = "none";
-        clearButton.style.display = "none";
+        addButton.classList.remove("d-none");
+        divider.classList.add("d-none");
+        acceptButton.classList.add("d-none");
+        clearButton.classList.add("d-none");
     }
 }
 

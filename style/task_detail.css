@@ -18,6 +18,7 @@
 
 .assigned-dropdown {
     position: relative;
+    width: 440px;
 }
 
 .dropdown-input {
@@ -63,6 +64,10 @@
     flex-wrap: wrap;
     margin-right: 0 !important;
     gap: 8px;
+}
+
+.mt-8 {
+    margin-top: 8px;
 }
 
 .assigned-avatars .contact-avatar:first-child {
