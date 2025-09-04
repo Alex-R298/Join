@@ -95,7 +95,7 @@ function handleEditSubtaskClick(event, li) {
     let editBtn = li.querySelector(".icon-btn.edit-btn");
     let editImg = editBtn.querySelector("img");
 
-    if (editImg.src.includes("check.svg")) {
+    if (editImg.src.includes("check_subtask.svg")) {
         stopEditSubtaskEditMode(li);
     } else {
         startEditSubtaskEditMode(li);
@@ -103,6 +103,10 @@ function handleEditSubtaskClick(event, li) {
 }
 
 function startEditSubtaskEditMode(li) {
+
+    li.classList.add("edit-mode");
+     console.log("Klasse hinzugefügt:", li.classList); 
+
     let editBtn = li.querySelector(".icon-btn.edit-btn");
     let deleteBtn = li.querySelector(".icon-btn.delete-btn");
     let separator = li.querySelector(".vl-small");
@@ -115,7 +119,7 @@ function startEditSubtaskEditMode(li) {
     parent.insertBefore(deleteBtn, editBtn);
     parent.insertBefore(separator, editBtn);
 
-    let span = li.querySelector(".subtask-text");
+    let span = li.querySelector(".subtask-text list");
     if (!span) return;
 
     let input = document.createElement("input");
@@ -155,12 +159,13 @@ function saveEditSubtaskEdit(input, li) {
     let newValue = input.value.trim();
     if (newValue !== "") {
         let span = document.createElement("span");
-        span.className = "subtask-text";
+        span.className = "subtask-text list";
         span.textContent = newValue;
         li.replaceChild(span, input);
     } else {
         li.remove();
     }
+    li.classList.remove("edit-mode");
 }
 
 function deleteEditSubtask(button) {
@@ -204,7 +209,7 @@ async function saveEditedTask(taskId) {
     const assignedCheckboxes = document.querySelectorAll('#edit-user-dropdown input[type="checkbox"]:checked');
     const assignedUsers = Array.from(assignedCheckboxes).map(cb => cb.value);
     const subtaskElements = [];
-    const subtaskItems = document.querySelectorAll('#editMyList .subtask-text');
+    const subtaskItems = document.querySelectorAll('#editMyList .subtask-text list');
     subtaskItems.forEach(item => {
         subtaskElements.push({
             text: item.textContent,

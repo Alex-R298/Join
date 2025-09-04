@@ -285,7 +285,7 @@ function clearInput() {
 
 function editSubtask(button) {
   let li = button.closest("li");
-  let span = li.querySelector(".subtask-text");
+  let span = li.querySelector(".subtask-text list");
 
   let input = document.createElement("input");
   input.type = "text";
@@ -323,12 +323,15 @@ function handleSubtaskClick(event, li) {
 }
 
 function startEditMode(li) {
+
+  li.classList.add("edit-mode");
+  
   let editBtn = li.querySelector(".icon-btn.edit-btn");
   let deleteBtn = li.querySelector(".icon-btn.delete-btn");
   let separator = li.querySelector(".vl-small");
 
   let editImg = editBtn.querySelector("img");
-  editImg.src = "./assets/icons/check.svg";
+  editImg.src = "./assets/icons/check_subtask.svg";
   editImg.alt = "Check";
   editImg.classList.add("check_icon_subtask");
 
@@ -376,7 +379,7 @@ function saveEdit(input, li) {
   let newValue = input.value.trim();
   if (newValue !== "") {
     let span = document.createElement("span");
-    span.className = "subtask-text";
+    span.className = "subtask-text list";
     span.textContent = newValue;
     li.replaceChild(span, input);
   } else {

@@ -330,7 +330,7 @@ textarea {
     border: 1px solid var(--lightgrey);
     font-size: 20px;
     cursor: pointer;
-    padding: 0px 16px;
+    padding: 8px 16px;
 }
 
 textarea:focus {
