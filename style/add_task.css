@@ -272,6 +272,7 @@ input[type="date"]::placeholder {
     gap: 8px;
     flex-direction: column;
     margin-top: 8px;
+    width: 440px;
 }
 
 .subtask-listelement {
@@ -285,6 +286,12 @@ input[type="date"]::placeholder {
 .subtask-listelement:hover {
     border-radius: 10px;
     background-color: #eee;
+}
+
+.subtask-listelement.edit-mode:hover {
+    background-color: white;
+    border-radius: 0;
+    border-bottom: 1px solid #29ABE2;
 }
 
 .subtask-edit-btns {
@@ -308,6 +315,11 @@ input[type="date"]::placeholder {
 }
 
 .check_icon_subtask {
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
+}
+
+.edit-input {
+    background: transparent !important;
+    border: none !important;
 }

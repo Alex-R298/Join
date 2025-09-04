@@ -128,7 +128,7 @@ function renderSubtasks(subtasks, taskId) {
                        ${subtask.completed ? 'checked' : ''}>
                 <label for="checkbox-${taskId}-${index}" class="checkbox-label">
                     <span class="checkbox-custom"></span>
-                    <span class="subtask-text">${subtask.text || subtask}</span>
+                    <span class="subtask-text list">${subtask.text || subtask}</span>
                 </label>
             </div>
         </div>
@@ -149,7 +149,7 @@ function renderSubtasks(subtasks, taskId) {
                        ${subtask.completed ? 'checked' : ''}>
                 <label for="checkbox-${taskId}-${index}" class="checkbox-label">
                     <span class="checkbox-custom"></span>
-                    <span class="subtask-text">${subtask.text || subtask}</span>
+                    <span class="subtask-text list">${subtask.text || subtask}</span>
                 </label>
             </div>
         </div>
