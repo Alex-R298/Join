@@ -164,7 +164,7 @@
   }
 .overview{
   gap: 0px;
-
+  width: 100%;
 }
 .main_greet{
   display: none;
@@ -173,6 +173,7 @@
 .main_content{
   margin-left: 0;
   padding: 16px;
+  overflow: auto;
 }
 .main_head_line {
   display: flex;
@@ -205,6 +206,7 @@
 width: 396px;
 height: 110px;
 gap: 16px;
+padding-bottom: 30px;
 }
 .summary-icon{
   width: 40px;
@@ -219,6 +221,7 @@ h1{
 .summary {
   gap: 10px;
   padding: 0;
+  border-radius: 20px;
 }
 .row-2{
   width: 396px;
@@ -243,7 +246,11 @@ h1{
   margin-bottom: 6px;
 }
 .row-3{
-  gap: 13px;
+  width: 396px;
+  height: 116px;
+  gap: 24px;
+  padding-top: 18px;
+  
 }
 .tasks {
   width: 116px;
