@@ -79,9 +79,29 @@ function datetimer() {
       date.innerHTML = `
         <h2>${greet}!</h2>
       `;
+    }
+   if (
+      !sessionStorage.getItem("overlayShown") && window.matchMedia("(max-width: 428px)").matches
+    ) {
+      showOverlay(greet, userName);
+      sessionStorage.setItem("overlayShown", "true");
+    }
   }
 }
 
+function showOverlay(greet, userName) {
+  const overlay = document.getElementById("welcome-overlay");
+  const overlayContent = overlay.querySelector(".overlay-content");
+
+  overlayContent.innerHTML = userName
+    ? `<h2>${greet},</h2><p class="greet_name">${userName}</p>`
+    : `<h2>${greet}!</h2>`;
+
+  overlay.classList.remove("hidden");
+
+  setTimeout(() => {
+    overlay.classList.add("hidden");
+  }, 3000);
 }
 
 function loadHeader() {
