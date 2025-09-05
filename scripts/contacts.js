@@ -2,6 +2,8 @@ function onloadFunc() {
     fetchContacts("/user");
 }
 
+let currentSelectedContact = null;
+
 
 async function fetchContacts(path) {
     const response = await fetch(BASE_URL + path + ".json");
@@ -62,10 +64,17 @@ async function saveContactToFirebase(contact) {
         });
         const data = await response.json();
         const newContactId = data.name;
+        
         showSuccessMessage();
         await fetchContacts("/user");
-        displayContactDetails(newContactId, contact, null, null, false);
-        markContactCard(newContactId);
+        displayContactDetails(newContactId, contact, getInitials(contact.name), getAvatarColor(contact.name), false);
+        if (window.innerWidth <= 428) {
+            const headline = document.querySelector('.contacts-headline');
+            if (headline) {
+                headline.classList.add('active');
+            }
+        }
+        
     } catch (error) {
         console.error("Error saving contact:", error);
     }
@@ -117,6 +126,13 @@ async function sendUpdatedContactToFirebase(contactId, updatedFields) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(updatedContact)
         });
+        if (currentSelectedContact && currentSelectedContact.id === contactId) {
+            currentSelectedContact.name = updatedContact.name;
+            currentSelectedContact.email = updatedContact.email;
+            currentSelectedContact.phone = updatedContact.phone;
+            currentSelectedContact.initials = getInitials(updatedContact.name);
+            currentSelectedContact.avatarColor = getAvatarColor(updatedContact.name);
+        }
         await fetchContacts("/user");
     } catch (error) {
         console.error("Error updating contact:", error);
@@ -125,6 +141,14 @@ async function sendUpdatedContactToFirebase(contactId, updatedFields) {
 
 
 function showContactDetails(contactId, name, email, phone, initials, avatarColor) {
+    currentSelectedContact = {
+        id: contactId,
+        name: name,
+        email: email,
+        phone: phone,
+        initials: initials,
+        avatarColor: avatarColor
+    };
     const allContactCards = document.querySelectorAll('.contact-card');
     allContactCards.forEach(card => {
         card.classList.remove('selected');
@@ -142,6 +166,47 @@ function showContactDetails(contactId, name, email, phone, initials, avatarColor
     }
 }
 
+    function backToContacts() {
+        const headline = document.querySelector('.contacts-headline');
+        if (headline) {
+            headline.classList.remove('active');
+        }
+    }
+
+    function toggleContact() {
+    const buttonDropMenu = document.getElementById("button-drop-menu");
+    const buttonDrop = document.querySelector(".button-drop");
+    
+    buttonDrop.classList.add("button-hidden");
+    buttonDropMenu.classList.remove("d_none");
+    buttonDropMenu.innerHTML = getDropMenuTemplate(
+        currentSelectedContact.id,
+        currentSelectedContact.name,
+        currentSelectedContact.email,
+        currentSelectedContact.phone,
+        currentSelectedContact.initials,
+        currentSelectedContact.avatarColor
+    );
+    
+    buttonDropMenu.style.display = "flex";
+    buttonDropMenu.style.justifyContent = "flex-end";
+    setTimeout(() => {
+        buttonDropMenu.classList.add("visible");
+    }, 10);
+}
+
+function getDropMenuTemplate(contactId, name, email, phone, initials, avatarColor) {
+    return `
+        <div class="button-drop-menu">
+            <button onclick="editContact('${contactId}', '${name}', '${email}', '${phone}', '${initials}', '${avatarColor}')" class="button-details-drop" type="button">
+                <img src="./assets/icons/edit.svg" alt=""> Edit
+            </button>
+            <button onclick="deleteContact('${contactId}')" class="button-details-drop" type="button">
+                <img src="./assets/icons/delete.svg" alt=""> Delete
+            </button>
+        </div>
+    `;
+}
 
 function getAvatarColor(name) {
     const colors = [
@@ -241,7 +306,9 @@ function editContact(contactId, name, email, phone, initials, avatarColor) {
             editOverlay.classList.add('visible');
         }, 10);
     }
+    closeDropdown();
 }
+
 
 
 function showSuccessMessage() {
@@ -306,6 +373,27 @@ function showAndMarkContact(contactId, contact) {
 }
 
 
+function closeDropdownOnOutsideClick() {
+    closeDropdown();
+}
+
+function closeDropdown() {
+    const menu = document.getElementById("button-drop-menu");
+    const btn = document.querySelector(".button-drop");
+    
+    if (menu && btn) {
+        menu.classList.remove('visible');
+        menu.classList.add('closing');
+        setTimeout(() => {
+            menu.classList.add("d_none");
+            menu.classList.remove('closing');
+            menu.style.display = "none";
+            menu.innerHTML = "";
+            btn.classList.remove("button-hidden");
+        }, 500);
+    }
+}
+
 function markContactCard(contactId) {
     document.querySelectorAll('.contact-card').forEach(card => 
         card.classList.remove('selected')
@@ -313,4 +401,18 @@ function markContactCard(contactId) {
     const card = document.querySelector(`[data-contact-id="${contactId}"]`);
     if (card) card.classList.add('selected');
 }
+
+document.addEventListener('click', function(event) {
+    const headline = document.querySelector('.contacts-headline');
+    const btn = document.querySelector(".button-drop");
+    const menu = document.getElementById("button-drop-menu");
+    
+    if (headline?.contains(event.target) && btn && !btn.contains(event.target)) {
+        if (menu && !menu.classList.contains("d_none") && menu.style.display !== "none") {
+            closeDropdown();
+        }
+    }
+});
+
+
 

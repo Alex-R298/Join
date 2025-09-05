@@ -8,6 +8,15 @@
     box-shadow: 0px 4px 4px 3px #0000001A;
 }
 
+.button-hidden {
+    display: none !important;
+}
+
+.button-details-drop{
+    display: none;
+}
+
+
 .button-contact {
     width: 352px;
 }
@@ -398,6 +407,15 @@
     display: none;
 }
 
+.button-back{
+    display: none;
+}
+
+.button-drop {
+    display: none;
+}
+
+
 @media (max-width: 1600px){
     .contact-details-name {
         font-size: 40px;
@@ -444,8 +462,7 @@
 @media (max-width: 428px) {
 
     .main-container {
-        margin-top: 80px;
-    height: calc(100vh - 80px);
+        height: calc(100vh - 160px);
     }
 
     .content-wrapper {
@@ -453,7 +470,8 @@
         margin-left: 0;
         padding: 0px;
     box-shadow: none;
-    margin-bottom: 55px;
+    margin-bottom: 16px;
+    margin-top: -15px;
     }
 
     .button-contact {
@@ -465,7 +483,7 @@
         justify-content: flex-end;
         position: sticky;
         bottom: 0px;
-        z-index: 100;
+        /* z-index: 100; */
         padding-bottom: 44px;
     }
         
@@ -478,6 +496,7 @@
         box-shadow: 0px 4px 3px 1px #0000001A;
         cursor: pointer;
         display: block;
+        z-index: 2;
     }
 
     .button-contact-res:hover {
@@ -485,21 +504,26 @@
         box-shadow: 0px 4px 4px 0px #00000040;
     }
 
-    .contacts-headline  {
+    .contacts-headline {
         position: fixed;
-        display: flex;
+        top: 80px;
+        left: 0;
         width: 100%;
-        /* height: calc(100vh - 80px); */
-        padding: 24px;
-        margin-top: 0;
-        margin-left: 0;
+        height: calc(100vh - 160px);
         background: #f6f7f8;
-        z-index: 1000;
-        opacity: 0;
+        z-index: 500;
+        padding: 18px;
+        display: none; 
+        flex-direction: column;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+        margin-top: 0px;
+        margin-left: 0px;
     }
-    
+
     .contacts-headline.active {
-        opacity: 1;
+        display: flex;
+        transform: translateX(0);
     }
 
     .add-contact-popup {
@@ -559,4 +583,96 @@
     .button-secondary {
         display: none;
     }
+
+    .button-back {
+        display: block;
+        position: absolute;
+        left: 86%;
+    }
+
+    .button-back-res {
+        background-color: #f6f7f8;
+    }
+
+    .contact-details.animate {
+    animation: none;
+}
+
+    .button-details {
+    display: none;
+}
+
+.button-drop {
+    display: block;
+    display: flex;
+        justify-content: flex-end;
+        margin-top: 176px;
+        position: sticky;
+        bottom: 132px;
+}
+
+.button-drop-style {
+        height: 56px;
+        width: 56px;
+        border-radius: 46px;
+        background-color: var(--primary);
+        box-shadow: 0px 4px 3px 1px #0000001A;
+        cursor: pointer;
+        display: block;
+        z-index: 2;
+    }
+
+    .button-drop-style:hover {
+        background-color: var(--secondary);
+        box-shadow: 0px 4px 4px 0px #00000040;
+    }
+
+    .button-drop-menu {
+        display: block;
+    display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 146px;
+        background: white;
+        box-shadow: 0 6px 6px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        width: 120px;
+        height: 100px;
+        border-bottom-left-radius: 26px;
+        border-top-left-radius: 26px;
+        border-top-right-radius: 26px;
+        animation: slideInFromRight 0.5s ease forwards;
+    }
+
+    #button-drop-menu {
+        position: sticky;
+        bottom: 112px;
+    }
+
+    #button-drop-menu.closing {
+        animation: slideOutToRight 0.5s ease forwards;
+    }
+
+    .button-details-drop {
+            background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 16px;
+    }
+
+    .button-details-drop:hover {
+    color: var(--secondary);
+    background: rgba(0, 0, 0, 0.1);
+    margin: 0 10px;
+    border-radius: 12px;
+}
+
+    /* .contacts-container {
+        margin-top: -15px;
+    } */
 }

@@ -2,7 +2,7 @@
 
 
 function updateDashboardCounts() {
-  if (!document.querySelector('.summary-info h1')) return;
+  if (!document.querySelector('.summary-info h2')) return;
   
   const todoCount = allTasks.filter(task => task.status === 'toDo').length;
   const inProgressCount = allTasks.filter(task => task.status === 'inProgress').length;
@@ -31,13 +31,13 @@ function findEarliestDueDate(tasks) {
 }
 
 function updateDashboardElements(todoCount, inProgressCount, awaitFeedbackCount, doneCount, urgentCount, earliestDate, totalCount) {
-  document.querySelectorAll('.summary-info h1')[0].textContent = todoCount;
-  document.querySelectorAll('.summary-info h1')[1].textContent = doneCount;
-  document.querySelectorAll('.summary-info h1')[2].textContent = urgentCount;
+  document.querySelectorAll('.summary-info h2')[0].textContent = todoCount;
+  document.querySelectorAll('.summary-info h2')[1].textContent = doneCount;
+  document.querySelectorAll('.summary-info h2')[2].textContent = urgentCount;
   
-  document.querySelectorAll('.summary.tasks h1')[0].textContent = totalCount;
-  document.querySelectorAll('.summary.tasks h1')[1].textContent = inProgressCount;
-  document.querySelectorAll('.summary.tasks h1')[2].textContent = awaitFeedbackCount;
+  document.querySelectorAll('.summary.tasks h2')[0].textContent = totalCount;
+  document.querySelectorAll('.summary.tasks h2')[1].textContent = inProgressCount;
+  document.querySelectorAll('.summary.tasks h2')[2].textContent = awaitFeedbackCount;
   
   const dateElement = document.querySelector('.row-2 .summary div:last-child h3');
   if (dateElement) {
