@@ -1,7 +1,11 @@
 let selectedPriority = "medium";
 let currentTaskStatus = "todo";
 
-
+/**
+ * Sets the current task status to the specified value.
+ * @global {string} currentTaskStatus
+ * @param {string} status - The new status of the task (e.g., "todo", "in progress", "done")
+ */
 function setTaskStatus(status) {
     currentTaskStatus = status;
 }
@@ -24,6 +28,8 @@ const priorityConfig = {
   },
 };
 
+
+/** Fetches base data from the server */
 async function fetchBase() {
   try {
     const res = await fetch(BASE_URL + ".json");
@@ -33,6 +39,8 @@ async function fetchBase() {
   }
 }
 
+
+/** Adds a new task to the system */
 async function addTask() {
     const title = document.getElementById("title").value;
     const description = document.getElementById("task_description").value;
@@ -79,17 +87,30 @@ async function addTask() {
     }
 }
 
+
+/** Fetches tasks from the server for debugging purposes */
 async function loadTasksDebug() {
   const res = await fetch(BASE_URL + "/task.json");
   const data = await res.json();
 }
 
+
+/**
+ * Activates the medium priority button by default when the DOM is loaded.
+ * @global {string} currentTaskStatus
+ */
 function activMediumBtn() {
   document.addEventListener("DOMContentLoaded", () => {
     selectPriority(document.querySelector('[data-priority="medium"]'));
   });
 }
 
+
+/**
+ * Selects a priority level and updates the UI accordingly.
+ * Removes any existing selection and highlights the newly selected priority.
+ * @param {HTMLElement} button - The button element corresponding to the priority
+ */
 function selectPriority(button) {
   const buttons = document.querySelectorAll(".priority-btn");
 
@@ -111,6 +132,7 @@ function selectPriority(button) {
 }
 
 
+/** Shows the AddTask - Popup */
 function showPopup() {
     document.getElementById("taskPopup").classList.remove('d-none');
     setTimeout(() => {
@@ -118,6 +140,8 @@ function showPopup() {
     }, 1500);
 }
 
+
+/** Closes the AddTask - Popup */
 function closePopup() {
   document.getElementById("taskPopup").classList.add('d-none');
   if (document.getElementById("add-task-overlay")) {
@@ -134,13 +158,15 @@ function getTodaysDate() {
   return `${yyyy}-${mm}-${dd}`;
 }
 
+
+/** Sets the minimum date, because it cant be in the past */
 function setMinDate() {
   const dateInput = document.getElementById("datepicker");
   dateInput.min = getTodaysDate();
 }
 
 
-
+/** Checks if all required inputs are filled */
 function validateAddTask() {
     const isTitleValid = checkTitle();
     const isDateValid = checkDate();
@@ -148,6 +174,7 @@ function validateAddTask() {
     
     return isTitleValid && isDateValid && isCategoryValid;
 }
+
 
 function checkTitle() {
     const titleRef = document.getElementById("title");
@@ -164,6 +191,7 @@ function checkTitle() {
         return true;
     }
 }
+
 
 function checkDate() {
     const dateRef = document.getElementById("datepicker");
@@ -182,6 +210,7 @@ function checkDate() {
     }
 }
 
+
 function checkCategory() {
     const categoryRef = document.getElementById("category_task");
     const errorCategoryRef = document.getElementById("category-error-message");
@@ -198,6 +227,7 @@ function checkCategory() {
     }
 }
 
+
 function resetValidationState() {
     document.querySelectorAll('.invalid').forEach(element => {
         element.classList.remove('invalid');
@@ -207,6 +237,7 @@ function resetValidationState() {
         errorElement.classList.add('d-none');
     });
 }
+
 
 async function clearInputs() {
     document.getElementById("title").value = "";
@@ -236,6 +267,7 @@ async function clearInputs() {
     resetValidationState();
 }
 
+
 function handleAddTask() {
     if (validateAddTask()) {
         addTask();
@@ -243,8 +275,7 @@ function handleAddTask() {
 }
 
 
-// Subtask
-
+// Subtask-functions
 function addSubtask() {
   let input = document.getElementById("subtask_input");
   let list = document.getElementById("myList");
@@ -256,6 +287,7 @@ function addSubtask() {
   }
   changeButtons();
 }
+
 
 function changeButtons() {
   let acceptButton = document.getElementById("acceptButton");
@@ -277,11 +309,13 @@ function changeButtons() {
   }
 }
 
+
 function clearInput() {
   let input = document.getElementById("subtask_input");
   input.value = "";
   changeButtons();
 }
+
 
 function editSubtask(button) {
   let li = button.closest("li");
@@ -323,7 +357,6 @@ function handleSubtaskClick(event, li) {
 }
 
 function startEditMode(li) {
-
   li.classList.add("edit-mode");
 
   let editBtn = li.querySelector(".icon-btn.edit-btn");
@@ -386,11 +419,18 @@ function saveEdit(input, li) {
     li.remove();
   }
 }
+
+/** Deletes a subtask from the list */
 function deleteSubtask(button) {
   let li = button.closest("li");
   if (li) li.remove();
 }
 
+
+/**
+ * Adds hover effects to subtasks using event delegation.
+ * Shows edit buttons on mouseover and hides them on mouseout.
+ */
 function addSubtaskHoverEffectsWithDelegation() {
   document.body.addEventListener("mouseover", function (e) {
     const subtaskElement = e.target.closest(".subtask-listelement");
@@ -415,6 +455,11 @@ function addSubtaskHoverEffectsWithDelegation() {
   });
 }
 
+
+/**
+ * Updates the visual representation of selected assignees.
+ * Shows avatars of all selected users below the select field.
+ */
 function updateAssigneeAvatars() {
   const checkedBoxes = document.querySelectorAll(
     '#assignee-dropdown input[type="checkbox"]:checked'
@@ -430,6 +475,8 @@ function updateAssigneeAvatars() {
   });
 }
 
+
+/** Filters the Assignees */
 function filterAssignees(searchTerm) {
   const userItems = document.querySelectorAll(".assigned-user-item");
   const search = searchTerm.toLowerCase();
@@ -444,13 +491,13 @@ function filterAssignees(searchTerm) {
   });
 }
 
-// Toggles the visibility of the assignee dropdown
+
+/** Toggles the visibility of the assignee dropdown */
 function toggleAssigneeDropdown() {
   const dropdown = document.getElementById("assignee-dropdown");
   const arrow = document.querySelector(".dropdown-arrow");
   const input = document.getElementById("assignee-input");
   const categoryDropdown = document.getElementById("category-dropdown");
-  // show dropdown
   if (dropdown.classList.contains("d-none")) {
     dropdown.classList.remove("d-none");
     categoryDropdown.classList.add("d-none");
@@ -458,7 +505,6 @@ function toggleAssigneeDropdown() {
     input.removeAttribute("readonly");
     input.focus();
   } else {
-    // hide dropdown
     dropdown.classList.add("d-none");
     arrow.classList.remove("open");
     input.setAttribute("readonly", true);
@@ -467,7 +513,7 @@ function toggleAssigneeDropdown() {
   }
 }
 
-// Toggles the visibility of the category dropdown
+/** Toggles the visibility of the category dropdown */
 let selectedCategory = null;
 function toggleCategoryDropdown() {
   document.getElementById("assignee-dropdown").classList.add("d-none");
@@ -475,7 +521,7 @@ function toggleCategoryDropdown() {
   categoryDropdown.classList.toggle("d-none");
 }
 
-// Selects a category and updates the display
+/** Selects a category and updates the display */ 
 function selectCategory(value, e) {
   const label = {
     "technical-task": "Technical Task",
@@ -485,7 +531,6 @@ function selectCategory(value, e) {
   document.getElementById("selected-category-placeholder").textContent =
     label[value] || "Select category";
   document.getElementById("category-dropdown").classList.add("d-none");
-
   document.getElementById("category_task").value = value;
 
   e.stopPropagation();
