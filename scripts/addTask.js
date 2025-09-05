@@ -112,14 +112,14 @@ function selectPriority(button) {
 
 
 function showPopup() {
-    document.getElementById("taskPopup").style.display = "flex";
+    document.getElementById("taskPopup").classList.remove('d-none');
     setTimeout(() => {
         closePopup();
     }, 1500);
 }
 
 function closePopup() {
-  document.getElementById("taskPopup").style.display = "none";
+  document.getElementById("taskPopup").classList.add('d-none');
   if (document.getElementById("add-task-overlay")) {
     closeAddTaskOverlay();
   }
@@ -325,7 +325,7 @@ function handleSubtaskClick(event, li) {
 function startEditMode(li) {
 
   li.classList.add("edit-mode");
-  
+
   let editBtn = li.querySelector(".icon-btn.edit-btn");
   let deleteBtn = li.querySelector(".icon-btn.delete-btn");
   let separator = li.querySelector(".vl-small");
@@ -444,13 +444,16 @@ function filterAssignees(searchTerm) {
   });
 }
 
+// Toggles the visibility of the assignee dropdown
 function toggleAssigneeDropdown() {
   const dropdown = document.getElementById("assignee-dropdown");
   const arrow = document.querySelector(".dropdown-arrow");
   const input = document.getElementById("assignee-input");
+  const categoryDropdown = document.getElementById("category-dropdown");
   // show dropdown
   if (dropdown.classList.contains("d-none")) {
     dropdown.classList.remove("d-none");
+    categoryDropdown.classList.add("d-none");
     arrow.classList.add("open");
     input.removeAttribute("readonly");
     input.focus();
@@ -462,4 +465,28 @@ function toggleAssigneeDropdown() {
     input.value = "";
     filterAssignees("");
   }
+}
+
+// Toggles the visibility of the category dropdown
+let selectedCategory = null;
+function toggleCategoryDropdown() {
+  document.getElementById("assignee-dropdown").classList.add("d-none");
+  const categoryDropdown = document.getElementById("category-dropdown");
+  categoryDropdown.classList.toggle("d-none");
+}
+
+// Selects a category and updates the display
+function selectCategory(value, e) {
+  const label = {
+    "technical-task": "Technical Task",
+    "user-story": "User Story",
+  };
+
+  document.getElementById("selected-category-placeholder").textContent =
+    label[value] || "Select category";
+  document.getElementById("category-dropdown").classList.add("d-none");
+
+  document.getElementById("category_task").value = value;
+
+  e.stopPropagation();
 }

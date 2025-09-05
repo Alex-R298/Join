@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style/fonts.css">
+  <link rel="stylesheet" href="./style/style.css">
+  <link rel="stylesheet" href="./style/indexx.css">
+  <link rel="stylesheet" href="./style/header.css">
+  <link rel="stylesheet" href="./style/sidebar.css">
+  <link rel="stylesheet" href="./style/add_task.css">
+  <link rel="stylesheet" href="./style/task_detail.css">
+  <link rel="stylesheet" href="./style/contacts.css">
+  <script src="./scripts/config.js"></script>
+  <script src="./script.js"></script>
+  <script src="./scripts/template.js"></script>
+  <script src="./scripts/board.js"></script>
+  <script src="./scripts/addTask.js"></script>
+  <script src="./scripts/contacts.js"></script>
+
+  <title>Join</title>
+</head>
+
+<body onload="init();">
+
+  <div id="header-container"></div>
+  <main class="main_content">
+    <div id="sidebar-container"></div>
+
+    <div id="add_task_template">
+
+      <div class="input-with-label">
+              <label for="assignee-input">Assigned to</label>
+              <div class="assigned-dropdown">
+                  <input class="input input-assignees dropdown-input" 
+                         type="text" 
+                         id="assignee-input" 
+                         placeholder="Select contacts to assign" 
+                         onclick="toggleAssigneeDropdown()"
+                         oninput="filterAssignees(this.value)">
+                  <img src="./assets/icons/arrow_drop_downarea.svg" class="dropdown-arrow" onclick="toggleAssigneeDropdown()">
+                  
+                  <div id="assignee-dropdown" class="user-dropdown d-none">
+      
+                  </div>
+              </div>
+            </div>
+      
+      
+            <div class="input-with-label">
+              <label for="category_task">Category<span style="color: #FF8190;">*</span></label>
+                <div class="category-select-header" onclick="toggleCategoryDropdown()">
+                  <span id="selected-category-placeholder">Select task category</span>
+                <img src="./assets/icons/arrow_drop_downarea.svg" class="dropdown-arrow">
+              
+                <div id="category-dropdown" class="user-dropdown d-none">
+                <div class="category-option" onclick="selectCategory('user-story')">User Story</div>
+                <div class="category-option" onclick="selectCategory('technical-task')">Technical Task</div>
+              
+                </div>
+              </div>
+              <span id="category-error-message" class="input-invalid d-none">This field is required</span>
+              </div>
+    </div>
+  </main>
+
+</body>
+
+</html>
+
+
+
