@@ -13,6 +13,7 @@
 .priority-inputs-container {
     display: flex;
     align-items: start;
+    justify-content: space-between;
     gap: 16px;
     flex-grow: 1;
 }
@@ -84,7 +85,7 @@
     display: flex;
     justify-content: space-between;
     align-items: end;
-    width: 977px;
+    width: 100%;
     margin-top: 60px;
 }
 
@@ -309,30 +310,12 @@ input[type="date"]::placeholder {
 
 @media (max-width: 428px) {
 
-    .vl-add-task {
-        display: none;
-    }
-
-    .inputs-right {
-        margin-top: 16px;
-    }
-
     .input-assignees {
         width: 100%;
     }
 
-    .create-btns {
-        width: 100%;
-        flex-direction: column;
-        margin-top: 0;
-    }
-
     .button-secondary {
         display: block;
-    }
-
-    .add-task-buttons {
-        margin-top: 40px;
     }
 
     .pb-16 {
@@ -356,6 +339,30 @@ input[type="date"]::placeholder {
     .priority-btn img {
         width: 16px;
         height: 16px;
+    }
+
+}
+
+@media (max-width: 1000px) {
+
+    .vl-add-task {
+            display: none;
+        }
+    
+    .inputs-right {
+        margin-top: 16px;
+    }
+
+    .create-btns {
+        width: 100%;
+        flex-direction: column;
+        margin-top: 0;
+        align-items: stretch;
+    }
+
+    .add-task-buttons {
+        margin-top: 40px;
+        justify-content: flex-end;
     }
 
 }

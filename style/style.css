@@ -356,7 +356,6 @@ a {
     display: flex;
     align-items: stretch;
     flex-direction: column;
-    flex-wrap: wrap;
     justify-content: center;
     padding: 96px;
     margin-left: 232px;
@@ -459,14 +458,21 @@ a {
     fill: var(--secondary);
 }
 
-@media (max-width: 428px) {
-    .container {
-        padding: 0 8px;
+@media (max-width: 1000px) {
+
+    .main_content {
+        padding: 48px;
     }
 
     .main_content_row {
         flex-direction: column;
         width: 100%;
+    }
+}
+
+@media (max-width: 428px) {
+    .container {
+        padding: 0 8px;
     }
 
     label {
