@@ -90,10 +90,21 @@ a.active {
     justify-content: center;
     align-items: center;
     padding: 0;
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .sidebar_footer {
     display: none;
   }
+  a.active {
+  border-radius: 16px;
+}
+a {
+ height:76px;
+ width: 80px;
+}
+a img {
+  width: 24px;
+  height: 24px;
+}
 }
