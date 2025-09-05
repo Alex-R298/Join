@@ -70,6 +70,11 @@ function datetimer() {
     else if (hrs >= 12 && hrs <= 17) greet = "Good Afternoon";
     else if (hrs >= 17 && hrs <= 24) greet = "Good Evening";
     const userName = sessionStorage.getItem('userName');
+
+    if (!userName) {
+      sessionStorage.removeItem("overlayShown");
+    }
+
     if (userName) {
       date.innerHTML = `
         <h2>${greet},</h2>
@@ -80,9 +85,9 @@ function datetimer() {
         <h2>${greet}!</h2>
       `;
     }
-   if (
-      !sessionStorage.getItem("overlayShown") && window.matchMedia("(max-width: 428px)").matches
-    ) {
+    const showOverlayCondition = !sessionStorage.getItem("overlayShown") && window.matchMedia("(max-width: 428px)").matches;
+
+    if (showOverlayCondition) {
       showOverlay(greet, userName);
       sessionStorage.setItem("overlayShown", "true");
     }
@@ -97,10 +102,10 @@ function showOverlay(greet, userName) {
     ? `<h2>${greet},</h2><p class="greet_name">${userName}</p>`
     : `<h2>${greet}!</h2>`;
 
-  overlay.classList.remove("hidden");
+  overlay.classList.remove("d-none");
 
   setTimeout(() => {
-    overlay.classList.add("hidden");
+    overlay.classList.add("d-none");
   }, 3000);
 }
 
