@@ -369,15 +369,22 @@ function getAddPageTemplate(task, usersArray = []) {
         </div>
         <div class="dropdown-spacer"></div> 
 
-      <div class="input-with-label">
-        <label for="category_task">Category<span style="color: #FF8190;">*</span></label>
-        <select class="minimal" id="category_task" required>
-        <option value="" disabled selected>Select task category</option>
-          <option value="user-story">User Story</option>
-          <option value="technical-task">Technical Task</option>
-        </select>
-        <span id="category-error-message" class="input-invalid d-none">This field is required</span>
-      </div>
+            <div class="input-with-label">
+              <label for="category_task">Category<span style="color: #FF8190;">*</span></label>
+              <div class="custom-category-select">
+                <div class="category-select-header input" onclick="toggleCategoryDropdown()">
+                  <span id="selected-category-placeholder">Select task category</span>
+                <img src="./assets/icons/arrow_drop_downarea.svg" class="dropdown-arrow">
+                <input type="hidden" id="category_task">
+                <div id="category-dropdown" class="user-dropdown d-none">
+                <div class="category-option" onclick="selectCategory('user-story', event)">User Story</div>
+                <div class="category-option" onclick="selectCategory('technical-task', event)">Technical Task</div>
+              
+                </div>
+              </div>
+              </div>
+              <span id="category-error-message" class="input-invalid d-none">This field is required</span>
+              </div>
 
       <div class="input-with-label">
         <label for="subtask_input">Subtasks</label>
