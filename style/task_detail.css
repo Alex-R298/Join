@@ -18,7 +18,7 @@
 
 .assigned-dropdown {
     position: relative;
-    width: 440px;
+    width: 100%;
 }
 
 .dropdown-input {
@@ -56,7 +56,7 @@
     border-radius: 8px;
     z-index: 10;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    width: 440px;
+    width: 100%;
 }
 
 .assigned-avatars {

@@ -1,3 +1,4 @@
+/** Highlights the word "join" in all p-tags */
 function highlightJoin() {
   const pTags = document.querySelectorAll("p");
 
