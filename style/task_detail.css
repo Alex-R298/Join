@@ -130,3 +130,16 @@
     margin: 0;
     line-height: 1.5;
 }
+
+
+@media (max-width: 428px) {
+
+    .user-dropdown {
+        width: 396px;
+    }
+
+    .assigned-dropdown {
+        width: 396px;
+    }
+
+}

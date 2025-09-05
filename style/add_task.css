@@ -354,3 +354,56 @@ input[type="date"]::placeholder {
 .category-option:hover {
     background-color: #f0f0f0;
 }
+
+
+
+@media (max-width: 428px) {
+
+
+    .vl-add-task {
+        display: none;
+    }
+
+    .inputs-right {
+        margin-top: 16px;
+    }
+
+    .priority-btn {
+        width: 120px;
+    }
+
+    .input-assignees {
+        width: 396px;
+    }
+
+    .input-with-button {
+        width: 396px;
+    }
+
+    .subtasks-list {
+        width: 396px;
+    }
+
+    .custom-category-select {
+        width: 396px;
+    }
+
+    .create-btns {
+        width: 400px;
+        flex-direction: column;
+        margin-top: 0;
+    }
+
+    .button-secondary {
+        display: block;
+    }
+
+    .add-task-buttons {
+        margin-top: 40px;
+    }
+
+    .pb-16 {
+        padding-bottom: 0;
+    }
+
+}

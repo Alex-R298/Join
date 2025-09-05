@@ -457,3 +457,18 @@ a {
 .delete-icon:hover path {
     fill: var(--secondary);
 }
+
+@media (max-width: 428px) {
+
+    .input {
+        width: 396px;
+    }
+
+    textarea {
+        width: 396px;
+    }
+
+    .main_content_row {
+        flex-direction: column;
+    }
+}
