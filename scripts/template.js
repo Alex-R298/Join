@@ -182,15 +182,15 @@ function getAddContactTemplate() {
         </div>
         <div class="inputs">
             <div class="input-with-icon">
-                <input class="input" id="contact-name" placeholder="Name">
+                <input class="input-contact" id="contact-name" placeholder="Name">
                 <img src="./assets/icons/person.svg" alt="">
             </div>
             <div class="input-with-icon">
-                <input class="input" id="contact-email" placeholder="Email">
+                <input class="input-contact" id="contact-email" placeholder="Email">
                 <img src="./assets/icons/mail.svg" alt="">
             </div>
             <div class="input-with-icon">
-                <input class="input" id="contact-phone" placeholder="Phone">
+                <input class="input-contact" id="contact-phone" placeholder="Phone">
                 <img src="./assets/icons/call.svg" alt="">
             </div>
         </div>
@@ -221,15 +221,15 @@ function editContactTemplate(contactId = '', name = '', email = '', phone = '', 
                 </div>
                 <div class="inputs">
                     <div class="input-with-icon">
-                        <input class="input" id="contact-name" placeholder="Name" value="${name}">
+                        <input class="input-contact" id="contact-name" placeholder="Name" value="${name}">
                         <img src="./assets/icons/person.svg" alt="">
                     </div>
                     <div class="input-with-icon">
-                        <input class="input" id="contact-email" placeholder="Email" value="${email}">
+                        <input class="input-contact" id="contact-email" placeholder="Email" value="${email}">
                         <img src="./assets/icons/mail.svg" alt="">
                     </div>
                     <div class="input-with-icon">
-                        <input class="input" id="contact-phone" placeholder="Phone" value="${phone}">
+                        <input class="input-contact" id="contact-phone" placeholder="Phone" value="${phone}">
                         <img src="./assets/icons/call.svg" alt="">
                     </div>
                 </div>
@@ -421,7 +421,7 @@ function getAddPageTemplate(task, usersArray = []) {
 function createListItemTemplate(value) {
   return `
     <li class="subtask-listelement" onclick="handleSubtaskClick(event, this)">
-    <span class="subtask-text list">${value}</span>
+    <span class="subtask-text">${value}</span>
     <div class="subtask-edit-btns d-none">
         <button class="icon-btn edit-btn" onclick="editSubtask(this)">
         <img src="./assets/icons/edit.svg" alt="Edit">

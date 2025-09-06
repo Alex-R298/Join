@@ -257,14 +257,15 @@ async function saveEditedTask(taskId) {
   const assignedUsers = Array.from(assignedCheckboxes).map((cb) => cb.value);
   const subtaskElements = [];
   const subtaskItems = document.querySelectorAll(
-    "#editMyList .subtask-text list"
+    "#editMyList .subtask-text.list"
   );
-  subtaskItems.forEach((item) => {
-    subtaskElements.push({
-      text: item.textContent,
-      completed: false,
-    });
+  subtaskItems.forEach((item, index) => {
+  const originalCompleted = task.subtaskElements[index]?.completed || false;
+  subtaskElements.push({
+    text: item.textContent,
+    completed: originalCompleted,
   });
+});
 
   task.title = document.getElementById("edit-title").value;
   task.description = document.getElementById("edit-description").value;
@@ -275,7 +276,11 @@ async function saveEditedTask(taskId) {
 
   await saveTaskToFirebase(task);
   closeTaskOverlay();
-  updateHTML();
+
+  const taskElement = document.getElementById(`task-${taskId}`);
+  if (taskElement) {
+    taskElement.outerHTML = taskOnBoardTemplate(task);
+}
 }
 
 

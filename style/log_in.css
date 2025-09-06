@@ -1,3 +1,15 @@
+body.full-width {
+    max-width: none !important;
+}
+
+.sign-up-res {
+    display: none;
+}
+
+label {
+    color: #A8A8A8;
+}
+
 .main-login {
        display: flex;
     flex-direction: column;
@@ -82,7 +94,7 @@
     justify-content: center;
     align-items: center;
     gap: 16px;
-    margin-top: 250px;
+    margin-top: 100px;
     font-size: 16px;
     
 }
@@ -236,3 +248,94 @@
     margin: 0; 
     width: 100%;
 }
+
+.input-log {
+    width: 422px;
+    height: 48px;
+    border-radius: 10px;
+    border: 1px solid var(--lightgrey);
+    font-size: 20px;
+    text-indent: 16px;
+}
+
+@media (max-width: 427px) {
+    .card {
+        width: 396px;
+        height: 475px;
+        padding: 0px !important;
+        gap: 0px !important;
+    }
+
+    .card h1 {
+        font-size: 47px;
+    }
+
+    .log-in-form {
+        min-width: 396px;
+        max-width: 396px;
+    }
+
+    .log-in-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 180px;
+        margin-top: 46px;
+    }
+    
+    .input-log {
+    width: 364px;
+    
+    
+}
+
+.separator-line {
+    width: 88px;
+    margin: 18px 0;
+
+}
+
+.sign-up-res {
+    display: flex;
+        align-items: center;
+        gap: 35px;
+        margin-top: 50px;
+}
+
+.sign-up {
+    display: none;
+}
+
+.header-log-in {
+    padding: 37px 0 0 38px;
+}
+
+.header-log-in img {
+    width: 64px;
+    height: 78px;
+}
+
+
+    
+    #start_screen {
+        background-color: #2a3647;
+    }
+
+    label a {
+        font-size: 16px;
+    }
+
+    .card[data-size="large"] {
+        height: 595px;
+    }
+
+    .form-header {
+        width: 80%;
+    }
+
+    .sign-up-checkbox {
+        margin-top: 40px;
+    }
+
+}
+

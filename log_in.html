@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="./style/style.css">
     <title>Log In</title>
 </head>
-<body>
+<body class="full-width">
     <div id="start_screen">
         <img id="animated_logo" src="./assets/icons/capa_dark.svg" alt="Join Logo">
     </div>
@@ -34,11 +34,11 @@
                     <div class="separator-line"></div>
                     <div class="inputs">
                         <div class="input-with-icon">
-                            <input class="input" type="email" id="login-email" name="email" required placeholder="Email">
+                            <input class="input-log" type="email" id="login-email" name="email" required placeholder="Email">
                             <img src="./assets/icons/mail.svg" alt="">
                         </div>
                         <div class="input-with-icon ">
-                            <input class="input" type="password" id="login-password" name="password" required placeholder="Password">
+                            <input class="input-log" type="password" id="login-password" name="password" required placeholder="Password">
                             <img src="./assets/icons/lock.svg" alt="">
                         </div>
                     </div>
@@ -47,6 +47,10 @@
                         <button class="button-secondary" onclick="window.location.href='summary_guest.html'" type="button">Guest Log in</button>
                     </div>
                 </form>
+                <div class="sign-up-res">
+                        <p class="sign-up-text">Not a Join user?</p> 
+                        <button class="button-primary" onclick="window.location.href='sign_up.html'">Sign Up</button>
+                    </div>
                 <div class="log-in-footer">
                     <a href="privacy_policy_before.html">Privacy Policy</a> <a href="legal_notice_before.html">Legal notice</a>
                 </div>

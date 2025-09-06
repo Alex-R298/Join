@@ -10,14 +10,24 @@ function initializeApp() {
         animatedLogo: document.getElementById('animated_logo'),
         headerLogo: document.getElementById('header_logo'),
     };
-    elements.originalWidth = 273; 
-    elements.originalHeight = 334; 
-    elements.targetWidth = 101; 
-    elements.targetHeight = 122;
+    const isMobile = window.innerWidth <= 427;
+    elements.originalWidth = isMobile ? 100 : 273;
+    elements.originalHeight = isMobile ? 122 : 334;
+    elements.targetWidth = isMobile ? 64 : 101;
+    elements.targetHeight = isMobile ? 78 : 122;
+    if (isMobile) {
+        elements.startScreen.style.backgroundColor = '#2a3647';
+        if (elements.animatedLogo.tagName === 'IMG') {
+            elements.animatedLogo.src = '/assets/icons/capa_white.svg';
+        } else {
+            elements.animatedLogo.innerHTML = '<img src="/assets/icons/capa_white.svg" alt="Logo">';
+        }
+    }
     elements.headerLogo.style.visibility = 'hidden';
     elements.animationDuration = 0.8;
+    
     initializeAnimation(elements);
-    setTimeout(() => startLogoAnimation(elements), 500);
+    setTimeout(() => startLogoAnimation(elements), 1000);
 }
 
 function initializeAnimation(elements) {
@@ -33,18 +43,27 @@ function initializeAnimation(elements) {
 
 function startLogoAnimation(elements) {
     const headerRect = elements.headerLogo.getBoundingClientRect();
-    const targetX = (headerRect.left + headerRect.width/2) / window.innerWidth * 100;
-    const targetY = (headerRect.top + headerRect.height/2) / window.innerHeight * 100;
-    elements.animatedLogo.style.transform = `translate(-50%, -50%) translate(${targetX - 50}vw, ${targetY - 50}vh)`;
+    const animatedRect = elements.animatedLogo.getBoundingClientRect();
+    
+    const deltaX = headerRect.left + headerRect.width/2 - (animatedRect.left + animatedRect.width/2);
+    const deltaY = headerRect.top + headerRect.height/2 - (animatedRect.top + animatedRect.height/2);
+    
+    if (window.innerWidth <= 427) {
+        const logoImg = elements.animatedLogo.tagName === 'IMG' ? elements.animatedLogo : elements.animatedLogo.querySelector('img');
+        if (logoImg) {
+            logoImg.src = '/assets/icons/capa_dark.svg';
+        }
+    }
+    
+    elements.animatedLogo.style.transform = `translate(-50%, -50%) translate(${deltaX}px, ${deltaY}px)`;
     elements.animatedLogo.style.width = elements.targetWidth + 'px';
     elements.animatedLogo.style.height = elements.targetHeight + 'px';
     elements.contentContainer.style.opacity = '1';
     elements.contentContainer.style.transition = 'opacity 0.6s ease';
     elements.startScreen.style.backgroundColor = 'rgba(255, 255, 255, 0)';
     elements.startScreen.style.transition = 'background-color 1.5s ease';
-    setTimeout(() => {
-        completeAnimation(elements);
-    }, elements.animationDuration * 1000 + 100);
+    
+    setTimeout(() => completeAnimation(elements), elements.animationDuration * 1000 + 200);
 }
 
 function completeAnimation(elements) {
@@ -122,3 +141,4 @@ window.onload = function() {
         window.location.replace("index.html");
     }
 };
+

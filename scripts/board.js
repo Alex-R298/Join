@@ -6,26 +6,37 @@ let allTasks = [];
 
 
 // Live Search Funktionnen 
-
 function liveSearchBoards() {
     let input = document.getElementById('searchInputBoards');
 
     input.addEventListener('input', async () => {
         const query = input.value.trim().toLowerCase();
         if (query.length < 2) {
-            loadTasks();
-    }
-    await filterTasks(query);
-});
+            await loadTasks();
+            updateHTML();
+        } else {
+            await filterTasks(query);
+        }
+    });
 }
 
 
- async function filterTasks(query) {
-  let filteredTasks = allTasks.filter(task => {
-    let title = task.title.toLowerCase();
-    return title.includes(query);
-  });
+async function filterTasks(query) {
+    let filteredTasks = allTasks.filter(task => {
+        let title = task.title.toLowerCase();
+        return title.includes(query);
+    });
     updateHTML(filteredTasks);
+    filteredTasks.forEach(task => {
+        const progressData = calculateSubtaskProgress(task);
+        const progressBar = document.querySelector(`[id="task-${task.id}"] .progress`);
+        const progressText = document.querySelector(`[id="task-${task.id}"] .subtasks`);
+        
+        if (progressBar && progressText) {
+            progressBar.style.width = `${progressData.progressPercent}%`;
+            progressText.textContent = progressData.progressText;
+        }
+    });
 }
 // Ende! 
 
@@ -62,26 +73,6 @@ function clearAllContainers() {
     });
 }
 
-// function updateHTML(tasks = allTasks) {
-//     ["toDo", "inProgress", "awaitFeedback", "done"].forEach(containerId => {
-//         const container = document.getElementById(containerId);
-//         if (!container) return;
-//         const tasksForContainer = tasks.filter(task => task.category === containerId);
-//         const placeholder = container.querySelector('.drag-placeholder');
-//         container.innerHTML = '';
-
-//         if (tasksForContainer.length === 0) {
-//             container.innerHTML = `<div class="empty-container"><p class="empty-container-text">${getEmptyText(containerId)}</p></div>`;
-//         } else {
-//             tasksForContainer.forEach(task => {
-//                 container.insertAdjacentHTML('beforeend', taskOnBoardTemplate(task));
-//                 if (task.assignedTo) renderAssignedUserData(task.assignedTo, task.id);
-//             });
-//         }
-
-//         if (placeholder) container.appendChild(placeholder);
-//     });
-// }
 
 function updateHTML(tasks = allTasks) {
     ["toDo", "inProgress", "awaitFeedback", "done"].forEach(containerId => {
@@ -239,16 +230,22 @@ async function loadTasks() {
 async function toggleSubtask(taskId, subtaskIndex) {
     const task = allTasks.find(t => t.id === taskId);
     if (!task) return;
-    
     if (typeof task.subtaskElements[0] === 'string') {
         task.subtaskElements = task.subtaskElements.map(text => ({
             text: text,
             completed: false
         }));
     }
-    
     task.subtaskElements[subtaskIndex].completed = !task.subtaskElements[subtaskIndex].completed;
     await saveTaskToFirebase(task);
+    const progressData = calculateSubtaskProgress(task);
+    const progressBar = document.querySelector(`[id="task-${task.id}"] .progress`);
+    const progressText = document.querySelector(`[id="task-${task.id}"] .subtasks`);
+    if (progressBar && progressText) {
+        progressBar.style.transition = 'width 0.3s ease';
+        progressBar.style.width = `${progressData.progressPercent}%`;
+        progressText.textContent = progressData.progressText;
+    }
 }
 
 

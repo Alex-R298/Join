@@ -68,7 +68,7 @@ async function saveContactToFirebase(contact) {
         showSuccessMessage();
         await fetchContacts("/user");
         displayContactDetails(newContactId, contact, getInitials(contact.name), getAvatarColor(contact.name), false);
-        if (window.innerWidth <= 428) {
+        if (window.innerWidth <= 740) {
             const headline = document.querySelector('.contacts-headline');
             if (headline) {
                 headline.classList.add('active');
@@ -158,7 +158,7 @@ function showContactDetails(contactId, name, email, phone, initials, avatarColor
         clickedCard.classList.add('selected');
     }
     displayContactDetails(contactId, { name, email, phone }, initials, avatarColor);
-     if (window.innerWidth <= 428) {
+     if (window.innerWidth <= 740) {
         const headline = document.querySelector('.contacts-headline');
         if (headline) {
             headline.classList.add('active');
