@@ -137,7 +137,7 @@ function redirectToSummary() {
 
 
 window.onload = function() {
-    if (sessionStorage.getItem('currentUser')) {
+    if (sessionStorage.getItem('currentUser', 'guest')) {
         window.location.replace("index.html");
     }
 };
