@@ -132,7 +132,6 @@ header {
     padding: 0px 10px 0px 10px;
     position: fixed;
     z-index: 1;
-    overflow: hidden;
   }
   .header_title_p_tag {
     display: none;
