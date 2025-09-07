@@ -41,6 +41,7 @@ async function fetchBase() {
 
 
 /** Adds a new task to the system */
+
 async function addTask() {
     const title = document.getElementById("title").value;
     const description = document.getElementById("task_description").value;
@@ -75,8 +76,6 @@ async function addTask() {
         if (!response.ok) {
             throw new Error("HTTP error " + response.status);
         }
-        const data = await response.json();
-        console.log("Task gespeichert:", data);
         await renderTasks();
         updateHTML(); 
         showPopup();
@@ -273,10 +272,6 @@ function handleAddTask() {
         addTask();
     }
 }
-
-
-// Subtask-functions
-
 
 /**
  * Updates the visual representation of selected assignees.

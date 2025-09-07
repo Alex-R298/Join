@@ -1,3 +1,4 @@
+/** Adds a new subtask to the list if the input is not empty */
 function addSubtask() {
   let input = document.getElementById("subtask_input");
   let list = document.getElementById("myList");
@@ -10,7 +11,7 @@ function addSubtask() {
   changeButtons();
 }
 
-
+/** Changes the visibility of buttons based on the input content */
 function changeButtons() {
   let acceptButton = document.getElementById("acceptButton");
   let addButton = document.getElementById("addButton");
@@ -31,14 +32,14 @@ function changeButtons() {
   }
 }
 
-
+/** Clears the input field and updates the buttons */
 function clearInput() {
   let input = document.getElementById("subtask_input");
   input.value = "";
   changeButtons();
 }
 
-
+/** Enables editing of a subtask when the edit button is clicked */
 function editSubtask(button) {
   let li = button.closest("li");
   let span = li.querySelector(".subtask-text list");
@@ -61,6 +62,7 @@ function editSubtask(button) {
   });
 }
 
+/** Handles clicks on a subtask and toggles edit mode */
 function handleSubtaskClick(event, li) {
   if (
     event.target.closest(".icon-btn.delete-btn") ||
@@ -78,6 +80,7 @@ function handleSubtaskClick(event, li) {
   }
 }
 
+/** Starts the edit mode for a subtask and shows the input field */
 function startEditMode(li) {
   li.classList.add("edit-mode");
 
@@ -112,6 +115,7 @@ function startEditMode(li) {
   });
 }
 
+/** Stops the edit mode and saves the subtask value */
 function stopEditMode(li) {
   let editBtn = li.querySelector(".icon-btn.edit-btn");
   let deleteBtn = li.querySelector(".icon-btn.delete-btn");
@@ -130,6 +134,7 @@ function stopEditMode(li) {
   if (input) saveEdit(input, li);
 }
 
+/** Saves the edited subtask or removes it if the input is empty */
 function saveEdit(input, li) {
   let newValue = input.value.trim();
   if (newValue !== "") {
@@ -148,11 +153,7 @@ function deleteSubtask(button) {
   if (li) li.remove();
 }
 
-
-/**
- * Adds hover effects to subtasks using event delegation.
- * Shows edit buttons on mouseover and hides them on mouseout.
- */
+/** Adds hover effects to subtasks; shows edit buttons on mouseover, hides them on mouseout */
 function addSubtaskHoverEffectsWithDelegation() {
   document.body.addEventListener("mouseover", function (e) {
     const subtaskElement = e.target.closest(".subtask-listelement");
@@ -176,3 +177,5 @@ function addSubtaskHoverEffectsWithDelegation() {
     }
   });
 }
+
+
