@@ -54,9 +54,6 @@ a.active {
   margin-bottom: 96px;
 }
 
-
-
-
 @media screen and (max-width: 428px) {
   .sidebar {
     position: fixed;
