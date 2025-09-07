@@ -1,3 +1,7 @@
+h2{
+  font-size: 64px;
+  font-weight: 600;
+}
 .main_head_line {
   display: flex;
   align-items: center;
@@ -9,7 +13,10 @@
   flex-direction: column;
   justify-content: center;
 }
-
+.main_greet h2{
+  font-size: 47px;
+  font-weight: 500;
+}
 .greet_name {
   color: #30aae0;
   font-weight: 700;
@@ -35,8 +42,8 @@
 .summary-icon {
   border-radius: 50%;
   background-color: #2A3647;
-  width: 60px;
-  height: 60px;
+  width: 69px;
+  height: 69px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,6 +74,7 @@
 }
 
 .tasks {
+  height: 168px;
   width: 168px;
   display: flex;
   flex-direction: column;
@@ -104,7 +112,7 @@
   color: var(--white);
 }
 
-.summary:hover h1 {
+.summary:hover h2 {
   color: var(--white);
 }
 
@@ -166,7 +174,14 @@
   align-items: center;
 }
 
-
+@media screen and (min-width: 1440px) and (max-width: 1920px){
+ body {
+  max-width: 1920px;
+ }
+ main{
+  max-width: 1920px;
+ }
+}
 @media screen and (max-width: 430px){
   main{
     max-width: 430px;
@@ -260,6 +275,10 @@ margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.summary-info p{
+  font-size: 16px;
+  font-weight: 400;
 }
 .summary_date_timer{
   height: 44px;

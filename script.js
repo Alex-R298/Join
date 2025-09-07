@@ -143,7 +143,7 @@ async function loadAddPage(task = {}) {
 
     return usersArray;
   } catch (error) {
-    console.error("Fehler beim Laden der Add Page:", error);
+    
     return [];
   }
   }
