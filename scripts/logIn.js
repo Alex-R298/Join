@@ -18,9 +18,9 @@ function initializeApp() {
     if (isMobile) {
         elements.startScreen.style.backgroundColor = '#2a3647';
         if (elements.animatedLogo.tagName === 'IMG') {
-            elements.animatedLogo.src = '/assets/icons/capa_white.svg';
+            elements.animatedLogo.src = './assets/icons/capa_white.svg';
         } else {
-            elements.animatedLogo.innerHTML = '<img src="/assets/icons/capa_white.svg" alt="Logo">';
+            elements.animatedLogo.innerHTML = '<img src="./assets/icons/capa_white.svg" alt="Logo">';
         }
     }
     elements.headerLogo.style.visibility = 'hidden';
@@ -51,7 +51,7 @@ function startLogoAnimation(elements) {
     if (window.innerWidth <= 427) {
         const logoImg = elements.animatedLogo.tagName === 'IMG' ? elements.animatedLogo : elements.animatedLogo.querySelector('img');
         if (logoImg) {
-            logoImg.src = '/assets/icons/capa_dark.svg';
+            logoImg.src = './assets/icons/capa_dark.svg';
         }
     }
     
