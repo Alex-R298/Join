@@ -523,3 +523,17 @@ a {
         height: 40px;
     }
 }
+
+
+@media (max-width: 1270px) {
+    .main_content {
+        padding: 48px;
+        }
+}
+
+@media (max-width: 800px) {
+    .main_content {
+        padding: 48px;
+        margin: 80px 0px;
+    }
+}

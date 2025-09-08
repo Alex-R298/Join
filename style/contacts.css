@@ -443,94 +443,38 @@
 
 @media (max-width: 1270px) {
 
-        .main-container {
+    .main-container {
         height: calc(100vh - 177px);
         overflow: hidden;
         
     }
 
     .contacts-headline-top {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 40px;
-    flex-direction: column;
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 40px;
+        flex-direction: column;
     }
 
     .vl {
-    display: none;
+        display: none;
     }
 
     .vl-rotated {
-    border-left: 3px solid #29ABE2;
-    height: 90px;
-    margin: -30px 45px;
-    transform: rotate(90deg);
+        border-left: 3px solid #29ABE2;
+        height: 90px;
+        margin: -30px 45px;
+        transform: rotate(90deg);
 }
 
     .contacts-headline {
-    margin-top: 40px;
-    margin-left: 40px;
+        margin-top: 40px;
+        margin-left: 40px;
     }
 
     .content-wrapper {
         margin-left: 0px;
     }
-
-    .sidebar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    top: auto;
-    width: 100%;   
-    height: 80px;  
-    background-color: #2A3647;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 0;
-    z-index: 3;
-  }
-
-  header {
-    padding: 20px 40px;
-    position: fixed;
-  }
-
-  .side_bar_img {
-    display: none;
-  }
-
-  .sidebar-menu {
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    gap: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .sidebar-menu a {
-    flex-direction: column; 
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    font-size: 14px;
-  }
-
-  .sidebar_footer {
-    display: none;
-  }
-  a.active {
-  border-radius: 16px;
-}
-a {
- height:76px;
- width: 80px;
-}
-a img {
-  width: 24px;
-  height: 24px;
-}
 
 .add-contact-popup {
         width: 396px;
@@ -560,8 +504,8 @@ a img {
     }
 
     .add-contact-close img {
-    filter: brightness(0) invert(1);
-}
+        filter: brightness(0) invert(1);
+    }
 
     .inputs {
         gap: 15px;
@@ -598,7 +542,7 @@ a img {
         margin-left: 20px;
     }
 
-        .contact-details-avatar {
+    .contact-details-avatar {
         width: 80px;
         height: 80px;
         font-size: 30px;
@@ -610,12 +554,12 @@ a img {
     }
 
     .contact-details-info {
-    margin-left: 10px;
-}
+        margin-left: 10px;
+    }
 
-.contact-info-container {
-    margin-left: 0px;
-}
+    .contact-info-container {
+        margin-left: 0px;
+    }
 }
 
 @media (max-width: 776px) {
@@ -633,33 +577,37 @@ a img {
 
     @media (max-width: 740px) {
 
-        header{
-    width: 100%;
-    height: 80px;
-    padding: 0px 10px 0px 10px;
-    position: fixed;
-    z-index: 1;
-    overflow: hidden;
+    header{
+        width: 100%;
+        height: 80px;
+        padding: 0px 10px 0px 10px;
+        position: fixed;
+        z-index: 1;
+        overflow: hidden;
   }
+
   .header_title_p_tag {
     display: none;
   }
+
   .join_logo_dark_header{
     display: block;
     height: 39px;
     width: 32px;
-}
-.help-icon {
-  display: none;
-}
-.name-icon{
-  width: 40px;
-  height: 40px;
-}
-.popuptext{
-  width: 150px;
-  height: 204px;
-}
+    }
+    .help-icon {
+        display: none;
+    }
+
+    .name-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .popuptext {
+        width: 150px;
+        height: 204px;
+    }
 
     .main-container {
         height: calc(100vh - 160px);
@@ -670,7 +618,7 @@ a img {
         width: 100%;
         margin-left: 0;
         padding: 0px;
-    box-shadow: none;
+        box-shadow: none;
     }
 
     .button-contact {
@@ -742,22 +690,22 @@ a img {
 
     .contact-details.animate {
     animation: none;
-}
+    }
 
     .button-details {
     display: none;
-}
+    }
 
-.button-drop {
-    display: block;
-    display: flex;
-        justify-content: flex-end;
-        margin-top: 176px;
-        position: sticky;
-        bottom: 132px;
-}
+    .button-drop {
+        display: block;
+        display: flex;
+            justify-content: flex-end;
+            margin-top: 176px;
+            position: sticky;
+            bottom: 132px;
+    }
 
-.button-drop-style {
+    .button-drop-style {
         height: 56px;
         width: 56px;
         border-radius: 46px;
@@ -766,7 +714,7 @@ a img {
         cursor: pointer;
         display: block;
         z-index: 2;
-    }
+        }
 
     .button-drop-style:hover {
         background-color: var(--secondary);
@@ -775,7 +723,7 @@ a img {
 
     .button-drop-menu {
         display: block;
-    display: flex;
+        display: flex;
         flex-direction: column;
         justify-content: center;
         margin-top: 146px;
@@ -799,21 +747,21 @@ a img {
         animation: slideOutToRight 0.5s ease forwards;
     }
 
-#created-contact.visible .created-contact-popup {
-    animation: slideInAndOutRes 2s ease-in-out forwards;
-}
+    #created-contact.visible .created-contact-popup {
+        animation: slideInAndOutRes 2s ease-in-out forwards;
+    }
 
-.created-contact-popup {
-    margin-top: 20px;
-}
+    .created-contact-popup {
+        margin-top: 20px;
+    }
 
     .contacts-headline-top {
-    margin-bottom: 0;
+        margin-bottom: 0;
     }
  
 
     .button-details-drop {
-            background: none;
+    background: none;
     border: none;
     color: black;
     cursor: pointer;
@@ -825,10 +773,10 @@ a img {
     }
 
     .button-details-drop:hover {
-    color: var(--secondary);
-    background: rgba(0, 0, 0, 0.1);
-    margin: 0 10px;
-    border-radius: 12px;
+        color: var(--secondary);
+        background: rgba(0, 0, 0, 0.1);
+        margin: 0 10px;
+        border-radius: 12px;
 }
 
     .contacts-container {
