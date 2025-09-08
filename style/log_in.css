@@ -337,18 +337,33 @@ label {
         margin-top: 40px;
     }
 
+    .log-in-footer {
+    margin: 40px 0;
+    
+    
 }
+
+}
+
 
 @media (max-width: 426px) {
     .card {
-        width: 396px;
+        width: 300px;
         height: 475px;
         padding: 0px !important;
         gap: 0px !important;
     }
 
     .log-in-form {
-        min-width: 396px;
-        max-width: 396px;
+        min-width: 300px;
+        max-width: 300px;
+    }
+
+    .input-log {
+        width: 280px;
+    }
+
+        .log-in-buttons {
+        margin-top: 26px;
     }
 }
