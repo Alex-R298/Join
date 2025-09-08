@@ -603,7 +603,7 @@
         display: flex;
         justify-content: flex-end;
         position: sticky;
-        bottom: 154px;
+        bottom: 144px;
     }
         
 
@@ -672,9 +672,9 @@
         display: block;
         display: flex;
             justify-content: flex-end;
-            margin-top: 176px;
+            margin-top: auto;
             position: sticky;
-            bottom: 132px;
+            bottom: 154px;
             margin-right: 232px;
     }
 
@@ -790,7 +790,7 @@
         display: flex;
         justify-content: flex-end;
         position: sticky;
-        bottom: 74px;
+        bottom: 65px;
     }
 
         .contacts-headline {
