@@ -529,6 +529,10 @@ a {
     .main_content {
         padding: 48px;
         }
+    
+    h1 {
+        font-size: 48px;
+    }
 }
 
 @media (max-width: 800px) {

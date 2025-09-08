@@ -125,12 +125,26 @@ header {
   display: none;
 }
 
+@media (max-width: 1270px) {
+  header {
+    padding: 20px 40px 20px 248px;
+  }
+}
+
 @media (max-width: 800px) {
 
   header {
-      padding: 20px 40px;
       position: fixed;
+      width: 100%;
+      height: 80px;
+      padding: 0px 10px 0px 10px;
+      position: fixed;
+      overflow: hidden;
     }
+
+  .header_title_p_tag {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 428px){
@@ -141,10 +155,6 @@ header {
     padding: 0px 10px 0px 10px;
     position: fixed;
     z-index: 1;
-  }
-
-  .header_title_p_tag {
-    display: none;
   }
 
   .join_logo_dark_header{
