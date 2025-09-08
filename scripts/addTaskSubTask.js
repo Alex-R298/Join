@@ -117,6 +117,8 @@ function startEditMode(li) {
 
 /** Stops the edit mode and saves the subtask value */
 function stopEditMode(li) {
+  li.classList.remove("edit-mode");
+
   let editBtn = li.querySelector(".icon-btn.edit-btn");
   let deleteBtn = li.querySelector(".icon-btn.delete-btn");
   let separator = li.querySelector(".vl-small");
@@ -124,17 +126,26 @@ function stopEditMode(li) {
   let editImg = editBtn.querySelector("img");
   editImg.src = "./assets/icons/edit.svg";
   editImg.alt = "Edit";
+  editImg.classList.remove("check_icon_subtask");
 
   let parent = editBtn.parentNode;
 
+  // Edit-Button wieder an den Anfang setzen
   parent.insertBefore(editBtn, parent.firstChild);
-  parent.insertBefore(separator, deleteBtn);
 
+  // Separator wieder vor Delete setzen
+  parent.insertBefore(deleteBtn, );
+
+  // falls Input noch offen ist → speichern
   let input = li.querySelector(".edit-input");
-  if (input) saveEdit(input, li);
+  if (input) {
+    saveEdit(input, li);
+  }
 }
 
+
 /** Saves the edited subtask or removes it if the input is empty */
+
 function saveEdit(input, li) {
   let newValue = input.value.trim();
   if (newValue !== "") {
@@ -142,6 +153,15 @@ function saveEdit(input, li) {
     span.className = "subtask-text list";
     span.textContent = newValue;
     li.replaceChild(span, input);
+
+    // zurück aus dem Edit-Modus
+    li.classList.remove("edit-mode");
+
+    let editBtn = li.querySelector(".icon-btn.edit-btn");
+    let editImg = editBtn.querySelector("img");
+    editImg.src = "./assets/icons/edit.svg";
+    editImg.alt = "Edit";
+    editImg.classList.remove("check_icon_subtask");
   } else {
     li.remove();
   }
