@@ -265,7 +265,7 @@ function getAddPageTemplate(task, usersArray = []) {
         <h1>Add Task</h1>
         <button id="btn-overlay-close" class="d-none btn-overlay-close" onclick="closeAddTaskOverlay()"><img src="./assets/icons/close.svg"></button>
     </div>
-<div class="main_content_row">
+<div class="main-content-row">
 
   <div class="inputs-left">
     <div class="task-inputs">

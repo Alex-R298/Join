@@ -243,8 +243,16 @@ async function clearInputs() {
     document.getElementById("task_description").value = "";
     document.getElementById("datepicker").value = "";
     document.getElementById("assignee-input").value = "";
-    document.getElementById("category_task").value = "";
     document.getElementById("myList").innerHTML = "";
+
+    const categoryPlaceholder = document.getElementById("selected-category-placeholder");
+    const categoryInput = document.getElementById("category_task");
+    if (categoryPlaceholder) {
+        categoryPlaceholder.textContent = "Select task category";
+    }
+    if (categoryInput) {
+        categoryInput.value = "";
+    }
     
     const subtaskContainer = document.getElementById("subtask-container");
     if (subtaskContainer) {

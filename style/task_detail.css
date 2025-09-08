@@ -130,3 +130,8 @@
     margin: 0;
     line-height: 1.5;
 }
+
+
+#assignee-input::placeholder {
+    color:black;
+}
