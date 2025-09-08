@@ -421,7 +421,7 @@ function getAddPageTemplate(task, usersArray = []) {
 function createListItemTemplate(value) {
   return `
     <li class="subtask-listelement" onclick="handleSubtaskClick(event, this)">
-    <span class="subtask-text">${value}</span>
+    <span class="subtask-text list">${value}</span>
     <div class="subtask-edit-btns d-none">
         <button class="icon-btn edit-btn" onclick="editSubtask(this)">
         <img src="./assets/icons/edit.svg" alt="Edit">

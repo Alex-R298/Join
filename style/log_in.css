@@ -258,7 +258,7 @@ label {
     text-indent: 16px;
 }
 
-@media (max-width: 427px) {
+@media (max-width: 770px) {
     .card {
         width: 396px;
         height: 475px;
@@ -339,3 +339,16 @@ label {
 
 }
 
+@media (max-width: 426px) {
+    .card {
+        width: 396px;
+        height: 475px;
+        padding: 0px !important;
+        gap: 0px !important;
+    }
+
+    .log-in-form {
+        min-width: 396px;
+        max-width: 396px;
+    }
+}

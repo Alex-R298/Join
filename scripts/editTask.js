@@ -168,7 +168,7 @@ function startEditSubtaskEditMode(li) {
   parent.insertBefore(deleteBtn, editBtn);
   parent.insertBefore(separator, editBtn);
 
-  let span = li.querySelector(".subtask-text list");
+  let span = li.querySelector(".subtask-text.list");
   if (!span) return;
 
   let input = document.createElement("input");

@@ -10,7 +10,7 @@ function initializeApp() {
         animatedLogo: document.getElementById('animated_logo'),
         headerLogo: document.getElementById('header_logo'),
     };
-    const isMobile = window.innerWidth <= 427;
+    const isMobile = window.innerWidth <= 770;
     elements.originalWidth = isMobile ? 100 : 273;
     elements.originalHeight = isMobile ? 122 : 334;
     elements.targetWidth = isMobile ? 64 : 101;
@@ -48,7 +48,7 @@ function startLogoAnimation(elements) {
     const deltaX = headerRect.left + headerRect.width/2 - (animatedRect.left + animatedRect.width/2);
     const deltaY = headerRect.top + headerRect.height/2 - (animatedRect.top + animatedRect.height/2);
     
-    if (window.innerWidth <= 427) {
+    if (window.innerWidth <= 770) {
         const logoImg = elements.animatedLogo.tagName === 'IMG' ? elements.animatedLogo : elements.animatedLogo.querySelector('img');
         if (logoImg) {
             logoImg.src = './assets/icons/capa_dark.svg';

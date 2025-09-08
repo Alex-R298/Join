@@ -42,7 +42,7 @@ function clearInput() {
 /** Enables editing of a subtask when the edit button is clicked */
 function editSubtask(button) {
   let li = button.closest("li");
-  let span = li.querySelector(".subtask-text list");
+  let span = li.querySelector(".subtask-text");
 
   let input = document.createElement("input");
   input.type = "text";
