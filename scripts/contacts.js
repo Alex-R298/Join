@@ -3,6 +3,7 @@ function onloadFunc() {
 }
 
 let currentSelectedContact = null;
+let isSuccessMessageShown = false;
 
 
 async function fetchContacts(path) {
@@ -64,9 +65,11 @@ async function saveContactToFirebase(contact) {
         });
         const data = await response.json();
         const newContactId = data.name;
-        
         showSuccessMessage();
-        await fetchContacts("/user");
+        await fetchContacts("/user"); 
+        setTimeout(() => {
+            markContactCard(newContactId); 
+        }, 100);
         displayContactDetails(newContactId, contact, getInitials(contact.name), getAvatarColor(contact.name), false);
         if (window.innerWidth <= 1032) {
             const headline = document.querySelector('.contacts-headline');
@@ -149,14 +152,7 @@ function showContactDetails(contactId, name, email, phone, initials, avatarColor
         initials: initials,
         avatarColor: avatarColor
     };
-    const allContactCards = document.querySelectorAll('.contact-card');
-    allContactCards.forEach(card => {
-        card.classList.remove('selected');
-    });
-    const clickedCard = event.currentTarget;
-    if (clickedCard) {
-        clickedCard.classList.add('selected');
-    }
+    markContactCard(contactId);
     displayContactDetails(contactId, { name, email, phone }, initials, avatarColor);
      if (window.innerWidth <= 1032) {
         const headline = document.querySelector('.contacts-headline');
@@ -313,6 +309,8 @@ function editContact(contactId, name, email, phone, initials, avatarColor) {
 
 
 function showSuccessMessage() {
+    if (isSuccessMessageShown) return;
+    isSuccessMessageShown = true;
     const createdContact = document.getElementById("created-contact");
     const addOverlay = document.getElementById("overlay-add-contact");
     if (createdContact) {
@@ -320,14 +318,17 @@ function showSuccessMessage() {
         createdContact.style.display = "flex";
         createdContact.style.visibility = "visible";
         createdContact.classList.add('visible');
-        if (addOverlay) {
-            addOverlay.classList.remove('visible');
-            setTimeout(() => {
-                addOverlay.style.visibility = "hidden";
-                addOverlay.style.display = "none";
-            }, 300);
-        }
+    } if (addOverlay) {
+        addOverlay.classList.remove('visible');
+        setTimeout(() => {
+            addOverlay.style.visibility = "hidden";
+            addOverlay.style.display = "none";
+        }, 10);
     }
+    setTimeout(() => {
+        closeCreatedContact();
+        isSuccessMessageShown = false;
+    }, 3000);
 }
 
 
@@ -349,6 +350,7 @@ function closeCreatedContact() {
             if (popup) {
                 popup.classList.remove('closing');
             }
+            isSuccessMessageShown = false;
         }, 10);
     }
 }
@@ -366,22 +368,6 @@ function closeAddContactQuick() {
         }, 10);
     }
 }
-
-
-function showAndMarkContact(contactId, contact) {
-    const initials = getInitials(contact.name);
-    const avatarColor = getAvatarColor(contact.name);
-    showContactDetails(
-        contactId,
-        contact.name,
-        contact.email,
-        contact.phone,
-        initials,
-        avatarColor
-    );
-    setTimeout(() => markContactCard(contactId), 50);
-}
-
 
 function closeDropdownOnOutsideClick() {
     closeDropdown();
@@ -423,6 +409,7 @@ document.addEventListener('click', function(event) {
         }
     }
 });
+
 
 
 
