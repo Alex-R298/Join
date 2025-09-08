@@ -133,6 +133,11 @@ header {
 }
 
 @media (max-width: 800px) {
+  .join_logo_dark_header{
+        display: block;
+        height: 39px;
+        width: 32px;
+    }
 
   header {
       position: fixed;

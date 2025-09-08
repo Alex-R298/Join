@@ -126,6 +126,7 @@
 
 .contacts-list-wrapper {
     margin-top: 20px;
+    margin-bottom: 30px;
 }
 
 .contacts-container::-webkit-scrollbar {
@@ -562,14 +563,6 @@
 }
 
     @media (max-width: 1032px) {
-        
-
-  .join_logo_dark_header{
-        display: block;
-        height: 39px;
-        width: 32px;
-    }
-
     .help-icon {
         display: none;
     }
