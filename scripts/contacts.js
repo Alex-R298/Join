@@ -164,6 +164,7 @@ function showContactDetails(contactId, name, email, phone, initials, avatarColor
             headline.classList.add('active');
         }
     }
+    closeCreatedContact();
 }
 
     function backToContacts() {
@@ -327,7 +328,6 @@ function showSuccessMessage() {
             }, 300);
         }
     }
-    return;
 }
 
 
@@ -336,11 +336,20 @@ function showSuccessMessage() {
 function closeCreatedContact() {
     const createdContact = document.getElementById("created-contact");
     if (createdContact) {
+        const popup = createdContact.querySelector('.created-contact-popup');
         createdContact.classList.remove('visible');
+        createdContact.classList.add('closing');
+        if (popup) {
+            popup.classList.add('closing');
+        }
         setTimeout(() => {
             createdContact.style.visibility = "hidden";
             createdContact.style.display = "none";
-        }, 1000);
+            createdContact.classList.remove('closing');
+            if (popup) {
+                popup.classList.remove('closing');
+            }
+        }, 10);
     }
 }
 
