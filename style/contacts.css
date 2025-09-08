@@ -406,6 +406,10 @@
     animation: slideInAndOut 2s ease-in-out forwards;
 }
 
+#created-contact.closing .created-contact-popup {
+    animation: slideInAndOut 2s ease-in-out forwards;
+}
+
 .button-contact-wrapper-res {
     display: none;
 }
@@ -718,8 +722,12 @@
     }
 
     #created-contact.visible .created-contact-popup {
-        animation: slideInAndOutRes 2s ease-in-out forwards;
+        animation: slideInAndOutRes 2s ease-in-out forwards !important;
     }
+
+    #created-contact.closing .created-contact-popup {
+    animation: slideInAndOutRes 2s ease-in-out forwards !important;
+}
 
     .created-contact-popup {
         margin-top: 20px;
