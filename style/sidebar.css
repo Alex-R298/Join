@@ -109,11 +109,10 @@ a.active {
 }
 
 
-@media screen and (max-width: 428px) {
+/* @media screen and (max-width: 428px) {
   .sidebar {
     bottom: 0;
-    top: auto;
-    width: 428px;   
+    top: auto;  
     height: 80px;  
     background-color: #2A3647;
     display: flex;
@@ -158,4 +157,4 @@ a img {
   width: 24px;
   height: 24px;
 }
-}
+} */

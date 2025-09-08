@@ -557,7 +557,7 @@
     }
 }
 
-    @media (max-width: 800px) {
+    @media (max-width: 1032px) {
         
 
   .join_logo_dark_header{
@@ -581,13 +581,12 @@
     }
 
     .main-container {
-        height: calc(100vh - 160px);
+        height: calc(100vh - 80px);
         margin-top: 80px;
     }
 
     .content-wrapper {
         width: 100%;
-        margin-left: 0;
         padding: 0px;
         box-shadow: none;
     }
@@ -600,9 +599,7 @@
         display: flex;
         justify-content: flex-end;
         position: sticky;
-        bottom: 0px;
-        /* z-index: 100; */
-        padding-bottom: 44px;
+        bottom: 154px;
     }
         
 
@@ -627,7 +624,7 @@
         top: 80px;
         left: 0;
         width: 100%;
-        height: calc(100vh - 160px);
+        height: calc(100vh - 80px);
         background: #f6f7f8;
         z-index: 500;
         padding: 9px;
@@ -636,7 +633,7 @@
         transform: translateX(100%);
         transition: transform 0.3s ease-in-out;
         margin-top: 0px;
-        margin-left: 0px;
+        margin-left: 232px;
     }
 
 
@@ -652,7 +649,7 @@
     .button-back {
         display: block;
         position: absolute;
-        left: 86%;
+        right: 14.5rem;
     }
 
     .button-back-res {
@@ -674,6 +671,7 @@
             margin-top: 176px;
             position: sticky;
             bottom: 132px;
+            margin-right: 232px;
     }
 
     .button-drop-style {
@@ -712,6 +710,7 @@
     #button-drop-menu {
         position: sticky;
         bottom: 112px;
+        margin-right: 232px;
     }
 
     #button-drop-menu.closing {
@@ -755,6 +754,50 @@
     }
 
     }
+
+
+    @media (max-width: 800px) {
+        .main-container {
+        height: calc(100vh - 160px);
+    }
+
+        .content-wrapper {
+        width: 100%;
+        padding: 0px;
+        box-shadow: none;
+        margin-left: 0px;
+    }
+
+    .button-drop {
+            margin-right: 0px;
+    }
+
+    .button-back {
+        display: block;
+        position: absolute;
+        right: 1.5rem;
+    }
+
+    .button-contact-wrapper-res{
+        display: flex;
+        justify-content: flex-end;
+        position: sticky;
+        bottom: 74px;
+    }
+
+        .contacts-headline {
+        height: calc(100vh - 160px);
+        margin-left: 0px;
+    }
+
+        #button-drop-menu {
+        margin-right: 0px;
+    }
+
+
+
+    }
+
 
 @media (max-width: 427px) {
     .contact-email {
@@ -809,4 +852,19 @@
     .add-contact-buttons {
     margin-top: 22px;
 }
+
+.contact-details-name {
+        font-size: 28px;
+    }
+
+        .contact-details-avatar {
+        width: 70px;
+        height: 70px;
+        font-size: 28px;
+        margin-right: 0;
+    }
+
+        .button-drop {
+        margin-top: 205px;
+    }
 }

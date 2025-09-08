@@ -147,10 +147,9 @@ header {
   }
 }
 
-@media screen and (max-width: 428px){
+/* @media screen and (max-width: 428px){
 
   header {
-    width: 428px;
     height: 80px;
     padding: 0px 10px 0px 10px;
     position: fixed;
@@ -174,4 +173,4 @@ header {
     width: 150px;
     height: 204px;
   }
-}
+} */
