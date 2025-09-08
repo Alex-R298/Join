@@ -85,7 +85,7 @@ function datetimer() {
         <h2>${greet}!</h2>
       `;
     }
-    const showOverlayCondition = !sessionStorage.getItem("overlayShown") && window.matchMedia("(max-width: 428px)").matches;
+    const showOverlayCondition = !sessionStorage.getItem("overlayShown") && window.matchMedia("(max-width: 800px)").matches;
 
     if (showOverlayCondition) {
       showOverlay(greet, userName);

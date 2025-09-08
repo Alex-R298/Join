@@ -88,10 +88,10 @@ h2{
   display: flex;
   gap: 80px;
 }
-
+/* box-shadow: 0px 0px 4px 0px #0000001A;*/
 .summary {
   cursor: pointer;
-  box-shadow: 0px 0px 4px 0px #0000001A;
+  box-shadow: 0px 0px 4px 0px #0000001a;
   background-color: var(--white);
   border-radius: 30px;
   padding: 38px 19px;
@@ -173,13 +173,12 @@ h2{
   display: flex;
   align-items: center;
 }
-/* kann evt. raus*/
-@media screen and (min-width: 1271px) and (max-width: 1920px){
+@media screen and (max-width: 1440px){
  body {
-  max-width: 1920px;
+  max-width: 1440px;
  }
  main{
-  max-width: 1920px;
+  max-width: 1440px;
  }
 }
 @media screen and (min-width: 1025px) and (max-width: 1270px){
@@ -250,15 +249,39 @@ h2{
 }
 }
 
-@media screen and (min-width: 800px) and (max-width: 970px){
-
-.main_greet {
-display: none;
+/* great off*/
+@media screen and (min-width: 320px) and (max-width: 970px){
+  .main_greet {
+    display: none;
+}
 }
 
-}
+/* Overlay */
+@media screen and (min-width: 320px) and (max-width: 800px){
+  .overlay {
+    position: fixed;
+    inset: 0;                
+    background: #fff;       
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index:4;           
+    opacity: 1;
+    transition: opacity 0.5s ease;
+  }
 
-@media screen and (min-width: 600px) and (max-width: 800px){
+  .overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .overlay-content {
+    color: #000;            
+    font-size: 2rem;
+    text-align: center;
+  }
+}
+@media screen and (min-width: 550px) and (max-width: 800px){
   .summary-content {
     display: flex;
     gap: 80px;
@@ -269,39 +292,29 @@ display: none;
     flex-direction: row;
     justify-content: center;
 }
-}
 
-@media screen and (min-width: 430px) and (max-width: 800px){
-  .main_greet {
-    display: none;
 }
-  .summary {
-    cursor: pointer;
-    box-shadow: 0px 0px 4px 0px #2a3647;
-    background-color: var(--white);
-    border-radius: 30px;
-    padding: 30px 19px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 32px;
+@media screen and (min-width: 550px) and (max-width: 600px){
+.overview {
+    width: 100%;
 }
 }
 
-@media screen and (min-width:300px) and (max-width: 600px){
+
+@media screen and (min-width:320px) and (max-width: 550px){
   main{
-    max-width: 430px;
+    max-width: 480px;
   }
   h2 {
     font-size: 47px;
     font-weight: 600;
 }
-.overview{
-  gap: 0px;
-  width: 100%;
-}
-.main_greet{
-  display: none;
+.overview {
+    gap: 0px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
 }
 
 .main_head_line {
@@ -355,7 +368,7 @@ margin-bottom: 30px;
 }
 
 .main_head_line h1{
-  font-size: 47px;
+  font-size: 35px;
   padding-bottom: 8px;
 }
 .summary {
@@ -405,28 +418,35 @@ margin-bottom: 30px;
   height: 116px;
   padding: 0 0 25px 0;
 }
-
-
-  .overlay {
-    position: fixed;
-    inset: 0;                
-    background: #fff;       
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index:4;           
-    opacity: 1;
-    transition: opacity 0.5s ease;
   }
 
-  .overlay.hidden {
-    opacity: 0;
-    pointer-events: none;
+  @media screen and (min-width:320px) and (max-width: 550px){
+     .row-1 {
+        width: 100%;
+        height: 90px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }    
+    .todo {
+        width: 130px;
+        height: 110px;
+    }
+        .row-2 {
+        width: 276px;
+        height: 90px;
+        padding-top: 10px;
+    }
+      .row-3 {
+        width: 276px;
+        height: 90px;
+        padding-top: 40px;
+    }
+      .vl-grey {
+        margin: 0px 10px;
+    }
+      .summary {
+        gap: 5px;
+    }
   }
-
-  .overlay-content {
-    color: #000;            
-    font-size: 2rem;
-    text-align: center;
-  }
-  }
+   
