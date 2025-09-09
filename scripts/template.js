@@ -423,11 +423,11 @@ function createListItemTemplate(value) {
     <li class="subtask-listelement" onclick="handleSubtaskClick(event, this)">
     <span class="subtask-text list">${value}</span>
     <div class="subtask-edit-btns d-none">
-        <button class="icon-btn edit-btn" onclick="editSubtask(this)">
+        <button class="icon-btn edit-btn">
         <img src="./assets/icons/edit.svg" alt="Edit">
         </button>
         <div class="vl-small"></div>
-        <button class="icon-btn delete-btn" onclick="deleteSubtask(this)">
+        <button class="icon-btn delete-btn" onclick="deleteSubtask(this); event.stopPropagation();">
         <img src="./assets/icons/delete.svg" alt="Delete">
         </button>
     </div>
