@@ -41,7 +41,6 @@ async function fetchBase() {
 
 
 /** Adds a new task to the system */
-
 async function addTask() {
     const title = document.getElementById("title").value;
     const description = document.getElementById("task_description").value;
@@ -148,7 +147,7 @@ function closePopup() {
   }
 }
 
-
+/** Returns today's date as a string in 'YYYY-MM-DD' format. */
 function getTodaysDate() {
   const today = new Date();
   const yyyy = today.getFullYear();
@@ -175,6 +174,7 @@ function validateAddTask() {
 }
 
 
+/** Validates the title input field and shows/hides error messages accordingly. */
 function checkTitle() {
     const titleRef = document.getElementById("title");
     const errorTitleRef = document.getElementById("title-error-message");
@@ -192,6 +192,7 @@ function checkTitle() {
 }
 
 
+/** Validates the date input field ensuring it's not empty and not in the past. */
 function checkDate() {
     const dateRef = document.getElementById("datepicker");
     const errorDateRef = document.getElementById("date-error-message");
@@ -210,6 +211,7 @@ function checkDate() {
 }
 
 
+/** Validates the category input field and shows/hides error messages accordingly. */
 function checkCategory() {
     const categoryRef = document.getElementById("category_task");
     const errorCategoryRef = document.getElementById("category-error-message");
@@ -227,6 +229,7 @@ function checkCategory() {
 }
 
 
+/** Resets all form validation states by removing invalid styling and hiding error messages. */
 function resetValidationState() {
     document.querySelectorAll('.invalid').forEach(element => {
         element.classList.remove('invalid');
@@ -238,6 +241,7 @@ function resetValidationState() {
 }
 
 
+/** Clears all form inputs and resets the task creation form to its initial state. */
 async function clearInputs() {
     document.getElementById("title").value = "";
     document.getElementById("task_description").value = "";
@@ -275,6 +279,7 @@ async function clearInputs() {
 }
 
 
+/** Handles the add task action by validating the form and adding the task if valid. */
 function handleAddTask() {
     if (validateAddTask()) {
         addTask();
@@ -338,6 +343,7 @@ function toggleAssigneeDropdown() {
   }
 }
 
+
 /** Toggles the visibility of the category dropdown */
 let selectedCategory = null;
 function toggleCategoryDropdown() {
@@ -345,6 +351,7 @@ function toggleCategoryDropdown() {
   const categoryDropdown = document.getElementById("category-dropdown");
   categoryDropdown.classList.toggle("d-none");
 }
+
 
 /** Selects a category and updates the display */ 
 function selectCategory(value, e) {
@@ -362,8 +369,11 @@ function selectCategory(value, e) {
 }
 
 
-
-
+/**
+ * Saves the edited subtask value and exits edit mode, or removes the item if empty.
+ * @param {HTMLInputElement} input - The input element containing the edited value
+ * @param {HTMLLIElement} li - The list item element being edited
+ */
 function saveEdit(input, li) {
   let newValue = input.value.trim();
   if (newValue !== "") {
