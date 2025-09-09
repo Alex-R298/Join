@@ -78,7 +78,7 @@ function datetimer() {
     if (userName) {
       date.innerHTML = `
         <h2>${greet},</h2>
-        <p class="greet_name">${userName}</p>
+        <p class="greet-name">${userName}</p>
       `;
       } else {
       date.innerHTML = `

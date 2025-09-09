@@ -276,11 +276,11 @@ async function saveEditedTask(taskId) {
 
   await saveTaskToFirebase(task);
   closeTaskOverlay();
-
   const taskElement = document.getElementById(`task-${taskId}`);
   if (taskElement) {
     taskElement.outerHTML = taskOnBoardTemplate(task);
 }
+updateHTML();
 }
 
 
