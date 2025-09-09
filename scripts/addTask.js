@@ -360,3 +360,24 @@ function selectCategory(value, e) {
 
   e.stopPropagation();
 }
+
+
+
+
+function saveEdit(input, li) {
+  let newValue = input.value.trim();
+  if (newValue !== "") {
+    let span = document.createElement("span");
+    span.className = "subtask-text list";
+    span.textContent = newValue;
+    li.replaceChild(span, input);
+
+    // zurück aus dem Edit-Modus
+    li.classList.remove("edit-mode");
+
+
+    editImg.classList.remove("check_icon_subtask");
+  } else {
+    li.remove();
+  }
+}

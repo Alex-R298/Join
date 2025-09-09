@@ -135,6 +135,7 @@ function stopEditMode(li) {
 }
 
 /** Saves the edited subtask or removes it if the input is empty */
+
 function saveEdit(input, li) {
   let newValue = input.value.trim();
   if (newValue !== "") {
@@ -142,6 +143,15 @@ function saveEdit(input, li) {
     span.className = "subtask-text list";
     span.textContent = newValue;
     li.replaceChild(span, input);
+
+    // zurück aus dem Edit-Modus
+    li.classList.remove("edit-mode");
+
+    let editBtn = li.querySelector(".icon-btn.edit-btn");
+    let editImg = editBtn.querySelector("img");
+    editImg.src = "./assets/icons/edit.svg";
+    editImg.alt = "Edit";
+    editImg.classList.remove("check_icon_subtask");
   } else {
     li.remove();
   }
