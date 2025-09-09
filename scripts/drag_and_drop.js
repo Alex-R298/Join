@@ -1,14 +1,26 @@
+/**
+ * Global drag state variables
+ */
 let currentDraggedElement = null;
 let draggedTaskHeight = 0;
 let taskStatus = null;
 let placeholderElement = null;
 
 
+/**
+ * Allows drop events on containers
+ * @param {DragEvent} event - Drag event
+ */
 function allowDrop(event) {
     event.preventDefault();
 }
 
 
+/**
+ * Starts the dragging operation for a task
+ * @param {string} id - Task ID
+ * @param {DragEvent} event - Drag start event
+ */
 function startDragging(id, event) {
     currentDraggedElement = id;
     const taskIndex = allTasks.findIndex(task => task.id === id);
@@ -26,6 +38,12 @@ function startDragging(id, event) {
 }
 
 
+/**
+ * Sets up drag image for better visual feedback
+ * @param {DragEvent} event - Drag event
+ * @param {HTMLElement} taskElement - Task element being dragged
+ * @param {string} id - Task ID
+ */
 function setupDragImage(event, taskElement, id) {
     if (!event.dataTransfer) return;
     const rect = taskElement.getBoundingClientRect();
@@ -39,6 +57,12 @@ function setupDragImage(event, taskElement, id) {
 }
 
 
+/**
+ * Creates a visual placeholder for the dragged task
+ * @param {HTMLElement} taskElement - Original task element
+ * @param {number} height - Height of the placeholder
+ * @param {number} width - Width of the placeholder
+ */
 function createPlaceholder(taskElement, height, width) {
     if (placeholderElement && placeholderElement.parentNode) {
         placeholderElement.parentNode.removeChild(placeholderElement);
@@ -60,6 +84,11 @@ function createPlaceholder(taskElement, height, width) {
 }
 
 
+/**
+ * Handles drag over events on containers
+ * @param {DragEvent} event - Drag over event
+ * @param {string} containerId - Container ID
+ */
 function handleDragOver(event, containerId) {
     event.preventDefault();
     const container = document.getElementById(containerId);
@@ -74,6 +103,12 @@ function handleDragOver(event, containerId) {
 }
 
 
+/**
+ * Determines if placeholder should be moved
+ * @param {HTMLElement|null} afterElement - Element to insert after
+ * @param {HTMLElement} container - Target container
+ * @returns {boolean} Should move placeholder
+ */
 function shouldMovePlaceholder(afterElement, container) {
     const currentParent = placeholderElement.parentNode;
     const currentNextSibling = placeholderElement.nextSibling;
@@ -83,6 +118,11 @@ function shouldMovePlaceholder(afterElement, container) {
 }
 
 
+/**
+ * Moves the placeholder to new position
+ * @param {HTMLElement} container - Target container
+ * @param {HTMLElement|null} afterElement - Element to insert after
+ */
 function movePlaceholder(container, afterElement) {
     placeholderElement.style.transition = 'none';
     if (afterElement == null) container.appendChild(placeholderElement);
@@ -93,6 +133,11 @@ function movePlaceholder(container, afterElement) {
 }
 
 
+/**
+ * Handles drag leave events
+ * @param {DragEvent} event - Drag leave event
+ * @param {string} containerId - Container ID
+ */
 function handleDragLeave(event, containerId) {
     event.preventDefault();
     const container = document.getElementById(containerId);
@@ -103,6 +148,12 @@ function handleDragLeave(event, containerId) {
 }
 
 
+/**
+ * Gets element that comes after drag position
+ * @param {HTMLElement} container - Target container
+ * @param {number} y - Y coordinate
+ * @returns {HTMLElement|undefined} Element after drag position
+ */
 function getDragAfterElement(container, y) {
     const draggableElements = [...container.querySelectorAll('.task-container:not(.dragging)')];
     return draggableElements.reduce((closest, child) => {
@@ -117,6 +168,11 @@ function getDragAfterElement(container, y) {
 }
 
 
+/**
+ * Moves task to new status column
+ * @param {string} status - New task status
+ * @param {DragEvent} event - Drop event
+ */
 async function moveTo(status, event) {
     event.preventDefault();
     let taskId = event.dataTransfer ? event.dataTransfer.getData('text/plain') : currentDraggedElement;
@@ -135,6 +191,10 @@ async function moveTo(status, event) {
 }
 
 
+/**
+ * Replaces placeholder with the actual task element
+ * @param {HTMLElement} draggingItem - Task element being dragged
+ */
 function replacePlaceholderWithTask(draggingItem) {
     if (placeholderElement && placeholderElement.parentNode) {
         placeholderElement.parentNode.replaceChild(draggingItem, placeholderElement);
@@ -147,6 +207,10 @@ function replacePlaceholderWithTask(draggingItem) {
 }
 
 
+/**
+ * Animates task into its new position
+ * @param {HTMLElement} draggingItem - Task element
+ */
 function animateTaskIn(draggingItem) {
     requestAnimationFrame(() => {
         draggingItem.style.transition = 'all 0.3s ease';
@@ -157,6 +221,9 @@ function animateTaskIn(draggingItem) {
 }
 
 
+/**
+ * Cleans up drag state from DOM elements
+ */
 function cleanupDragState() {
     document.querySelectorAll('.drag-over').forEach(container => {
         container.classList.remove('drag-over');
@@ -164,86 +231,41 @@ function cleanupDragState() {
 }
 
 
-// function updateTaskStatus(taskId, status) {
-//     const taskIndex = allTasks.findIndex(task => task.id === taskId);
-//     if (taskIndex !== -1) {
-//         allTasks[taskIndex].status = status;
-//     }
-// }
-
-
-// async function saveTask(taskId, status) {
-//     if (isLocalStorageAvailable()) {
-//         saveStatusToLocalStorage();
-//     } else {
-//         await saveTaskToFirebase(taskId, status);
-//     }
-// }
-
-
-// function updateAllTasksFromDOM() {
-//     const containers = ["toDo", "inProgress", "awaitFeedback", "done"];
-//     let newAllTasks = [];
-//     containers.forEach(containerId => {
-//         const container = document.getElementById(containerId);
-//         const tasksInContainer = [...container.querySelectorAll('.task-container')];
-//         tasksInContainer.forEach((taskElement, index) => {
-//             const taskId = taskElement.id.replace('task-', '');
-//             const task = allTasks.find(t => t.id === taskId);
-//             if (task) {
-//                 task.status = containerId;
-//                 task.order = index;
-//                 newAllTasks.push(task);
-//             }
-//         });
-//     });
-//     allTasks = newAllTasks;
-// }
-
-// Status ändern UND speichern
+/**
+ * Updates task status and saves to Firebase
+ * @param {string} taskId - Task ID
+ * @param {string} status - New status
+ */
 async function updateTaskStatus(taskId, status) {
     const taskIndex = allTasks.findIndex(task => task.id === taskId);
     if (taskIndex !== -1) {
         allTasks[taskIndex].status = status;
-        
-        // Sofort in beide Speicher speichern
-        try {
-            await saveTaskToFirebase(allTasks[taskIndex]);
-            if (isLocalStorageAvailable()) {
-                saveStatusToLocalStorage();
-            }
-            updateHTML();
-        } catch (error) {
-            console.error('Fehler beim Speichern:', error);
-        }
+        await saveTaskToFirebase(allTasks[taskIndex]);
+        updateHTML();
     }
 }
 
-// Beide Speicher verwenden (nicht entweder-oder)
+
+/**
+ * Saves task with new status to Firebase
+ * @param {string} taskId - Task ID
+ * @param {string} status - New status
+ */
 async function saveTask(taskId, status) {
     const task = allTasks.find(t => t.id === taskId);
     if (!task) return;
     
     task.status = status;
-    
-    try {
-        // Immer Firebase (Hauptspeicher)
-        await saveTaskToFirebase(task);
-        
-        // Zusätzlich localStorage
-        if (isLocalStorageAvailable()) {
-            saveStatusToLocalStorage();
-        }
-    } catch (error) {
-        console.error('Fehler beim Speichern:', error);
-    }
+    await saveTaskToFirebase(task);
 }
 
-// DOM-Update mit Speicherung
+
+/**
+ * Updates all tasks from current DOM structure
+ */
 async function updateAllTasksFromDOM() {
     const containers = ["toDo", "inProgress", "awaitFeedback", "done"];
     let newAllTasks = [];
-    
     containers.forEach(containerId => {
         const container = document.getElementById(containerId);
         const tasksInContainer = [...container.querySelectorAll('.task-container')];
@@ -260,21 +282,15 @@ async function updateAllTasksFromDOM() {
     
     allTasks = newAllTasks;
     
-    // Alle geänderten Tasks speichern
     for (const task of allTasks) {
-        try {
-            await saveTaskToFirebase(task);
-        } catch (error) {
-            console.error(`Fehler beim Speichern von Task ${task.id}:`, error);
-        }
-    }
-    
-    if (isLocalStorageAvailable()) {
-        saveStatusToLocalStorage();
+        await saveTaskToFirebase(task);
     }
 }
 
 
+/**
+ * Cancels current drag operation
+ */
 function cancelDragging() {
     if (!currentDraggedElement) return;
     const draggingItem = document.getElementById(`task-${currentDraggedElement}`);
@@ -294,6 +310,9 @@ function cancelDragging() {
 }
 
 
+/**
+ * Event listener for ESC key to cancel dragging
+ */
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && currentDraggedElement) {
         cancelDragging();
@@ -301,6 +320,9 @@ document.addEventListener('keydown', (e) => {
 });
 
 
+/**
+ * Event listener for drag end to cleanup
+ */
 document.addEventListener('dragend', (e) => {
     if (currentDraggedElement && placeholderElement) {
         setTimeout(() => {
