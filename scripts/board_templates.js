@@ -304,7 +304,7 @@ function getEditTaskTemplate(task, usersArray = []) {
                         }</span>
                         <div class="subtask-edit-btns d-none">
                             <button class="icon-btn edit-btn" type="button" onclick="event.stopPropagation();">
-                                <img src="./assets/icons/edit.svg" alt="Edit">
+                                <img src="./assets/icons/check_subtask.svg" alt="check">
                             </button>
                             <div class="vl-small"></div>
                             <button class="icon-btn delete-btn" type="button" onclick="event.stopPropagation(); deleteEditSubtask(this);">

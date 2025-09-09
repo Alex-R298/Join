@@ -138,7 +138,9 @@ function showPopup() {
     document.getElementById("taskPopup").classList.remove('d-none');
     setTimeout(() => {
         closePopup();
+        window.location.href = "board.html";
     }, 1500);
+
 }
 
 
