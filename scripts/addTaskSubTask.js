@@ -9,6 +9,7 @@ function addSubtask() {
     input.value = "";
   }
   changeButtons();
+  addSubtaskHoverEffectsWithDelegation();
 }
 
 /** Changes the visibility of buttons based on the input content */
