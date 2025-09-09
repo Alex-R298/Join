@@ -47,42 +47,45 @@ async function addTask() {
     const dueDate = document.getElementById("datepicker").value;
     const category = document.getElementById("category_task").value;
     const checkedUsers = Array.from(
-    document.querySelectorAll('input[type="checkbox"][id^="user-"]:checked')
+        document.querySelectorAll('input[type="checkbox"][id^="user-"]:checked')
     ).map(cb => cb.value);
-    const subtaskElements = document.querySelectorAll(".subtask-text");
-    try {
-        if (!checkDate()) {
-            throw new Error("Ungültiges Datum");
-        }
-        const newTask = {
-          title,
-          description,
-          dueDate,
-          priority: selectedPriority,
-          assignedTo: checkedUsers,
-          category,
-          status: currentTaskStatus,
-          subtaskElements: Array.from(subtaskElements).map((el) => ({
+    const addTaskContainer = document.getElementById("myList");
+    const subtaskElements = addTaskContainer ? 
+        addTaskContainer.querySelectorAll(".subtask-text") : 
+        [];
+        
+    if (!checkDate()) {
+        return;
+    }
+    
+    const newTask = {
+        title,
+        description,
+        dueDate,
+        priority: selectedPriority,
+        assignedTo: checkedUsers,
+        category,
+        status: currentTaskStatus,
+        subtaskElements: Array.from(subtaskElements).map((el) => ({
             text: el.textContent,
             completed: false,
-          })),
-        };
-        const response = await fetch(BASE_URL + "/task.json", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newTask),
-        });
-        if (!response.ok) {
-            throw new Error("HTTP error " + response.status);
-        }
-        await renderTasks();
-        updateHTML(); 
-        showPopup();
-        clearInputs();
-        
-    } catch (error) {
-        console.error("Fehler beim Speichern der Task:", error);
+        })),
+    };
+    
+    const response = await fetch(BASE_URL + "/task.json", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newTask),
+    });
+    
+    if (!response.ok) {
+        throw new Error("HTTP error " + response.status);
     }
+    
+    await renderTasks();
+    updateHTML(); 
+    showPopup();
+    clearInputs();
 }
 
 
