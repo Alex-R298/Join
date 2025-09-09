@@ -1,5 +1,5 @@
 let selectedPriority = "medium";
-let currentTaskStatus = "todo";
+let currentTaskStatus = "toDo";
 
 /**
  * Sets the current task status to the specified value.
