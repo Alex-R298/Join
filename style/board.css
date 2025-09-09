@@ -460,17 +460,41 @@
     /* transition: width 0.3s ease; */
 }
 
-@media (max-width: 428px) {
+@media (max-width: 1420px) {
     .site-title {
         display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
+.main-content-row.res {
+    flex-direction: column;
+}
+
+.drag-area {
+    width: 100%;
+    flex-direction: row;
+
+}
+
+}
+
+@media (max-width: 1000px) {
+    .site-title {
+        display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+    .drag-area {
+        flex-direction: column;
+    }
+
+
     .button-add-task {
         position: absolute;
-        right: 0.3rem;
-        top: 0.8rem;
+        right: 2.4rem;
+        top: 2.9rem;
         width: 40px;
         height: 40px;
         border-radius: 10px;
@@ -497,8 +521,15 @@
     width: 100% !important;
 }
 
-.drag-area{
-    width: 100%;
 }
 
+@media (max-width: 428px) {
+    .button-add-task {
+        position: absolute;
+        right: 0.3rem;
+        top: 0.8rem;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+    }
 }

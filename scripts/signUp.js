@@ -1,37 +1,73 @@
-function signup() { 
-    const nameInput = document.getElementById('signup-name');
-    const emailInput = document.getElementById('signup-email');
-    const passwordInput = document.getElementById('signup-password');
-    const confirmPasswordInput = document.getElementById('signup-confirm-password');
-    const acceptInput = document.getElementById('check-privacy-policy');
-    if (!validateSignupInputs(nameInput, emailInput, passwordInput, confirmPasswordInput, acceptInput)) {
+/**
+ * Handles user signup process
+ */
+function signup() {
+    const inputElements = getSignupInputElements();
+    
+    if (!validateSignupInputs(inputElements.name, inputElements.email, inputElements.password, inputElements.confirmPassword, inputElements.accept)) {
         return;
     }
-    const newUser = {
-        name: nameInput.value.trim(),
-        email: emailInput.value.trim(),
-        password: passwordInput.value,
-        createdAt: new Date().toISOString()
-    };
+    
+    const newUser = createUserObject(inputElements);
     registerUserInFirebase(newUser);
     closeSignupForm();
     showSuccessMessageSignUp();
 }
 
 
+/**
+ * Gets signup input elements from form
+ * @returns {Object} Object containing input elements
+ */
+function getSignupInputElements() {
+    return {
+        name: document.getElementById('signup-name'),
+        email: document.getElementById('signup-email'),
+        password: document.getElementById('signup-password'),
+        confirmPassword: document.getElementById('signup-confirm-password'),
+        accept: document.getElementById('check-privacy-policy')
+    };
+}
 
-function validateSignupInputs(nameInput, emailInput, passwordInput, confirmPasswordInput , acceptInput) {
+
+/**
+ * Creates user object from input data
+ * @param {Object} inputElements - Input elements with values
+ * @returns {Object} New user object
+ */
+function createUserObject(inputElements) {
+    return {
+        name: inputElements.name.value.trim(),
+        email: inputElements.email.value.trim(),
+        password: inputElements.password.value,
+        createdAt: new Date().toISOString()
+    };
+}
+
+
+/**
+ * Validates all signup input fields
+ * @param {HTMLElement} nameInput - Name input element
+ * @param {HTMLElement} emailInput - Email input element
+ * @param {HTMLElement} passwordInput - Password input element
+ * @param {HTMLElement} confirmPasswordInput - Confirm password input element
+ * @param {HTMLElement} acceptInput - Privacy policy checkbox element
+ * @returns {boolean} True if all inputs are valid
+ */
+function validateSignupInputs(nameInput, emailInput, passwordInput, confirmPasswordInput, acceptInput) {
     let isValid = true;
     isValid = validateName(nameInput) && isValid;
     isValid = validateEmail(emailInput) && isValid;
     isValid = validatePassword(passwordInput) && isValid;
     isValid = validateConfirmPassword(confirmPasswordInput, passwordInput) && isValid;
     isValid = validateAccept(acceptInput) && isValid;
-    
     return isValid;
 }
 
 
+/**
+ * Clears signup form input fields
+ */
 function closeSignupForm() {
     document.getElementById('signup-name').value = '';
     document.getElementById('signup-email').value = '';
@@ -40,42 +76,56 @@ function closeSignupForm() {
 }
 
 
+/**
+ * Registers new user in Firebase database
+ * @param {Object} user - User object to register
+ */
 async function registerUserInFirebase(user) {
-    try {
-        const response = await fetch(BASE_URL + "/user.json", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(user)
-        });
-        
-        if (!response.ok) {
-            throw new Error();
-        }
-
-    } catch (error) {
-        console.error("Fehler bei der Registrierung:", error);
-        showErrorMessage("Registrierung fehlgeschlagen. Bitte versuche es erneut.");
+    const response = await fetch(BASE_URL + "/user.json", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user)
+    });
+    
+    if (!response.ok) {
+        showErrorMessage("Registration failed. Please try again.");
     }
 }
 
 
-
+/**
+ * Shows success message after successful signup
+ */
 function showSuccessMessageSignUp() {
     const signedUp = document.getElementById("signed-up");
     const overlaySignup = document.getElementById("overlay-signup");
     
     if (signedUp && overlaySignup) {
         prepareSuccessElements(signedUp, overlaySignup);
-        setTimeout(() => {
-            redirectToLogin();
-        }, 1500); 
+        setTimeout(redirectToLogin, 1500);
     }
 }
 
+
+/**
+ * Prepares success message elements for display
+ * @param {HTMLElement} signedUp - Success message element
+ * @param {HTMLElement} overlaySignup - Overlay element
+ */
 function prepareSuccessElements(signedUp, overlaySignup) {
     signedUp.classList.remove('d-none');
     overlaySignup.classList.remove('d-none');
     signedUp.innerHTML = signedUpTemplate();
+    setupSuccessElementStyles(signedUp, overlaySignup);
+}
+
+
+/**
+ * Sets up styles for success elements
+ * @param {HTMLElement} signedUp - Success message element
+ * @param {HTMLElement} overlaySignup - Overlay element
+ */
+function setupSuccessElementStyles(signedUp, overlaySignup) {
     overlaySignup.style.display = "flex";
     overlaySignup.style.visibility = "visible";
     overlaySignup.classList.add('visible');
@@ -85,12 +135,27 @@ function prepareSuccessElements(signedUp, overlaySignup) {
 }
 
 
+/**
+ * Redirects user to login page
+ */
 function redirectToLogin() {
     window.location.replace("log_in.html");
 }
 
-window.onload = function() {
+
+/**
+ * Checks for existing user session on page load
+ */
+function checkUserSession() {
     if (sessionStorage.getItem('currentUser')) {
         window.location.replace("index.html");
     }
+}
+
+
+/**
+ * Window load event handler
+ */
+window.onload = function() {
+    checkUserSession();
 };

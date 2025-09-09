@@ -260,12 +260,14 @@ async function saveEditedTask(taskId) {
     "#editMyList .subtask-text.list"
   );
   subtaskItems.forEach((item, index) => {
-  const originalCompleted = task.subtaskElements[index]?.completed || false;
-  subtaskElements.push({
-    text: item.textContent,
-    completed: originalCompleted,
+    const originalSubtask = task.subtaskElements && task.subtaskElements[index];
+    const originalCompleted = originalSubtask ? originalSubtask.completed : false;
+    
+    subtaskElements.push({
+      text: item.textContent,
+      completed: originalCompleted,
+    });
   });
-});
 
   task.title = document.getElementById("edit-title").value;
   task.description = document.getElementById("edit-description").value;
