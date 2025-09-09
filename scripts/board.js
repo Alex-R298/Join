@@ -424,7 +424,7 @@ function closeTaskOverlay() {
         overlay.classList.add("d-none");
         document.body.style.overflow = "auto";
         container.classList.remove("closing");
-    }, 300);
+    }, 500);
 }
 
 

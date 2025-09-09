@@ -41,51 +41,59 @@ async function fetchBase() {
 
 
 /** Adds a new task to the system */
+function getFormValues() {
+  return {
+    title: document.getElementById("title").value,
+    description: document.getElementById("task_description").value,
+    dueDate: document.getElementById("datepicker").value,
+    category: document.getElementById("category_task").value,
+    checkedUsers: Array.from(
+      document.querySelectorAll('input[type="checkbox"][id^="user-"]:checked')
+    ).map(cb => cb.value),
+    subtaskElements: getSubtasks()
+  };
+}
+
+function getSubtasks() {
+  const list = document.getElementById("myList");
+  if (!list) return [];
+  return Array.from(list.querySelectorAll(".subtask-text")).map(el => ({
+    text: el.textContent,
+    completed: false
+  }));
+}
+
+function buildTask({title, description, dueDate, category, checkedUsers, subtaskElements}) {
+  return {
+    title,
+    description,
+    dueDate,
+    priority: selectedPriority,
+    assignedTo: checkedUsers,
+    category,
+    status: currentTaskStatus,
+    subtaskElements
+  };
+}
+
+async function saveTask(task) {
+  const response = await fetch(BASE_URL + "/task.json", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(task),
+  });
+  if (!response.ok) throw new Error("HTTP error " + response.status);
+}
+
 async function addTask() {
-    const title = document.getElementById("title").value;
-    const description = document.getElementById("task_description").value;
-    const dueDate = document.getElementById("datepicker").value;
-    const category = document.getElementById("category_task").value;
-    const checkedUsers = Array.from(
-        document.querySelectorAll('input[type="checkbox"][id^="user-"]:checked')
-    ).map(cb => cb.value);
-    const addTaskContainer = document.getElementById("myList");
-    const subtaskElements = addTaskContainer ? 
-        addTaskContainer.querySelectorAll(".subtask-text") : 
-        [];
-        
-    if (!checkDate()) {
-        return;
-    }
-    
-    const newTask = {
-        title,
-        description,
-        dueDate,
-        priority: selectedPriority,
-        assignedTo: checkedUsers,
-        category,
-        status: currentTaskStatus,
-        subtaskElements: Array.from(subtaskElements).map((el) => ({
-            text: el.textContent,
-            completed: false,
-        })),
-    };
-    
-    const response = await fetch(BASE_URL + "/task.json", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newTask),
-    });
-    
-    if (!response.ok) {
-        throw new Error("HTTP error " + response.status);
-    }
-    
-    await renderTasks();
-    updateHTML(); 
-    showPopup();
-    clearInputs();
+  if (!checkDate()) return;
+  const values = getFormValues();
+  const newTask = buildTask(values);
+  await saveTask(newTask);
+  await renderTasks();
+  updateHTML();
+  showPopup();
+  clearInputs();
 }
 
 
@@ -247,41 +255,52 @@ function resetValidationState() {
 
 
 /** Clears all form inputs and resets the task creation form to its initial state. */
-async function clearInputs() {
-    document.getElementById("title").value = "";
-    document.getElementById("task_description").value = "";
-    document.getElementById("datepicker").value = "";
-    document.getElementById("assignee-input").value = "";
-    document.getElementById("myList").innerHTML = "";
-
-    const categoryPlaceholder = document.getElementById("selected-category-placeholder");
-    const categoryInput = document.getElementById("category_task");
-    if (categoryPlaceholder) {
-        categoryPlaceholder.textContent = "Select task category";
-    }
-    if (categoryInput) {
-        categoryInput.value = "";
-    }
-    
-    const subtaskContainer = document.getElementById("subtask-container");
-    if (subtaskContainer) {
-        subtaskContainer.innerHTML = "";
-    }
-    
-    selectedPriority = "medium";
-    selectPriority(document.querySelector('[data-priority="medium"]'));
-    
-    document.querySelectorAll('input[type="checkbox"][id^="user-"]').forEach(cb => {
-        cb.checked = false;
-    });
-    
-    const avatarsContainer = document.getElementById("assigned-avatars");
-    if (avatarsContainer) {
-        avatarsContainer.innerHTML = "";
-    }
-    
-    resetValidationState();
+// Clear main text input fields and task list
+function clearTextInputs() {
+  document.getElementById("title").value = "";
+  document.getElementById("task_description").value = "";
+  document.getElementById("datepicker").value = "";
+  document.getElementById("assignee-input").value = "";
+  document.getElementById("myList").innerHTML = "";
 }
+
+// Reset task category input and placeholder
+function resetCategory() {
+  const placeholder = document.getElementById("selected-category-placeholder");
+  const input = document.getElementById("category_task");
+  if (placeholder) placeholder.textContent = "Select task category";
+  if (input) input.value = "";
+}
+
+// Clear all subtasks in the subtask container
+function clearSubtasks() {
+  const container = document.getElementById("subtask-container");
+  if (container) container.innerHTML = "";
+}
+
+// Reset priority to default (medium)
+function resetPriority() {
+  selectedPriority = "medium";
+  selectPriority(document.querySelector('[data-priority="medium"]'));
+}
+
+// Uncheck all user checkboxes and clear assigned avatars
+function resetCheckboxesAndAvatars() {
+  document.querySelectorAll('input[type="checkbox"][id^="user-"]').forEach(cb => cb.checked = false);
+  const avatars = document.getElementById("assigned-avatars");
+  if (avatars) avatars.innerHTML = "";
+}
+
+// Main function to clear all inputs and reset UI state
+async function clearInputs() {
+  clearTextInputs();
+  resetCategory();
+  clearSubtasks();
+  resetPriority();
+  resetCheckboxesAndAvatars();
+  resetValidationState();
+}
+
 
 
 /** Handles the add task action by validating the form and adding the task if valid. */
@@ -351,6 +370,7 @@ function toggleAssigneeDropdown() {
 
 /** Toggles the visibility of the category dropdown */
 let selectedCategory = null;
+
 function toggleCategoryDropdown() {
   document.getElementById("assignee-dropdown").classList.add("d-none");
   const categoryDropdown = document.getElementById("category-dropdown");
