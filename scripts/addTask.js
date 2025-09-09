@@ -6,7 +6,7 @@ let currentTaskStatus = "todo";
  * @global {string} currentTaskStatus
  * @param {string} status - The new status of the task (e.g., "todo", "in progress", "done")
  */
-function setTaskStatus(status) {
+function saveTaskStatusToFirebase(status) {
     currentTaskStatus = status;
 }
 

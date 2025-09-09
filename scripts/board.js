@@ -270,7 +270,7 @@ async function renderTasks() {
   try {
     const tasks = await loadTasks();
     allTasks = tasks;
-    await setTaskStatus();
+    await saveTaskStatusToFirebase();
     updateHTML();
     if (typeof updateDashboardCounts === 'function') {
       updateDashboardCounts();
