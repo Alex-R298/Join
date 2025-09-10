@@ -209,7 +209,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2;
+    z-index: 3;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease, visibility 0.5s ease;
@@ -532,9 +532,21 @@
 @media (max-width: 800px) {
     .show-task-content {
         width: 95%;
-        height: calc(654px - 80px);
-        margin-bottom: 80px;
+        gap: 14px;
+        animation: slideInFromBottom 0.5s ease forwards;
     }
+
+    .show-task-content.closing {
+        animation: slideOutToBottom 0.5s ease forwards;
+    }
+
+    .show-task-content h1 {
+        font-size: 34px;
+    }
+
+    .edit-task-content {
+    max-height: 500px !important;
+}
 }
 
 
