@@ -385,7 +385,7 @@ async function showAddTaskOverlay(status = 'toDo') {
   
   overlay.classList.remove("d-none");
   document.body.style.overflow = "hidden";
-  
+   document.body.classList.add("no-markers");
   document.getElementById("btn-overlay-close").classList.remove("d-none");
   
   container.addEventListener("click", (e) => e.stopPropagation());
@@ -405,7 +405,7 @@ function openTaskOverlay(taskId) {
 
     overlay.classList.remove("d-none");
     container.innerHTML = taskDetailOverlayTemplate(task);
-
+    document.body.classList.add("no-markers"); 
     container.addEventListener("click", (e) => e.stopPropagation());
     overlay.addEventListener("click", closeTaskOverlay);
 
@@ -423,6 +423,7 @@ function closeTaskOverlay() {
     setTimeout(() => {
         overlay.classList.add("d-none");
         document.body.style.overflow = "auto";
+        document.body.classList.remove("no-markers");
         container.classList.remove("closing");
     }, 500);
 }

@@ -314,7 +314,7 @@ async function editTask(taskId) {
   const usersArray = await loadUsers();
   selectedPriority = task.priority;
   container.innerHTML = getEditTaskTemplate(task, usersArray);
-
+  document.body.classList.remove("no-markers");
   addSubtaskHoverEffectsWithDelegation();
 }
 
