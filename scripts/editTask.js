@@ -152,16 +152,16 @@ function handleEditSubtaskClick(event, li) {
 * Adds the "edit-mode" CSS class and replaces the text with an input field.
 * @param {HTMLElement} li - The list item to be edited.
 */
+
 function startEditSubtaskEditMode(li) {
   li.classList.add("edit-mode");
-  console.log("Klasse hinzugefügt:", li.classList);
 
   let editBtn = li.querySelector(".icon-btn.edit-btn");
   let deleteBtn = li.querySelector(".icon-btn.delete-btn");
   let separator = li.querySelector(".vl-small");
 
   let editImg = editBtn.querySelector("img");
-  editImg.src = "./assets/icons/check.svg";
+  editImg.src = "./assets/icons/check_subtask.svg";
   editImg.alt = "Check";
 
   let parent = editBtn.parentNode;
