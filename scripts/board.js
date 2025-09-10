@@ -385,7 +385,6 @@ async function showAddTaskOverlay(status = 'toDo') {
   
   overlay.classList.remove("d-none");
   document.body.style.overflow = "hidden";
-   document.body.classList.add("no-markers");
   document.getElementById("btn-overlay-close").classList.remove("d-none");
   
   container.addEventListener("click", (e) => e.stopPropagation());
