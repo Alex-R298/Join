@@ -400,7 +400,7 @@ function openTaskOverlay(taskId) {
     const overlay = document.getElementById("detailed-task-overlay");
     const container = document.getElementById("task-detail-container");
     const task = allTasks.find((t) => t.id === taskId); // tasks ist dein Array aus Firebase
-
+    document.body.style.overflow = 'hidden';
     if (!task) return;
 
     overlay.classList.remove("d-none");
