@@ -521,7 +521,22 @@
     width: 100% !important;
 }
 
+.button-details.res {
+        display: block;
+        display: flex
+
+    }
+
+
 }
+@media (max-width: 800px) {
+    .show-task-content {
+        width: 95%;
+        height: calc(654px - 80px);
+        margin-bottom: 80px;
+    }
+}
+
 
 @media (max-width: 428px) {
     .button-add-task {
@@ -531,5 +546,9 @@
         width: 40px;
         height: 40px;
         border-radius: 10px;
+    }
+
+    .show-task-content {
+        padding: 20px;
     }
 }

@@ -89,7 +89,7 @@ function taskDetailOverlayTemplate(task) {
         <div class="task-details-buttons">
             <button onclick="deleteTask('${
               task.id
-            }')" class="button-details delete-icon" type="button">
+            }')" class="button-details res delete-icon" type="button">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_354206_5432" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
                 <rect width="24" height="24" fill="#D9D9D9"/>
@@ -102,7 +102,7 @@ function taskDetailOverlayTemplate(task) {
             <div class="spacer"></div>
             <button onclick="editTask('${
               task.id
-            }')" class="button-details edit-icon" type="button">
+            }')" class="button-details res edit-icon" type="button">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_354206_5438" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
                 <rect width="24" height="24" fill="#D9D9D9"/>
