@@ -479,6 +479,12 @@
 
 }
 
+@media (max-width: 1270px) {
+    .add-task-content{
+    width: 85%;
+    }
+}
+
 @media (max-width: 1000px) {
     .site-title {
         display: flex;
@@ -527,6 +533,12 @@
 
     }
 
+    .add-task-content {
+        align-items: flex-start; 
+        overflow-y: auto;
+    }
+ 
+
 
 }
 @media (max-width: 800px) {
@@ -547,6 +559,7 @@
     .edit-task-content {
     max-height: 500px !important;
 }
+
 }
 
 

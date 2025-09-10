@@ -305,18 +305,6 @@ function getName(userName) {
 }
 
 
-// function renderAssignedUser(email) {
-//     if (!email) return ""; // if no mail, then there's no avatar
-
-//     const contact = contactsMap[email]; // get contact via email
-//     const userName = contact ? contact.name : email.split("@")[0];
-
-//     const name = getName(userName);
-//     const initials = getInitials(name);
-//     const color = getAvatarColor(name);
-
-//     return { initials, color, name };
-// }
 
 function renderAssignedUser(email) {
     if (typeof email !== 'string' || !email) {
@@ -334,17 +322,6 @@ function renderAssignedUser(email) {
     return { initials, color, name };
 }
 
-
-
-// function renderAssignedUserData(email, taskId) {
-//   if (!email) return ""; // if there's no assignedTo
-//   const { initials, color } = renderAssignedUser(email);
-//   const container = document.getElementById(`editor-${taskId}`);
-
-//   if (container) {
-//     container.innerHTML += `<div class="editor-avatar" style="background-color:${color}">${initials}</div>`;
-//   }
-// }
 
 function renderAssignedUserData(email, taskId) {
     if (typeof email !== 'string' || !email) {
@@ -379,20 +356,21 @@ function getPriorityData(priority) {
 
 
 async function showAddTaskOverlay(status = 'toDo') {
-  currentTaskStatus = status;
-  const overlay = document.getElementById("add-task-overlay");
-  const container = document.getElementById("add-task-container");
-  
-  overlay.classList.remove("d-none");
-  document.body.style.overflow = "hidden";
-  document.getElementById("btn-overlay-close").classList.remove("d-none");
-  
-  container.addEventListener("click", (e) => e.stopPropagation());
-  overlay.addEventListener("click", closeAddTaskOverlay);
-
-  setTimeout(() => {
-      overlay.classList.add("visible");
-  }, 10);
+    if (window.matchMedia("(max-width: 800px)").matches) {
+        window.location.href = 'add_task.html';
+        return; 
+    }
+    currentTaskStatus = status;
+    const overlay = document.getElementById("add-task-overlay");
+    const container = document.getElementById("add-task-container");
+    overlay.classList.remove("d-none");
+    document.body.style.overflow = "hidden";
+    document.getElementById("btn-overlay-close").classList.remove("d-none");
+    container.addEventListener("click", (e) => e.stopPropagation());
+    overlay.addEventListener("click", closeAddTaskOverlay);
+    setTimeout(() => {
+        overlay.classList.add("visible");
+    }, 10);
 }
 
 function openTaskOverlay(taskId) {
@@ -463,3 +441,18 @@ function calculateSubtaskProgress(task) {
     progressClass: "task-progress",
   };
 }
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const mediaQuery = window.matchMedia("(max-width: 800px)");
+    function handleScreenSizeChange(mq) {
+        if (mq.matches) {
+            const overlay = document.getElementById("add-task-overlay");
+            if (overlay && !overlay.classList.contains("d-none")) {
+                closeAddTaskOverlay();
+                window.location.href = 'add_task.html';
+            }
+        }
+    }
+    mediaQuery.addListener(handleScreenSizeChange);
+});
