@@ -120,7 +120,7 @@
 
 .task-description-container {
     width: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
     margin: 16px 0;
 }
 
