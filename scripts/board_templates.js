@@ -298,12 +298,12 @@ function getEditTaskTemplate(task, usersArray = []) {
                     ? task.subtaskElements
                         .map(
                           (subtask, index) => `
-                    <li class="subtask-listelement" onclick="handleEditSubtaskClick(event, this)">
+                    <li class="subtask-listelement" onclick="handleSubtaskClick(event, this)">
                         <span class="subtask-text list">${
                           subtask.text || subtask
                         }</span>
                         <div class="subtask-edit-btns d-none">
-                            <button class="icon-btn edit-btn" type="button" onclick="event.stopPropagation();">
+                            <button class="icon-btn edit-btn" type="button" onclick="">
                                 <img src="./assets/icons/check_subtask.svg" alt="check">
                             </button>
                             <div class="vl-small"></div>
