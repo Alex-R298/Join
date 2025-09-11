@@ -6,7 +6,7 @@ function toggleContact() {
     const buttonDrop = document.querySelector(".button-drop");
     
     buttonDrop.classList.add("button-hidden");
-    buttonDropMenu.classList.remove("d_none");
+    buttonDropMenu.classList.remove("d-none");
     setupDropdownContent(buttonDropMenu);
     showDropdownMenu(buttonDropMenu);
 }
@@ -239,7 +239,7 @@ function closeDropdown() {
  * @param {HTMLElement} btn - Dropdown button element
  */
 function resetDropdownMenu(menu, btn) {
-    menu.classList.add("d_none");
+    menu.classList.add("d-none");
     menu.classList.remove('closing');
     menu.style.display = "none";
     menu.innerHTML = "";
@@ -256,7 +256,7 @@ document.addEventListener('click', function(event) {
     const menu = document.getElementById("button-drop-menu");
     
     if (headline?.contains(event.target) && btn && !btn.contains(event.target)) {
-        if (menu && !menu.classList.contains("d_none") && menu.style.display !== "none") {
+        if (menu && !menu.classList.contains("d-none") && menu.style.display !== "none") {
             closeDropdown();
         }
     }
