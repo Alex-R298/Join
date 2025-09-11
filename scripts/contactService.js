@@ -29,3 +29,53 @@ async function apiRequest(endpoint, method = 'GET', data = null) {
         throw error;
     }
 }
+
+
+/**
+ * Loads all contacts from Firebase
+ * @returns {Promise<Object>} Contact data
+ */
+async function loadContacts() {
+    return await apiRequest("/user");
+}
+
+
+/**
+ * Loads a specific contact from Firebase
+ * @param {string} contactId - Contact ID
+ * @returns {Promise<Object>} Contact data
+ */
+async function loadContact(contactId) {
+    return await apiRequest(`/user/${contactId}`);
+}
+
+
+/**
+ * Creates a new contact in Firebase
+ * @param {Object} contactData - Contact data
+ * @returns {Promise<Object>} Response with new contact ID
+ */
+async function createContact(contactData) {
+    return await apiRequest("/user", "POST", contactData);
+}
+
+
+/**
+ * Updates an existing contact in Firebase
+ * @param {string} contactId - Contact ID
+ * @param {Object} contactData - Updated contact data
+ * @returns {Promise<Object>} Response data
+ */
+async function updateContactData(contactId, contactData) {
+    return await apiRequest(`/user/${contactId}`, "PUT", contactData);
+}
+
+
+/**
+ * Deletes a contact from Firebase
+ * @param {string} contactId - Contact ID
+ * @returns {Promise<Object>} Response data
+ */
+async function removeContact(contactId) {
+    return await apiRequest(`/user/${contactId}`, "DELETE");
+}

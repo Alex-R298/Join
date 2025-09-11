@@ -5,12 +5,14 @@
 let currentSelectedContact = null;
 let isSuccessMessageShown = false;
 
+
 /**
  * Initializes contact loading on page load
  */
 function onloadFunc() {
     fetchContacts();
 }
+
 
 /**
  * Fetches contacts and updates UI
@@ -24,50 +26,6 @@ async function fetchContacts() {
     }
 }
 
-/**
- * Loads all contacts from Firebase
- * @returns {Promise<Object>} Contact data
- */
-async function loadContacts() {
-    return await apiRequest("/user");
-}
-
-/**
- * Loads a specific contact from Firebase
- * @param {string} contactId - Contact ID
- * @returns {Promise<Object>} Contact data
- */
-async function loadContact(contactId) {
-    return await apiRequest(`/user/${contactId}`);
-}
-
-/**
- * Creates a new contact in Firebase
- * @param {Object} contactData - Contact data
- * @returns {Promise<Object>} Response with new contact ID
- */
-async function createContact(contactData) {
-    return await apiRequest("/user", "POST", contactData);
-}
-
-/**
- * Updates an existing contact in Firebase
- * @param {string} contactId - Contact ID
- * @param {Object} contactData - Updated contact data
- * @returns {Promise<Object>} Response data
- */
-async function updateContactData(contactId, contactData) {
-    return await apiRequest(`/user/${contactId}`, "PUT", contactData);
-}
-
-/**
- * Deletes a contact from Firebase
- * @param {string} contactId - Contact ID
- * @returns {Promise<Object>} Response data
- */
-async function removeContact(contactId) {
-    return await apiRequest(`/user/${contactId}`, "DELETE");
-}
 
 /**
  * Updates contacts UI
@@ -77,6 +35,7 @@ function updateContactsUI(data) {
     const contactsList = document.getElementById('contacts-list');
     contactsList.innerHTML = getContactsTemplate(data);
 }
+
 
 /**
  * Creates a new contact from form data
@@ -97,6 +56,7 @@ async function createdContact() {
     }
 }
 
+
 /**
  * Saves contact to Firebase
  * @param {Object} contact - Contact data
@@ -111,6 +71,7 @@ async function saveContactToFirebase(contact) {
     }
 }
 
+
 /**
  * Handles successful contact save
  * @param {string} contactId - New contact ID
@@ -123,6 +84,7 @@ async function handleSuccessfulContactSave(contactId, contact) {
     displayContactDetails(contactId, contact, getInitials(contact.name), getAvatarColor(contact.name), false);
     handleMobileContactView();
 }
+
 
 /**
  * Deletes a contact
@@ -138,6 +100,7 @@ async function deleteContact(contactId) {
         // Handle error silently
     }
 }
+
 
 /**
  * Updates an existing contact
@@ -160,6 +123,7 @@ async function updateContact(contactId) {
     }
 }
 
+
 /**
  * Sends updated contact data to Firebase
  * @param {string} contactId - Contact ID
@@ -178,6 +142,7 @@ async function sendUpdatedContactToFirebase(contactId, updatedFields) {
     }
 }
 
+
 /**
  * Gets current contact data
  * @param {string} contactId - Contact ID
@@ -191,6 +156,7 @@ async function getCurrentContactData(contactId) {
     }
 }
 
+
 /**
  * Gets contact input elements from form
  * @returns {Object} Object containing input elements
@@ -202,6 +168,7 @@ function getContactInputElements() {
         phone: document.getElementById('contact-phone')
     };
 }
+
 
 /**
  * Creates contact object from input data
@@ -216,6 +183,7 @@ function createContactObject(inputs) {
         createdAt: new Date().toISOString()
     };
 }
+
 
 /**
  * Validates all contact input fields
@@ -232,6 +200,7 @@ function validateContactInputs(nameInput, emailInput, phoneInput) {
     return isValid;
 }
 
+
 /**
  * Handles mobile view activation for contacts
  */
@@ -244,6 +213,7 @@ function handleMobileContactView() {
     }
 }
 
+
 /**
  * Clears the contact details view
  */
@@ -253,6 +223,7 @@ function clearContactDetailsView() {
         contactsMetrics.innerHTML = "";
     }
 }
+
 
 /**
  * Creates updated contact object from inputs
@@ -268,6 +239,7 @@ function createUpdatedContactObject(inputs) {
     };
 }
 
+
 /**
  * Finalizes contact update process
  * @param {string} contactId - Contact ID
@@ -277,6 +249,7 @@ function finalizeContactUpdate(contactId, updatedContact) {
     displayContactDetails(contactId, updatedContact, null, null, false);
     markContactCard(contactId);
 }
+
 
 /**
  * Updates selected contact data in memory
@@ -292,6 +265,7 @@ function updateSelectedContactData(contactId, updatedContact) {
         currentSelectedContact.avatarColor = getAvatarColor(updatedContact.name);
     }
 }
+
 
 /**
  * Shows contact details in UI
@@ -309,6 +283,7 @@ function showContactDetails(contactId, name, email, phone, initials, avatarColor
     handleMobileContactView();
     closeCreatedContact();
 }
+
 
 /**
  * Sets current selected contact data
@@ -330,6 +305,7 @@ function setCurrentSelectedContact(contactId, name, email, phone, initials, avat
     };
 }
 
+
 /**
  * Returns to contacts list view (mobile)
  */
@@ -339,6 +315,7 @@ function backToContacts() {
         headline.classList.remove('active');
     }
 }
+
 
 /**
  * Generates avatar color based on name
@@ -360,6 +337,7 @@ function getAvatarColor(name) {
     return colors[Math.abs(hash) % colors.length];
 }
 
+
 /**
  * Extracts initials from full name
  * @param {string} name - Full name
@@ -371,6 +349,7 @@ function getInitials(name) {
         .join('')
         .toUpperCase();
 }
+
 
 /**
  * Prepares contact data for display
@@ -388,6 +367,7 @@ function prepareContactsData(data) {
     return sortedContacts.sort((a, b) => a.name.localeCompare(b.name, 'de'));
 }
 
+
 /**
  * Creates HTML template for contacts list
  * @param {Object} data - Contact data
@@ -399,6 +379,7 @@ function getContactsTemplate(data) {
     
     return buildContactsHTML(sortedContacts);
 }
+
 
 /**
  * Builds HTML for contacts list
@@ -419,6 +400,7 @@ function buildContactsHTML(sortedContacts) {
     return template;
 }
 
+
 /**
  * Sorts contacts alphabetically
  * @param {Object} data - Contact data
@@ -429,6 +411,7 @@ function sortContacts(data) {
         .filter(user => user && user.name && user.email)
         .sort((a, b) => a.name.localeCompare(b.name, 'de'));
 }
+
 
 /**
  * Marks contact card as selected
