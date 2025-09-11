@@ -1,49 +1,51 @@
-// async function init() {
-//   datetimer();
-//   loadHeader();
-//   loadSidebar();
-//   fetchBase();
-//   loadAddPage();
-//   renderTasks();
-//   activMediumBtn();
-// }
-
-
 async function init() {
   if (typeof datetimer === 'function') {
     datetimer();
   }
-  
+     
   if (typeof loadHeader === 'function') {
     loadHeader();
   }
-  
+     
   if (typeof loadSidebar === 'function') {
     loadSidebar();
   }
-  
+     
   if (typeof fetchBase === 'function') {
     fetchBase();
   }
-  
+     
   if (typeof loadAddPage === 'function') {
     loadAddPage();
   }
-  
+     
   if (typeof renderTasks === 'function') {
     renderTasks();
   }
-  
+     
   if (typeof activMediumBtn === 'function') {
     activMediumBtn();
   }
 
-  setActiveNavigation();
-  clearAllContainers();
+  if (typeof setActiveNavigation === 'function') {
+    setActiveNavigation();
+  }
+
+  if (typeof clearAllContainers === 'function') {
+    clearAllContainers();
+  }
+     
+  if (typeof loadContacts === 'function') {
     await loadContacts();
-    
+  }
+         
+  if (typeof renderTasks === 'function') {
     await renderTasks();
+  }
+
+  if (typeof updateHTML === 'function') {
     updateHTML();
+  }
 }
 
 
