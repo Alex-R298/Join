@@ -29,17 +29,6 @@ const priorityConfig = {
 };
 
 
-/** Fetches base data from the server */
-async function fetchBase() {
-  try {
-    const res = await fetch(BASE_URL + ".json");
-    const data = await res.json();
-  } catch (err) {
-    console.error("Fehler beim Laden:", err);
-  }
-}
-
-
 /** Adds a new task to the system */
 function getFormValues() {
   return {
@@ -76,16 +65,6 @@ function buildTask({title, description, dueDate, category, checkedUsers, subtask
     status: currentTaskStatus,
     subtaskElements
   };
-}
-
-
-async function saveTask(task) {
-  const response = await fetch(BASE_URL + "/task.json", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(task),
-  });
-  if (!response.ok) throw new Error("HTTP error " + response.status);
 }
 
 
