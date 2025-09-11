@@ -151,6 +151,10 @@ header {
   .header_title_p_tag {
     display: none;
   }
+  .popuptext{
+    top: 80px;
+    position: fixed;
+  }
 }
 
 /* @media screen and (max-width: 428px){
