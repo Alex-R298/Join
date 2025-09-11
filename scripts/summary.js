@@ -101,8 +101,7 @@ function formatDate(dateString) {
  * Loads all tasks from Firebase and updates allTasks array
  */
 async function loadTasksFromFirebase() {
-  const response = await fetch(`${BASE_URL}/tasks.json`);
-  const data = await response.json();
+  const data = await getTaskData();
   
   if (data) {
     allTasks = Object.keys(data).map(key => ({
