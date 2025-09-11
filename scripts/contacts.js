@@ -17,36 +17,48 @@ async function fetchContacts(path) {
     const response = await fetch(BASE_URL + path + ".json");
     const data = await response.json();
     updateContactsUI(data);
-    clearDetailsIfNoSelection();
+    // clearDetailsIfNoSelection();
 }
 
 
-/**
- * Updates the contacts UI elements
- * @param {Object} data - Contact data from Firebase
- */
+// /**
+//  * Updates the contacts UI elements
+//  * @param {Object} data - Contact data from Firebase
+//  */
+// function updateContactsUI(data) {
+//     const contactsList = document.getElementById('contacts-list');
+//     const contactsListDetails = document.getElementById('contacts-container-details');
+//     const editContact = document.getElementById('overlay-add-contact');
+
+//     if (contactsList && contactsListDetails && editContact) {
+//         contactsList.innerHTML = getContactsTemplate(data);
+//         contactsListDetails.innerHTML = "";
+//         editContact.innerHTML = editContactTemplate();
+//     }
+// }
+
 function updateContactsUI(data) {
     const contactsList = document.getElementById('contacts-list');
-    const contactsListDetails = document.getElementById('contacts-container-details');
-    const editContact = document.getElementById('overlay-add-contact');
-
-    if (contactsList && contactsListDetails && editContact) {
+    
+    if (contactsList) {
         contactsList.innerHTML = getContactsTemplate(data);
-        contactsListDetails.innerHTML = "";
-        editContact.innerHTML = editContactTemplate();
     }
 }
 
 
-/**
- * Clears details view if no contact is selected
- */
-function clearDetailsIfNoSelection() {
-    const contactsListDetails = document.getElementById('contacts-container-details');
-    if (contactsListDetails && !document.querySelector('.contact-card.selected')) {
-        contactsListDetails.innerHTML = "";
-    }
-}
+// /**
+//  * Clears details view if no contact is selected
+//  */
+// function clearDetailsIfNoSelection() {
+//     const contactsListDetails = document.getElementById('contacts-container-details');
+    
+//     // NUR leeren wenn wirklich kein Kontakt ausgewählt ist UND kein currentSelectedContact existiert
+//     if (contactsListDetails && 
+//         !document.querySelector('.contact-card.selected') && 
+//         !currentSelectedContact) {
+//         contactsListDetails.innerHTML = "";
+//     }
+// }
 
 
 /**
