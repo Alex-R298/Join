@@ -1,45 +1,195 @@
 /**
- * Initializes contacts loading on page load
+ * Refactored Contact Functions - Uses centralized API
  */
-function onloadFunc() {
-    fetchContacts("/user");
-}
-
 
 let currentSelectedContact = null;
 let isSuccessMessageShown = false;
 
 /**
- * Fetches contacts from Firebase and updates UI
- * @param {string} path - API path for contacts
+ * Initializes contact loading on page load
  */
-async function fetchContacts(path) {
-    const response = await fetch(BASE_URL + path + ".json");
-    const data = await response.json();
-    updateContactsUI(data);
-    // clearDetailsIfNoSelection();
+function onloadFunc() {
+    fetchContacts();
 }
 
+/**
+ * Fetches contacts and updates UI
+ */
+async function fetchContacts() {
+    try {
+        const data = await loadContacts();
+        updateContactsUI(data);
+    } catch (error) {
+        // Handle error silently
+    }
+}
 
+/**
+ * Loads all contacts from Firebase
+ * @returns {Promise<Object>} Contact data
+ */
+async function loadContacts() {
+    return await apiRequest("/user");
+}
+
+/**
+ * Loads a specific contact from Firebase
+ * @param {string} contactId - Contact ID
+ * @returns {Promise<Object>} Contact data
+ */
+async function loadContact(contactId) {
+    return await apiRequest(`/user/${contactId}`);
+}
+
+/**
+ * Creates a new contact in Firebase
+ * @param {Object} contactData - Contact data
+ * @returns {Promise<Object>} Response with new contact ID
+ */
+async function createContact(contactData) {
+    return await apiRequest("/user", "POST", contactData);
+}
+
+/**
+ * Updates an existing contact in Firebase
+ * @param {string} contactId - Contact ID
+ * @param {Object} contactData - Updated contact data
+ * @returns {Promise<Object>} Response data
+ */
+async function updateContactData(contactId, contactData) {
+    return await apiRequest(`/user/${contactId}`, "PUT", contactData);
+}
+
+/**
+ * Deletes a contact from Firebase
+ * @param {string} contactId - Contact ID
+ * @returns {Promise<Object>} Response data
+ */
+async function removeContact(contactId) {
+    return await apiRequest(`/user/${contactId}`, "DELETE");
+}
+
+/**
+ * Updates contacts UI
+ * @param {Object} data - Contact data
+ */
 function updateContactsUI(data) {
     const contactsList = document.getElementById('contacts-list');
     contactsList.innerHTML = getContactsTemplate(data);
 }
 
-
 /**
  * Creates a new contact from form data
  */
-function createdContact() { 
+async function createdContact() { 
     const inputs = getContactInputElements();
     if (!validateContactInputs(inputs.name, inputs.email, inputs.phone)) {
         return; 
     }
+    
     const newContact = createContactObject(inputs);
     closeAddContactQuick();
-    saveContactToFirebase(newContact);
+    
+    try {
+        await saveContactToFirebase(newContact);
+    } catch (error) {
+        // Handle error silently
+    }
 }
 
+/**
+ * Saves contact to Firebase
+ * @param {Object} contact - Contact data
+ */
+async function saveContactToFirebase(contact) {
+    try {
+        const data = await createContact(contact);
+        const newContactId = data.name;
+        handleSuccessfulContactSave(newContactId, contact);
+    } catch (error) {
+        throw error;
+    }
+}
+
+/**
+ * Handles successful contact save
+ * @param {string} contactId - New contact ID
+ * @param {Object} contact - Contact data
+ */
+async function handleSuccessfulContactSave(contactId, contact) {
+    showSuccessMessage();
+    await fetchContacts();
+    setTimeout(() => markContactCard(contactId), 100);
+    displayContactDetails(contactId, contact, getInitials(contact.name), getAvatarColor(contact.name), false);
+    handleMobileContactView();
+}
+
+/**
+ * Deletes a contact
+ * @param {string} contactId - ID of contact to delete
+ */
+async function deleteContact(contactId) {
+    try {
+        await removeContact(contactId);
+        await fetchContacts();
+        clearContactDetailsView();
+        closeAddContactQuick();
+    } catch (error) {
+        // Handle error silently
+    }
+}
+
+/**
+ * Updates an existing contact
+ * @param {string} contactId - ID of contact to update
+ */
+async function updateContact(contactId) {
+    const inputs = getContactInputElements();
+    if (!validateContactInputs(inputs.name, inputs.email, inputs.phone)) {
+        return; 
+    }
+    
+    const updatedContact = createUpdatedContactObject(inputs);
+    closeAddContactQuick();
+    
+    try {
+        await sendUpdatedContactToFirebase(contactId, updatedContact);
+        finalizeContactUpdate(contactId, updatedContact);
+    } catch (error) {
+        // Handle error silently
+    }
+}
+
+/**
+ * Sends updated contact data to Firebase
+ * @param {string} contactId - Contact ID
+ * @param {Object} updatedFields - Fields to update
+ */
+async function sendUpdatedContactToFirebase(contactId, updatedFields) {
+    try {
+        const currentContact = await getCurrentContactData(contactId);
+        const updatedContact = { ...currentContact, ...updatedFields };
+        
+        await updateContactData(contactId, updatedContact);
+        updateSelectedContactData(contactId, updatedContact);
+        await fetchContacts();
+    } catch (error) {
+        throw error;
+    }
+}
+
+/**
+ * Gets current contact data
+ * @param {string} contactId - Contact ID
+ * @returns {Object} Current contact data
+ */
+async function getCurrentContactData(contactId) {
+    try {
+        return await loadContact(contactId);
+    } catch (error) {
+        throw error;
+    }
+}
 
 /**
  * Gets contact input elements from form
@@ -52,7 +202,6 @@ function getContactInputElements() {
         phone: document.getElementById('contact-phone')
     };
 }
-
 
 /**
  * Creates contact object from input data
@@ -67,7 +216,6 @@ function createContactObject(inputs) {
         createdAt: new Date().toISOString()
     };
 }
-
 
 /**
  * Validates all contact input fields
@@ -84,37 +232,6 @@ function validateContactInputs(nameInput, emailInput, phoneInput) {
     return isValid;
 }
 
-
-/**
- * Saves contact to Firebase database
- * @param {Object} contact - Contact data to save
- */
-async function saveContactToFirebase(contact) {
-    const response = await fetch(BASE_URL + "/user.json", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(contact)
-    });
-    const data = await response.json();
-    const newContactId = data.name;
-    handleSuccessfulContactSave(newContactId, contact);
-}
-
-
-/**
- * Handles successful contact creation
- * @param {string} contactId - New contact ID
- * @param {Object} contact - Contact data
- */
-function handleSuccessfulContactSave(contactId, contact) {
-    showSuccessMessage();
-    fetchContacts("/user");
-    setTimeout(() => markContactCard(contactId), 100);
-    displayContactDetails(contactId, contact, getInitials(contact.name), getAvatarColor(contact.name), false);
-    handleMobileContactView();
-}
-
-
 /**
  * Handles mobile view activation for contacts
  */
@@ -127,21 +244,6 @@ function handleMobileContactView() {
     }
 }
 
-
-/**
- * Deletes a contact from Firebase
- * @param {string} contactId - ID of contact to delete
- */
-async function deleteContact(contactId) {
-    await fetch(`${BASE_URL}/user/${contactId}.json`, {
-        method: "DELETE"
-    });
-    fetchContacts("/user");
-    clearContactDetailsView();
-    closeAddContactQuick();
-}
-
-
 /**
  * Clears the contact details view
  */
@@ -151,23 +253,6 @@ function clearContactDetailsView() {
         contactsMetrics.innerHTML = "";
     }
 }
-
-
-/**
- * Updates an existing contact
- * @param {string} contactId - ID of contact to update
- */
-async function updateContact(contactId) {
-    const inputs = getContactInputElements();
-    if (!validateContactInputs(inputs.name, inputs.email, inputs.phone)) {
-        return; 
-    }
-    const updatedContact = createUpdatedContactObject(inputs);
-    closeAddContactQuick();
-    await sendUpdatedContactToFirebase(contactId, updatedContact);
-    finalizeContactUpdate(contactId, updatedContact);
-}
-
 
 /**
  * Creates updated contact object from inputs
@@ -183,7 +268,6 @@ function createUpdatedContactObject(inputs) {
     };
 }
 
-
 /**
  * Finalizes contact update process
  * @param {string} contactId - Contact ID
@@ -193,38 +277,6 @@ function finalizeContactUpdate(contactId, updatedContact) {
     displayContactDetails(contactId, updatedContact, null, null, false);
     markContactCard(contactId);
 }
-
-
-/**
- * Sends updated contact data to Firebase
- * @param {string} contactId - Contact ID
- * @param {Object} updatedFields - Fields to update
- */
-async function sendUpdatedContactToFirebase(contactId, updatedFields) {
-    const currentContact = await getCurrentContactData(contactId);
-    const updatedContact = { ...currentContact, ...updatedFields };
-    
-    await fetch(`${BASE_URL}/user/${contactId}.json`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedContact)
-    });
-    
-    updateSelectedContactData(contactId, updatedContact);
-    await fetchContacts("/user");
-}
-
-
-/**
- * Gets current contact data from Firebase
- * @param {string} contactId - Contact ID
- * @returns {Object} Current contact data
- */
-async function getCurrentContactData(contactId) {
-    const response = await fetch(`${BASE_URL}/user/${contactId}.json`);
-    return await response.json();
-}
-
 
 /**
  * Updates selected contact data in memory
@@ -240,7 +292,6 @@ function updateSelectedContactData(contactId, updatedContact) {
         currentSelectedContact.avatarColor = getAvatarColor(updatedContact.name);
     }
 }
-
 
 /**
  * Shows contact details in UI
@@ -258,7 +309,6 @@ function showContactDetails(contactId, name, email, phone, initials, avatarColor
     handleMobileContactView();
     closeCreatedContact();
 }
-
 
 /**
  * Sets current selected contact data
@@ -280,7 +330,6 @@ function setCurrentSelectedContact(contactId, name, email, phone, initials, avat
     };
 }
 
-
 /**
  * Returns to contacts list view (mobile)
  */
@@ -290,7 +339,6 @@ function backToContacts() {
         headline.classList.remove('active');
     }
 }
-
 
 /**
  * Generates avatar color based on name
@@ -312,7 +360,6 @@ function getAvatarColor(name) {
     return colors[Math.abs(hash) % colors.length];
 }
 
-
 /**
  * Extracts initials from full name
  * @param {string} name - Full name
@@ -324,7 +371,6 @@ function getInitials(name) {
         .join('')
         .toUpperCase();
 }
-
 
 /**
  * Prepares contact data for display
@@ -342,7 +388,6 @@ function prepareContactsData(data) {
     return sortedContacts.sort((a, b) => a.name.localeCompare(b.name, 'de'));
 }
 
-
 /**
  * Creates HTML template for contacts list
  * @param {Object} data - Contact data
@@ -354,7 +399,6 @@ function getContactsTemplate(data) {
     
     return buildContactsHTML(sortedContacts);
 }
-
 
 /**
  * Builds HTML for contacts list
@@ -375,7 +419,6 @@ function buildContactsHTML(sortedContacts) {
     return template;
 }
 
-
 /**
  * Sorts contacts alphabetically
  * @param {Object} data - Contact data
@@ -386,7 +429,6 @@ function sortContacts(data) {
         .filter(user => user && user.name && user.email)
         .sort((a, b) => a.name.localeCompare(b.name, 'de'));
 }
-
 
 /**
  * Marks contact card as selected
@@ -399,6 +441,7 @@ function markContactCard(contactId) {
     const card = document.querySelector(`[data-contact-id="${contactId}"]`);
     if (card) card.classList.add('selected');
 }
+
 
 
 
