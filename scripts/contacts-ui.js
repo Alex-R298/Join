@@ -123,6 +123,9 @@ function showSuccessMessage() {
     
     const createdContact = document.getElementById("created-contact");
     const addOverlay = document.getElementById("overlay-add-contact");
+
+    createdContact.classList.remove('d-none');
+    createdContact.classList.add("visible");
     
     displaySuccessPopup(createdContact);
     hideAddOverlay(addOverlay);
@@ -140,8 +143,6 @@ function showSuccessMessage() {
 function displaySuccessPopup(createdContact) {
   if (createdContact) {
     createdContact.innerHTML = createdContactTemplate();
-    createdContact.classList.remove("d-none");
-    createdContact.classList.add("visible");
   }
 }
 

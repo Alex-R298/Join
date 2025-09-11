@@ -392,8 +392,6 @@
     top: 20px;
     right: 20px;
     z-index: 1100;
-    visibility: hidden;
-    display: none;
 }
 
 #created-contact.visible .created-contact-popup {
