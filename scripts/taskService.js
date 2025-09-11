@@ -10,7 +10,8 @@ async function postTaskData(task) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(task),
   });
-  if (!response.ok) throw new Error("HTTP error " + response.status);
+  const result = await response.json();
+  return { ...task, id: result.name };
 }
 
 async function saveTask(task) {

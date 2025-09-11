@@ -174,20 +174,27 @@ function getDragAfterElement(container, y) {
  * @param {DragEvent} event - Drop event
  */
 async function moveTo(status, event) {
-    event.preventDefault();
-    let taskId = event.dataTransfer ? event.dataTransfer.getData('text/plain') : currentDraggedElement;
-    if (!taskId) return;
-    const draggingItem = document.getElementById(`task-${taskId}`);
-    if (!draggingItem) return;
-    replacePlaceholderWithTask(draggingItem);
-    animateTaskIn(draggingItem);
-    cleanupDragState();
-    updateTaskStatus(taskId, status);
-    updateAllTasksFromDOM();
-    setTimeout(() => updateEmptyContainers(), 400);
-    await saveTask(taskId, status);
-    if (typeof updateDashboardCounts === 'function') updateDashboardCounts();
-    currentDraggedElement = null;
+  event.preventDefault();
+
+  let taskId = event.dataTransfer
+    ? event.dataTransfer.getData("text/plain")
+    : currentDraggedElement;
+  if (!taskId) return;
+
+  const draggingItem = document.getElementById(`task-${taskId}`);
+  if (!draggingItem) return;
+
+  replacePlaceholderWithTask(draggingItem);
+  animateTaskIn(draggingItem);
+  cleanupDragState();
+  const task = allTasks.find((t) => t.id === taskId);
+  if (!task) return;
+  task.status = status;
+  updateAllTasksFromDOM();
+  setTimeout(() => updateEmptyContainers(), 400);
+  await saveTaskToFirebase(task);
+  if (typeof updateDashboardCounts === "function") updateDashboardCounts();
+  currentDraggedElement = null;
 }
 
 

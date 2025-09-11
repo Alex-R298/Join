@@ -56,7 +56,6 @@ function getSubtasks() {
 
 function buildTask({title, description, dueDate, category, checkedUsers, subtaskElements}) {
   return {
-    id: crypto.randomUUID(),
     title,
     description,
     dueDate,
@@ -73,7 +72,7 @@ async function addTask() {
   if (!checkDate()) return;
   const values = getFormValues();
   const newTask = buildTask(values);
-  await saveTaskToFirebase(newTask);
+  const savedTask = await postTaskData(newTask);
   await renderTasks();
   updateHTML();
   showPopup();
