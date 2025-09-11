@@ -474,6 +474,7 @@
 .drag-area {
     width: 100%;
     flex-direction: row;
+    flex-wrap: wrap;
 
 }
 
