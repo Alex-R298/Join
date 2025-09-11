@@ -14,10 +14,6 @@ async function postTaskData(task) {
   return { ...task, id: result.name };
 }
 
-async function saveTask(task) {
-  await postTaskData(task);
-}
-
 
 /**
 * Saves a task to the Firebase database.
