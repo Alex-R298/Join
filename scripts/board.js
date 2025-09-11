@@ -223,17 +223,38 @@ async function toggleSubtask(taskId, subtaskIndex) {
 }
 
 
-function getCategoryData(task) {
-  const category = task.category;
+// function getCategoryData(task) {
+//   const category = task.category;
+   
+//   const text = category
+//     .replace(/-/g, " ")
+//     .split(" ")
+//     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+//     .join(" ");
+
+//   const className = category.toLowerCase().replace(/\s+/g, "-");
+//   return { text, className };
+// }
+
+function getCategoryData(task, status) {
+  const category = task.category || "no-category";
+  const taskStatus = status || task.status || "todo";
    
   const text = category
     .replace(/-/g, " ")
     .split(" ")
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
-
+    
   const className = category.toLowerCase().replace(/\s+/g, "-");
-  return { text, className };
+  const statusClass = taskStatus.toLowerCase().replace(/\s+/g, "-");
+  
+  return { 
+    text, 
+    className,
+    status: taskStatus,
+    statusClass
+  };
 }
 
 
