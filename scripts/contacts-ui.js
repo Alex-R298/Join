@@ -35,6 +35,7 @@ function setupDropdownContent(buttonDropMenu) {
  * @param {HTMLElement} buttonDropMenu - Dropdown menu element
  */
 function showDropdownMenu(buttonDropMenu) {
+    buttonDropMenu.classList.remove("d-none");
     setTimeout(() => {
         buttonDropMenu.classList.add("visible");
     }, 10);
@@ -69,13 +70,12 @@ function getDropMenuTemplate(contactId, name, email, phone, initials, avatarColo
  * Opens add contact overlay
  */
 function addContact() {
-    const addOverlay = document.getElementById("overlay-add-contact");
-    if (!addOverlay) return;
-    
-    addOverlay.innerHTML = getAddContactTemplate();
-    addOverlay.style.display = "flex";
-    addOverlay.style.visibility = "visible";
-    setTimeout(() => addOverlay.classList.add('visible'), 10);
+  const addOverlay = document.getElementById("overlay-add-contact");
+  if (!addOverlay) return;
+
+  addOverlay.innerHTML = getAddContactTemplate();
+  addOverlay.classList.remove("d-none");
+  setTimeout(() => addOverlay.classList.add("visible"), 10);
 }
 
 
@@ -83,14 +83,14 @@ function addContact() {
  * Closes add contact overlay with animation
  */
 function closeAddContact() {
-    const addOverlay = document.getElementById("overlay-add-contact");
-    if (!addOverlay) return;
-    
-    const popup = addOverlay.querySelector('.add-contact-popup');
-    if (popup) popup.classList.add('closing');
-    
-    addOverlay.classList.remove('visible');
-    setTimeout(() => addOverlay.style.visibility = "hidden", 500);
+  const addOverlay = document.getElementById("overlay-add-contact");
+  if (!addOverlay) return;
+
+  const popup = addOverlay.querySelector(".add-contact-popup");
+  if (popup) popup.classList.add("closing");
+
+  addOverlay.classList.remove("visible");
+  setTimeout(() => addOverlay.classList.add("d-none"), 500);
 }
 
 
@@ -106,10 +106,9 @@ function closeAddContact() {
 function editContact(contactId, name, email, phone, initials, avatarColor) {
     const editOverlay = document.getElementById("overlay-add-contact");
     if (!editOverlay) return;
-    
+   
     editOverlay.innerHTML = editContactTemplate(contactId, name, email, phone, initials, avatarColor);
-    editOverlay.style.display = "flex";
-    editOverlay.style.visibility = "visible";
+    editOverlay.classList.remove('d-none');
     setTimeout(() => editOverlay.classList.add('visible'), 10);
     closeDropdown();
 }
@@ -139,12 +138,11 @@ function showSuccessMessage() {
  * @param {HTMLElement} createdContact - Success popup element
  */
 function displaySuccessPopup(createdContact) {
-    if (createdContact) {
-        createdContact.innerHTML = createdContactTemplate();
-        createdContact.style.display = "flex";
-        createdContact.style.visibility = "visible";
-        createdContact.classList.add('visible');
-    }
+  if (createdContact) {
+    createdContact.innerHTML = createdContactTemplate();
+    createdContact.classList.remove("d-none");
+    createdContact.classList.add("visible");
+  }
 }
 
 
@@ -153,13 +151,12 @@ function displaySuccessPopup(createdContact) {
  * @param {HTMLElement} addOverlay - Add overlay element
  */
 function hideAddOverlay(addOverlay) {
-    if (addOverlay) {
-        addOverlay.classList.remove('visible');
-        setTimeout(() => {
-            addOverlay.style.visibility = "hidden";
-            addOverlay.style.display = "none";
-        }, 10);
-    }
+  if (addOverlay) {
+    addOverlay.classList.remove("visible");
+    setTimeout(() => {
+      addOverlay.classList.add("d-none");
+    }, 10);
+  }
 }
 
 
@@ -185,10 +182,9 @@ function closeCreatedContact() {
  * @param {HTMLElement} popup - Popup inner element
  */
 function resetSuccessPopup(createdContact, popup) {
-    createdContact.style.visibility = "hidden";
-    createdContact.style.display = "none";
-    createdContact.classList.remove('closing');
-    if (popup) popup.classList.remove('closing');
+    createdContact.classList.add("d-none");
+    createdContact.classList.remove("closing");
+    if (popup) popup.classList.remove("closing");
     isSuccessMessageShown = false;
 }
 
@@ -199,12 +195,11 @@ function resetSuccessPopup(createdContact, popup) {
 function closeAddContactQuick() {
     const addOverlay = document.getElementById("overlay-add-contact");
     if (!addOverlay) return;
-    
+
     addOverlay.style.transition = "opacity 0.1s ease";
-    addOverlay.classList.remove('visible');
+    addOverlay.classList.remove("visible");
     setTimeout(() => {
-        addOverlay.style.visibility = "hidden";
-        addOverlay.style.display = "none";
+        addOverlay.classList.add("d-none");
         addOverlay.style.transition = "";
     }, 10);
 }
@@ -241,7 +236,6 @@ function closeDropdown() {
 function resetDropdownMenu(menu, btn) {
     menu.classList.add("d-none");
     menu.classList.remove('closing');
-    menu.style.display = "none";
     menu.innerHTML = "";
     btn.classList.remove("button-hidden");
 }
