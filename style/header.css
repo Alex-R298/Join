@@ -155,6 +155,9 @@ header {
     top: 80px;
     position: fixed;
   }
+  .help-icon {
+    display: none;
+  }
 }
 
 /* @media screen and (max-width: 428px){
