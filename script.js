@@ -58,41 +58,48 @@ function getInitials(name) {
         .toUpperCase();
 }
 
-function datetimer() {
-  let date = document.getElementById("lblGreetings");
-  if (date) {
-    const myDate = new Date();
-    const hrs = myDate.getHours();
-
-    let greet;
-
-    if (hrs < 12) greet = "Good Morning";
-    else if (hrs >= 12 && hrs <= 17) greet = "Good Afternoon";
-    else if (hrs >= 17 && hrs <= 24) greet = "Good Evening";
-    const userName = sessionStorage.getItem('userName');
-
-    if (!userName) {
-      sessionStorage.removeItem("overlayShown");
-    }
-
-    if (userName) {
-      date.innerHTML = `
-        <h2>${greet},</h2>
-        <p class="greet-name">${userName}</p>
-      `;
-      } else {
-      date.innerHTML = `
-        <h2>${greet}!</h2>
-      `;
-    }
-    const showOverlayCondition = !sessionStorage.getItem("overlayShown") && window.matchMedia("(max-width: 800px)").matches;
-
-    if (showOverlayCondition) {
-      showOverlay(greet, userName);
-      sessionStorage.setItem("overlayShown", "true");
-    }
-  }
+/**
+ * Returns a greeting based on current time.
+ * @returns {string} "Good Morning/Afternoon/Evening"
+ */
+function getTimeGreeting() {
+  const hrs = new Date().getHours();
+  if (hrs < 12) return "Good Morning";
+  if (hrs <= 17) return "Good Afternoon";
+  return "Good Evening";
 }
+
+/**
+ * Updates the greeting label (#lblGreetings) with name if available.
+ */
+function updateGreetingLabel() {
+  const date = document.getElementById("lblGreetings");
+  if (!date) return;
+  const greet = getTimeGreeting();
+  const userName = sessionStorage.getItem("userName");
+  date.innerHTML = userName 
+    ? `<h2>${greet},</h2><p class="greet-name">${userName}</p>` 
+    : `<h2>${greet}!</h2>`;
+}
+
+/**
+ * Shows the overlay once per session (only time greeting, no name).
+ */
+function showGreetingOverlay() {
+  const greet = getTimeGreeting();
+  if (sessionStorage.getItem("overlayShown") || !window.matchMedia("(max-width: 970px)").matches) return;
+  showOverlay(greet, null); // Name null → nur Zeitgruß
+  sessionStorage.setItem("overlayShown", "true");
+}
+
+/**
+ * Main function to call on page load.
+ */
+function datetimer() {
+  updateGreetingLabel();
+  showGreetingOverlay();
+}
+
 
 function showOverlay(greet, userName) {
   const overlay = document.getElementById("welcome-overlay");
@@ -108,6 +115,7 @@ function showOverlay(greet, userName) {
     overlay.classList.add("d-none");
   }, 3000);
 }
+
 
 function loadHeader() {
   const headerContainer = document.getElementById('header-container');
