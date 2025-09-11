@@ -151,6 +151,13 @@ header {
   .header_title_p_tag {
     display: none;
   }
+  .popuptext{
+    top: 80px;
+    position: fixed;
+  }
+  .help-icon {
+    display: none;
+  }
 }
 
 /* @media screen and (max-width: 428px){
