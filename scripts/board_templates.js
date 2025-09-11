@@ -2,8 +2,8 @@ function taskOnBoardTemplate(task) {
     const title = task.title || 'Untitled';
     const description = task.description || 'No description';
     const priority = task.priority || 'medium';
-    const status = task.status || 'toDO';
-    const category = getCategoryData(task, task.status);
+    const status = task.status || 'toDo';
+    const category = getCategoryData(task);
     const { icon: priorityIcon } = getPriorityData(priority);
     const { progressPercent, progressText, progressClass} = calculateSubtaskProgress(task);
     return `

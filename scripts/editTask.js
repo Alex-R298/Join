@@ -287,20 +287,6 @@ updateHTML();
 
 
 /**
-* Saves a task to the Firebase database.
-* Sends the task data as JSON to the Firebase endpoint.
-*/
-async function saveTaskToFirebase(task) {
-  const response = await fetch(`${BASE_URL}/task/${task.id}.json`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(task),
-  });
-  return response.ok;
-}
-
-
-/**
 * Prepares for processing a task.
 * Loads the task data and initializes the processing form.
 * @param {string} taskId - The ID of the task to be processed.

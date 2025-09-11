@@ -178,24 +178,63 @@ async function loadUsers() {
 }
 
 
+// async function loadTasks() {
+//   try {
+//     const data = await getTaskData();
+//     if (!data) return [];
+//     const tasks = Object.entries(data).map(([id, task]) => {
+//       const category = task.category;
+//       const status = task.status  || "toDo";
+//       if (task.subtaskElements && typeof task.subtaskElements[0] === 'string') {
+//                 task.subtaskElements = task.subtaskElements.map(text => ({
+//                     text: text,
+//                     completed: false
+//                 }));
+//             }
+//       return {id, ...task, category, status};
+//     });
+    
+//     return tasks;
+//   } catch (error) {
+//     return [];
+//   }
+// }
+
 async function loadTasks() {
   try {
+    console.log("Loading tasks...");
     const data = await getTaskData();
-    if (!data) return [];
+    console.log("Raw data from getTaskData:", data);
+
+    if (!data) {
+      console.log("No data returned");
+      return [];
+    }
+
     const tasks = Object.entries(data).map(([id, task]) => {
+      console.log("Processing task:", id, task);
+
       const category = task.category;
-      const status = task.status  || "toDo";
-      if (task.subtaskElements && typeof task.subtaskElements[0] === 'string') {
-                task.subtaskElements = task.subtaskElements.map(text => ({
-                    text: text,
-                    completed: false
-                }));
-            }
-      return {id, ...task, category, status};
+      const status = task.status || "toDo";
+
+      // Debug category
+      if (!category) {
+        console.warn("Task has no category:", id, task);
+      }
+
+      if (task.subtaskElements && typeof task.subtaskElements[0] === "string") {
+        task.subtaskElements = task.subtaskElements.map((text) => ({
+          text: text,
+          completed: false,
+        }));
+      }
+      return { id, ...task, category, status };
     });
-    
+
+    console.log("Processed tasks:", tasks);
     return tasks;
   } catch (error) {
+    console.error("Error in loadTasks:", error);
     return [];
   }
 }
