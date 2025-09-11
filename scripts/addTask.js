@@ -102,10 +102,10 @@ async function addTask() {
 
 
 /** Fetches tasks from the server for debugging purposes */
-async function loadTasksDebug() {
-  const res = await fetch(BASE_URL + "/task.json");
-  const data = await res.json();
-}
+// async function loadTasksDebug() {
+//   const res = await fetch(BASE_URL + "/task.json");
+//   const data = await res.json();
+// }
 
 
 /**

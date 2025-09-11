@@ -38,8 +38,7 @@ async function filterTasks(query) {
 
 async function resetTaskStatus() {
   try {
-    const res = await fetch(BASE_URL + "/task.json");
-    const data = await res.json();
+    const data = await getTaskData();
     
     if (!data) return;
     allTasks = allTasks.map(task => {
@@ -181,8 +180,7 @@ async function loadUsers() {
 
 async function loadTasks() {
   try {
-    const res = await fetch(BASE_URL + "/task.json");
-    const data = await res.json();
+    const data = await getTaskData();
     if (!data) return [];
     const tasks = Object.entries(data).map(([id, task]) => {
       const category = task.category;
