@@ -56,6 +56,7 @@ function getSubtasks() {
 
 function buildTask({title, description, dueDate, category, checkedUsers, subtaskElements}) {
   return {
+    id: crypto.randomUUID(),
     title,
     description,
     dueDate,
@@ -63,7 +64,7 @@ function buildTask({title, description, dueDate, category, checkedUsers, subtask
     assignedTo: checkedUsers,
     category,
     status: currentTaskStatus,
-    subtaskElements
+    subtaskElements,
   };
 }
 
@@ -72,19 +73,12 @@ async function addTask() {
   if (!checkDate()) return;
   const values = getFormValues();
   const newTask = buildTask(values);
-  await saveTask(newTask);
+  await saveTaskToFirebase(newTask);
   await renderTasks();
   updateHTML();
   showPopup();
   clearInputs();
 }
-
-
-/** Fetches tasks from the server for debugging purposes */
-// async function loadTasksDebug() {
-//   const res = await fetch(BASE_URL + "/task.json");
-//   const data = await res.json();
-// }
 
 
 /**
