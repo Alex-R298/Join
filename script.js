@@ -8,6 +8,7 @@
 //   activMediumBtn();
 // }
 
+
 async function init() {
   if (typeof datetimer === 'function') {
     datetimer();
@@ -131,6 +132,7 @@ function loadSidebar() {
     sidebarContainer.innerHTML = getSidebarTemplate();
   }
 }
+
 
 async function loadAddPage(task = {}) {
   try {

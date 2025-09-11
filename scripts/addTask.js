@@ -54,6 +54,7 @@ function getFormValues() {
   };
 }
 
+
 function getSubtasks() {
   const list = document.getElementById("myList");
   if (!list) return [];
@@ -62,6 +63,7 @@ function getSubtasks() {
     completed: false
   }));
 }
+
 
 function buildTask({title, description, dueDate, category, checkedUsers, subtaskElements}) {
   return {
@@ -76,6 +78,7 @@ function buildTask({title, description, dueDate, category, checkedUsers, subtask
   };
 }
 
+
 async function saveTask(task) {
   const response = await fetch(BASE_URL + "/task.json", {
     method: "POST",
@@ -84,6 +87,7 @@ async function saveTask(task) {
   });
   if (!response.ok) throw new Error("HTTP error " + response.status);
 }
+
 
 async function addTask() {
   if (!checkDate()) return;
@@ -159,6 +163,7 @@ function closePopup() {
     closeAddTaskOverlay();
   }
 }
+
 
 /** Returns today's date as a string in 'YYYY-MM-DD' format. */
 function getTodaysDate() {
@@ -255,7 +260,6 @@ function resetValidationState() {
 
 
 /** Clears all form inputs and resets the task creation form to its initial state. */
-// Clear main text input fields and task list
 function clearTextInputs() {
   document.getElementById("title").value = "";
   document.getElementById("task_description").value = "";
@@ -406,10 +410,7 @@ function saveEdit(input, li) {
     span.className = "subtask-text list";
     span.textContent = newValue;
     li.replaceChild(span, input);
-
-    // zurück aus dem Edit-Modus
     li.classList.remove("edit-mode");
-
 
     editImg.classList.remove("check_icon_subtask");
   } else {

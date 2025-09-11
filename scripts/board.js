@@ -1,11 +1,7 @@
-
-// To do / In progress / Await feedback / Done
-
 let allTasks = [];
 
 
-
-// Live Search Funktionnen 
+// Live Search functions
 function liveSearchBoards() {
     let input = document.getElementById('searchInputBoards');
 
@@ -38,7 +34,7 @@ async function filterTasks(query) {
         }
     });
 }
-// Ende! 
+
 
 async function resetTaskStatus() {
   try {
@@ -47,29 +43,22 @@ async function resetTaskStatus() {
     
     if (!data) return;
     allTasks = allTasks.map(task => {
-      if (data[task.id]) {
-        return {
-          ...task,
-          status: data[task.id].status
-        };
-      }
+      if (data[task.id]) return {...task, status: data[task.id].status};
       return task;
     });
-    
-   // console.log("Task-Kategorien zurückgesetzt:", allTasks);
+  
     updateHTML();
   } catch (error) {
-    console.error("Fehler beim Zurücksetzen der Kategorien:", error);
+    console.error("Could not reset status: ", error);
   }
 }
+
 
 function clearAllContainers() {
     const containers = ["toDo", "inProgress", "awaitFeedback", "done"];
     containers.forEach(containerId => {
         const container = document.getElementById(containerId);
-        if (container) {
-            container.innerHTML = '';
-        }
+        if (container) container.innerHTML = '';
     });
 }
 
@@ -100,7 +89,6 @@ function updateHTML(tasks = allTasks) {
 }
 
 
-
 function getEmptyText(containerId) {
     const texts = {
         'toDo': 'No Tasks To Do',
@@ -111,10 +99,9 @@ function getEmptyText(containerId) {
     return texts[containerId] || `No Tasks ${containerId}`;
 }
 
+
 function renderTasksInContainer(container, tasks) {
-  tasks.forEach(task => {
-    container.innerHTML += taskOnBoardTemplate(task);
-  });
+  tasks.forEach(task => {container.innerHTML += taskOnBoardTemplate(task);});
   
   tasks.forEach(task => {
     if (task.assignedTo) {
@@ -126,7 +113,6 @@ function renderTasksInContainer(container, tasks) {
     }
   });
 }
-
 
 
 function renderTasksInContainer(container, tasks) {
@@ -177,17 +163,12 @@ function updateEmptyContainers() {
 
 function updateContainer(status) {
   const container = document.getElementById(status);
-  if (!container) {
-    console.error(`Container mit ID ${status} nicht gefunden`);
-    return;
-  }
+  if (!container) return;
+
   container.innerHTML = "";
   const tasksInStatus = allTasks.filter(t => t.status === status);
    
-   //console.log(`Tasks in Kategorie ${status} nach Update:`, tasksInStatus.length);
-  tasksInStatus.forEach(todo => {
-    container.innerHTML += taskOnBoardTemplate(todo);
-  });
+  tasksInStatus.forEach(todo => {container.innerHTML += taskOnBoardTemplate(todo);});
 }
 
 
@@ -212,12 +193,7 @@ async function loadTasks() {
                     completed: false
                 }));
             }
-      return {
-        id,
-        ...task,
-        category,
-        status,
-      };
+      return {id, ...task, category, status};
     });
     
     return tasks;
@@ -250,18 +226,15 @@ async function toggleSubtask(taskId, subtaskIndex) {
 
 
 function getCategoryData(task) {
-    
   const category = task.category;
    
   const text = category
-    .replace(/-/g, " ")                       // Bindestriche zu Leerzeichen
+    .replace(/-/g, " ")
     .split(" ")
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
-  // CSS-Klasse: alles klein, Leerzeichen durch Bindestriche ersetzen
   const className = category.toLowerCase().replace(/\s+/g, "-");
-
   return { text, className };
 }
 
@@ -285,7 +258,6 @@ async function loadContacts() {
   const res = await fetch(BASE_URL + "/user.json");
   const data = await res.json();
 
-  // Map: email -> contact
   contactsMap = Object.values(data || {}).reduce((acc, contact) => {
     acc[contact.email] = contact;
     return acc;
@@ -312,9 +284,7 @@ function renderAssignedUser(email) {
         return { initials: '??', color: '#ccc', name: 'Unknown' };
     }
 
-    const contact = contactsMap[email];
-    const userName = contact ? contact.name : email.split('@')[0];
-
+    const userName = contactsMap[email] ? contactsMap[email].name : email.split('@')[0];
     const name = getName(userName);
     const initials = getInitials(name);
     const color = getAvatarColor(name);
@@ -324,17 +294,13 @@ function renderAssignedUser(email) {
 
 
 function renderAssignedUserData(email, taskId) {
-    if (typeof email !== 'string' || !email) {
-        console.warn('Invalid or missing email in renderAssignedUserData:', email);
-        return "";
-    }
+    if (typeof email !== 'string' || !email) return "";
 
     const { initials, color } = renderAssignedUser(email);
     const container = document.getElementById(`editor-${taskId}`);
 
-    if (container) {
-        container.innerHTML += `<div class="editor-avatar" style="background-color:${color}">${initials}</div>`;
-    }
+    if (!container) return;
+    container.innerHTML += `<div class="editor-avatar" style="background-color:${color}">${initials}</div>`;
 }
 
 
@@ -346,9 +312,7 @@ function getPriorityData(priority) {
     medium: "orange",
     low: "green",
   };
-
   const text = priority.charAt(0).toUpperCase() + priority.slice(1);
-
   const icon = `./assets/icons/prio_${priority}_${colors[priority]}.svg`;
 
   return { text, icon };
@@ -376,7 +340,7 @@ async function showAddTaskOverlay(status = 'toDo') {
 function openTaskOverlay(taskId) {
     const overlay = document.getElementById("detailed-task-overlay");
     const container = document.getElementById("task-detail-container");
-    const task = allTasks.find((t) => t.id === taskId); // tasks ist dein Array aus Firebase
+    const task = allTasks.find((t) => t.id === taskId);
     document.body.style.overflow = 'hidden';
     if (!task) return;
 
@@ -417,17 +381,12 @@ function formatDate(dateStr) {
   return `${day}/${month}/${year}`;
 }
 
+
 function calculateSubtaskProgress(task) {
-  // are there subtasks?
   const subtasks = task.subtaskElements || task.subTasks;
 
-  // if there are no subtasks
   if (!subtasks || subtasks.length === 0) {
-    return {
-      progressPercent: 0,
-      progressText: "No Subtasks",
-      progressClass: "d-none",
-    };
+    return {progressPercent: 0, progressText: "No Subtasks", progressClass: "d-none"};
   }
 
   const total = subtasks.length;
@@ -435,11 +394,7 @@ function calculateSubtaskProgress(task) {
   const progressPercent = total > 0 ? Math.round((done / total) * 100) : 0;
   const progressText = `${done}/${total} Subtasks`;
 
-  return {
-    progressPercent,
-    progressText,
-    progressClass: "task-progress",
-  };
+  return {progressPercent, progressText, progressClass: "task-progress"};
 }
 
 

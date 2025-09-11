@@ -86,13 +86,13 @@ function generateContactDetailsHTML(contactId, name, email, phone, initials, ava
                 <p class="contact-details-description">Contact Information</p>
                 <div class="contact-details-section">
                     <div class="contact-details-heading">Email</div>
-                    <div class="contact-details-value" style="color: #007CEE ">${email}</div>
+                    <div class="contact-details-value" style="color: #007CEE">
+                        <a href="mailto:${email}">${email}</a>
+                    </div>
                 </div>
                 <div class="contact-details-section">
                     <div class="contact-details-heading">Phone</div>
-                    <div class="contact-details-value">
-                        ${phone || "Not specified"}
-                    </div>
+            <a href="tel:${phone || "Not specified"}" class="contact-details-value">${phone || "Not specified"}</a>
                 </div>
             </div>
         </div>
@@ -143,16 +143,12 @@ function displayContactDetails(contactId, contact, initials = null, avatarColor 
                 <p class="contact-details-description">Contact Information</p>
                 <div class="contact-details-section">
                     <div class="contact-details-heading">Email</div>
-                    <div class="contact-details-value" style="color: #007CEE ">${
-                      contact.email
-                    }</div>
+                        <a href="mailto:${contact.email}" class="contact-details-value " style="color: #007CEE">${contact.email}</a>
                 </div>
                 
                 <div class="contact-details-section">
                     <div class="contact-details-heading">Phone</div>
-                    <div class="contact-details-value">
-                        ${contact.phone || "Not specified"}
-                    </div>
+                    <a href="tel:${contact.phone || "Not specified"}" class="contact-details-value">${contact.phone || "Not specified"}</a>
                 </div>
             </div>
         </div>

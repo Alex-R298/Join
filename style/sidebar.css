@@ -21,7 +21,7 @@
   width: 100%;
 }
 
-a {
+.sidebar a {
   color: #fff;
   text-decoration: none;
   font-size: 18px;
@@ -33,11 +33,11 @@ a {
   padding: 8px 56px;
 }
 
-a:hover {
+.sidebar a:hover {
   background-color: #2A3D59;
 }
 
-a.active {
+.sidebar a.active {
   background-color: #091931;
 }
 
