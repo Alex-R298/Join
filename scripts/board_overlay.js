@@ -175,3 +175,30 @@ async function toggleSubtask(taskId, subtaskIndex) {
         progressText.textContent = progressData.progressText;
     }
 }
+
+
+/**
+ * Updates the progress for all provided tasks.
+ * @param {Object[]} tasks - List of tasks to update progress for.
+ */
+function updateProgressForTasks(tasks) {
+  tasks.forEach(task => updateTaskProgress(task));
+}
+
+
+/**
+ * Updates the progress (bar and text) for a single task.
+ * @param {Object} task - A task object containing subtask information.
+ */
+function updateTaskProgress(task) {
+  const progressData = calculateSubtaskProgress(task);
+  const taskElement = document.querySelector(`[id="task-${task.id}"]`);
+  if (!taskElement) return;
+  const progressBar = taskElement.querySelector('.progress');
+  const progressText = taskElement.querySelector('.subtasks');
+  if (progressBar && progressText) {
+    progressBar.style.width = `${progressData.progressPercent}%`;
+    progressText.textContent = progressData.progressText;
+  }
+}
+
