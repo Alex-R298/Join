@@ -59,10 +59,8 @@ function updateTaskProgress(task) {
   const progressData = calculateSubtaskProgress(task);
   const taskElement = document.querySelector(`[id="task-${task.id}"]`);
   if (!taskElement) return;
-
   const progressBar = taskElement.querySelector('.progress');
   const progressText = taskElement.querySelector('.subtasks');
-
   if (progressBar && progressText) {
     progressBar.style.width = `${progressData.progressPercent}%`;
     progressText.textContent = progressData.progressText;
@@ -284,7 +282,6 @@ async function loadTasks() {
   try {
     const data = await getTaskData();
     if (!data) return [];
-
     return normalizeTasks(data);
   } catch (error) {
     return [];
@@ -313,52 +310,7 @@ function normalizeTasks(data) {
 function normalizeTask(id, task) {
   const status = task.status || "toDo";
   const subtaskElements = normalizeSubtasks(task.subtaskElements);
-
   return { id, ...task, status, subtaskElements };
-}
-
-
-/**
- * Normalisiert Subtask-Elemente eines Tasks.
- * @param {Array} subtaskElements - Rohdaten der Subtasks.
- * @returns {Array} Normalisierte Subtasks.
- */
-function normalizeSubtasks(subtaskElements) {
-  if (!Array.isArray(subtaskElements)) return subtaskElements;
-  if (typeof subtaskElements[0] === "string") {
-    return subtaskElements.map(text => ({
-      text,
-      completed: false,
-    }));
-  }
-  return subtaskElements;
-}
-
-
-/**
- * Kippt den Status eines Subtasks und speichert die Änderung.
- * @param {string} taskId - Task-ID.
- * @param {number} subtaskIndex - Index des Subtasks.
- */
-async function toggleSubtask(taskId, subtaskIndex) {
-    const task = allTasks.find(t => t.id === taskId);
-    if (!task) return;
-    if (typeof task.subtaskElements[0] === 'string') {
-        task.subtaskElements = task.subtaskElements.map(text => ({
-            text: text,
-            completed: false
-        }));
-    }
-    task.subtaskElements[subtaskIndex].completed = !task.subtaskElements[subtaskIndex].completed;
-    await saveTaskToFirebase(task);
-    const progressData = calculateSubtaskProgress(task);
-    const progressBar = document.querySelector(`[id="task-${task.id}"] .progress`);
-    const progressText = document.querySelector(`[id="task-${task.id}"] .subtasks`);
-    if (progressBar && progressText) {
-        progressBar.style.transition = 'width 0.3s ease';
-        progressBar.style.width = `${progressData.progressPercent}%`;
-        progressText.textContent = progressData.progressText;
-    }
 }
 
 
@@ -405,7 +357,6 @@ async function renderTasks() {
 async function loadContacts() {
   const res = await fetch(BASE_URL + "/user.json");
   const data = await res.json();
-
   contactsMap = Object.values(data || {}).reduce((acc, contact) => {
     acc[contact.email] = contact;
     return acc;
@@ -429,78 +380,6 @@ function getName(userName) {
 
 
 /**
- * Erstellt Avatar-Daten (Initialen, Farbe, Name) für einen User.
- * @param {string} email - User-E-Mail.
- * @returns {Object} Avatar-Daten.
- */
-function renderAssignedUser(email) {
-    if (typeof email !== 'string' || !email) {
-        console.warn('Invalid or missing email:', email);
-        return { initials: '??', color: '#ccc', name: 'Unknown' };
-    }
-
-    const userName = contactsMap[email] ? contactsMap[email].name : email.split('@')[0];
-    const name = getName(userName);
-    const initials = getInitials(name);
-    const color = getAvatarColor(name);
-
-    return { initials, color, name };
-}
-
-
-/**
- * Rendert das Avatar eines Users in einen Task-Editor.
- * @param {string} email - User-E-Mail.
- * @param {string} taskId - Task-ID.
- */
-function renderAssignedUserData(email, taskId) {
-    if (typeof email !== 'string' || !email) return "";
-
-    const { initials, color } = renderAssignedUser(email);
-    const container = document.getElementById(`editor-${taskId}`);
-
-    if (!container) return;
-    container.innerHTML += `<div class="editor-avatar" style="background-color:${color}">${initials}</div>`;
-}
-
-
-/**
- * Liefert Text & Icon zu einer Priorität.
- * @param {string} priority - "urgent", "medium", "low".
- * @returns {Object} Daten zur Priorität.
- */
-function getPriorityData(priority) {
-  if (!priority) return { text: "", icon: "" };
-  const colors = {
-    urgent: "red",
-    medium: "orange",
-    low: "green",
-  };
-  const text = priority.charAt(0).toUpperCase() + priority.slice(1);
-  const icon = `./assets/icons/prio_${priority}_${colors[priority]}.svg`;
-
-  return { text, icon };
-}
-
-
-/**
- * Formatiert ein Datum (yyyy-mm-dd) zu dd/mm/yyyy.
- * @param {string} dateStr - ISO-Datum.
- * @returns {string} Formatiertes Datum.
- */
-function formatDate(dateStr) {
-  if (!dateStr) return "";
-
-  const date = new Date(dateStr);
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0"); 
-  const year = date.getFullYear();
-
-  return `${day}/${month}/${year}`;
-}
-
-
-/**
  * Berechnet den Fortschritt von Subtasks eines Tasks.
  * @param {Object} task - Task-Objekt.
  * @returns {Object} Fortschrittsdaten (Prozent, Text, CSS-Klasse).
@@ -514,7 +393,6 @@ function calculateSubtaskProgress(task) {
   const done = subtasks.filter((subtask) => subtask.completed === true).length;
   const progressPercent = total > 0 ? Math.round((done / total) * 100) : 0;
   const progressText = `${done}/${total} Subtasks`;
-
   return {progressPercent, progressText, progressClass: "task-progress"};
 }
 
@@ -526,8 +404,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (overlay && !overlay.classList.contains("d-none")) {
                 closeAddTaskOverlay();
                 window.location.href = 'add_task.html';
-            }
-        }
-    }
+              }}}
     mediaQuery.addListener(handleScreenSizeChange);
 });
