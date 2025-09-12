@@ -42,6 +42,25 @@ async function init() {
   if (typeof updateHTML === 'function') {
     updateHTML();
   }
+
+  if (typeof firebase !== 'undefined') {
+  const taskRef = firebase.database().ref('/task');
+  taskRef.on('value', async (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+      const tasks = Object.entries(data)
+        .filter(([id, task]) => task.category)
+        .map(([id, task]) => ({ id, ...task }));
+      allTasks = tasks;
+      updateHTML();
+      
+      // Dashboard auch aktualisieren
+      if (typeof updateDashboardCounts === 'function') {
+        updateDashboardCounts();
+      }
+    }
+  });
+}
 }
 
 

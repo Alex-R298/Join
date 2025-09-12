@@ -1,3 +1,8 @@
+/**
+ * Validates name input field
+ * @param {HTMLElement} nameInput - Name input element
+ * @returns {boolean} True if name is valid (contains first and last name)
+ */
 function validateName(nameInput) {
     if (!nameInput.value.trim() || !nameInput.value.includes(' ')) {
         nameInput.style.borderColor = 'red';
@@ -19,6 +24,11 @@ function validateName(nameInput) {
 }
 
 
+/**
+ * Validates email input field
+ * @param {HTMLElement} emailInput - Email input element
+ * @returns {boolean} True if email has valid format
+ */
 function validateEmail(emailInput) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailInput.value.trim() || !emailRegex.test(emailInput.value)) {
@@ -33,6 +43,11 @@ function validateEmail(emailInput) {
 }
 
 
+/**
+ * Validates phone number input field
+ * @param {HTMLElement} phoneInput - Phone input element
+ * @returns {boolean} True if phone number is valid or empty (optional field)
+ */
 function validatePhone(phoneInput) {
     if (!phoneInput.value.trim()) {
         hideValidationError(phoneInput.id + '-error');
@@ -52,6 +67,11 @@ function validatePhone(phoneInput) {
 }
 
 
+/**
+ * Validates password input field
+ * @param {HTMLElement} passwordInput - Password input element
+ * @returns {boolean} True if password meets minimum requirements (8 characters)
+ */
 function validatePassword(passwordInput) {
     const password = passwordInput.value;
     
@@ -67,6 +87,12 @@ function validatePassword(passwordInput) {
 }
 
 
+/**
+ * Validates password confirmation field
+ * @param {HTMLElement} confirmPasswordInput - Confirm password input element
+ * @param {HTMLElement} passwordInput - Original password input element
+ * @returns {boolean} True if confirmation password matches original password
+ */
 function validateConfirmPassword(confirmPasswordInput, passwordInput) {
     const confirmPassword = confirmPasswordInput.value;
     const password = passwordInput.value;
@@ -87,6 +113,11 @@ function validateConfirmPassword(confirmPasswordInput, passwordInput) {
 }
 
 
+/**
+ * Validates acceptance checkbox (terms and conditions)
+ * @param {HTMLElement} acceptInput - Checkbox input element
+ * @returns {boolean} True if checkbox is checked
+ */
 function validateAccept(acceptInput) {
     if (!acceptInput.checked) {
         showValidationError(acceptInput.id + '-error', 'Bitte akzeptiere die Nutzungsbedingungen');
@@ -98,6 +129,11 @@ function validateAccept(acceptInput) {
 }
 
 
+/**
+ * Shows validation error message below input field
+ * @param {string} errorId - ID of the error element
+ * @param {string} message - Error message to display
+ */
 function showValidationError(errorId, message) {
     let errorElement = document.getElementById(errorId);
     
@@ -124,6 +160,10 @@ function showValidationError(errorId, message) {
 }
 
 
+/**
+ * Hides validation error message
+ * @param {string} errorId - ID of the error element to hide
+ */
 function hideValidationError(errorId) {
     const errorElement = document.getElementById(errorId);
     if (errorElement) {
