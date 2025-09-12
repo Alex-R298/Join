@@ -685,9 +685,9 @@
     }
 
     #button-drop-menu {
-        position: sticky;
-        bottom: 112px;
-        margin-right: 232px;
+        position: fixed;
+        bottom: 56px;
+        right: 1rem;
     }
 
     #button-drop-menu.closing {
@@ -728,6 +728,10 @@
         background: rgba(0, 0, 0, 0.1);
         margin: 0 10px;
         border-radius: 12px;
+    }
+
+    .button-details-drop:hover img {
+    filter: brightness(0) saturate(100%) invert(58%) sepia(94%) saturate(1352%) hue-rotate(170deg) brightness(96%) contrast(89%);
     }
 
     .contacts-container {

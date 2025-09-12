@@ -1,71 +1,57 @@
 /**
- * Initializes the application by loading various components and setting up Firebase listeners.
- * Conditionally calls multiple initialization functions if they exist.
- * @returns {Promise<void>}
+ * Initializes the application
  */
 async function init() {
-  if (typeof datetimer === 'function') {
-    datetimer();
-  }
-     
-  if (typeof loadHeader === 'function') {
-    loadHeader();
-  }
-     
-  if (typeof loadSidebar === 'function') {
-    loadSidebar();
-  }
-  
-  if (typeof loadAddPage === 'function') {
-    loadAddPage();
-  }
-     
-  if (typeof renderTasks === 'function') {
-    renderTasks();
-  }
-     
-  if (typeof activMediumBtn === 'function') {
-    activMediumBtn();
-  }
-
-  if (typeof setActiveNavigation === 'function') {
-    setActiveNavigation();
-  }
-
-  if (typeof clearAllContainers === 'function') {
-    clearAllContainers();
-  }
-     
-  if (typeof loadContacts === 'function') {
-    await loadContacts();
-  }
-         
-  if (typeof renderTasks === 'function') {
-    await renderTasks();
-  }
-
-  if (typeof updateHTML === 'function') {
-    updateHTML();
-  }
-
-  if (typeof firebase !== 'undefined') {
-  const taskRef = firebase.database().ref('/task');
-  taskRef.on('value', async (snapshot) => {
-    const data = snapshot.val();
-    if (data) {
-      const tasks = Object.entries(data)
-        .filter(([id, task]) => task.category)
-        .map(([id, task]) => ({ id, ...task }));
-      allTasks = tasks;
-      updateHTML();
-      
-      // Update dashboard as well
-      if (typeof updateDashboardCounts === 'function') {
-        updateDashboardCounts();
-      }
+    const functionNames = [
+        'datetimer', 'loadHeader', 'loadSidebar', 'loadAddPage', 
+        'setActiveNavigation', 'clearAllContainers'
+    ];
+    functionNames.forEach(name => {
+        if (typeof window[name] === 'function') {
+            window[name]();
+        }
+    });
+    if (typeof loadContacts === 'function') {
+        await loadContacts();
+    }if (typeof renderTasks === 'function') {
+        await renderTasks();
+    }if (typeof updateHTML === 'function') {
+        updateHTML();
     }
-  });
+setupFirebaseListener();
 }
+
+
+/**
+ * Executes function if it exists
+ * @param {Function} fn - Function to execute
+ */
+async function executeIfExists(fn) {
+    if (typeof fn === 'function') {
+        await fn();
+    }
+}
+
+
+/**
+ * Sets up Firebase real-time listener for tasks
+ */
+function setupFirebaseListener() {
+    if (typeof firebase === 'undefined') return;
+    const taskRef = firebase.database().ref('/task');
+    taskRef.on('value', async (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+        const tasks = Object.entries(data)
+            .filter(([id, task]) => task.category)
+            .map(([id, task]) => ({ id, ...task }));
+        allTasks = tasks;
+        if (typeof updateHTML === 'function') {
+            updateHTML();
+        }if (typeof updateDashboardCounts === 'function') {
+            updateDashboardCounts();
+        }
+    });
 }
 
 
