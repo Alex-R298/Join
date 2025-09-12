@@ -307,9 +307,7 @@ async function editTask(taskId) {
 
 /** Deletes a task from the database and refreshes the display. */
 async function deleteTask(taskId) {
-  const response = await fetch(`${BASE_URL}/task/${taskId}.json`, {
-    method: "DELETE",
-  });
+  const response = await deleteTaskService(taskId);
   if (response.ok) {
     allTasks = allTasks.filter((t) => t.id !== taskId);
     updateHTML();

@@ -22,10 +22,6 @@ async function init() {
     loadSidebar();
   }
   
-  if (typeof fetchBase === 'function') {
-    fetchBase();
-  }
-  
   if (typeof loadAddPage === 'function') {
     loadAddPage();
   }

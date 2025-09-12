@@ -473,9 +473,6 @@ a {
     color: #2A3647;
     font-size: 16px;
 }
-.no-markers .subtask-text::marker {
-  content: none;
-}
 
 .edit-icon:hover path {
     fill: var(--secondary);
