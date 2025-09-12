@@ -1,3 +1,8 @@
+/**
+ * Initializes the application by loading various components and setting up Firebase listeners.
+ * Conditionally calls multiple initialization functions if they exist.
+ * @returns {Promise<void>}
+ */
 async function init() {
   if (typeof datetimer === 'function') {
     datetimer();
@@ -54,7 +59,7 @@ async function init() {
       allTasks = tasks;
       updateHTML();
       
-      // Dashboard auch aktualisieren
+      // Update dashboard as well
       if (typeof updateDashboardCounts === 'function') {
         updateDashboardCounts();
       }
@@ -64,11 +69,19 @@ async function init() {
 }
 
 
+/**
+ * Toggles the visibility of the user popup menu.
+ */
 function user_button_show_links() {
   document.getElementById("myPopup").classList.toggle("show");
 }
 
 
+/**
+ * Extracts initials from a full name.
+ * @param {string} name - The full name to extract initials from.
+ * @returns {string} Uppercase initials extracted from the name.
+ */
 function getInitials(name) {
     return name.split(' ')
         .map(part => part.charAt(0))
@@ -76,9 +89,10 @@ function getInitials(name) {
         .toUpperCase();
 }
 
+
 /**
  * Returns a greeting based on current time.
- * @returns {string} "Good Morning/Afternoon/Evening"
+ * @returns {string} Time-appropriate greeting: "Good Morning", "Good Afternoon", or "Good Evening".
  */
 function getTimeGreeting() {
   const hrs = new Date().getHours();
@@ -87,8 +101,9 @@ function getTimeGreeting() {
   return "Good Evening";
 }
 
+
 /**
- * Updates the greeting label (#lblGreetings) with name if available.
+ * Updates the greeting label element with personalized greeting if user name is available.
  */
 function updateGreetingLabel() {
   const date = document.getElementById("lblGreetings");
@@ -100,18 +115,22 @@ function updateGreetingLabel() {
     : `<h2>${greet}!</h2>`;
 }
 
+
 /**
- * Shows the overlay once per session (only time greeting, no name).
+ * Shows the greeting overlay once per session on mobile devices.
+ * Only displays time-based greeting without user name.
  */
 function showGreetingOverlay() {
   const greet = getTimeGreeting();
   if (sessionStorage.getItem("overlayShown") || !window.matchMedia("(max-width: 970px)").matches) return;
-  showOverlay(greet, null); // Name null → nur Zeitgruß
+  showOverlay(greet, null); // Name null → only time greeting
   sessionStorage.setItem("overlayShown", "true");
 }
 
+
 /**
- * Main function to call on page load.
+ * Main function to initialize date/time related functionality on page load.
+ * Updates greeting label and shows overlay if conditions are met.
  */
 function datetimer() {
   updateGreetingLabel();
@@ -119,6 +138,11 @@ function datetimer() {
 }
 
 
+/**
+ * Displays a temporary greeting overlay with optional user name.
+ * @param {string} greet - The greeting message to display.
+ * @param {string|null} userName - Optional user name to include in greeting.
+ */
 function showOverlay(greet, userName) {
   const overlay = document.getElementById("welcome-overlay");
   const overlayContent = overlay.querySelector(".overlay-content");
@@ -135,6 +159,9 @@ function showOverlay(greet, userName) {
 }
 
 
+/**
+ * Loads and renders the header component into the designated container.
+ */
 function loadHeader() {
   const headerContainer = document.getElementById('header-container');
   if (headerContainer) {
@@ -143,6 +170,9 @@ function loadHeader() {
 }
 
 
+/**
+ * Loads and renders the sidebar component into the designated container.
+ */
 function loadSidebar() {
   const sidebarContainer = document.getElementById('sidebar-container');
   if (sidebarContainer) {
@@ -151,6 +181,12 @@ function loadSidebar() {
 }
 
 
+/**
+ * Loads the add task page/overlay with user data and task information.
+ * Fetches users from the database and renders the add task template.
+ * @param {Object} [task={}] - Optional task object for editing existing tasks.
+ * @returns {Promise<Object[]>} Array of user objects, or empty array if error occurs.
+ */
 async function loadAddPage(task = {}) {
   try {
     const res = await fetch(BASE_URL + "/user.json");
@@ -176,7 +212,10 @@ async function loadAddPage(task = {}) {
   }
 
 
-
+/**
+ * Immediately invoked function expression (IIFE) that handles session-based page protection.
+ * Redirects users to login page if accessing protected pages without valid session.
+ */
 (function() {
     const currentPage = window.location.pathname;
     const protectedPages = [
@@ -199,13 +238,21 @@ async function loadAddPage(task = {}) {
     }
 })();
 
+
+/**
+ * Handles guest user login by setting session storage and redirecting to main page.
+ */
 function guestLogin() {
     sessionStorage.setItem('guestUser', 'true');
     window.location.href = 'index.html';
 }
 
 
-
+/**
+ * Logs out the current user by clearing session data and redirecting to login page.
+ * Prevents browser back navigation to protected pages after logout.
+ * @returns {boolean} Always returns false.
+ */
 function logOut() {
     document.documentElement.style.display = 'none';
     sessionStorage.clear();
@@ -218,21 +265,25 @@ function logOut() {
 }
 
 
+/**
+ * Sets the active navigation item based on the current page URL.
+ * Removes existing active classes and adds active class to current page link.
+ */
 function setActiveNavigation() {
   const navLinks = document.querySelectorAll(".sidebar a");
 
   const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
-  // remove active
+  // remove active classes
   navLinks.forEach((link) => {
     link.classList.remove("active");
   });
 
-  // find link and add active
+  // find matching link and add active class
   navLinks.forEach((link) => {
     const href = link.getAttribute("href");
 
-    // is link current page?
+    // check if link matches current page
     if (
       href === currentPage ||
       (currentPage === "" && href === "index.html") ||
@@ -243,6 +294,11 @@ function setActiveNavigation() {
   });
 }
 
+
+/**
+ * Closes the add task overlay with animation and resets form state.
+ * Clears inputs and validation states before hiding the overlay.
+ */
 function closeAddTaskOverlay() {
   const overlay = document.getElementById("add-task-overlay");
   const container = document.getElementById("add-task-container");
@@ -255,4 +311,4 @@ function closeAddTaskOverlay() {
     document.body.style.overflow = "auto";
     container.classList.remove("closing");
   }, 500);
-}
+} 
