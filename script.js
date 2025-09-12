@@ -177,28 +177,32 @@ async function loadAddPage(task = {}) {
 
 
 
-// (function() {
-//     const currentPage = window.location.pathname;
-//     const protectedPages = [
-//         'board.html', 
-//         'contacts.html', 
-//         'index.html',
-//         'legal_notice.html',
-//         'help.html',
-//         'privacy_policy.html',
-//         'add_task.html'
-//     ];
+(function() {
+    const currentPage = window.location.pathname;
+    const protectedPages = [
+        'board.html', 
+        'contacts.html', 
+        'index.html',
+        'legal_notice.html',
+        'help.html',
+        'privacy_policy.html',
+        'add_task.html'
+    ];
+    const isProtectedPage = protectedPages.some(page => 
+        currentPage.endsWith(page) || currentPage.includes(page)
+    );
+    const hasValidSession = sessionStorage.getItem('currentUser') || sessionStorage.getItem('guestUser');
     
-//     const isProtectedPage = protectedPages.some(page => 
-//         currentPage.endsWith(page) || currentPage.includes(page)
-//     );
-    
+    if (isProtectedPage && !hasValidSession) {
+        document.documentElement.style.display = 'none';
+        window.location.replace("log_in.html");
+    }
+})();
 
-//     if (isProtectedPage && !sessionStorage.getItem('currentUser')) {
-//         document.documentElement.style.display = 'none';
-//         window.location.replace("log_in.html");
-//     }
-// })();
+function guestLogin() {
+    sessionStorage.setItem('guestUser', 'true');
+    window.location.href = 'index.html';
+}
 
 
 
@@ -213,27 +217,6 @@ function logOut() {
     return false;
 }
 
-
-// document.addEventListener('DOMContentLoaded', function() {
-//     const currentPage = window.location.pathname;
-//     const protectedPages = [
-//         'board.html', 
-//         'contacts.html', 
-//         'index.html',
-//         'legal_notice.html',
-//         'help.html',
-//         'privacy_policy.html',
-//         'add_task.html'
-//     ];
-    
-//     const isProtectedPage = protectedPages.some(page => 
-//         currentPage.endsWith(page) || currentPage.includes(page)
-//     );
-    
-//     if (isProtectedPage && !sessionStorage.getItem('currentUser')) {
-//         window.location.replace("log_in.html");
-//     }
-// });
 
 function setActiveNavigation() {
   const navLinks = document.querySelectorAll(".sidebar a");
