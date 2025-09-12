@@ -1,4 +1,6 @@
-/** Adds a new subtask to the list if the input is not empty */
+/**
+ * Adds a new subtask to the list if the input is not empty.
+ */
 function addSubtask() {
   let input = document.getElementById("subtask_input");
   let list = document.getElementById("myList");
@@ -12,7 +14,11 @@ function addSubtask() {
   addSubtaskHoverEffectsWithDelegation();
 }
 
-// Get references to all relevant buttons and input
+
+/**
+ * Gets references to all relevant buttons and input elements for subtask management.
+ * @returns {{acceptButton: HTMLElement, addButton: HTMLElement, clearButton: HTMLElement, input: HTMLInputElement, pipe: HTMLElement}} Object containing button and input element references.
+ */
 function getButtonElements() {
   return {
     acceptButton: document.getElementById("acceptButton"),
@@ -23,7 +29,15 @@ function getButtonElements() {
   };
 }
 
-// Show buttons when input has content
+
+/**
+ * Shows action buttons when input has content.
+ * @param {Object} elements - Object containing button element references.
+ * @param {HTMLElement} elements.acceptButton - Accept button element.
+ * @param {HTMLElement} elements.addButton - Add button element.
+ * @param {HTMLElement} elements.clearButton - Clear button element.
+ * @param {HTMLElement} elements.pipe - Pipe separator element.
+ */
 function showButtons({acceptButton, addButton, clearButton, pipe}) {
   addButton.style.display = "none";
   acceptButton.style.display = "inline-block";
@@ -31,7 +45,15 @@ function showButtons({acceptButton, addButton, clearButton, pipe}) {
   pipe.style.display = "inline-block";
 }
 
-// Hide buttons when input is empty
+
+/**
+ * Hides action buttons when input is empty.
+ * @param {Object} elements - Object containing button element references.
+ * @param {HTMLElement} elements.acceptButton - Accept button element.
+ * @param {HTMLElement} elements.addButton - Add button element.
+ * @param {HTMLElement} elements.clearButton - Clear button element.
+ * @param {HTMLElement} elements.pipe - Pipe separator element.
+ */
 function hideButtons({acceptButton, addButton, clearButton, pipe}) {
   addButton.style.display = "inline-block";
   acceptButton.style.display = "none";
@@ -39,7 +61,10 @@ function hideButtons({acceptButton, addButton, clearButton, pipe}) {
   pipe.style.display = "none";
 }
 
-// Main function to toggle button visibility based on input content
+
+/**
+ * Main function to toggle button visibility based on input content.
+ */
 function changeButtons() {
   const elements = getButtonElements();
   if (elements.input.value.trim() !== "") {
@@ -50,14 +75,21 @@ function changeButtons() {
 }
 
 
-/** Clears the input field and updates the buttons */
+/**
+ * Clears the input field and updates the button states.
+ */
 function clearInput() {
   let input = document.getElementById("subtask_input");
   input.value = "";
   changeButtons();
 }
 
-// Get the list item and text span related to the clicked edit button
+
+/**
+ * Gets the list item and text span elements related to the clicked edit button.
+ * @param {HTMLElement} button - The clicked edit button element.
+ * @returns {{li: HTMLLIElement|undefined, span: HTMLSpanElement|undefined}} Object containing the list item and span elements.
+ */
 function getSubtaskElements(button) {
   if (!button) return {};
   const li = button.closest("li");
@@ -67,7 +99,12 @@ function getSubtaskElements(button) {
   return { li, span };
 }
 
-// Create an input element for editing a subtask
+
+/**
+ * Creates an input element for editing a subtask.
+ * @param {HTMLSpanElement} span - The span element containing the current subtask text.
+ * @returns {HTMLInputElement} Input element configured for editing.
+ */
 function createEditInput(span) {
   const input = document.createElement("input");
   input.type = "text";
@@ -76,7 +113,12 @@ function createEditInput(span) {
   return input;
 }
 
-// Add event listeners to save the edit on Enter key or blur
+
+/**
+ * Adds event listeners to save the edit on Enter key press or blur event.
+ * @param {HTMLInputElement} input - The input element being edited.
+ * @param {HTMLLIElement} li - The list item containing the input.
+ */
 function attachEditEvents(input, li) {
   input.addEventListener("keydown", e => {
     if (e.key === "Enter") saveEdit(input, li);
@@ -84,7 +126,11 @@ function attachEditEvents(input, li) {
   input.addEventListener("blur", () => saveEdit(input, li));
 }
 
-// Main function to enable editing of a subtask
+
+/**
+ * Main function to enable editing mode for a subtask.
+ * @param {HTMLElement} button - The edit button that was clicked.
+ */
 function editSubtask(button) {
   const { li, span } = getSubtaskElements(button);
   if (!li || !span) return;
@@ -96,19 +142,33 @@ function editSubtask(button) {
 }
 
 
-// Check if the click was on the delete button
+/**
+ * Checks if the click event was on the delete button.
+ * @param {Event} event - The click event object.
+ * @returns {boolean} True if the delete button was clicked, false otherwise.
+ */
 function clickedDelete(event) {
   return event.target.closest(".icon-btn.delete-btn") ||
          event.target.closest(".icon-btn.delete-btn img");
 }
 
-// Check if the click was on the edit button
+
+/**
+ * Checks if the click event was on the edit button.
+ * @param {Event} event - The click event object.
+ * @returns {boolean} True if the edit button was clicked, false otherwise.
+ */
 function clickedEdit(event) {
   return event.target.closest(".icon-btn.edit-btn") ||
          event.target.closest(".icon-btn.edit-btn img");
 }
 
-// Handle subtask click: toggle edit mode appropriately
+
+/**
+ * Handles subtask click events and toggles edit mode appropriately.
+ * @param {Event} event - The click event object.
+ * @param {HTMLLIElement} li - The list item that was clicked.
+ */
 function handleSubtaskClick(event, li) {
   if (clickedDelete(event)) return; // Ignore clicks on delete button
 
@@ -125,7 +185,10 @@ function handleSubtaskClick(event, li) {
 }
 
 
-// Show edit buttons and change edit button appearance
+/**
+ * Shows edit buttons and changes edit button appearance for edit mode.
+ * @param {HTMLLIElement} li - The list item to show edit buttons for.
+ */
 function showEditButtons(li) {
   const editBtn = li.querySelector(".icon-btn.edit-btn");
   const deleteBtn = li.querySelector(".icon-btn.delete-btn");
@@ -144,7 +207,12 @@ function showEditButtons(li) {
   parent.insertBefore(separator, editBtn);
 }
 
-// Replace span with input for editing
+
+/**
+ * Replaces the span element with an input element for editing.
+ * @param {HTMLLIElement} li - The list item containing the span to replace.
+ * @returns {HTMLInputElement|null} The created input element, or null if span not found.
+ */
 function replaceSpanWithInput(li) {
   const span = li.querySelector(".subtask-text");
   if (!span) return null;
@@ -158,7 +226,12 @@ function replaceSpanWithInput(li) {
   return input;
 }
 
-// Attach event listeners to handle Enter key and blur
+
+/**
+ * Attaches event listeners to handle Enter key press and blur events for input.
+ * @param {HTMLInputElement} input - The input element to attach events to.
+ * @param {HTMLLIElement} li - The list item containing the input.
+ */
 function attachInputEvents(input, li) {
   input.addEventListener("keydown", e => {
     if (e.key === "Enter") {
@@ -178,7 +251,11 @@ function attachInputEvents(input, li) {
   });
 }
 
-// Main function to start edit mode for a subtask
+
+/**
+ * Main function to start edit mode for a subtask.
+ * @param {HTMLLIElement} li - The list item to put into edit mode.
+ */
 function startEditMode(li) {
   li.classList.add("edit-mode");
   showEditButtons(li);
@@ -187,7 +264,12 @@ function startEditMode(li) {
 }
 
 
-// Replace input with a span containing the new subtask text
+/**
+ * Replaces the input element with a span containing the new subtask text.
+ * @param {HTMLInputElement} input - The input element to replace.
+ * @param {HTMLLIElement} li - The list item containing the input.
+ * @returns {HTMLSpanElement|null} The created span element, or null if input is empty.
+ */
 function replaceInputWithSpan(input, li) {
   const newValue = input.value.trim();
   if (newValue === "") return null;
@@ -199,7 +281,11 @@ function replaceInputWithSpan(input, li) {
   return span;
 }
 
-// Reset edit buttons and icons to default state
+
+/**
+ * Resets edit buttons and icons to their default state.
+ * @param {HTMLLIElement} li - The list item to reset button states for.
+ */
 function resetEditButtons(li) {
   const editBtn = li.querySelector(".icon-btn.edit-btn");
   const deleteBtn = li.querySelector(".icon-btn.delete-btn");
@@ -218,7 +304,11 @@ function resetEditButtons(li) {
   parent.insertBefore(separator, deleteBtn);
 }
 
-// Main function to stop edit mode and save subtask
+
+/**
+ * Main function to stop edit mode and save the subtask.
+ * @param {HTMLLIElement} li - The list item to exit from edit mode.
+ */
 function stopEditMode(li) {
   const input = li.querySelector(".edit-input");
   if (!input) return;
@@ -232,9 +322,13 @@ function stopEditMode(li) {
   }
 }
 
-/** Saves the edited subtask or removes it if the input is empty */
 
-// Replace input with a span containing the new subtask text
+/**
+ * Replaces the input element with a span containing the new subtask text (save version).
+ * @param {HTMLInputElement} input - The input element to replace.
+ * @param {HTMLLIElement} li - The list item containing the input.
+ * @returns {HTMLSpanElement|null} The created span element, or null if input is empty.
+ */
 function replaceInputWithSpanSave(input, li) {
   const newValue = input.value.trim();
   if (newValue === "") return null;
@@ -246,7 +340,11 @@ function replaceInputWithSpanSave(input, li) {
   return span;
 }
 
-// Reset the edit button to its default state
+
+/**
+ * Resets the edit button to its default state.
+ * @param {HTMLLIElement} li - The list item containing the edit button to reset.
+ */
 function resetEditButton(li) {
   const editBtn = li.querySelector(".icon-btn.edit-btn");
   const editImg = editBtn.querySelector("img");
@@ -255,7 +353,12 @@ function resetEditButton(li) {
   editImg.classList.remove("check_icon_subtask");
 }
 
-// Main function to save subtask edits
+
+/**
+ * Saves the edited subtask value and exits edit mode, or removes the item if empty.
+ * @param {HTMLInputElement} input - The input element containing the edited value.
+ * @param {HTMLLIElement} li - The list item element being edited.
+ */
 function saveEdit(input, li) {
   const span = replaceInputWithSpanSave(input, li);
   if (span) {
@@ -266,19 +369,32 @@ function saveEdit(input, li) {
   }
 }
 
-/** Deletes a subtask from the list */
+
+/**
+ * Deletes a subtask from the list.
+ * @param {HTMLElement} button - The delete button that was clicked.
+ */
 function deleteSubtask(button) {
   let li = button.closest("li");
   if (li) li.remove();
 }
 
-// Show edit buttons on mouseover if not in edit mode
+
+/**
+ * Shows edit buttons on mouseover if the subtask is not in edit mode.
+ * @param {HTMLElement} subtaskElement - The subtask element to show buttons for.
+ */
 function showEditButtonsOnHover(subtaskElement) {
   const editButtons = subtaskElement.querySelector(".subtask-edit-btns");
   if (editButtons) editButtons.classList.remove("d-none");
 }
 
-// Hide edit buttons on mouseout if not in edit mode
+
+/**
+ * Hides edit buttons on mouseout if the subtask is not in edit mode.
+ * @param {HTMLElement} subtaskElement - The subtask element to hide buttons for.
+ * @param {HTMLElement} relatedTarget - The element the mouse moved to.
+ */
 function hideEditButtonsOnMouseOut(subtaskElement, relatedTarget) {
   if (!subtaskElement.contains(relatedTarget)) {
     const editButtons = subtaskElement.querySelector(".subtask-edit-btns");
@@ -286,7 +402,10 @@ function hideEditButtonsOnMouseOut(subtaskElement, relatedTarget) {
   }
 }
 
-// Attach hover effects to subtasks using event delegation
+
+/**
+ * Attaches hover effects to subtasks using event delegation for better performance.
+ */
 function addSubtaskHoverEffectsWithDelegation() {
   document.body.addEventListener("mouseover", e => {
     const subtask = e.target.closest(".subtask-listelement");
@@ -302,5 +421,3 @@ function addSubtaskHoverEffectsWithDelegation() {
     }
   });
 }
-
-

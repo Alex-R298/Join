@@ -1,6 +1,7 @@
 /**
- * Öffnet das Overlay zum Hinzufügen eines Tasks.
- * @param {string} [status="toDo"] - Vorgabe-Status.
+ * Opens the overlay for adding a new task.
+ * @param {string} [status="toDo"] - Default status for the new task.
+ * @returns {Promise<void>}
  */
 async function showAddTaskOverlay(status = 'toDo') {
     if (window.matchMedia("(max-width: 800px)").matches) {
@@ -22,8 +23,8 @@ async function showAddTaskOverlay(status = 'toDo') {
 
 
 /**
- * Öffnet das Overlay für Details eines Tasks.
- * @param {string} taskId - ID des Tasks.
+ * Opens the overlay displaying detailed information about a specific task.
+ * @param {string} taskId - The unique identifier of the task.
  */
 function openTaskOverlay(taskId) {
     const overlay = document.getElementById("detailed-task-overlay");
@@ -43,7 +44,7 @@ function openTaskOverlay(taskId) {
 
 
 /**
- * Schließt das Task-Detail-Overlay.
+ * Closes the task detail overlay.
  */
 function closeTaskOverlay() {
     const overlay = document.getElementById("detailed-task-overlay");
@@ -60,9 +61,9 @@ function closeTaskOverlay() {
 
 
 /**
- * Liefert Text & Icon zu einer Priorität.
- * @param {string} priority - "urgent", "medium", "low".
- * @returns {Object} Daten zur Priorität.
+ * Returns text and icon data for a given priority level.
+ * @param {string} priority - Priority level: "urgent", "medium", or "low".
+ * @returns {{text: string, icon: string}} Object containing priority text and icon path.
  */
 function getPriorityData(priority) {
   if (!priority) return { text: "", icon: "" };
@@ -79,9 +80,9 @@ function getPriorityData(priority) {
 
 
 /**
- * Formatiert ein Datum (yyyy-mm-dd) zu dd/mm/yyyy.
- * @param {string} dateStr - ISO-Datum.
- * @returns {string} Formatiertes Datum.
+ * Formats a date string from ISO format (yyyy-mm-dd) to dd/mm/yyyy format.
+ * @param {string} dateStr - ISO date string.
+ * @returns {string} Formatted date string or empty string if input is invalid.
  */
 function formatDate(dateStr) {
   if (!dateStr) return "";
@@ -96,9 +97,9 @@ function formatDate(dateStr) {
 
 
 /**
- * Rendert das Avatar eines Users in einen Task-Editor.
- * @param {string} email - User-E-Mail.
- * @param {string} taskId - Task-ID.
+ * Renders the avatar of a user in a task editor.
+ * @param {string} email - User's email address.
+ * @param {string} taskId - Task identifier.
  */
 function renderAssignedUserData(email, taskId) {
     if (typeof email !== 'string' || !email) return "";
@@ -112,9 +113,9 @@ function renderAssignedUserData(email, taskId) {
 
 
 /**
- * Erstellt Avatar-Daten (Initialen, Farbe, Name) für einen User.
- * @param {string} email - User-E-Mail.
- * @returns {Object} Avatar-Daten.
+ * Creates avatar data (initials, color, name) for a user based on their email.
+ * @param {string} email - User's email address.
+ * @returns {{initials: string, color: string, name: string}} Avatar data object.
  */
 function renderAssignedUser(email) {
     if (typeof email !== 'string' || !email) {
@@ -132,9 +133,9 @@ function renderAssignedUser(email) {
 
 
 /**
- * Normalisiert Subtask-Elemente eines Tasks.
- * @param {Array} subtaskElements - Rohdaten der Subtasks.
- * @returns {Array} Normalisierte Subtasks.
+ * Normalizes subtask elements of a task to ensure consistent structure.
+ * @param {Array} subtaskElements - Raw subtask data.
+ * @returns {Array} Normalized subtasks with text and completed properties.
  */
 function normalizeSubtasks(subtaskElements) {
   if (!Array.isArray(subtaskElements)) return subtaskElements;
@@ -149,9 +150,10 @@ function normalizeSubtasks(subtaskElements) {
 
 
 /**
- * Kippt den Status eines Subtasks und speichert die Änderung.
- * @param {string} taskId - Task-ID.
- * @param {number} subtaskIndex - Index des Subtasks.
+ * Toggles the completion status of a subtask and saves the change.
+ * @param {string} taskId - Task identifier.
+ * @param {number} subtaskIndex - Index of the subtask to toggle.
+ * @returns {Promise<void>}
  */
 async function toggleSubtask(taskId, subtaskIndex) {
     const task = allTasks.find(t => t.id === taskId);

@@ -3,7 +3,7 @@ let contactsMap = {};
 
 
 /**
- * Initialisiert die Live-Suche für Boards und reagiert auf Eingaben.
+ * Initializes live search for boards and responds to input events.
  */
 function liveSearchBoards() {
     let input = document.getElementById('searchInputBoards');
@@ -21,8 +21,9 @@ function liveSearchBoards() {
 
 
 /**
- * Filtert alle Tasks nach einem Suchbegriff und aktualisiert das Board.
- * @param {string} query - Der Suchbegriff.
+ * Filters all tasks by a search term and updates the board.
+ * @param {string} query - The search term.
+ * @returns {Promise<void>}
  */
 async function filterTasks(query) {
   const filteredTasks = getFilteredTasks(query);
@@ -32,9 +33,9 @@ async function filterTasks(query) {
 
 
 /**
- * Gibt die gefilterten Tasks anhand des Titels zurück.
- * @param {string} query - Der Suchbegriff.
- * @returns {Object[]} Gefilterte Tasks.
+ * Returns filtered tasks based on title matching the search term.
+ * @param {string} query - The search term.
+ * @returns {Object[]} Filtered tasks array.
  */
 function getFilteredTasks(query) {
   const q = query.toLowerCase();
@@ -43,8 +44,8 @@ function getFilteredTasks(query) {
 
 
 /**
- * Aktualisiert den Fortschritt für alle übergebenen Tasks.
- * @param {Object[]} tasks - Liste der Tasks.
+ * Updates the progress for all provided tasks.
+ * @param {Object[]} tasks - List of tasks to update progress for.
  */
 function updateProgressForTasks(tasks) {
   tasks.forEach(task => updateTaskProgress(task));
@@ -52,8 +53,8 @@ function updateProgressForTasks(tasks) {
 
 
 /**
- * Aktualisiert den Fortschritt (Balken & Text) für einen einzelnen Task.
- * @param {Object} task - Ein Task-Objekt.
+ * Updates the progress (bar and text) for a single task.
+ * @param {Object} task - A task object containing subtask information.
  */
 function updateTaskProgress(task) {
   const progressData = calculateSubtaskProgress(task);
@@ -69,7 +70,8 @@ function updateTaskProgress(task) {
 
 
 /**
- * Setzt den Status aller Tasks anhand der gespeicherten Daten zurück.
+ * Resets the status of all tasks based on stored data.
+ * @returns {Promise<void>}
  */
 async function resetTaskStatus() {
   try {
@@ -86,9 +88,8 @@ async function resetTaskStatus() {
 }
 
 
-
 /**
- * Leert alle Container-Spalten (toDo, inProgress, awaitFeedback, done).
+ * Clears all container columns (toDo, inProgress, awaitFeedback, done).
  */
 function clearAllContainers() {
     const containers = ["toDo", "inProgress", "awaitFeedback", "done"];
@@ -100,8 +101,8 @@ function clearAllContainers() {
 
 
 /**
- * Rendert alle Tasks in die Spalten.
- * @param {Object[]} [tasks=allTasks] - Liste der Tasks.
+ * Renders all tasks into their respective columns.
+ * @param {Object[]} [tasks=allTasks] - List of tasks to render. Defaults to all tasks.
  */
 function updateHTML(tasks = allTasks) {
   const columns = ["toDo", "inProgress", "awaitFeedback", "done"];
@@ -115,10 +116,10 @@ function updateHTML(tasks = allTasks) {
 
 
 /**
- * Gibt alle Tasks für eine bestimmte Spalte zurück.
- * @param {Object[]} tasks - Alle Tasks.
- * @param {string} containerId - ID des Containers.
- * @returns {Object[]} Gefilterte Tasks.
+ * Returns all tasks for a specific column/container.
+ * @param {Object[]} tasks - All available tasks.
+ * @param {string} containerId - ID of the container/column.
+ * @returns {Object[]} Filtered tasks for the specified container.
  */
 function getTasksForContainer(tasks, containerId) {
   return tasks.filter(t => t.status === containerId);
@@ -126,10 +127,10 @@ function getTasksForContainer(tasks, containerId) {
 
 
 /**
- * Rendert einen Container mit Tasks oder leerem Platzhalter.
- * @param {HTMLElement} container - Der Spalten-Container.
- * @param {Object[]} tasksForContainer - Tasks für diesen Container.
- * @param {string} containerId - Container-ID.
+ * Renders a container with tasks or an empty placeholder.
+ * @param {HTMLElement} container - The column container element.
+ * @param {Object[]} tasksForContainer - Tasks for this specific container.
+ * @param {string} containerId - Container identifier.
  */
 function renderContainer(container, tasksForContainer, containerId) {
   const placeholder = container.querySelector('.drag-placeholder');
@@ -153,9 +154,9 @@ function renderContainer(container, tasksForContainer, containerId) {
 
 
 /**
- * Erstellt ein DOM-Element für einen leeren Container.
- * @param {string} containerId - ID der Spalte.
- * @returns {HTMLElement} DOM-Element.
+ * Creates a DOM element for an empty container.
+ * @param {string} containerId - ID of the column/container.
+ * @returns {HTMLElement} DOM element representing the empty state.
  */
 function createEmptyNode(containerId) {
   const wrap = document.createElement('div');
@@ -166,21 +167,21 @@ function createEmptyNode(containerId) {
 
 
 /**
- * Wandelt HTML-String in ein DOM-Fragment um.
- * @param {string} html - HTML-String.
- * @returns {DocumentFragment} DOM-Fragment.
+ * Converts an HTML string into a DOM fragment.
+ * @param {string} html - HTML string to convert.
+ * @returns {DocumentFragment} DOM fragment created from the HTML string.
  */
 function createFragmentFromHTML(html) {
-  // sicherer Weg, HTML-String in DOM-Knoten zu verwandeln
+  // Safe way to convert HTML string to DOM nodes
   const range = document.createRange();
   return range.createContextualFragment(html);
 }
 
 
 /**
- * Liefert den passenden Text für leere Container.
- * @param {string} containerId - ID der Spalte.
- * @returns {string} Text.
+ * Returns the appropriate text for empty containers based on their type.
+ * @param {string} containerId - ID of the column/container.
+ * @returns {string} Display text for the empty container.
  */
 function getEmptyText(containerId) {
     const texts = {
@@ -194,9 +195,9 @@ function getEmptyText(containerId) {
 
 
 /**
- * Rendert Tasks direkt in einen Container (mit Platzhalter).
- * @param {HTMLElement} container - Container-Element.
- * @param {Object[]} tasks - Liste der Tasks.
+ * Renders tasks directly into a container (with placeholder support).
+ * @param {HTMLElement} container - Container element to render tasks into.
+ * @param {Object[]} tasks - List of tasks to render.
  */
 function renderTasksInContainer(container, tasks) {
     const placeholder = container.querySelector('.drag-placeholder');
@@ -216,9 +217,9 @@ function renderTasksInContainer(container, tasks) {
 
 
 /**
- * Wandelt einen HTML-String in ein DOM-Element um.
- * @param {string} html - HTML-String.
- * @returns {Element} Erstes Kind-Element.
+ * Converts an HTML string into a DOM element.
+ * @param {string} html - HTML string to parse.
+ * @returns {Element} First child element from the parsed HTML.
  */
 function parseHTML(html) {
     const template = document.createElement('template');
@@ -228,7 +229,7 @@ function parseHTML(html) {
 
 
 /**
- * Aktualisiert alle Container auf leere Zustände oder entfernt Platzhalter.
+ * Updates all containers to show empty states or removes placeholders as needed.
  */
 function updateEmptyContainers() {
     ["toDo", "inProgress", "awaitFeedback", "done"].forEach(containerId => {
@@ -251,8 +252,8 @@ function updateEmptyContainers() {
 
 
 /**
- * Aktualisiert einen einzelnen Container basierend auf Status.
- * @param {string} status - Task-Status (z.B. "toDo").
+ * Updates a single container based on task status.
+ * @param {string} status - Task status (e.g., "toDo", "inProgress").
  */
 function updateContainer(status) {
   const container = document.getElementById(status);
@@ -264,8 +265,8 @@ function updateContainer(status) {
 
 
 /**
- * Aktualisiert einen einzelnen Container basierend auf Status.
- * @param {string} status - Task-Status (z.B. "toDo").
+ * Loads all users from the database.
+ * @returns {Promise<Object[]>} Array of user objects with names.
  */
 async function loadUsers() {
     const res = await fetch(BASE_URL + "/user.json");
@@ -275,8 +276,8 @@ async function loadUsers() {
 
 
 /**
- * Lädt alle Tasks aus der Datenbank.
- * @returns {Promise<Object[]>} Normalisierte Tasks.
+ * Loads all tasks from the database.
+ * @returns {Promise<Object[]>} Array of normalized tasks.
  */
 async function loadTasks() {
   try {
@@ -290,9 +291,9 @@ async function loadTasks() {
 
 
 /**
- * Normalisiert eine Menge Task-Daten.
- * @param {Object} data - Raw-Daten.
- * @returns {Object[]} Normalisierte Tasks.
+ * Normalizes a collection of task data from raw database format.
+ * @param {Object} data - Raw task data from database.
+ * @returns {Object[]} Array of normalized task objects.
  */
 function normalizeTasks(data) {
   return Object.entries(data)
@@ -302,10 +303,10 @@ function normalizeTasks(data) {
 
 
 /**
- * Normalisiert einen einzelnen Task.
- * @param {string} id - Task-ID.
- * @param {Object} task - Task-Daten.
- * @returns {Object} Normalisierter Task.
+ * Normalizes a single task object to ensure consistent structure.
+ * @param {string} id - Task identifier.
+ * @param {Object} task - Raw task data.
+ * @returns {Object} Normalized task object with consistent properties.
  */
 function normalizeTask(id, task) {
   const status = task.status || "toDo";
@@ -315,10 +316,10 @@ function normalizeTask(id, task) {
 
 
 /**
- * Bereitet Kategoriedaten (Text & CSS-Klassen) auf.
- * @param {Object} task - Task-Objekt.
- * @param {string} status - Status.
- * @returns {Object} Kategoriedaten.
+ * Prepares category data including display text and CSS classes.
+ * @param {Object} task - Task object containing category information.
+ * @param {string} status - Task status for additional styling.
+ * @returns {{text: string, className: string, status: string, statusClass: string}} Category data with styling information.
  */
 function getCategoryData(task, status) {
   const category = task.category || "no-category";
@@ -336,7 +337,8 @@ function getCategoryData(task, status) {
 
 
 /**
- * Rendert alle Tasks neu und aktualisiert die Zähler.
+ * Re-renders all tasks and updates counters.
+ * @returns {Promise<void>}
  */
 async function renderTasks() {
   try {
@@ -347,12 +349,14 @@ async function renderTasks() {
       updateDashboardCounts();
     }
   } catch (error) {
+    // Error handling could be added here
   }
 }
 
 
 /**
- * Lädt Kontakte und baut eine E-Mail-zu-User-Map.
+ * Loads contacts and builds an email-to-user mapping.
+ * @returns {Promise<void>}
  */
 async function loadContacts() {
   const res = await fetch(BASE_URL + "/user.json");
@@ -365,9 +369,9 @@ async function loadContacts() {
 
 
 /**
- * Formatiert einen Usernamen (Punkte/Unterstriche zu Leerzeichen, Capitalize).
- * @param {string} userName - Roh-Name.
- * @returns {string} Formatierter Name.
+ * Formats a username by replacing dots/underscores with spaces and capitalizing words.
+ * @param {string} userName - Raw username string.
+ * @returns {string} Formatted and capitalized username.
  */
 function getName(userName) {
   if (!userName) return "";
@@ -380,9 +384,9 @@ function getName(userName) {
 
 
 /**
- * Berechnet den Fortschritt von Subtasks eines Tasks.
- * @param {Object} task - Task-Objekt.
- * @returns {Object} Fortschrittsdaten (Prozent, Text, CSS-Klasse).
+ * Calculates the progress of subtasks for a given task.
+ * @param {Object} task - Task object containing subtask information.
+ * @returns {{progressPercent: number, progressText: string, progressClass: string}} Progress data including percentage, display text, and CSS class.
  */
 function calculateSubtaskProgress(task) {
   const subtasks = task.subtaskElements || task.subTasks;
@@ -396,6 +400,11 @@ function calculateSubtaskProgress(task) {
   return {progressPercent, progressText, progressClass: "task-progress"};
 }
 
+
+/**
+ * Handles screen size changes and redirects overlay to separate page on mobile.
+ * Automatically closes task overlay and redirects to add_task.html on mobile screens.
+ */
 document.addEventListener('DOMContentLoaded', function() {
     const mediaQuery = window.matchMedia("(max-width: 800px)");
     function handleScreenSizeChange(mq) {
