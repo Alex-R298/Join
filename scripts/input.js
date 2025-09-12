@@ -54,10 +54,10 @@ function validatePhone(phoneInput) {
         return true;
     }
     
-    const phoneRegex = /^\d{11}$/;
+    const phoneRegex = /^(\+)?\d[\d\s]{9,14}$/;
     if (!phoneRegex.test(phoneInput.value.replace(/\s/g, ''))) {
         phoneInput.style.borderColor = 'red';
-        showValidationError(phoneInput.id + '-error', 'Bitte eine gültige Telefonnummer mit 11 Ziffern eingeben');
+        showValidationError(phoneInput.id + '-error', 'Bitte eine gültige Telefonnummer eingeben');
         return false;
     } else {
         phoneInput.style.borderColor = '';
