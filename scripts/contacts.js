@@ -45,10 +45,8 @@ async function createdContact() {
     if (!validateContactInputs(inputs.name, inputs.email, inputs.phone)) {
         return; 
     }
-    
     const newContact = createContactObject(inputs);
     closeAddContactQuick();
-    
     try {
         await saveContactToFirebase(newContact);
     } catch (error) {
@@ -111,10 +109,8 @@ async function updateContact(contactId) {
     if (!validateContactInputs(inputs.name, inputs.email, inputs.phone)) {
         return; 
     }
-    
     const updatedContact = createUpdatedContactObject(inputs);
     closeAddContactQuick();
-    
     try {
         await sendUpdatedContactToFirebase(contactId, updatedContact);
         finalizeContactUpdate(contactId, updatedContact);
@@ -133,7 +129,6 @@ async function sendUpdatedContactToFirebase(contactId, updatedFields) {
     try {
         const currentContact = await getCurrentContactData(contactId);
         const updatedContact = { ...currentContact, ...updatedFields };
-        
         await updateContactData(contactId, updatedContact);
         updateSelectedContactData(contactId, updatedContact);
         await fetchContacts();
@@ -314,27 +309,6 @@ function backToContacts() {
     if (headline) {
         headline.classList.remove('active');
     }
-}
-
-
-/**
- * Generates avatar color based on name
- * @param {string} name - Contact name
- * @returns {string} CSS color variable
- */
-function getAvatarColor(name) {
-    const colors = [
-        'var(--orange)', 'var(--rosa)', 'var(--blue-lila)',
-        'var(--lila)', 'var(--light-blue)', 'var(--turqoise)',
-        'var(--lachs)', 'var(--softorange)', 'var(--pinke)',
-        'var(--darkyellow)', 'var(--blue)', 'var(--lightgreen)',
-        'var(--yellow)', 'var(--red)', 'var(--lightorange)'
-    ];
-    let hash = 0;
-    for (let i = 0; i < name.length; i++) {
-        hash = name.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    return colors[Math.abs(hash) % colors.length];
 }
 
 

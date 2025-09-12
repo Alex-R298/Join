@@ -1,6 +1,6 @@
 
 function getHeaderTemplate() {
-    const userName = sessionStorage.getItem('userName') || 'Guest User';
+    const userName = sessionStorage.getItem('userName') || 'Guest';
     const initials = getInitials(userName);
     const isHelpPage = window.location.pathname.endsWith("help.html");
     return `

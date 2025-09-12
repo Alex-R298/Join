@@ -243,6 +243,27 @@ function resetDropdownMenu(menu, btn) {
 
 
 /**
+ * Generates avatar color based on name
+ * @param {string} name - Contact name
+ * @returns {string} CSS color variable
+ */
+function getAvatarColor(name) {
+    const colors = [
+        'var(--orange)', 'var(--rosa)', 'var(--blue-lila)',
+        'var(--lila)', 'var(--light-blue)', 'var(--turqoise)',
+        'var(--lachs)', 'var(--softorange)', 'var(--pinke)',
+        'var(--darkyellow)', 'var(--blue)', 'var(--lightgreen)',
+        'var(--yellow)', 'var(--red)', 'var(--lightorange)'
+    ];
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+        hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return colors[Math.abs(hash) % colors.length];
+}
+
+
+/**
  * Event listener for closing dropdown on outside clicks
  */
 document.addEventListener('click', function(event) {
