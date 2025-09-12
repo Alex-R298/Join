@@ -6,46 +6,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style/style.css">
   <link rel="stylesheet" href="./style/summary.css">
-  <link rel="stylesheet" href="./style/header.css">
-  <link rel="stylesheet" href="./style/sidebar.css">
+  <link rel="stylesheet" href="./style/menu.css">
   <link rel="stylesheet" href="./style/add_task.css">
   <link rel="stylesheet" href="./style/task_detail.css">
   <link rel="stylesheet" href="./style/contacts.css">
   <link rel="shortcut icon" href="./assets/icons/capa_white.svg" type="image/x-icon">
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
   <script src="./scripts/config.js"></script>
   <script src="./script.js"></script>
-  <script src="./scripts/taskService.js"></script>
-  <script src="./scripts/template.js"></script>
+  <script src="./scripts/services/taskService.js"></script>
+  <script src="./scripts/services/contactService.js"></script>
+  <script src="./scripts/templates/template.js"></script>
   <script src="./scripts/board.js"></script>
-   <script src="./scripts/board_overlay.js"></script>
+  <script src="./scripts/board_overlay.js"></script>
   <script src="./scripts/addTask.js"></script>
   <script src="./scripts/resetHelper.js"></script>
   <script src="./scripts/addTaskSubTask.js"></script>
   <script src="./scripts/addTaskSubTaskEditMode.js"></script>
   <script src="./scripts/contacts.js"></script>
   <script src="./scripts/contacts-ui.js"></script>
-  <script src="./scripts/contactService.js"></script>
-  
+
   <title>Join</title>
 </head>
 
 <body onload="init(); addSubtaskHoverEffectsWithDelegation();">
 
- <div id="header-container"></div>
+  <div id="header-container"></div>
   <main class="main-content">
     <div id="sidebar-container"></div>
 
-     <div id="add_task_template">
+    <div id="add_task_template">
 
-      </div>                  
-   <!-- -->
-   <div id="taskPopup" class="task-added-popup d-none">
-       <p>Task erfolgreich erstellt!</p>
-       <img src="./assets/icons/board_white.svg">
-     </div>
+    </div>
+    <!-- -->
+    <div id="taskPopup" class="task-added-popup d-none">
+      <p>Task erfolgreich erstellt!</p>
+      <img src="./assets/icons/board_white.svg">
+    </div>
   </main>
   </div>
 </body>
+
 </html>

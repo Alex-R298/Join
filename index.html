@@ -6,18 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style/style.css">
   <link rel="stylesheet" href="./style/summary.css">
-  <link rel="stylesheet" href="./style/header.css">
-  <link rel="stylesheet" href="./style/sidebar.css">
+  <link rel="stylesheet" href="./style/menu.css">
   <link rel="shortcut icon" href="./assets/icons/capa_white.svg" type="image/x-icon">
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
   <script src="./scripts/config.js"></script>
   <script src="./script.js"></script>
-  <script src="./scripts/template.js"></script>
-  <script src="./scripts/taskService.js"></script>
+  <script src="./scripts/services/taskService.js"></script>
+  <script src="./scripts/templates/template.js"></script>
   <script src="./scripts/summary.js"></script>
   <script src="./scripts/board.js"></script>
-   <script src="./scripts/board_overlay.js"></script>
+  <script src="./scripts/board_overlay.js"></script>
   <title>Join</title>
 </head>
 
@@ -26,13 +25,13 @@
   <main class="main-content">
     <div id="sidebar-container"></div>
 
-      <div class="main-head-line">
-        <h1>Join 360</h1>
-        <div class="vl"></div>
-        <p>Key Metrics at a Glance</p>
-        <div class="blue-line-responsive"></div>
-      </div>
-      <div class="summary-content">
+    <div class="main-head-line">
+      <h1>Join 360</h1>
+      <div class="vl"></div>
+      <p>Key Metrics at a Glance</p>
+      <div class="blue-line-responsive"></div>
+    </div>
+    <div class="summary-content">
       <div class="overview">
         <div class="row-1">
           <div class="summary todo" onclick="window.location.href='board.html'">
@@ -63,7 +62,7 @@
               </svg>
             </div>
             <div class="summary-info">
-             <h2></h2>
+              <h2></h2>
               <p>done</p>
             </div>
           </div>
@@ -100,14 +99,14 @@
         </div>
       </div>
 
-    <div class="main-greet">
-      <label id="lblGreetings"></label>
-    </div>
+      <div class="main-greet">
+        <label id="lblGreetings"></label>
+      </div>
     </div>
   </main>
- <div id="welcome-overlay" class="overlay d-none">
-<div class="overlay-content"></div>
-</div> 
+  <div id="welcome-overlay" class="overlay d-none">
+    <div class="overlay-content"></div>
+  </div>
 </body>
 
 </html>
