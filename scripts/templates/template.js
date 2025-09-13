@@ -271,7 +271,7 @@ function getAddPageTemplate(task, usersArray = []) {
         <span id="title-error-message" class="input-invalid d-none">This field is required</span>
       </div>
       <div class="input-with-label description-input pb-16">
-        <label for="description">Description</label>
+        <label for="task_description">Description</label>
         <textarea id="task_description" placeholder="Enter a Description"></textarea>
       </div>
       <div class="input-with-label">
@@ -288,7 +288,7 @@ function getAddPageTemplate(task, usersArray = []) {
     <div class="task-inputs">
 
       <div class="input-with-label">
-        <label for="priority">Priority</label>
+        <span style="margin-bottom: 8px;">Priority</span>
         <div class="priority-inputs-container">
             <button class="priority-btn" data-priority="urgent" onclick="selectPriority(this)">
             Urgent
@@ -366,7 +366,7 @@ function getAddPageTemplate(task, usersArray = []) {
         <div class="dropdown-spacer"></div> 
 
             <div class="input-with-label">
-              <label for="category_task">Category<span style="color: #FF8190;">*</span></label>
+              <span style="margin-bottom: 8px;">Category<span style="color: #FF8190;">*</span></span>
               <div class="custom-category-select">
                 <div class="category-select-header input" onclick="toggleCategoryDropdown()">
                   <span id="selected-category-placeholder">Select task category</span>
