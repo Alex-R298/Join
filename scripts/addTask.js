@@ -98,7 +98,9 @@ async function addTask() {
   const savedTask = await postTaskData(newTask);
   await renderTasks();
   updateHTML();
-  closeAddTaskOverlay();
+  if (document.getElementById("add-task-overlay")) {
+    closeAddTaskOverlay();
+  }
   showPopup();
   clearInputs();
 }
