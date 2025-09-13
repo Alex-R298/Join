@@ -131,14 +131,18 @@ function datetimer() {
  */
 function showOverlay(greet, userName) {
   const overlay = document.getElementById("welcome-overlay");
+  if (!overlay) {
+    return;
+  }
   const overlayContent = overlay.querySelector(".overlay-content");
-
+  if (!overlayContent) {
+    return;
+  }
   overlayContent.innerHTML = userName
     ? `<h2>${greet},</h2><p class="greet_name">${userName}</p>`
     : `<h2>${greet}!</h2>`;
 
   overlay.classList.remove("d-none");
-
   setTimeout(() => {
     overlay.classList.add("d-none");
   }, 3000);

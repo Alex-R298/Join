@@ -98,6 +98,7 @@ async function addTask() {
   const savedTask = await postTaskData(newTask);
   await renderTasks();
   updateHTML();
+  closeAddTaskOverlay();
   showPopup();
   clearInputs();
 }
