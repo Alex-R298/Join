@@ -116,26 +116,6 @@ function taskDetailOverlayTemplate(task) {
     `;
 }
 
-function renderSubtasks(subtasks, taskId) {
-    if (!subtasks || subtasks.length === 0) return '';
-    
-    return subtasks.map((subtask, index) => `
-        <div class="subtask-item">
-            <div class="custom-checkbox">
-                <input type="checkbox" 
-                       id="checkbox-${taskId}-${index}" 
-                       onchange="toggleSubtask('${taskId}', ${index})"
-                       ${subtask.completed ? 'checked' : ''}>
-                <label for="checkbox-${taskId}-${index}" class="checkbox-label">
-                    <span class="checkbox-custom"></span>
-                    <span class="subtask-text list">${subtask.text || subtask}</span>
-                </label>
-            </div>
-        </div>
-    `).join('');
-}
-
-
 
 function renderSubtasks(subtasks, taskId) {
     if (!subtasks || subtasks.length === 0) return '';
