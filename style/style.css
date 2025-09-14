@@ -468,7 +468,8 @@ a {
 .custom-checkbox input[type="checkbox"]:checked + .checkbox-label .checkbox-custom::after {
     opacity: 1;
 }
-#detailed-task-overlay .subtask-text.list {
+
+.no-markers .subtask-text.list{
     list-style: none;
 }
 .subtask-text {
