@@ -637,10 +637,6 @@
         animation: none;
     }
 
-    .button-details {
-        display: none;
-    }
-
     .button-drop {
         display: block;
         display: flex;
