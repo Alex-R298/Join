@@ -191,7 +191,7 @@ function getAddContactTemplate() {
             </div>
         </div>
         <div class="add-contact-buttons">
-            <button class="button-secondary" onclick="closeAddContact()">Cancel <img src="./assets/icons/close.svg" alt=""></button>
+            <button class="button-secondary cancel-btn" onclick="closeAddContact()">Cancel <img src="./assets/icons/close.svg" alt=""></button>
             <button class="button-primary" onclick="createdContact()">Create contact <img class="check-icon" src="./assets/icons/check_white.svg" alt=""></button>
         </div>
     </div>

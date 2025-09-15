@@ -619,7 +619,7 @@
         transform: translateX(0);
     }
 
-    .button-secondary {
+    .cancel-btn {
         display: none;
     }
 
