@@ -136,16 +136,13 @@ function validateAccept(acceptInput) {
  */
 function showValidationError(errorId, message) {
     let errorElement = document.getElementById(errorId);
-    
     if (!errorElement) {
         errorElement = document.createElement('div');
         errorElement.id = errorId;
         errorElement.className = 'validation-error';
         errorElement.style = "color: red; font-size: 12px; position: absolute; top: 100%; left: 0; margin-top: 5px; z-index: 1;";
-        
         const inputId = errorId.replace('-error', '');
         const inputElement = document.getElementById(inputId);
-        
         if (inputElement) {
             const inputContainer = inputElement.closest('.input-with-icon, .sign-up-checkbox');
             if (inputContainer) {
@@ -154,7 +151,6 @@ function showValidationError(errorId, message) {
             }
         }
     }
-    
     errorElement.textContent = message;
     errorElement.style.display = 'block';
 }

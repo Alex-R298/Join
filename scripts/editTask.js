@@ -324,3 +324,14 @@ function closeEditTaskOverlay() {
     overlay.classList.add("d-none");
   }, 500);
 }
+
+
+/**
+ * Toggles the selection state of a user checkbox in edit mode
+ * @param {string} email - The email of the user to toggle selection for
+ */
+function toggleUserSelectionEdit(email) {
+    const checkbox = document.getElementById('edit-user-' + email);
+    checkbox.checked = !checkbox.checked;
+    updateEditAssignedAvatars();
+}

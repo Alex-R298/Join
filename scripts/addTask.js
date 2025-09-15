@@ -276,14 +276,23 @@ function updateAssigneeAvatars() {
     '#assignee-dropdown input[type="checkbox"]:checked'
   );
   const avatarsContainer = document.getElementById("assigned-avatars");
-
   avatarsContainer.innerHTML = "";
-
   checkedBoxes.forEach((checkbox) => {
     const userItem = checkbox.closest(".assigned-user-item");
     const avatar = userItem.querySelector(".contact-avatar").cloneNode(true);
     avatarsContainer.appendChild(avatar);
   });
+}
+
+
+/**
+ * Toggles the selection state of a user checkbox in edit mode
+ * @param {string} email - The email of the user to toggle selection for
+ */
+function toggleUserSelection(email) {
+    const checkbox = document.getElementById('user-' + email);
+    checkbox.checked = !checkbox.checked;
+    updateAssigneeAvatars();
 }
 
 

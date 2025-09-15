@@ -321,7 +321,7 @@ function getAddPageTemplate(task, usersArray = []) {
                 ${usersArray
                   .map(
                     (user) => `
-                    <div class="assigned-user-item" data-name="${user.name.toLowerCase()}">
+                    <div class="assigned-user-item" data-name="${user.name.toLowerCase()}" onclick="toggleUserSelection('${user.email}')">
                         <div class="user-info">
                             <div class="contact-avatar" style="background-color:${getAvatarColor(
                               user.name
