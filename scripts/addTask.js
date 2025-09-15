@@ -243,14 +243,15 @@ function checkDate() {
  */
 function checkCategory() {
     const categoryRef = document.getElementById("category_task");
+    const dropdownHeader = document.querySelector(".category-select-header");
     const errorCategoryRef = document.getElementById("category-error-message");
     const inputValue = categoryRef.value.trim();
     if (!inputValue) {
-        categoryRef.classList.add("invalid");
+        dropdownHeader.classList.add("invalid");
         errorCategoryRef.classList.remove("d-none");
         return false;
     } else {
-        categoryRef.classList.remove("invalid");
+        dropdownHeader.classList.remove("invalid");
         errorCategoryRef.classList.add("d-none");
         return true;
     }
