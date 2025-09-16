@@ -193,6 +193,14 @@ label {
     visibility: visible;
 }
 
+.sign-up-checkbox label {
+    font-size: 16px;
+}
+
+.sign-up-checkbox label a {
+    font-size: 16px;
+}
+
 @keyframes slideInFromBottom {
     0% {
         transform: translateY(100%);
@@ -345,7 +353,7 @@ label {
     }
 
     .log-in-footer {
-    bottom: 22px;     
+        bottom: 22px;     
     }
 
 }

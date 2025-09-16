@@ -371,6 +371,10 @@ textarea::placeholder {
     font-family: inherit;
 }
 
+#datepicker {
+    cursor: pointer;
+}
+
 label {
     margin-bottom: 8px;
 }
