@@ -363,6 +363,10 @@ input[type="date"]::placeholder {
     background-color: #f0f0f0;
 }
 
+.category-select-active {
+    border: 1px solid #29ABE2;
+}
+
 
 @media (max-width: 428px) {
 

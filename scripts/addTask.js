@@ -133,6 +133,7 @@ function showPopup() {
     }, 1500);
 }
 
+
 function closePopup() {
     const popup = document.getElementById("taskPopup");
     const overlay = document.getElementById("popupOverlay");
@@ -140,7 +141,6 @@ function closePopup() {
     overlay.classList.add("d-none");
     document.body.style.overflow = "auto";
 }
-
 
 
 /**
@@ -276,14 +276,15 @@ function renderAvatars(checkboxSelector, containerId) {
   }
 }
 
+
 function updateAssigneeAvatars() {
   renderAvatars('#assignee-dropdown input[type="checkbox"]', "assigned-avatars");
 }
 
+
 function updateEditAssignedAvatars() {
   renderAvatars('#edit-user-dropdown input[type="checkbox"]', "edit-assigned-avatars");
 }
-
 
 
 /**
@@ -375,8 +376,18 @@ document.addEventListener('click', function(event) {
  */
 function toggleCategoryDropdown() {
   document.getElementById("assignee-dropdown").classList.add("d-none");
+  const categorySelect = document.getElementById("category-select");
   const categoryDropdown = document.getElementById("category-dropdown");
+  const arrow = document.querySelector(".arrow-category"); 
   categoryDropdown.classList.toggle("d-none");
+
+  if (categoryDropdown.classList.contains("d-none")) {
+    arrow.classList.remove("open");
+    categorySelect.classList.remove("category-select-active");
+  } else {
+    arrow.classList.add("open");
+    categorySelect.classList.add("category-select-active");
+  }
 }
 
 

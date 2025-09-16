@@ -370,9 +370,9 @@ function getAddPageTemplate(task, usersArray = []) {
             <div class="input-with-label input-invalid-message">
               <span style="margin-bottom: 8px;">Category<span style="color: #E60026;">*</span></span>
               <div class="custom-category-select">
-                <div class="category-select-header input" onclick="toggleCategoryDropdown()">
+                <div class="category-select-header input" id="category-select" onclick="toggleCategoryDropdown()">
                   <span id="selected-category-placeholder">Select task category</span>
-                <img src="./assets/icons/arrow_drop_downarea.svg" class="dropdown-arrow">
+                <img src="./assets/icons/arrow_drop_downarea.svg" class="dropdown-arrow arrow-category">
                 <input type="hidden" id="category_task">
                 <div id="category-dropdown" class="user-dropdown d-none">
                 <div class="category-option" onclick="selectCategory('user-story', event)">User Story</div>
