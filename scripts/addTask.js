@@ -347,6 +347,10 @@ function toggleAssigneeDropdown() {
 
 
 function closeAssigneeDropdown() {
+  const categoryDropdown = document.getElementById("category-dropdown");
+  categoryDropdown.classList.add("d-none");
+  document.getElementById("category-select").classList.remove("category-select-active");
+  document.querySelector(".arrow-category").classList.remove("open");
   const dropdown = document.getElementById("assignee-dropdown");
   const arrow = document.querySelector(".dropdown-arrow");
   const input = document.getElementById("assignee-input");
@@ -366,7 +370,18 @@ document.addEventListener('click', function(event) {
   const assigneeContainer = document.querySelector(".assigned-dropdown");
   if (!dropdown.classList.contains("d-none")) {
     if (!assigneeContainer.contains(event.target) && !dropdown.contains(event.target)) {
-      closeAssigneeDropdown();}
+      closeAssigneeDropdown();
+    }
+  }
+});
+
+document.addEventListener('click', function(event) {
+  const dropdown = document.getElementById("category-dropdown");
+  const userDropdown = document.querySelector(".category-select-header");
+  if (!dropdown.classList.contains("d-none")) {
+    if (!userDropdown.contains(event.target) && !dropdown.contains(event.target)) {
+      closeAssigneeDropdown();
+    }
   }
 });
 
