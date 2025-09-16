@@ -330,3 +330,16 @@ function addSubtaskHoverEffectsWithDelegation() {
     }
   });
 }
+
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
+        if (e.target.id === 'subtask_input') {
+            e.preventDefault();
+            addSubtask();
+        } else if (e.target.id === 'edit-subtask-input') {
+            e.preventDefault();
+            addEditSubtask();
+        }
+    }
+});
