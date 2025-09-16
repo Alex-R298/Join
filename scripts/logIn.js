@@ -176,14 +176,15 @@ function checkPrivacyPolicy() {
  */
 async function login(event) {
     if (event) event.preventDefault();
-    
     const emailInput = document.getElementById('login-email');
     const passwordInput = document.getElementById('login-password');
-    
+    emailInput.style.borderColor = '';
+    passwordInput.style.borderColor = '';
+    hideValidationError('login-email-error');
+    hideValidationError('login-password-error');
     if (!validateLoginInputs(emailInput, passwordInput)) {
         return;
     }
-    
     const userExists = await checkUserCredentials(emailInput.value, passwordInput.value);
     if (userExists) {
         redirectToSummary();
@@ -214,7 +215,6 @@ function validateLoginInputs(emailInput, passwordInput) {
 async function checkUserCredentials(email, password) {
     const response = await fetch(BASE_URL + "/user.json");
     const users = await response.json();
-    
     for (const userId in users) {
         const user = users[userId];
         if (user.email === email && user.password === password) {
@@ -222,6 +222,9 @@ async function checkUserCredentials(email, password) {
             return true;
         }
     }
+    document.getElementById('login-email').style.borderColor = 'red';
+    document.getElementById('login-password').style.borderColor = 'red';
+    showValidationError('login-password-error', 'E-Mail oder Passwort ist falsch');
     return false;
 }
 

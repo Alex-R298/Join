@@ -547,6 +547,10 @@
         display: none;
     }
 
+    .contact-details-buttons.res {
+        display: none;
+    }
+
     .name-icon {
         width: 40px;
         height: 40px;
@@ -603,8 +607,8 @@
         width: 100%;
         height: calc(100vh - 80px);
         background: #f6f7f8;
-        z-index: 500;
-        padding: 9px;
+        z-index: 1;
+        padding: 20px;
         display: none; 
         flex-direction: column;
         transform: translateX(100%);
@@ -619,7 +623,7 @@
         transform: translateX(0);
     }
 
-    .button-secondary {
+    .cancel-btn {
         display: none;
     }
 
@@ -630,7 +634,7 @@
     }
 
     .button-back-res {
-        background-color: #f6f7f8;
+        background-color: transparent;
     }
 
     .contact-details.animate {
@@ -682,8 +686,8 @@
 
     #button-drop-menu {
         position: fixed;
-        bottom: 56px;
-        right: 1rem;
+        bottom: 136px;
+        right: 12.7rem;
     }
 
     #button-drop-menu.closing {
@@ -768,10 +772,13 @@
         .contacts-headline {
         height: calc(100vh - 160px);
         margin-left: 0px;
+        padding: 9px;
     }
 
         #button-drop-menu {
         margin-right: 0px;
+        bottom: 56px;
+        right: 1rem;
     }
     }
 

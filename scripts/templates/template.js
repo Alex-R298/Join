@@ -110,7 +110,7 @@ function displayContactDetails(contactId, contact, initials = null, avatarColor 
                 <div class="contact-details-avatar" style="background-color: ${avatarColor};">${initials}</div>
                 <div class="contact-details-info">
                     <div class="contact-details-name">${contact.name}</div>
-                    <div class="contact-details-buttons">
+                    <div class="contact-details-buttons res">
                         <button onclick="editContact('${contactId}', '${
       contact.name
     }', '${contact.email}', '${
@@ -191,7 +191,7 @@ function getAddContactTemplate() {
             </div>
         </div>
         <div class="add-contact-buttons">
-            <button class="button-secondary" onclick="closeAddContact()">Cancel <img src="./assets/icons/close.svg" alt=""></button>
+            <button class="button-secondary cancel-btn" onclick="closeAddContact()">Cancel <img src="./assets/icons/close.svg" alt=""></button>
             <button class="button-primary" onclick="createdContact()">Create contact <img class="check-icon" src="./assets/icons/check_white.svg" alt=""></button>
         </div>
     </div>
@@ -266,7 +266,7 @@ function getAddPageTemplate(task, usersArray = []) {
   <div class="inputs-left">
     <div class="task-inputs">
       <div class="input-with-label">
-        <label for="title">Title<span style="color: #FF8190;">*</span></label>
+        <label for="title">Title<span style="color: #E60026;">*</span></label>
         <input class="input" type="text" id="title" name="title" required placeholder="Enter a title">
         <span id="title-error-message" class="input-invalid d-none">This field is required</span>
       </div>
@@ -275,7 +275,7 @@ function getAddPageTemplate(task, usersArray = []) {
         <textarea id="task_description" placeholder="Enter a Description"></textarea>
       </div>
       <div class="input-with-label">
-        <label for="datepicker">Due date<span style="color: #FF8190;">*</span></label>
+        <label for="datepicker">Due date<span style="color: #E60026;">*</span></label>
         <input class="input" type="date" id="datepicker" name="datepicker" required placeholder="dd/mm/yyyy">
         <span id="date-error-message" class="input-invalid d-none">This field is required</span>
       </div>
@@ -321,7 +321,9 @@ function getAddPageTemplate(task, usersArray = []) {
                 ${usersArray
                   .map(
                     (user) => `
-                    <div class="assigned-user-item" data-name="${user.name.toLowerCase()}">
+                    <div class="assigned-user-item" data-name="${user.name.toLowerCase()}" onclick="toggleUserSelection('${
+                      user.email
+                    }')">
                         <div class="user-info">
                             <div class="contact-avatar" style="background-color:${getAvatarColor(
                               user.name
@@ -366,7 +368,7 @@ function getAddPageTemplate(task, usersArray = []) {
         <div class="dropdown-spacer"></div> 
 
             <div class="input-with-label">
-              <span style="margin-bottom: 8px;">Category<span style="color: #FF8190;">*</span></span>
+              <span style="margin-bottom: 8px;">Category<span style="color: #E60026;">*</span></span>
               <div class="custom-category-select">
                 <div class="category-select-header input" onclick="toggleCategoryDropdown()">
                   <span id="selected-category-placeholder">Select task category</span>
@@ -405,7 +407,7 @@ function getAddPageTemplate(task, usersArray = []) {
   </div>
 </div>
 <div class="create-btns">
-  <p class="short-info"><span style="color: #FF8190;">*</span>This field is required</p>
+  <p class="short-info"><span style="color: #E60026;">*</span>This field is required</p>
   <div class="add-task-buttons">
     <button class="button-secondary" onclick="clearInputs()">Clear</button>
     <button class="button-primary"  onclick="handleAddTask()">Create Task</button>

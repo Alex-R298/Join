@@ -11,11 +11,12 @@ label {
 }
 
 .main-login {
-       display: flex;
+    display: flex;
     flex-direction: column;
     max-width: 1440px;
     justify-content: center;
     margin: auto;
+    min-height: 100vh;
 }
 
 .header-log-in {
@@ -38,8 +39,25 @@ label {
 .log-in-section {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    margin-top: 48px;   
+    gap: 16px;
+    font-size: 16px;
+    padding: 40px 0;
+    margin-top: auto;
+    flex: 1;
+}
+
+.sign-up-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    font-size: 16px;
+    padding: 0 0 40px 0;
+    margin-top: auto;
+    flex: 1;
 }
 
 .separator-line {
@@ -94,16 +112,14 @@ label {
     justify-content: center;
     align-items: center;
     gap: 16px;
-    margin-top: 100px;
+    margin-top: 20px;
     font-size: 16px;
-    
 }
 
 .log-in-footer a {
     color: #A8A8A8;
     text-decoration: none;
 }
-
 
 #start_screen {
     position: fixed;
@@ -137,7 +153,6 @@ label {
     margin-right: 8px;
 }
 
-
 #overlay-signup {
     position: fixed;
     top: 0;
@@ -158,7 +173,6 @@ label {
     opacity: 1;
     visibility: visible;
 }
-
 
 #signed-up {
     position: fixed;
@@ -198,9 +212,6 @@ label {
     }
 }
 
-
-
-
 .signed-up-popup {
     background-color: var(--primary);
     color: white;
@@ -213,14 +224,10 @@ label {
     animation: slideInFromBottom 2s ease forwards; 
 }
 
-
-
 .signed-up-popup p {
     color: white;
     font-size: 20px;
 }
-
-
 
 .form-header {
     display: grid;
@@ -284,39 +291,39 @@ label {
     }
     
     .input-log {
-    width: 364px;
-    
-    
-}
+        width: 364px;  
+    }
 
-.separator-line {
-    width: 88px;
-    margin: 18px 0;
+    .separator-line {
+        width: 88px;
+        margin: 18px 0;
 
-}
+    }
 
-.sign-up-res {
-    display: flex;
+    .sign-up-res {
+        display: flex;
         align-items: center;
         gap: 35px;
         margin-top: 50px;
-}
+    }
 
-.sign-up {
-    display: none;
-}
+    .sign-up {
+        display: none;
+    }
 
-.header-log-in {
-    padding: 37px 0 0 38px;
-}
+    .sign-up-section {
+        margin-top: 48px;
+    }
 
-.header-log-in img {
-    width: 64px;
-    height: 78px;
-}
+    .header-log-in {
+        padding: 37px 0 0 38px;
+    }
 
-
-    
+    .header-log-in img {
+        width: 64px;
+        height: 78px;
+    }
+        
     #start_screen {
         background-color: #2a3647;
     }
@@ -338,10 +345,8 @@ label {
     }
 
     .log-in-footer {
-    margin: 40px 0;
-    
-    
-}
+    bottom: 22px;     
+    }
 
 }
 

@@ -1,16 +1,6 @@
 let selectedPriority = "medium";
 let currentTaskStatus = "toDo";
-
-
-/**
- * Sets the current task status to the specified value.
- * @param {string} status - The new status of the task (e.g., "toDo", "inProgress", "done").
- */
-function saveTaskStatusToFirebase(status) {
-    currentTaskStatus = status;
-}
-
-
+let selectedCategory = null;
 const priorityConfig = {
   urgent: {
     defaultIcon: "./assets/icons/prio_urgent_red.svg",
@@ -31,6 +21,15 @@ const priorityConfig = {
 
 
 /**
+ * Sets the current task status to the specified value.
+ * @param {string} status - The new status of the task (e.g., "toDo", "inProgress", "done").
+ */
+function saveTaskStatusToFirebase(status) {
+    currentTaskStatus = status;
+}
+
+
+/**
  * Reads all values from the add-task form.
  * @returns {{title: string, description: string, dueDate: string, category: string, checkedUsers: string[], subtaskElements: Object[]}} Form data containing title, description, date, category, users, and subtasks.
  */
@@ -40,10 +39,12 @@ function getFormValues() {
     description: document.getElementById("task_description").value,
     dueDate: document.getElementById("datepicker").value,
     category: document.getElementById("category_task").value,
-    checkedUsers: Array.from(
+    assignedTo: Array.from(
       document.querySelectorAll('input[type="checkbox"][id^="user-"]:checked')
     ).map(cb => cb.value),
-    subtaskElements: getSubtasks()
+    subtaskElements: getSubtasks(),
+    priority: selectedPriority,
+    status: currentTaskStatus,
   };
 }
 
@@ -63,39 +64,13 @@ function getSubtasks() {
 
 
 /**
- * Builds a task object from form values and global status/priority.
- * @param {Object} values - Form data object.
- * @param {string} values.title - Task title.
- * @param {string} values.description - Task description.
- * @param {string} values.dueDate - Task due date.
- * @param {string} values.category - Task category.
- * @param {string[]} values.checkedUsers - Array of assigned user emails.
- * @param {Object[]} values.subtaskElements - Array of subtask objects.
- * @returns {Object} New task object with all required properties.
- */
-function buildTask({title, description, dueDate, category, checkedUsers, subtaskElements}) {
-  return {
-    title,
-    description,
-    dueDate,
-    priority: selectedPriority,
-    assignedTo: checkedUsers,
-    category,
-    status: currentTaskStatus,
-    subtaskElements,
-  };
-}
-
-
-/**
  * Adds a new task, saves it to the database, and updates the UI.
  * @returns {Promise<void>}
  */
 async function addTask() {
   if (!checkDate()) return;
-  const values = getFormValues();
-  const newTask = buildTask(values);
-  const savedTask = await postTaskData(newTask);
+  const newTask = getFormValues();
+  await postTaskData(newTask);
   await renderTasks();
   updateHTML();
   if (document.getElementById("add-task-overlay")) {
@@ -243,14 +218,15 @@ function checkDate() {
  */
 function checkCategory() {
     const categoryRef = document.getElementById("category_task");
+    const dropdownHeader = document.querySelector(".category-select-header");
     const errorCategoryRef = document.getElementById("category-error-message");
     const inputValue = categoryRef.value.trim();
     if (!inputValue) {
-        categoryRef.classList.add("invalid");
+        dropdownHeader.classList.add("invalid");
         errorCategoryRef.classList.remove("d-none");
         return false;
     } else {
-        categoryRef.classList.remove("invalid");
+        dropdownHeader.classList.remove("invalid");
         errorCategoryRef.classList.add("d-none");
         return true;
     }
@@ -276,14 +252,23 @@ function updateAssigneeAvatars() {
     '#assignee-dropdown input[type="checkbox"]:checked'
   );
   const avatarsContainer = document.getElementById("assigned-avatars");
-
   avatarsContainer.innerHTML = "";
-
   checkedBoxes.forEach((checkbox) => {
     const userItem = checkbox.closest(".assigned-user-item");
     const avatar = userItem.querySelector(".contact-avatar").cloneNode(true);
     avatarsContainer.appendChild(avatar);
   });
+}
+
+
+/**
+ * Toggles the selection state of a user checkbox in edit mode
+ * @param {string} email - The email of the user to toggle selection for
+ */
+function toggleUserSelection(email) {
+    const checkbox = document.getElementById('user-' + email);
+    checkbox.checked = !checkbox.checked;
+    updateAssigneeAvatars();
 }
 
 
@@ -321,20 +306,34 @@ function toggleAssigneeDropdown() {
     input.removeAttribute("readonly");
     input.focus();
   } else {
-    dropdown.classList.add("d-none");
-    arrow.classList.remove("open");
-    input.setAttribute("readonly", true);
-    input.value = "";
-    filterAssignees("");
+    closeAssigneeDropdown();
   }
 }
 
 
+function closeAssigneeDropdown() {
+  const dropdown = document.getElementById("assignee-dropdown");
+  const arrow = document.querySelector(".dropdown-arrow");
+  const input = document.getElementById("assignee-input");
+  dropdown.classList.add("d-none");
+  arrow.classList.remove("open");
+  input.setAttribute("readonly", true);
+  input.value = "";
+  filterAssignees("");
+}
+
+
 /**
- * Currently selected category value.
- * @type {string|null}
+ * Event listener for clicking outside.
  */
-let selectedCategory = null;
+document.addEventListener('click', function(event) {
+  const dropdown = document.getElementById("assignee-dropdown");
+  const assigneeContainer = document.querySelector(".assigned-dropdown");
+  if (!dropdown.classList.contains("d-none")) {
+    if (!assigneeContainer.contains(event.target) && !dropdown.contains(event.target)) {
+      closeAssigneeDropdown();}
+  }
+});
 
 
 /**
@@ -358,11 +357,9 @@ function selectCategory(value, e) {
     "user-story": "User Story",
   };
 
-  document.getElementById("selected-category-placeholder").textContent =
-    label[value] || "Select category";
+  document.getElementById("selected-category-placeholder").textContent = label[value] || "Select category";
   document.getElementById("category-dropdown").classList.add("d-none");
   document.getElementById("category_task").value = value;
-
   e.stopPropagation();
 }
 

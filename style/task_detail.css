@@ -111,6 +111,14 @@
     background: #f0f0f0;
 }
 
+.assigned-user-item:active {
+    background: #2A3647;
+}
+
+.assigned-user-item:active span {
+    color: white;
+}
+
 .user-info {
     display: flex;
     align-items: center;
