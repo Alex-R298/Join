@@ -240,18 +240,23 @@ function getEditTaskTemplate(task, usersArray = []) {
                 </div>
                 
                 <div id="edit-assigned-avatars" class="assigned-avatars mt-8">
-                    ${assignedUsers
-                      .map((email) => {
-                        const user = usersArray.find((u) => u.email === email);
-                        if (user) {
-                          return `<div class="contact-avatar" style="background-color:${getAvatarColor(
-                            user.name
-                          )}">${getInitials(user.name)}</div>`;
-                        }
-                        return "";
-                      })
-                      .join("")}
-                </div>
+    ${(() => {
+        const maxVisible = 3;
+        let avatarHtml = '';
+        assignedUsers.slice(0, maxVisible).forEach(email => {
+            const user = usersArray.find((u) => u.email === email);
+            if (user) {
+                avatarHtml += `<div class="contact-avatar" style="background-color:${getAvatarColor(user.name)}">${getInitials(user.name)}</div>`;
+            }
+        });
+        if (assignedUsers.length > maxVisible) {
+            const moreCount = assignedUsers.length - maxVisible;
+            avatarHtml += `<div class="contact-avatar more-avatar">+${moreCount}</div>`;
+        }
+        
+        return avatarHtml;
+    })()}
+</div>
                 
                 <div class="dropdown-spacer"></div>
             </div>
