@@ -265,7 +265,7 @@ function getAddPageTemplate(task, usersArray = []) {
 
   <div class="inputs-left">
     <div class="task-inputs">
-      <div class="input-with-label">
+      <div class="input-with-label input-invalid-message">
         <label for="title">Title<span style="color: #E60026;">*</span></label>
         <input class="input" type="text" id="title" name="title" required placeholder="Enter a title">
         <span id="title-error-message" class="input-invalid d-none">This field is required</span>
@@ -274,7 +274,7 @@ function getAddPageTemplate(task, usersArray = []) {
         <label for="task_description">Description</label>
         <textarea id="task_description" placeholder="Enter a Description"></textarea>
       </div>
-      <div class="input-with-label">
+      <div class="input-with-label input-invalid-message">
         <label for="datepicker">Due date<span style="color: #E60026;">*</span></label>
         <input class="input" type="date" id="datepicker" name="datepicker" required placeholder="dd/mm/yyyy">
         <span id="date-error-message" class="input-invalid d-none">This field is required</span>
@@ -367,7 +367,7 @@ function getAddPageTemplate(task, usersArray = []) {
         </div>
         <div class="dropdown-spacer"></div> 
 
-            <div class="input-with-label">
+            <div class="input-with-label input-invalid-message">
               <span style="margin-bottom: 8px;">Category<span style="color: #E60026;">*</span></span>
               <div class="custom-category-select">
                 <div class="category-select-header input" onclick="toggleCategoryDropdown()">

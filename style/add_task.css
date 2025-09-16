@@ -16,6 +16,7 @@
     justify-content: space-between;
     gap: 16px;
     flex-grow: 1;
+    margin-bottom: 24px;
 }
 
 .urgent-container {
@@ -75,6 +76,10 @@
     width: 100%;
 }
 
+.input-invalid-message {
+    height: 110px;
+}
+
 .more-avatar {
   background-color: #ccc;
   color: #000;
@@ -103,7 +108,6 @@
 .task-inputs {
     display: flex;
     flex-direction: column;
-    gap: 16px;
 }
 
 .pb-16 {
@@ -360,7 +364,6 @@ input[type="date"]::placeholder {
 }
 
 
-
 @media (max-width: 428px) {
 
     .input-assignees {
@@ -385,27 +388,16 @@ input[type="date"]::placeholder {
         padding: 0.5rem;
     }
 
-}
-
-/* @media (max-width: 400px) {
-
-
-
-    .priority-btn img {
-        width: 16px;
-        height: 16px;
+    .input-invalid-message {
+        height: 95px;
     }
 
-} */
+}
 
 @media (max-width: 1000px) {
 
     .vl-add-task {
             display: none;
-        }
-    
-    .inputs-right {
-        margin-top: 16px;
     }
 
     .create-btns {

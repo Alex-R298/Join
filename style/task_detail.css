@@ -19,6 +19,7 @@
 .assigned-dropdown {
     position: relative;
     width: 100%;
+    margin-bottom: 8px;
 }
 
 .dropdown-input {
@@ -69,6 +70,7 @@
     flex-wrap: wrap;
     margin-right: 0 !important;
     gap: 8px;
+    margin-bottom: 24px;
 }
 
 .mt-8 {

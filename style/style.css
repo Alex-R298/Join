@@ -355,7 +355,9 @@ textarea {
     font-size: 20px;
     cursor: pointer;
     padding: 8px 16px;
+    margin-bottom: 16px;
 }
+
 .more-avatar {
   background-color: #ccc;
   color: #000;
