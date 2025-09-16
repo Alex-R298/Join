@@ -105,38 +105,71 @@ function getTasksForContainer(tasks, containerId) {
 
 
 /**
- * Renders a container with tasks or an empty placeholder.
- * @param {HTMLElement} container - The column container element.
- * @param {Object[]} tasksForContainer - Tasks for this specific container.
- * @param {string} containerId - Container identifier.
+ * Leert den Container und fügt ggf. einen leeren Platzhalter hinzu.
+ * @param {HTMLElement} container - Spalten-Container.
+ * @param {string} containerId - ID des Containers.
+ * @param {boolean} isEmpty - Ob der Container keine Tasks hat.
  */
-function renderContainer(container, tasksForContainer, containerId) {
+function clearAndAddPlaceholder(container, containerId, isEmpty) {
   const placeholder = container.querySelector('.drag-placeholder');
   container.innerHTML = '';
-  if (!tasksForContainer.length) {
-    container.appendChild(createEmptyNode(containerId));
-  } else {
-    const frag = document.createDocumentFragment();
-    tasksForContainer.forEach(task => {
-      frag.appendChild(createFragmentFromHTML(taskOnBoardTemplate(task)));
-    });
-    updateSubtaskScroll()
-    container.appendChild(frag);
-    tasksForContainer.forEach(task => {
-      if (Array.isArray(task.assignedTo)) {
-        task.assignedTo.forEach(email => renderAssignedUserData(email, task.id));
-      }
-    });
-  }
-  if (placeholder) container.appendChild(placeholder);
+  if (isEmpty) container.appendChild(createEmptyNode(containerId));
+  return placeholder;
 }
 
 
+/**
+ * Rendert die Tasks als DocumentFragment.
+ * @param {Object[]} tasks - Array von Task-Objekten.
+ * @returns {DocumentFragment} Fragment mit allen Task-Elementen.
+ */
+function renderTasksFragment(tasks) {
+  const frag = document.createDocumentFragment();
+  tasks.forEach(task => {
+    frag.appendChild(createFragmentFromHTML(taskOnBoardTemplate(task)));
+  });
+  updateSubtaskScroll();
+  return frag;
+}
 
 
-// neue Alex
+/**
+ * Rendert die Avatare für alle Tasks im Container.
+ * @param {Object[]} tasks - Array von Task-Objekten.
+ */
+function renderAssignedUsersForTasks(tasks) {
+  tasks.forEach(task => {
+    if (Array.isArray(task.assignedTo)) {
+      task.assignedTo.forEach(email => renderAssignedUserData(email, task.id));
+    }
+  });
+}
 
 
+/**
+ * Rendert einen Container mit Tasks oder einem leeren Platzhalter.
+ * @param {HTMLElement} container - Spalten-Container.
+ * @param {Object[]} tasksForContainer - Tasks für diesen Container.
+ * @param {string} containerId - ID des Containers.
+ */
+function renderContainer(container, tasksForContainer, containerId) {
+  const isEmpty = !tasksForContainer.length;
+  const placeholder = clearAndAddPlaceholder(container, containerId, isEmpty);
+
+  if (!isEmpty) {
+    const frag = renderTasksFragment(tasksForContainer);
+    container.appendChild(frag);
+    renderAssignedUsersForTasks(tasksForContainer);
+  }
+
+  if (placeholder) container.appendChild(placeholder);
+}
+
+/**
+ * Passt die maximale Höhe des Subtask-Containers an,
+ * sodass bei mehr als 3 Subtasks nur 3 sichtbar sind und der Rest scrollbar wird.
+ * @param {string} taskId - ID der Aufgabe, deren Subtasks angepasst werden.
+ */
 function updateSubtaskScroll(taskId) {
   const container = document.getElementById(`subtasks-${taskId}`);
   if (!container) return;
@@ -149,11 +182,11 @@ function updateSubtaskScroll(taskId) {
 
   const subtaskHeight = items[0].offsetHeight;
   const maxVisible = 3;
-
   container.style.maxHeight = items.length > maxVisible
     ? `${subtaskHeight * maxVisible}px`
     : "auto";
 }
+
 
 /**
  * Creates a DOM element for an empty container.
