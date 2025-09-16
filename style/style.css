@@ -20,7 +20,7 @@
     --yellow: #FFE62B;
     --red: #FF4646;
     --lightorange: #FFBB2B;
-    --error-red: #FF8190;
+    --error-red: #E60026;
 }
 
 @font-face {
@@ -304,11 +304,11 @@ input::placeholder {
 }
 
 .invalid {
-    border: 1px solid var(--error-red);
+    border: 1px solid #E60026;
 }
 
 .input-invalid {
-    color: var(--error-red);
+    color: #E60026;
     font-size: 12px;
     margin-top: 4px;
     display: block;
