@@ -232,8 +232,8 @@ button {
 .button-secondary {
     background-color: var(--white);
     color: var(--primary);
-    border: 1px solid var(--primary);
-    display: flex;
+    outline: 1px solid var(--primary);
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
@@ -243,7 +243,7 @@ button {
 }
 
 .button-secondary:hover {
-    border: 2px solid var(--secondary);
+    outline: 2px solid var(--secondary);
     box-shadow: 0px 4px 4px 0px #00000040;
     color: var(--secondary);
 }
@@ -284,10 +284,6 @@ button {
 
 select {
     background-color: var(--white);
-}
-
-input {
-    cursor: pointer;
 }
 
 .input {
