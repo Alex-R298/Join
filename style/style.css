@@ -363,7 +363,7 @@ textarea {
 }
 
 textarea:focus {
-    border: 1px solid var(--secondary);
+    outline: 1px solid var(--secondary);
 }
 
 textarea::placeholder {
