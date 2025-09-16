@@ -168,33 +168,43 @@ function getDragAfterElement(container, y) {
 }
 
 
+
+/**
+ * Validates drag event and updates task position
+ * @param {string} taskId - Task ID
+ * @param {HTMLElement} draggingItem - Task element
+ * @param {string} status - New status
+ * @returns {Object|null} Updated task or null
+ */
+function processTaskMove(taskId, draggingItem, status) {
+    replacePlaceholderWithTask(draggingItem);
+    animateTaskIn(draggingItem);
+    cleanupDragState();
+    const task = allTasks.find((t) => t.id === taskId);
+    if (!task) return null;
+    task.status = status;
+    updateAllTasksFromDOM();
+    setTimeout(() => updateEmptyContainers(), 400);
+    return task;
+}
+
+
 /**
  * Moves task to new status column
  * @param {string} status - New task status
  * @param {DragEvent} event - Drop event
  */
 async function moveTo(status, event) {
-  event.preventDefault();
-
-  let taskId = event.dataTransfer
-    ? event.dataTransfer.getData("text/plain")
-    : currentDraggedElement;
-  if (!taskId) return;
-
-  const draggingItem = document.getElementById(`task-${taskId}`);
-  if (!draggingItem) return;
-
-  replacePlaceholderWithTask(draggingItem);
-  animateTaskIn(draggingItem);
-  cleanupDragState();
-  const task = allTasks.find((t) => t.id === taskId);
-  if (!task) return;
-  task.status = status;
-  updateAllTasksFromDOM();
-  setTimeout(() => updateEmptyContainers(), 400);
-  await saveTaskToFirebase(task);
-  if (typeof updateDashboardCounts === "function") updateDashboardCounts();
-  currentDraggedElement = null;
+    event.preventDefault();
+    const taskId = event.dataTransfer?.getData("text/plain") || currentDraggedElement;
+    if (!taskId) return;
+    const draggingItem = document.getElementById(`task-${taskId}`);
+    if (!draggingItem) return;
+    const task = processTaskMove(taskId, draggingItem, status);
+    if (!task) return;
+    await saveTaskToFirebase(task);
+    if (typeof updateDashboardCounts === "function") updateDashboardCounts();
+    currentDraggedElement = null;
 }
 
 
@@ -286,9 +296,7 @@ async function updateAllTasksFromDOM() {
             }
         });
     });
-    
     allTasks = newAllTasks;
-    
     for (const task of allTasks) {
         await saveTaskToFirebase(task);
     }
@@ -304,8 +312,7 @@ function cancelDragging() {
     if (draggingItem) {
         draggingItem.style.display = '';
         draggingItem.classList.remove('dragging');
-    }
-    document.querySelectorAll('.drag-over').forEach(container => {
+    }document.querySelectorAll('.drag-over').forEach(container => {
         container.classList.remove('drag-over');
     });
     if (placeholderElement && placeholderElement.parentNode) {
