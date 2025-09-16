@@ -61,8 +61,8 @@ function taskDetailOverlayTemplate(task) {
                 </span>
             </div>
         </div>
+        <span class="label">Assigned To:</span>
         <div class="assigned-to-container">
-            <span class="label">Assigned To:</span>
                 ${
                   assignedUser.length === 0
                     ? '<span class="no-assigned">No users assigned</span>'
