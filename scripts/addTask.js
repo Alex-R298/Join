@@ -421,6 +421,7 @@ function selectCategory(value, e) {
   document.getElementById("category-dropdown").classList.add("d-none");
   document.getElementById("category_task").value = value;
   e.stopPropagation();
+    closeAssigneeDropdown();
 }
 
 
