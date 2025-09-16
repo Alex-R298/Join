@@ -134,27 +134,11 @@ input[type="date"]::placeholder {
   overflow-y: auto;  
   padding-right: 4px;
 }
-#myList::-webkit-scrollbar {
-  width: 6px;
-}
 
-#myList::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,0.2);
-  border-radius: 3px;
-}
 #editMyList {
   max-height: 150px; 
   overflow-y: auto;  
   padding-right: 4px; 
-}
-
-#editMyList::-webkit-scrollbar {
-  width: 6px;
-}
-
-#editMyList::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,0.2);
-  border-radius: 3px;
 }
 
 .priority-btn {
@@ -197,6 +181,40 @@ input[type="date"]::placeholder {
   text-align: center;
 
 }
+
+
+.task-added-popup {
+    background-color: var(--primary);
+    width: 326px;
+    height: 74px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    margin: 0 auto;
+    animation: fromBottomToTop 0.5s ease forwards;
+    gap: 24px;
+    z-index: 2;
+}
+
+.task-added-popup p {
+    color: var(--white);
+}
+
+.task-added-popup img {
+    width: 30px;
+    height: 30px;
+}
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.2); /* leicht grau */
+  z-index: 1; /* unter dem Popup */
+}
+
 
 .priority-btn.active {
   color: white;
@@ -402,29 +420,6 @@ input[type="date"]::placeholder {
         justify-content: flex-end;
     }
 
-}
-
-.task-added-popup {
-    background-color: var(--primary);
-    width: 326px;
-    height: 74px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 20px;
-    margin: 0 auto;
-    animation: fromBottomToTop 0.5s ease forwards;
-    gap: 24px;
-    z-index: 2;
-}
-
-.task-added-popup p {
-    color: var(--white);
-}
-
-.task-added-popup img {
-    width: 30px;
-    height: 30px;
 }
 
 @keyframes fromBottomToTop {

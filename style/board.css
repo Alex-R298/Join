@@ -307,15 +307,6 @@
   padding-right: 4px; 
 }
 
-.subtasks::-webkit-scrollbar {
-  width: 6px;
-}
-
-.subtasks::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,0.2);
-  border-radius: 3px;
-}
-
 /* .task-container:not(.dragging) {
     animation: slideDown 0.3s ease;
 } */

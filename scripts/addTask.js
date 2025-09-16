@@ -118,23 +118,29 @@ function selectPriority(button) {
  * Shows a success popup after adding a task.
  */
 function showPopup() {
-    document.getElementById("taskPopup").classList.remove('d-none');
+    const popup = document.getElementById("taskPopup");
+    const overlay = document.getElementById("popupOverlay");
+
+    popup.classList.remove("d-none");
+    overlay.classList.remove("d-none");
+
+  
+    document.body.style.overflow = "hidden";
+
     setTimeout(() => {
         closePopup();
         window.location.href = "board.html";
     }, 1500);
 }
 
-
-/**
- * Closes the popup and optionally the overlay.
- */
 function closePopup() {
-  document.getElementById("taskPopup").classList.add('d-none');
-  if (document.getElementById("add-task-overlay")) {
-    closeAddTaskOverlay();
-  }
+    const popup = document.getElementById("taskPopup");
+    const overlay = document.getElementById("popupOverlay");
+    popup.classList.add("d-none");
+    overlay.classList.add("d-none");
+    document.body.style.overflow = "auto";
 }
+
 
 
 /**
