@@ -216,6 +216,7 @@ button {
     gap: 10px;
     padding: 15px 24px;
     border-radius: 8px;
+    font-weight: 700;
 }
 
 .button-primary:hover {
@@ -238,11 +239,13 @@ button {
     gap: 10px;
     padding: 15px 24px;
     border-radius: 8px;
+    font-weight: 700;
 }
 
 .button-secondary:hover {
     border: 2px solid var(--secondary);
     box-shadow: 0px 4px 4px 0px #00000040;
+    color: var(--secondary);
 }
 
 .button-primary:active {

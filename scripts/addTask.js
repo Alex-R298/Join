@@ -1,16 +1,6 @@
 let selectedPriority = "medium";
 let currentTaskStatus = "toDo";
-
-
-/**
- * Sets the current task status to the specified value.
- * @param {string} status - The new status of the task (e.g., "toDo", "inProgress", "done").
- */
-function saveTaskStatusToFirebase(status) {
-    currentTaskStatus = status;
-}
-
-
+let selectedCategory = null;
 const priorityConfig = {
   urgent: {
     defaultIcon: "./assets/icons/prio_urgent_red.svg",
@@ -31,6 +21,15 @@ const priorityConfig = {
 
 
 /**
+ * Sets the current task status to the specified value.
+ * @param {string} status - The new status of the task (e.g., "toDo", "inProgress", "done").
+ */
+function saveTaskStatusToFirebase(status) {
+    currentTaskStatus = status;
+}
+
+
+/**
  * Reads all values from the add-task form.
  * @returns {{title: string, description: string, dueDate: string, category: string, checkedUsers: string[], subtaskElements: Object[]}} Form data containing title, description, date, category, users, and subtasks.
  */
@@ -40,10 +39,12 @@ function getFormValues() {
     description: document.getElementById("task_description").value,
     dueDate: document.getElementById("datepicker").value,
     category: document.getElementById("category_task").value,
-    checkedUsers: Array.from(
+    assignedTo: Array.from(
       document.querySelectorAll('input[type="checkbox"][id^="user-"]:checked')
     ).map(cb => cb.value),
-    subtaskElements: getSubtasks()
+    subtaskElements: getSubtasks(),
+    priority: selectedPriority,
+    status: currentTaskStatus,
   };
 }
 
@@ -63,39 +64,13 @@ function getSubtasks() {
 
 
 /**
- * Builds a task object from form values and global status/priority.
- * @param {Object} values - Form data object.
- * @param {string} values.title - Task title.
- * @param {string} values.description - Task description.
- * @param {string} values.dueDate - Task due date.
- * @param {string} values.category - Task category.
- * @param {string[]} values.checkedUsers - Array of assigned user emails.
- * @param {Object[]} values.subtaskElements - Array of subtask objects.
- * @returns {Object} New task object with all required properties.
- */
-function buildTask({title, description, dueDate, category, checkedUsers, subtaskElements}) {
-  return {
-    title,
-    description,
-    dueDate,
-    priority: selectedPriority,
-    assignedTo: checkedUsers,
-    category,
-    status: currentTaskStatus,
-    subtaskElements,
-  };
-}
-
-
-/**
  * Adds a new task, saves it to the database, and updates the UI.
  * @returns {Promise<void>}
  */
 async function addTask() {
   if (!checkDate()) return;
-  const values = getFormValues();
-  const newTask = buildTask(values);
-  const savedTask = await postTaskData(newTask);
+  const newTask = getFormValues();
+  await postTaskData(newTask);
   await renderTasks();
   updateHTML();
   if (document.getElementById("add-task-overlay")) {
@@ -362,13 +337,6 @@ document.addEventListener('click', function(event) {
 
 
 /**
- * Currently selected category value.
- * @type {string|null}
- */
-let selectedCategory = null;
-
-
-/**
  * Toggles the visibility of the category dropdown menu.
  */
 function toggleCategoryDropdown() {
@@ -389,11 +357,9 @@ function selectCategory(value, e) {
     "user-story": "User Story",
   };
 
-  document.getElementById("selected-category-placeholder").textContent =
-    label[value] || "Select category";
+  document.getElementById("selected-category-placeholder").textContent = label[value] || "Select category";
   document.getElementById("category-dropdown").classList.add("d-none");
   document.getElementById("category_task").value = value;
-
   e.stopPropagation();
 }
 
