@@ -11,11 +11,12 @@ label {
 }
 
 .main-login {
-       display: flex;
+    display: flex;
     flex-direction: column;
     max-width: 1440px;
     justify-content: center;
     margin: auto;
+    min-height: 100vh;
 }
 
 .header-log-in {
@@ -38,15 +39,25 @@ label {
 .log-in-section {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    margin-top: 48px;   
+    gap: 16px;
+    font-size: 16px;
+    padding: 40px 0;
+    margin-top: auto;
+    flex: 1;
 }
 
 .sign-up-section {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    margin-top: 18px;
+    gap: 16px;
+    font-size: 16px;
+    padding: 0 0 40px 0;
+    margin-top: auto;
+    flex: 1;
 }
 
 .separator-line {
@@ -101,10 +112,8 @@ label {
     justify-content: center;
     align-items: center;
     gap: 16px;
-    margin-top: 100px;
+    margin-top: 20px;
     font-size: 16px;
-    position: absolute;
-    bottom: 40px;
 }
 
 .log-in-footer a {
