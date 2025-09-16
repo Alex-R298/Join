@@ -1,14 +1,7 @@
 /**
- * Adds a new subtask to the list if the input is not empty.
+ * Updates the scroll height of the subtask list based on the number of items.
+ * Sets a maximum height to show only 3 items and enables scrolling if there are more.
  */
-
-
-
-
-/// neue Alex
-
-
-
 function updateSubtaskScroll() {
   const list = document.getElementById("myList");
   const items = list.querySelectorAll("li");
@@ -22,6 +15,9 @@ function updateSubtaskScroll() {
 }
 
 
+/**
+ * Adds a new subtask to the list if the input is not empty.
+ */
 function addSubtask() {
   let input = document.getElementById("subtask_input");
   let list = document.getElementById("myList");
@@ -36,6 +32,7 @@ function addSubtask() {
   addSubtaskHoverEffectsWithDelegation();
   updateSubtaskScroll();
 }
+
 
 /**
  * Gets references to all relevant buttons and input elements for subtask management.
@@ -227,7 +224,6 @@ function attachInputEvents(input, li) {
       stopEditMode(li);
     }
   });
-
   input.addEventListener("blur", () => {
     setTimeout(() => {
       if (!li.classList.contains("edit-mode")) return;
@@ -332,6 +328,11 @@ function addSubtaskHoverEffectsWithDelegation() {
 }
 
 
+/**
+ * Global event listener for handling Enter key press on input fields.
+ * Handles both subtask input and edit subtask input fields.
+ * @param {KeyboardEvent} e - The keyboard event object.
+ */
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
         if (e.target.id === 'subtask_input') {

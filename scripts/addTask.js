@@ -123,8 +123,6 @@ function showPopup() {
 
     popup.classList.remove("d-none");
     overlay.classList.remove("d-none");
-
-  
     document.body.style.overflow = "hidden";
 
     setTimeout(() => {
@@ -177,111 +175,55 @@ function validateAddTask() {
 }
 
 
+
 /**
- * Validates the title field and shows/hides error message.
- * @returns {boolean} True if title is set and valid, false otherwise.
+ * Rendert ein einzelnes Avatar-Element und hängt es in den Container.
+ * @param {HTMLInputElement} checkbox - Die Checkbox, von der das Avatar kommt.
+ * @param {HTMLElement} container - Der Container, in den das Avatar eingefügt wird.
  */
-function checkTitle() {
-    const titleRef = document.getElementById("title");
-    const errorTitleRef = document.getElementById("title-error-message");
-    const inputValue = titleRef.value.trim();
-    if (!inputValue) {
-        titleRef.classList.add("invalid");
-        errorTitleRef.classList.remove("d-none");
-        return false;
-    } else {
-        titleRef.classList.remove("invalid");
-        errorTitleRef.classList.add("d-none");
-        return true;
-    }
+function renderAvatar(checkbox, container) {
+  const userItem = checkbox.closest(".assigned-user-item");
+  if (!userItem) return;
+  const avatar = userItem.querySelector(".contact-avatar").cloneNode(true);
+  container.appendChild(avatar);
 }
 
 
 /**
- * Validates the date field (not empty, not in the past).
- * @returns {boolean} True if date is valid, false otherwise.
- */
-function checkDate() {
-    const dateRef = document.getElementById("datepicker");
-    const errorDateRef = document.getElementById("date-error-message");
-    const inputValue = dateRef.value.trim();
-    const todayStr = getTodaysDate();
-    if (!inputValue || inputValue < todayStr) {
-        dateRef.classList.add("invalid");
-        errorDateRef.classList.remove("d-none");
-        return false;
-    } else {
-        dateRef.classList.remove("invalid");
-        errorDateRef.classList.add("d-none");
-        return true;
-    }
-}
-
-
-/**
- * Validates the category field and shows/hides error message.
- * @returns {boolean} True if category is selected, false otherwise.
- */
-function checkCategory() {
-    const categoryRef = document.getElementById("category_task");
-    const dropdownHeader = document.querySelector(".category-select-header");
-    const errorCategoryRef = document.getElementById("category-error-message");
-    const inputValue = categoryRef.value.trim();
-    if (!inputValue) {
-        dropdownHeader.classList.add("invalid");
-        errorCategoryRef.classList.remove("d-none");
-        return false;
-    } else {
-        dropdownHeader.classList.remove("invalid");
-        errorCategoryRef.classList.add("d-none");
-        return true;
-    }
-}
-
-
-/**
- * Handles the add task action by validating the form and adding the task if valid.
- */
-function handleAddTask() {
-    if (validateAddTask()) {
-        addTask();
-    }
-}
-
-
-/**
- * Updates the visual representation of selected assignees.
- * Shows avatars of all selected users below the select field.
+ * Rendert bis zu drei Avatare sowie ggf. ein "mehr"-Avatar.
+ * @param {string} checkboxSelector - CSS-Selector für die Checkboxen.
+ * @param {string} containerId - ID des Containers für die Avatare.
  */
 function renderAvatars(checkboxSelector, containerId) {
-  const checkedBoxes = document.querySelectorAll(`${checkboxSelector}:checked`);
+  const checkedBoxes = getCheckedBoxes(checkboxSelector);
   const avatarsContainer = document.getElementById(containerId);
-  if (!avatarsContainer) return; // bricht ab, wenn Container nicht existiert
-  avatarsContainer.innerHTML = "";
+  if (!avatarsContainer) return;
 
-  checkedBoxes.forEach((checkbox, index) => {
-    if (index < 3) {
-      const userItem = checkbox.closest(".assigned-user-item");
-      const avatar = userItem.querySelector(".contact-avatar").cloneNode(true);
-      avatarsContainer.appendChild(avatar);
-    }
-  });
+  avatarsContainer.innerHTML = "";
+  checkedBoxes.forEach((box, i) => i < 3 && renderAvatar(box, avatarsContainer));
 
   if (checkedBoxes.length > 3) {
-    const moreCount = checkedBoxes.length - 3;
     const moreAvatar = document.createElement("div");
     moreAvatar.className = "contact-avatar more-avatar";
-    moreAvatar.textContent = `+${moreCount}`;
+    moreAvatar.textContent = `+${checkedBoxes.length - 3}`;
     avatarsContainer.appendChild(moreAvatar);
   }
 }
 
 
+/**
+ * Aktualisiert die Avatar-Anzeige im "Assignee"-Bereich,
+ * basierend auf den im Dropdown ausgewählten Checkboxen.
+ */
 function updateAssigneeAvatars() {
   renderAvatars('#assignee-dropdown input[type="checkbox"]', "assigned-avatars");
 }
 
 
+/**
+ * Aktualisiert die Avatar-Anzeige im "Edit-Assignee"-Bereich,
+ * basierend auf den im Dropdown ausgewählten Checkboxen.
+ */
 function updateEditAssignedAvatars() {
   renderAvatars('#edit-user-dropdown input[type="checkbox"]', "edit-assigned-avatars");
 }
@@ -327,13 +269,17 @@ function filterAssignees(searchTerm) {
 
 
 /**
- * Toggles the visibility of the assignee dropdown menu.
+ * Öffnet oder schließt das Assignee-Dropdown.
+ * - Blendet das Category-Dropdown aus, wenn es geöffnet wird.
+ * - Setzt den Input auf fokussierbar, sobald das Dropdown offen ist.
+ * - Schließt das Dropdown über closeAssigneeDropdown(), wenn es bereits offen ist.
  */
 function toggleAssigneeDropdown() {
   const dropdown = document.getElementById("assignee-dropdown");
   const arrow = document.querySelector(".dropdown-arrow");
   const input = document.getElementById("assignee-input");
   const categoryDropdown = document.getElementById("category-dropdown");
+
   if (dropdown.classList.contains("d-none")) {
     dropdown.classList.remove("d-none");
     categoryDropdown.classList.add("d-none");
@@ -346,14 +292,22 @@ function toggleAssigneeDropdown() {
 }
 
 
+/**
+ * Schließt das Assignee-Dropdown und setzt den Zustand zurück.
+ * - Aktiviert wieder den readonly-Modus für das Input-Feld.
+ * - Leert das Eingabefeld.
+ * - Ruft filterAssignees("") auf, um Filter zurückzusetzen.
+ */
 function closeAssigneeDropdown() {
   const categoryDropdown = document.getElementById("category-dropdown");
   categoryDropdown.classList.add("d-none");
   document.getElementById("category-select").classList.remove("category-select-active");
   document.querySelector(".arrow-category").classList.remove("open");
+
   const dropdown = document.getElementById("assignee-dropdown");
   const arrow = document.querySelector(".dropdown-arrow");
   const input = document.getElementById("assignee-input");
+
   dropdown.classList.add("d-none");
   arrow.classList.remove("open");
   input.setAttribute("readonly", true);
@@ -363,11 +317,13 @@ function closeAssigneeDropdown() {
 
 
 /**
- * Event listener for clicking outside.
+ * Schließt das Assignee-Dropdown, wenn außerhalb geklickt wird.
+ * @param {MouseEvent} event - Das Klick-Event auf das Dokument.
  */
 document.addEventListener('click', function(event) {
   const dropdown = document.getElementById("assignee-dropdown");
   const assigneeContainer = document.querySelector(".assigned-dropdown");
+
   if (!dropdown.classList.contains("d-none")) {
     if (!assigneeContainer.contains(event.target) && !dropdown.contains(event.target)) {
       closeAssigneeDropdown();
@@ -375,9 +331,14 @@ document.addEventListener('click', function(event) {
   }
 });
 
+/**
+ * Schließt das Category-Dropdown, wenn außerhalb geklickt wird.
+ * @param {MouseEvent} event - Das Klick-Event auf das Dokument.
+ */
 document.addEventListener('click', function(event) {
   const dropdown = document.getElementById("category-dropdown");
   const userDropdown = document.querySelector(".category-select-header");
+
   if (!dropdown.classList.contains("d-none")) {
     if (!userDropdown.contains(event.target) && !dropdown.contains(event.target)) {
       closeAssigneeDropdown();
@@ -416,7 +377,6 @@ function selectCategory(value, e) {
     "technical-task": "Technical Task",
     "user-story": "User Story",
   };
-
   document.getElementById("selected-category-placeholder").textContent = label[value] || "Select category";
   document.getElementById("category-dropdown").classList.add("d-none");
   document.getElementById("category_task").value = value;
