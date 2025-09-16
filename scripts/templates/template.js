@@ -110,7 +110,7 @@ function displayContactDetails(contactId, contact, initials = null, avatarColor 
                 <div class="contact-details-avatar" style="background-color: ${avatarColor};">${initials}</div>
                 <div class="contact-details-info">
                     <div class="contact-details-name">${contact.name}</div>
-                    <div class="contact-details-buttons">
+                    <div class="contact-details-buttons res">
                         <button onclick="editContact('${contactId}', '${
       contact.name
     }', '${contact.email}', '${
