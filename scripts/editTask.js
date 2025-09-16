@@ -50,37 +50,6 @@ function filterEditUsers(searchTerm) {
 
 
 /**
- * Updates the list of assigned user avatars in edit mode.
- * Clones the avatars of the selected users and adds them to the avatar container.
- */
-// function updateEditAssigneeAvatars() {
-//   const checkedBoxes = document.querySelectorAll(
-//     '#assignee-dropdown input[type="checkbox"]:checked'
-//   );
-//   const avatarsContainer = document.getElementById("assigned-avatars");
-//   avatarsContainer.innerHTML = "";
-
-//   checkedBoxes.forEach((checkbox, index) => {
-//     if (index < 3) {
-//       const userItem = checkbox.closest(".assigned-user-item");
-//       const avatar = userItem.querySelector(".contact-avatar").cloneNode(true);
-//       avatarsContainer.appendChild(avatar);
-//     }
-//   });
-
-//   if (checkedBoxes.length > 3) {
-//     const moreCount = checkedBoxes.length - 3;
-//     const moreAvatar = document.createElement("div");
-//     moreAvatar.className = "contact-avatar more-avatar";
-//     moreAvatar.textContent = `+${moreCount}`;
-//     avatarsContainer.appendChild(moreAvatar);
-//   }
-// }
-
-
-// Subtask-Functions for editing
-
-/**
  * Changes the visibility of buttons in edit mode based on the input field value.
  * Shows "accept" and "delete" buttons, if the value is not empty
  * otherwise it displays the "Add" button.
