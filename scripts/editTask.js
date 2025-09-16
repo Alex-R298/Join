@@ -1,29 +1,45 @@
 /**
- * Toggels the visibility of the edit-user-dropdown.
- * Changes the display status of the dropdown and updates the display of the arrow.
+ * Öffnet das Edit-User-Dropdown und setzt Input und Pfeil.
+ * @param {HTMLElement} dropdown
+ * @param {HTMLElement} arrow
+ * @param {HTMLInputElement} input
+ */
+function openEditDropdown(dropdown, arrow, input) {
+  dropdown.style.display = "block";
+  arrow.classList.add("open");
+  input.removeAttribute("readonly");
+  input.focus();
+}
+
+
+/**
+ * Schließt das Edit-User-Dropdown, setzt Input readonly und zeigt alle Items.
+ * @param {HTMLElement} dropdown
+ * @param {HTMLElement} arrow
+ * @param {HTMLInputElement} input
+ */
+function closeEditDropdown(dropdown, arrow, input) {
+  dropdown.style.display = "none";
+  arrow.classList.remove("open");
+  input.setAttribute("readonly", true);
+  input.value = "";
+  dropdown.querySelectorAll(".assigned-user-item")
+          .forEach(item => item.style.display = "flex");
+}
+
+
+/**
+ * Toggles die Sichtbarkeit des Edit-User-Dropdowns.
  */
 function toggleEditUserDropdown() {
   const dropdown = document.getElementById("edit-user-dropdown");
-  const arrow = document.querySelector(
-    "#edit-assigned-input + .dropdown-arrow"
-  );
+  const arrow = document.querySelector("#edit-assigned-input + .dropdown-arrow");
   const input = document.getElementById("edit-assigned-input");
 
-  if (dropdown.style.display === "none" || dropdown.style.display === "") {
-    dropdown.style.display = "block";
-    arrow.classList.add("open");
-    input.removeAttribute("readonly");
-    input.focus();
+  if (!dropdown.style.display || dropdown.style.display === "none") {
+    openEditDropdown(dropdown, arrow, input);
   } else {
-    dropdown.style.display = "none";
-    arrow.classList.remove("open");
-    input.setAttribute("readonly", true);
-    input.value = "";
-    document
-      .querySelectorAll("#edit-user-dropdown .assigned-user-item")
-      .forEach((item) => {
-        item.style.display = "flex";
-      });
+    closeEditDropdown(dropdown, arrow, input);
   }
 }
 
@@ -37,7 +53,6 @@ function filterEditUsers(searchTerm) {
     "#edit-user-dropdown .assigned-user-item"
   );
   const search = searchTerm.toLowerCase();
-
   userItems.forEach((item) => {
     const name = item.getAttribute("data-name");
     if (name.includes(search)) {
@@ -50,29 +65,33 @@ function filterEditUsers(searchTerm) {
 
 
 /**
- * Changes the visibility of buttons in edit mode based on the input field value.
- * Shows "accept" and "delete" buttons, if the value is not empty
- * otherwise it displays the "Add" button.
+ * Zeigt oder versteckt Buttons basierend auf dem Eingabewert.
+ * @param {HTMLElement} addBtn - "Add"-Button
+ * @param {HTMLElement} acceptBtn - "Accept"-Button
+ * @param {HTMLElement} clearBtn - "Clear"-Button
+ * @param {HTMLElement} divider - Trennlinie
+ * @param {boolean} show - true: akzeptieren/löschen anzeigen, false: Add anzeigen
+ */
+function toggleEditButtons(addBtn, acceptBtn, clearBtn, divider, show) {
+  addBtn.classList.toggle("d-none", show);
+  divider.classList.toggle("d-none", !show);
+  acceptBtn.classList.toggle("d-none", !show);
+  clearBtn.classList.toggle("d-none", !show);
+}
+
+/**
+ * Prüft den Wert des Edit-Subtask-Inputs und passt die Buttons an.
  */
 function changeEditButtons() {
-  let acceptButton = document.getElementById("editAcceptButton");
-  let addButton = document.getElementById("editAddButton");
-  let clearButton = document.getElementById("editClearButton");
-  let input = document.getElementById("edit-subtask-input");
-  let divider = document.getElementById("vertical-divider");
+  const acceptBtn = document.getElementById("editAcceptButton");
+  const addBtn = document.getElementById("editAddButton");
+  const clearBtn = document.getElementById("editClearButton");
+  const input = document.getElementById("edit-subtask-input");
+  const divider = document.getElementById("vertical-divider");
 
-  if (input.value.trim() !== "") {
-    addButton.classList.add("d-none");
-    divider.classList.remove("d-none");
-    acceptButton.classList.remove("d-none");
-    clearButton.classList.remove("d-none");
-  } else {
-    addButton.classList.remove("d-none");
-    divider.classList.add("d-none");
-    acceptButton.classList.add("d-none");
-    clearButton.classList.add("d-none");
-  }
+  toggleEditButtons(addBtn, acceptBtn, clearBtn, divider, input.value.trim() !== "");
 }
+
 
 /**
  * Adds a new subtask to the worklist.
@@ -115,7 +134,6 @@ function handleEditSubtaskClick(event, li) {
     event.target.closest(".icon-btn.delete-btn img")
   )
     return;
-
   let editBtn = li.querySelector(".icon-btn.edit-btn");
   let editImg = editBtn.querySelector("img");
 
@@ -128,42 +146,56 @@ function handleEditSubtaskClick(event, li) {
 
 
 /**
-* Activates edit mode for a subtask list item.
-* Adds the "edit-mode" CSS class and replaces the text with an input field.
-* @param {HTMLElement} li - The list item to be edited.
-*/
+ * Ersetzt den Text-Span durch ein Input-Feld und fokussiert es.
+ * @param {HTMLElement} li - List Item
+ * @returns {HTMLInputElement} Das erstellte Input-Feld
+ */
+function replaceTextWithInput(li) {
+  const span = li.querySelector(".subtask-text.list");
+  if (!span) return null;
 
-function startEditSubtaskEditMode(li) {
-  li.classList.add("edit-mode");
-
-  let editBtn = li.querySelector(".icon-btn.edit-btn");
-  let deleteBtn = li.querySelector(".icon-btn.delete-btn");
-  let separator = li.querySelector(".vl-small");
-
-  let editImg = editBtn.querySelector("img");
-  editImg.src = "./assets/icons/check_subtask.svg";
-  editImg.alt = "Check";
-
-  let parent = editBtn.parentNode;
-  parent.insertBefore(deleteBtn, editBtn);
-  parent.insertBefore(separator, editBtn);
-
-  let span = li.querySelector(".subtask-text.list");
-  if (!span) return;
-
-  let input = document.createElement("input");
+  const input = document.createElement("input");
   input.type = "text";
   input.value = span.textContent;
   input.className = "edit-input";
   li.replaceChild(input, span);
   input.focus();
 
-  input.addEventListener("keydown", function (e) {
+  input.addEventListener("keydown", e => {
     if (e.key === "Enter") saveEditSubtaskEdit(input, li);
   });
-  input.addEventListener("blur", function () {
-    saveEditSubtaskEdit(input, li);
-  });
+  input.addEventListener("blur", () => saveEditSubtaskEdit(input, li));
+  return input;
+}
+
+
+/**
+ * Ändert das Edit-Icon zu einem Check und verschiebt Buttons.
+ * @param {HTMLElement} li - List Item
+ */
+function updateEditButtonToCheck(li) {
+  const editBtn = li.querySelector(".icon-btn.edit-btn");
+  const deleteBtn = li.querySelector(".icon-btn.delete-btn");
+  const separator = li.querySelector(".vl-small");
+
+  const editImg = editBtn.querySelector("img");
+  editImg.src = "./assets/icons/check_subtask.svg";
+  editImg.alt = "Check";
+
+  const parent = editBtn.parentNode;
+  parent.insertBefore(deleteBtn, editBtn);
+  parent.insertBefore(separator, editBtn);
+}
+
+
+/**
+ * Aktiviert den Edit-Modus für eine Subtask-Liste.
+ * @param {HTMLElement} li - List Item
+ */
+function startEditSubtaskEditMode(li) {
+  li.classList.add("edit-mode");
+  updateEditButtonToCheck(li);
+  replaceTextWithInput(li);
 }
 
 
@@ -176,16 +208,13 @@ function stopEditSubtaskEditMode(li) {
   let editBtn = li.querySelector(".icon-btn.edit-btn");
   let deleteBtn = li.querySelector(".icon-btn.delete-btn");
   let separator = li.querySelector(".vl-small");
-
   let editImg = editBtn.querySelector("img");
+
   editImg.src = "./assets/icons/edit.svg";
   editImg.alt = "Edit";
-
   let parent = editBtn.parentNode;
-
   parent.insertBefore(editBtn, parent.firstChild);
   parent.insertBefore(separator, deleteBtn);
-
   let input = li.querySelector(".edit-input");
   if (input) saveEditSubtaskEdit(input, li);
 }
@@ -221,9 +250,11 @@ function deleteEditSubtask(button) {
   updateEditSubtaskScroll();
 } 
 
-
-// Alex
-
+/**
+ * Passt die maximale Höhe der Edit-Subtask-Liste an.
+ * Wenn mehr als 3 Subtasks vorhanden sind, wird die Liste scrollbar,
+ * ansonsten wird die Höhe automatisch angepasst.
+ */
 function updateEditSubtaskScroll() {
   const list = document.getElementById("editMyList");
   const items = list.querySelectorAll("li");
@@ -231,62 +262,63 @@ function updateEditSubtaskScroll() {
     list.style.maxHeight = "auto";
     return;
   }
-
   const subtaskHeight = items[0].offsetHeight;
   const maxVisible = 3;
-
   list.style.maxHeight = items.length > maxVisible
     ? `${subtaskHeight * maxVisible}px`
     : "auto";
 }
 
 
-
-
-
-
 /**
-* Saves the edited task to the database.
-* Creates an updated version of the task and saves it via Firebase.
-* @param {string} taskId - The ID of the task to save.
-* @returns {Promise<void>} A promise representing the async operation.
-*/
-async function saveEditedTask(taskId) {
-  const task = allTasks.find((t) => t.id === taskId);
-  if (!task) return;
-
+ * Holt die aktuell ausgewählten Benutzer aus dem Edit-User-Dropdown.
+ * @returns {string[]} Array der ausgewählten E-Mails.
+ */
+function getAssignedUsers() {
   const assignedCheckboxes = document.querySelectorAll(
     '#edit-user-dropdown input[type="checkbox"]:checked'
   );
-  const assignedUsers = Array.from(assignedCheckboxes).map((cb) => cb.value);
+  return Array.from(assignedCheckboxes).map(cb => cb.value);
+}
+
+
+/**
+ * Erstellt ein Array von Subtask-Objekten basierend auf der Edit-Liste.
+ * @param {Object} task - Original-Task für den Vergleich.
+ * @returns {Array} Array von Subtask-Objekten.
+ */
+function getEditedSubtasks(task) {
   const subtaskElements = [];
-  const subtaskItems = document.querySelectorAll(
-    "#editMyList .subtask-text.list"
-  );
-  subtaskItems.forEach((item, index) => {
-    const originalSubtask = task.subtaskElements && task.subtaskElements[index];
-    const originalCompleted = originalSubtask ? originalSubtask.completed : false;
-    
+  document.querySelectorAll("#editMyList .subtask-text.list").forEach((item, index) => {
+    const originalSubtask = task.subtaskElements?.[index];
     subtaskElements.push({
       text: item.textContent,
-      completed: originalCompleted,
+      completed: originalSubtask ? originalSubtask.completed : false,
     });
   });
+  return subtaskElements;
+}
 
+
+/**
+ * Speichert die bearbeitete Aufgabe, aktualisiert HTML und schließt das Overlay.
+ * @param {string} taskId - ID der Task.
+ * @returns {Promise<void>}
+ */
+async function saveEditedTask(taskId) {
+  const task = allTasks.find(t => t.id === taskId);
+  if (!task) return;
   task.title = document.getElementById("edit-title").value;
   task.description = document.getElementById("edit-description").value;
   task.dueDate = document.getElementById("edit-datepicker").value;
   task.priority = selectedPriority;
-  task.assignedTo = assignedUsers.length > 0 ? [...assignedUsers] : [];
-  task.subtaskElements = subtaskElements;
-
+  task.assignedTo = getAssignedUsers();
+  task.subtaskElements = getEditedSubtasks(task);
   await saveTaskToFirebase(task);
   closeTaskOverlay();
   const taskElement = document.getElementById(`task-${taskId}`);
-  if (taskElement) {
-    taskElement.outerHTML = taskOnBoardTemplate(task);
-}
-updateHTML();
+  if (taskElement) taskElement.outerHTML = taskOnBoardTemplate(task);
+  updateHTML();
 }
 
 
