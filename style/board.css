@@ -289,9 +289,13 @@
 }
 
 
-.task-container:not(.dragging) {
-    animation: slideDown 0.3s ease;
+.task-container.dragging {
+    transition: none !important;
 }
+
+/* .task-container:not(.dragging) {
+    animation: slideDown 0.3s ease;
+} */
 
 
 .task-container:hover:not(.dragging) {
