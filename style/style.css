@@ -305,7 +305,7 @@ input::placeholder {
 
 .input-invalid {
     color: #E60026;
-    font-size: 12px;
+    font-size: 16px;
     margin-top: 4px;
     display: block;
 }
