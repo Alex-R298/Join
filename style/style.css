@@ -368,7 +368,7 @@ textarea:focus {
 
 textarea::placeholder {
     color: var(--lightgrey);
-    padding-top: 12px;
+    font-family: inherit;
 }
 
 label {
