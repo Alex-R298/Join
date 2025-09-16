@@ -302,6 +302,7 @@ async function editTask(taskId) {
   container.innerHTML = getEditTaskTemplate(task, usersArray);
   document.body.classList.remove("no-markers");
   addSubtaskHoverEffectsWithDelegation();
+  initializeEditCheckboxStates();
 }
 
 
@@ -333,5 +334,34 @@ function closeEditTaskOverlay() {
 function toggleUserSelectionEdit(email) {
     const checkbox = document.getElementById('edit-user-' + email);
     checkbox.checked = !checkbox.checked;
+    const userItem = checkbox.closest(".assigned-user-item");
+    const checkboxCustom = checkbox.parentNode.querySelector(".checkbox-custom");
+    if (checkbox.checked) {
+        userItem.classList.add("active");
+        checkboxCustom.classList.add("active");
+    } else {
+        userItem.classList.remove("active");
+        checkboxCustom.classList.remove("active");
+    }
     updateEditAssignedAvatars();
+}
+
+
+/**
+ * Initializes the visual state of checkboxes in edit mode
+ */
+function initializeEditCheckboxStates() {
+    const checkboxes = document.querySelectorAll('#edit-user-dropdown input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        const userItem = checkbox.closest(".assigned-user-item");
+        const checkboxCustom = checkbox.parentNode.querySelector(".checkbox-custom");
+        
+        if (checkbox.checked) {
+            userItem.classList.add("active");
+            checkboxCustom.classList.add("active");
+        } else {
+            userItem.classList.remove("active");
+            checkboxCustom.classList.remove("active");
+        }
+    });
 }

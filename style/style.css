@@ -436,6 +436,19 @@ a {
     overflow: visible;
 }
 
+.checkbox-custom.active {
+    border: 2px solid #ffffff;
+    background-color: #2A3647;
+}
+
+.checkbox-custom.active::after {
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+}
+
+.checkbox-custom.active::before {
+    background-color: #2A3647 !important;
+}
 
 .custom-checkbox input[type="checkbox"]:checked + .checkbox-label .checkbox-custom {
     border-top-right-radius: 0;

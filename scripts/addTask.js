@@ -262,20 +262,22 @@ function updateAssigneeAvatars() {
 
 
 /**
- * Toggles the selection state of a user checkbox in edit mode
+ * Toggles the selection state of a user checkbox
  * @param {string} email - The email of the user to toggle selection for
  */
 function toggleUserSelection(email) {
-  const checkbox = document.getElementById("user-" + email);
-  checkbox.checked = !checkbox.checked;
-
-  const userItem = checkbox.closest(".assigned-user-item");
-  if (checkbox.checked) {
-    userItem.classList.add("active");
-  } else {
-    userItem.classList.remove("active");
-  }
-  updateAssigneeAvatars();
+    const checkbox = document.getElementById("user-" + email);
+    checkbox.checked = !checkbox.checked;
+    const userItem = checkbox.closest(".assigned-user-item");
+    const checkboxCustom = checkbox.parentNode.querySelector(".checkbox-custom");
+    if (checkbox.checked) {
+        userItem.classList.add("active");
+        checkboxCustom.classList.add("active");
+    } else {
+        userItem.classList.remove("active");
+        checkboxCustom.classList.remove("active");
+    }
+    updateAssigneeAvatars();
 }
 
 
