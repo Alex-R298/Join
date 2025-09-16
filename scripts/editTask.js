@@ -119,6 +119,7 @@ function addEditSubtask() {
     input.value = "";
   }
   changeEditButtons();
+  updateEditSubtaskScroll();
 }
 
 
@@ -248,7 +249,31 @@ function saveEditSubtaskEdit(input, li) {
 function deleteEditSubtask(button) {
   let li = button.closest("li");
   if (li) li.remove();
+  updateEditSubtaskScroll();
+} 
+
+
+// Alex
+
+function updateEditSubtaskScroll() {
+  const list = document.getElementById("editMyList");
+  const items = list.querySelectorAll("li");
+  if (items.length === 0) {
+    list.style.maxHeight = "auto";
+    return;
+  }
+
+  const subtaskHeight = items[0].offsetHeight;
+  const maxVisible = 3;
+
+  list.style.maxHeight = items.length > maxVisible
+    ? `${subtaskHeight * maxVisible}px`
+    : "auto";
 }
+
+
+
+
 
 
 /**

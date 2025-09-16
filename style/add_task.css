@@ -128,6 +128,35 @@ input[type="date"]::placeholder {
     gap: 10px;
 }
 
+/* Alex */
+#myList {
+  max-height: 150px;
+  overflow-y: auto;  
+  padding-right: 4px;
+}
+#myList::-webkit-scrollbar {
+  width: 6px;
+}
+
+#myList::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+#editMyList {
+  max-height: 150px; 
+  overflow-y: auto;  
+  padding-right: 4px; 
+}
+
+#editMyList::-webkit-scrollbar {
+  width: 6px;
+}
+
+#editMyList::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
 .priority-btn {
     display: flex;
     align-items: center;

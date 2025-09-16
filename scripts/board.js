@@ -116,6 +116,7 @@ function renderContainer(container, tasksForContainer, containerId) {
     tasksForContainer.forEach(task => {
       frag.appendChild(createFragmentFromHTML(taskOnBoardTemplate(task)));
     });
+    updateSubtaskScroll()
     container.appendChild(frag);
     tasksForContainer.forEach(task => {
       if (Array.isArray(task.assignedTo)) {
@@ -126,6 +127,29 @@ function renderContainer(container, tasksForContainer, containerId) {
   if (placeholder) container.appendChild(placeholder);
 }
 
+
+
+
+// neue Alex
+
+
+function updateSubtaskScroll(taskId) {
+  const container = document.getElementById(`subtasks-${taskId}`);
+  if (!container) return;
+
+  const items = container.querySelectorAll("li");
+  if (items.length === 0) {
+    container.style.maxHeight = "auto";
+    return;
+  }
+
+  const subtaskHeight = items[0].offsetHeight;
+  const maxVisible = 3;
+
+  container.style.maxHeight = items.length > maxVisible
+    ? `${subtaskHeight * maxVisible}px`
+    : "auto";
+}
 
 /**
  * Creates a DOM element for an empty container.

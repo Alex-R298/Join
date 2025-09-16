@@ -1,6 +1,27 @@
 /**
  * Adds a new subtask to the list if the input is not empty.
  */
+
+
+
+
+/// neue Alex
+
+
+
+function updateSubtaskScroll() {
+  const list = document.getElementById("myList");
+  const items = list.querySelectorAll("li");
+  
+  const subtaskHeight = items[0]?.offsetHeight || 40;
+  const maxVisible = 3;
+  
+  list.style.maxHeight = items.length > maxVisible 
+    ? `${subtaskHeight * maxVisible}px` 
+    : "auto";
+}
+
+
 function addSubtask() {
   let input = document.getElementById("subtask_input");
   let list = document.getElementById("myList");
@@ -10,10 +31,11 @@ function addSubtask() {
     list.innerHTML += createListItemTemplate(value);
     input.value = "";
   }
+
   changeButtons();
   addSubtaskHoverEffectsWithDelegation();
+  updateSubtaskScroll();
 }
-
 
 /**
  * Gets references to all relevant buttons and input elements for subtask management.
