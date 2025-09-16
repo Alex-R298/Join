@@ -266,9 +266,16 @@ function updateAssigneeAvatars() {
  * @param {string} email - The email of the user to toggle selection for
  */
 function toggleUserSelection(email) {
-    const checkbox = document.getElementById('user-' + email);
-    checkbox.checked = !checkbox.checked;
-    updateAssigneeAvatars();
+  const checkbox = document.getElementById("user-" + email);
+  checkbox.checked = !checkbox.checked;
+
+  const userItem = checkbox.closest(".assigned-user-item");
+  if (checkbox.checked) {
+    userItem.classList.add("active");
+  } else {
+    userItem.classList.remove("active");
+  }
+  updateAssigneeAvatars();
 }
 
 

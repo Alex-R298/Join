@@ -111,11 +111,11 @@
     background: #f0f0f0;
 }
 
-.assigned-user-item:active {
+.assigned-user-item.active {
     background: #2A3647;
 }
 
-.assigned-user-item:active span {
+.assigned-user-item.active span {
     color: white;
 }
 
