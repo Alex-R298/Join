@@ -299,7 +299,7 @@ function getAddPageTemplate(task, usersArray = []) {
                    onclick="toggleAssigneeDropdown()"
                    oninput="filterAssignees(this.value)">
             <img src="./assets/icons/arrow_drop_downarea.svg" class="dropdown-arrow" onclick="toggleAssigneeDropdown()">
-            x
+            
             <div id="assignee-dropdown" class="user-dropdown d-none">
                 ${usersArray
                   .map(
