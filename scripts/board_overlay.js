@@ -97,20 +97,64 @@ function formatDate(dateStr) {
 
 
 /**
- * Renders the avatar of a user in a task editor.
+ * Renders the avatar of a user in a task editor with a maximum of 3 avatars.
  * @param {string} email - User's email address.
  * @param {string} taskId - Task identifier.
  */
 function renderAssignedUserData(email, taskId) {
     if (typeof email !== 'string' || !email) return "";
-
+    
     const { initials, color } = renderAssignedUser(email);
     const container = document.getElementById(`editor-${taskId}`);
-
+    
     if (!container) return;
-    container.innerHTML += `<div class="editor-avatar" style="background-color:${color}">${initials}</div>`;
+    
+    const existingAvatars = container.querySelectorAll('.editor-avatar:not(.more-users)');
+    const moreUsersElement = container.querySelector('.more-users');
+    
+    if (existingAvatars.length < 3) {
+        container.insertAdjacentHTML('beforeend', 
+            `<div class="editor-avatar" style="background-color:${color}">${initials}</div>`
+        );
+    } else {
+        if (moreUsersElement) {
+            const currentCount = parseInt(moreUsersElement.textContent.replace('+', '')) || 1;
+            moreUsersElement.textContent = `+${currentCount + 1}`;
+        } else {
+            container.insertAdjacentHTML('beforeend', 
+                `<div class="editor-avatar more-users" style="background-color:#666">+1</div>`
+            );
+        }
+    }
 }
 
+/**
+ * Renders all assigned users for a task with avatar limit.
+ * @param {Array} assignedUsers - Array of user emails.
+ * @param {string} taskId - Task identifier.
+ */
+function renderAllAssignedUsers(assignedUsers, taskId) {
+    const container = document.getElementById(`editor-${taskId}`);
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    if (!assignedUsers || assignedUsers.length === 0) return;
+    
+    const displayUsers = assignedUsers.slice(0, 3);
+    const remainingCount = assignedUsers.length - 3;
+
+    displayUsers.forEach(email => {
+        if (typeof email !== 'string' || !email) return;
+        
+        const { initials, color } = renderAssignedUser(email);
+        container.innerHTML += `<div class="editor-avatar" style="background-color:${color}">${initials}</div>`;
+    });
+    
+    if (remainingCount > 0) {
+        container.innerHTML += `<div class="editor-avatar more-users" style="background-color:#666">+${remainingCount}</div>`;
+    }
+}
 
 /**
  * Creates avatar data (initials, color, name) for a user based on their email.
@@ -122,12 +166,12 @@ function renderAssignedUser(email) {
         console.warn('Invalid or missing email:', email);
         return { initials: '??', color: '#ccc', name: 'Unknown' };
     }
-
+    
     const userName = contactsMap[email] ? contactsMap[email].name : email.split('@')[0];
     const name = getName(userName);
     const initials = getInitials(name);
     const color = getAvatarColor(name);
-
+    
     return { initials, color, name };
 }
 

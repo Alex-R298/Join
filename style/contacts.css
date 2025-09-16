@@ -28,6 +28,11 @@
     top: 0;
     z-index: 100;
 }
+.more-avatar {
+  background-color: #ccc;
+  color: #000;
+  font-weight: bold;
+}
 
 .main-container {
     display: flex;

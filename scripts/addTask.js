@@ -247,18 +247,37 @@ function handleAddTask() {
  * Updates the visual representation of selected assignees.
  * Shows avatars of all selected users below the select field.
  */
-function updateAssigneeAvatars() {
-  const checkedBoxes = document.querySelectorAll(
-    '#assignee-dropdown input[type="checkbox"]:checked'
-  );
-  const avatarsContainer = document.getElementById("assigned-avatars");
+function renderAvatars(checkboxSelector, containerId) {
+  const checkedBoxes = document.querySelectorAll(`${checkboxSelector}:checked`);
+  const avatarsContainer = document.getElementById(containerId);
+  if (!avatarsContainer) return; // bricht ab, wenn Container nicht existiert
   avatarsContainer.innerHTML = "";
-  checkedBoxes.forEach((checkbox) => {
-    const userItem = checkbox.closest(".assigned-user-item");
-    const avatar = userItem.querySelector(".contact-avatar").cloneNode(true);
-    avatarsContainer.appendChild(avatar);
+
+  checkedBoxes.forEach((checkbox, index) => {
+    if (index < 3) {
+      const userItem = checkbox.closest(".assigned-user-item");
+      const avatar = userItem.querySelector(".contact-avatar").cloneNode(true);
+      avatarsContainer.appendChild(avatar);
+    }
   });
+
+  if (checkedBoxes.length > 3) {
+    const moreCount = checkedBoxes.length - 3;
+    const moreAvatar = document.createElement("div");
+    moreAvatar.className = "contact-avatar more-avatar";
+    moreAvatar.textContent = `+${moreCount}`;
+    avatarsContainer.appendChild(moreAvatar);
+  }
 }
+
+function updateAssigneeAvatars() {
+  renderAvatars('#assignee-dropdown input[type="checkbox"]', "assigned-avatars");
+}
+
+function updateEditAssignedAvatars() {
+  renderAvatars('#edit-user-dropdown input[type="checkbox"]', "edit-assigned-avatars");
+}
+
 
 
 /**

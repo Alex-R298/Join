@@ -356,6 +356,11 @@ textarea {
     cursor: pointer;
     padding: 8px 16px;
 }
+.more-avatar {
+  background-color: #ccc;
+  color: #000;
+  font-weight: bold;
+}
 
 textarea:focus {
     border: 1px solid var(--secondary);

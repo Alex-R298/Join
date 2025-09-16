@@ -53,20 +53,30 @@ function filterEditUsers(searchTerm) {
  * Updates the list of assigned user avatars in edit mode.
  * Clones the avatars of the selected users and adds them to the avatar container.
  */
-function updateEditAssignedAvatars() {
-  const checkedBoxes = document.querySelectorAll(
-    '#edit-user-dropdown input[type="checkbox"]:checked'
-  );
-  const avatarsContainer = document.getElementById("edit-assigned-avatars");
+// function updateEditAssigneeAvatars() {
+//   const checkedBoxes = document.querySelectorAll(
+//     '#assignee-dropdown input[type="checkbox"]:checked'
+//   );
+//   const avatarsContainer = document.getElementById("assigned-avatars");
+//   avatarsContainer.innerHTML = "";
 
-  avatarsContainer.innerHTML = "";
+//   checkedBoxes.forEach((checkbox, index) => {
+//     if (index < 3) {
+//       const userItem = checkbox.closest(".assigned-user-item");
+//       const avatar = userItem.querySelector(".contact-avatar").cloneNode(true);
+//       avatarsContainer.appendChild(avatar);
+//     }
+//   });
 
-  checkedBoxes.forEach((checkbox) => {
-    const userItem = checkbox.closest(".assigned-user-item");
-    const avatar = userItem.querySelector(".contact-avatar").cloneNode(true);
-    avatarsContainer.appendChild(avatar);
-  });
-}
+//   if (checkedBoxes.length > 3) {
+//     const moreCount = checkedBoxes.length - 3;
+//     const moreAvatar = document.createElement("div");
+//     moreAvatar.className = "contact-avatar more-avatar";
+//     moreAvatar.textContent = `+${moreCount}`;
+//     avatarsContainer.appendChild(moreAvatar);
+//   }
+// }
+
 
 // Subtask-Functions for editing
 
@@ -303,6 +313,7 @@ async function editTask(taskId) {
   document.body.classList.remove("no-markers");
   addSubtaskHoverEffectsWithDelegation();
   initializeEditCheckboxStates();
+  renderAssignedUserData();
 }
 
 

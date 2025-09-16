@@ -75,6 +75,12 @@
     width: 100%;
 }
 
+.more-avatar {
+  background-color: #ccc;
+  color: #000;
+  font-weight: bold;
+}
+
 .vl-add-task {
     border-left: 1px solid #D1D1D1;
     height: 424px;

@@ -62,24 +62,30 @@ function taskDetailOverlayTemplate(task) {
             </div>
         </div>
         <div class="assigned-to-container">
-            <span class="label">Assigned To:</span>
-                ${
-                  assignedUser.length === 0
-                    ? '<span class="no-assigned">No users assigned</span>'
-                    : assignedUser
-                        .map((email) => {
-                          const { initials, color, name } =
-                            renderAssignedUser(email);
-                          return `
-                                      <div class="assigned-user">
-                                          <div class="contact-avatar" style="background-color:${color}">${initials}</div>
-                                          <span class="assigned-name">${name}</span>
-                                      </div>
-                                  `;
-                        })
-                        .join("")
-                }
-        </div>
+  <span class="label">Assigned To:</span>
+  ${
+    assignedUser.length === 0
+      ? '<span class="no-assigned">No users assigned</span>'
+      : assignedUser
+          .slice(0, 3)
+          .map((email) => {
+            const { initials, color, name } = renderAssignedUser(email);
+            return `
+              <div class="assigned-user">
+                <div class="contact-avatar" style="background-color:${color}">${initials}</div>
+                <span class="assigned-name">${name}</span>
+              </div>
+            `;
+          })
+          .join("") +
+        (assignedUser.length > 3
+          ? `<div class="assigned-user">
+              <div class="contact-avatar more-avatar">+${assignedUser.length - 3}</div>
+             </div>`
+          : "")
+  }
+</div>
+
         <div class="subtasks-container">
             <span class="label">Subtasks</span>
             <div class="subtasks" id="subtasks-${task.id}">

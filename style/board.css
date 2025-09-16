@@ -293,6 +293,12 @@
     transition: none !important;
 }
 
+.more-avatar {
+  background-color: #ccc;
+  color: #000;
+  font-weight: bold;
+}
+
 /* .task-container:not(.dragging) {
     animation: slideDown 0.3s ease;
 } */
