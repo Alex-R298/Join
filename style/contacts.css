@@ -524,7 +524,7 @@
     }
 
     .inputs {
-        gap: 15px;
+        gap: 18px;
     }
 
     .add-contact-header{
@@ -815,10 +815,6 @@
     .add-contact-body input {
         width: 284px;
         font-size: 15px;
-    }
-
-    .inputs {
-        gap: 15px;
     }
 
     .add-contact-header{

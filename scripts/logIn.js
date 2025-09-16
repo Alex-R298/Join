@@ -224,7 +224,7 @@ async function checkUserCredentials(email, password) {
     }
     document.getElementById('login-email').style.borderColor = 'red';
     document.getElementById('login-password').style.borderColor = 'red';
-    showValidationError('login-password-error', 'E-Mail oder Passwort ist falsch');
+    showValidationError('login-password-error', 'Check your email and password. Please try again.');
     return false;
 }
 
