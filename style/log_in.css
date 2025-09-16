@@ -193,6 +193,16 @@ label {
     visibility: visible;
 }
 
+.validation-error {
+    font-size: 16px;
+    color: #E60026;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 5px;
+    z-index: 1;
+}
+
 @keyframes slideInFromBottom {
     0% {
         transform: translateY(100%);
@@ -368,7 +378,11 @@ label {
         width: 280px;
     }
 
-        .log-in-buttons {
-        margin-top: 26px;
+    .log-in-buttons {
+    margin-top: 26px;
+    }
+
+    .validation-error {
+        font-size: 14px;
     }
 }

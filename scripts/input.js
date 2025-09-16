@@ -6,7 +6,7 @@
 function validateName(nameInput) {
     if (!nameInput.value.trim() || !nameInput.value.includes(' ')) {
         nameInput.style.borderColor = 'red';
-        showValidationError(nameInput.id + '-error', 'Bitte Vor- und Nachname eingeben');
+        showValidationError(nameInput.id + '-error', 'Please enter your first and last name');
         return false;
     } else {
         const nameParts = nameInput.value.trim().split(' ');
@@ -33,7 +33,7 @@ function validateEmail(emailInput) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailInput.value.trim() || !emailRegex.test(emailInput.value)) {
         emailInput.style.borderColor = 'red';
-        showValidationError(emailInput.id + '-error', 'Bitte eine gültige E-Mail-Adresse eingeben');
+        showValidationError(emailInput.id + '-error', 'Please enter a valid email address');
         return false;
     } else {
         emailInput.style.borderColor = '';
@@ -57,7 +57,7 @@ function validatePhone(phoneInput) {
     const phoneRegex = /^(\+)?\d[\d\s]{9,14}$/;
     if (!phoneRegex.test(phoneInput.value.replace(/\s/g, ''))) {
         phoneInput.style.borderColor = 'red';
-        showValidationError(phoneInput.id + '-error', 'Bitte eine gültige Telefonnummer eingeben');
+        showValidationError(phoneInput.id + '-error', 'Please enter a valid phone number');
         return false;
     } else {
         phoneInput.style.borderColor = '';
@@ -77,7 +77,7 @@ function validatePassword(passwordInput) {
     
     if (!password.trim() || password.length < 8) {
         passwordInput.style.borderColor = 'red';
-        showValidationError(passwordInput.id + '-error', 'Das Passwort muss mindestens 8 Zeichen lang sein');
+        showValidationError(passwordInput.id + '-error', 'The password must be 8+ characters');
         return false;
     } else {
         passwordInput.style.borderColor = '';
@@ -99,11 +99,11 @@ function validateConfirmPassword(confirmPasswordInput, passwordInput) {
     
     if (!confirmPassword.trim()) {
         confirmPasswordInput.style.borderColor = 'red';
-        showValidationError(confirmPasswordInput.id + '-error', 'Bitte bestätige dein Passwort');
+        showValidationError(confirmPasswordInput.id + '-error', 'Please confirm your password');
         return false;
     } else if (confirmPassword !== password) {
         confirmPasswordInput.style.borderColor = 'red';
-        showValidationError(confirmPasswordInput.id + '-error', 'Die Passwörter stimmen nicht überein');
+        showValidationError(confirmPasswordInput.id + '-error', 'Your passwords don´t match. Please try again.');
         return false;
     } else {
         confirmPasswordInput.style.borderColor = '';
@@ -120,7 +120,7 @@ function validateConfirmPassword(confirmPasswordInput, passwordInput) {
  */
 function validateAccept(acceptInput) {
     if (!acceptInput.checked) {
-        showValidationError(acceptInput.id + '-error', 'Bitte akzeptiere die Nutzungsbedingungen');
+        showValidationError(acceptInput.id + '-error', 'Please accept the privacy policy');
         return false;
     } else {
         hideValidationError(acceptInput.id + '-error');
@@ -140,7 +140,6 @@ function showValidationError(errorId, message) {
         errorElement = document.createElement('div');
         errorElement.id = errorId;
         errorElement.className = 'validation-error';
-        errorElement.style = "color: #E60026; font-size: 16px; position: absolute; top: 100%; left: 0; margin-top: 5px; z-index: 1;";
         const inputId = errorId.replace('-error', '');
         const inputElement = document.getElementById(inputId);
         if (inputElement) {
