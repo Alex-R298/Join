@@ -249,7 +249,6 @@ button {
 }
 
 .button-primary:active {
-    border: 1px solid var(--darkblue);
     box-shadow: 0px 4px 4px 0px #00000040;
 }
 
