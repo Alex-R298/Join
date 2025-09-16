@@ -39,7 +39,7 @@ label {
 .log-in-section {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     gap: 16px;
     font-size: 16px;
@@ -112,7 +112,7 @@ label {
     justify-content: center;
     align-items: center;
     gap: 16px;
-    margin-top: 20px;
+    margin: 20px 0;
     font-size: 16px;
 }
 

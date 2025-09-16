@@ -39,7 +39,11 @@ async function filterTasks(query) {
  */
 function getFilteredTasks(query) {
   const q = query.toLowerCase();
-  return allTasks.filter(task => task.title.toLowerCase().includes(q));
+  return allTasks.filter(
+    (task) =>
+      task.title.toLowerCase().includes(q) ||
+      task.description.toLowerCase().includes(q)
+  );
 }
 
 
