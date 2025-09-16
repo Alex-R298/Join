@@ -75,6 +75,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    background-color: #F6F7F8;
 }
 
 .add:hover {
