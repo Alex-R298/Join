@@ -81,6 +81,5 @@ async function renderTasks() {
       updateDashboardCounts();
     }
   } catch (error) {
-    // Error handling could be added here
   }
 }
