@@ -318,7 +318,7 @@ input[type="date"]::placeholder {
     list-style: disc;
     display: list-item;
     margin-left: 16px;
-    font-size: 20px;
+    height: 24px;
 }
 
 .check_icon_subtask {
