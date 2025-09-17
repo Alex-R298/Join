@@ -55,9 +55,16 @@ function resetPriority() {
 
 /**
  * Unchecks all user checkboxes and clears assigned user avatars.
+ * Also removes active state styling from user items and custom checkboxes.
  */
 function resetCheckboxesAndAvatars() {
-  document.querySelectorAll('input[type="checkbox"][id^="user-"]').forEach(cb => cb.checked = false);
+  document.querySelectorAll('input[type="checkbox"][id^="user-"]').forEach(cb => {
+    cb.checked = false;
+    const userItem = cb.closest(".assigned-user-item");
+    const checkboxCustom = cb.parentNode.querySelector(".checkbox-custom");
+    userItem?.classList.remove("active");
+    checkboxCustom?.classList.remove("active");
+  });
   const avatars = document.getElementById("assigned-avatars");
   if (avatars) avatars.innerHTML = "";
 }
