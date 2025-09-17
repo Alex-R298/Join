@@ -428,6 +428,7 @@ a {
     cursor: pointer;
     position: relative;
     margin-bottom: 0px;
+    width: 100%;
 }
 
 .checkbox-custom {
