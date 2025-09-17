@@ -455,6 +455,7 @@
   .main-content {
     padding: 48px 0 48px 0;
     margin: 50px 0px;
+    overflow: hidden;
   }
 
   .row-1 {
@@ -490,8 +491,4 @@
     flex-direction: row;
     justify-content: center
   }
-    .main-content {
-        padding: 6px;
-        overflow: hidden;
-    }
 }
