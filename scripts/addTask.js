@@ -269,10 +269,10 @@ function filterAssignees(searchTerm) {
 
 
 /**
- * Öffnet oder schließt das Assignee-Dropdown.
- * - Blendet das Category-Dropdown aus, wenn es geöffnet wird.
- * - Setzt den Input auf fokussierbar, sobald das Dropdown offen ist.
- * - Schließt das Dropdown über closeAssigneeDropdown(), wenn es bereits offen ist.
+ * Opens or closes the assignee dropdown.
+ * - Hides the category dropdown when it is opened.
+ * - Makes the input focusable as soon as the dropdown is open.
+ * - Closes the dropdown via closeAssigneeDropdown() if it is already open.
  */
 function toggleAssigneeDropdown() {
   const dropdown = document.getElementById("assignee-dropdown");
@@ -293,10 +293,10 @@ function toggleAssigneeDropdown() {
 
 
 /**
- * Schließt das Assignee-Dropdown und setzt den Zustand zurück.
- * - Aktiviert wieder den readonly-Modus für das Input-Feld.
- * - Leert das Eingabefeld.
- * - Ruft filterAssignees("") auf, um Filter zurückzusetzen.
+ * Closes the assignee dropdown and resets the state.
+ * - Re-enables the readonly mode for the input field.
+ * - Clears the input field.
+ * - Calls filterAssignees("") to reset filters.
  */
 function closeAssigneeDropdown() {
   const categoryDropdown = document.getElementById("category-dropdown");
@@ -317,8 +317,8 @@ function closeAssigneeDropdown() {
 
 
 /**
- * Schließt das Assignee-Dropdown, wenn außerhalb geklickt wird.
- * @param {MouseEvent} event - Das Klick-Event auf das Dokument.
+ * Closes the assignee dropdown when clicking outside.
+ * @param {MouseEvent} event - The click event on the document.
  */
 document.addEventListener('click', function(event) {
   const dropdown = document.getElementById("assignee-dropdown");
@@ -332,8 +332,8 @@ document.addEventListener('click', function(event) {
 });
 
 /**
- * Schließt das Category-Dropdown, wenn außerhalb geklickt wird.
- * @param {MouseEvent} event - Das Klick-Event auf das Dokument.
+ * Closes the category dropdown when clicking outside.
+ * @param {MouseEvent} event - The click event on the document.
  */
 document.addEventListener('click', function(event) {
   const dropdown = document.getElementById("category-dropdown");
