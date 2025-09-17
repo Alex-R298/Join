@@ -132,7 +132,6 @@ input[type="date"]::placeholder {
     gap: 10px;
 }
 
-/* Alex */
 #myList {
   max-height: 150px;
   overflow-y: auto;  
