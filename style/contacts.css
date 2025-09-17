@@ -424,6 +424,10 @@
     border: 1px solid var(--lightgrey);
     font-size: 20px;
     text-indent: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 48px;
 }
 
 
