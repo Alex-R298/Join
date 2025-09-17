@@ -19,13 +19,11 @@ function showEditButtons(li) {
   const separator = li.querySelector(".vl-small");
   const buttonsContainer = li.querySelector(".subtask-edit-btns");
 
-  buttonsContainer.classList.remove("d-none"); // Show buttons permanently
+  buttonsContainer.classList.remove("d-none"); 
   const editImg = editBtn.querySelector("img");
   editImg.src = "./assets/icons/check_subtask.svg";
   editImg.alt = "Check";
   editImg.classList.add("check_icon_subtask");
-
-  // Reorder buttons: delete button and separator before edit button
   const parent = editBtn.parentNode;
   parent.insertBefore(deleteBtn, editBtn);
   parent.insertBefore(separator, editBtn);
@@ -45,8 +43,35 @@ function startEditMode(li) {
 
 
 /**
- * Resets edit buttons and icons to their default state.
- * @param {HTMLLIElement} li - The list item to reset button states for.
+ * Resets the edit icon back to its default state.
+ * @param {HTMLElement} editBtn - The edit button element.
+ */
+function resetEditIcon(editBtn) {
+  const editImg = editBtn.querySelector("img");
+  editImg.src = "./assets/icons/edit.svg";
+  editImg.alt = "Edit";
+  editImg.classList.remove("check_icon_subtask");
+}
+
+
+/**
+ * Restores the default order of buttons inside the list item.
+ * @param {HTMLElement} editBtn - The edit button element.
+ * @param {HTMLElement} deleteBtn - The delete button element.
+ * @param {HTMLElement} separator - The separator element.
+ */
+function resetButtonOrder(editBtn, deleteBtn, separator) {
+  const parent = editBtn.parentNode;
+  parent.appendChild(editBtn);
+  parent.appendChild(separator);
+  parent.appendChild(deleteBtn);
+}
+
+
+/**
+ * Resets edit buttons and icons of a subtask list item
+ * back to their default state.
+ * @param {HTMLLIElement} li - The list item containing buttons.
  */
 function resetEditButtons(li) {
   const editBtn = li.querySelector(".icon-btn.edit-btn");
@@ -55,32 +80,28 @@ function resetEditButtons(li) {
   const buttonsContainer = li.querySelector(".subtask-edit-btns");
 
   buttonsContainer.classList.add("d-none");
-
-  const editImg = editBtn.querySelector("img");
-  editImg.src = "./assets/icons/edit.svg";
-  editImg.alt = "Edit";
-  editImg.classList.remove("check_icon_subtask");
-
-  const parent = editBtn.parentNode;
-  parent.insertBefore(editBtn, parent.firstChild);
-  parent.insertBefore(separator, deleteBtn);
+  resetEditIcon(editBtn);
+  resetButtonOrder(editBtn, deleteBtn, separator);
 }
 
 
 /**
- * Main function to stop edit mode and save the subtask.
- * @param {HTMLLIElement} li - The list item to exit from edit mode.
+ * Stops edit mode for a subtask list item.
+ * @param {HTMLLIElement} li - The list item to take out of edit mode.
  */
 function stopEditMode(li) {
   const input = li.querySelector(".edit-input");
-  if (!input) return;
-
-  const span = replaceInputWithSpan(input, li);
-  if (span) {
-    li.classList.remove("edit-mode");
-    resetEditButtons(li);
-  } else {
-    li.remove(); // Remove subtask if input is empty
+  if (input) {
+    const span = replaceInputWithSpan(input, li);
+    if (span) {
+      li.classList.remove("edit-mode");
+      resetEditButtons(li);
+      updateSubtaskScroll();
+    } else {
+      // If input is empty, remove the entire list item
+      li.remove();
+      updateSubtaskScroll();
+    }
   }
 }
 
@@ -109,3 +130,4 @@ function showEditButtonsOnHover(subtaskElement) {
   const editButtons = subtaskElement.querySelector(".subtask-edit-btns");
   if (editButtons) editButtons.classList.remove("d-none");
 }
+

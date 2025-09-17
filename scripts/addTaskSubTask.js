@@ -178,17 +178,19 @@ function clickedDelete(event) {
  * @param {HTMLLIElement} li - The list item that was clicked.
  */
 function handleSubtaskClick(event, li) {
-  if (clickedDelete(event)) return; // Ignore clicks on delete button
-
+  if (clickedDelete(event)) {
+    event.stopPropagation();
+    deleteSubtask(event.target.closest(".icon-btn.delete-btn"));
+    return;
+  }
   const inEditMode = li.classList.contains("edit-mode");
-
   if (inEditMode) {
     if (clickedEdit(event)) {
-      stopEditMode(li); // Finish editing if edit button clicked again
+      event.stopPropagation();
+      stopEditMode(li);
     }
-    // Otherwise do nothing, input stays active
   } else {
-    startEditMode(li); // Start edit mode
+    startEditMode(li);
   }
 }
 
@@ -223,12 +225,24 @@ function attachInputEvents(input, li) {
       e.preventDefault();
       stopEditMode(li);
     }
+    if (e.key === "Escape") {
+      e.preventDefault();
+      li.classList.remove("edit-mode");
+      const span = li.querySelector(".subtask-text");
+      if (span) {
+        const originalText = span.textContent;
+        input.value = originalText;
+        replaceInputWithSpan(input, li);
+        resetEditButtons(li);
+      }
+    }
   });
+  
   input.addEventListener("blur", () => {
     setTimeout(() => {
       if (!li.classList.contains("edit-mode")) return;
       const active = document.activeElement;
-      if (!active || !active.closest(".icon-btn.edit-btn")) {
+      if (!active || (!active.closest(".icon-btn.edit-btn") && !active.closest(".icon-btn.delete-btn"))) {
         stopEditMode(li);
       }
     }, 10);
@@ -318,7 +332,6 @@ function addSubtaskHoverEffectsWithDelegation() {
       showEditButtonsOnHover(subtask);
     }
   });
-
   document.body.addEventListener("mouseout", e => {
     const subtask = e.target.closest(".subtask-listelement");
     if (subtask && !subtask.classList.contains("edit-mode")) {
