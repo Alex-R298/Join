@@ -483,11 +483,15 @@
   }
 }
 
-@media (max-width: 550px){
+@media screen and (min-width:320px) and (max-width: 550px) {
   .row-3 {
     margin: 0;
     display: flex;
     flex-direction: row;
     justify-content: center
   }
+    .main-content {
+        padding: 6px;
+        overflow: hidden;
+    }
 }
