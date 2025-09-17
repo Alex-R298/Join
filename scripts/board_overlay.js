@@ -22,6 +22,25 @@ async function showAddTaskOverlay(status = 'toDo') {
 
 
 /**
+ * Closes the add task overlay with animation and resets form state.
+ * Clears inputs and validation states before hiding the overlay.
+ */
+function closeAddTaskOverlay() {
+  const overlay = document.getElementById("add-task-overlay");
+  const container = document.getElementById("add-task-container");
+  container.classList.add("closing");
+  overlay.classList.remove("visible");
+  clearInputs();
+  resetValidationState();
+  setTimeout(() => {
+    overlay.classList.add("d-none");
+    document.body.style.overflow = "auto";
+    container.classList.remove("closing");
+  }, 500);
+} 
+
+
+/**
  * Opens the overlay displaying detailed information about a specific task.
  * @param {string} taskId - The unique identifier of the task.
  */
