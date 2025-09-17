@@ -132,6 +132,9 @@ function showPopup() {
 }
 
 
+/**
+ * Closes the task popup and hides the overlay.
+ */
 function closePopup() {
     const popup = document.getElementById("taskPopup");
     const overlay = document.getElementById("popupOverlay");
