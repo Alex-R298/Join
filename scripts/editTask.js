@@ -1,5 +1,5 @@
 /**
- * Öffnet das Edit-User-Dropdown und setzt Input und Pfeil.
+ * Opens the edit-user dropdown and sets input and arrow.
  * @param {HTMLElement} dropdown
  * @param {HTMLElement} arrow
  * @param {HTMLInputElement} input
@@ -13,7 +13,7 @@ function openEditDropdown(dropdown, arrow, input) {
 
 
 /**
- * Schließt das Edit-User-Dropdown, setzt Input readonly und zeigt alle Items.
+ * Closes the edit-user dropdown, sets input to readonly, and shows all items.
  * @param {HTMLElement} dropdown
  * @param {HTMLElement} arrow
  * @param {HTMLInputElement} input
@@ -29,7 +29,7 @@ function closeEditDropdown(dropdown, arrow, input) {
 
 
 /**
- * Toggles die Sichtbarkeit des Edit-User-Dropdowns.
+ * Toggles the visibility of the edit-user dropdown.
  */
 function toggleEditUserDropdown() {
   const dropdown = document.getElementById("edit-user-dropdown");
@@ -65,12 +65,12 @@ function filterEditUsers(searchTerm) {
 
 
 /**
- * Zeigt oder versteckt Buttons basierend auf dem Eingabewert.
- * @param {HTMLElement} addBtn - "Add"-Button
- * @param {HTMLElement} acceptBtn - "Accept"-Button
- * @param {HTMLElement} clearBtn - "Clear"-Button
- * @param {HTMLElement} divider - Trennlinie
- * @param {boolean} show - true: akzeptieren/löschen anzeigen, false: Add anzeigen
+ * Shows or hides buttons based on the input value.
+ * @param {HTMLElement} addBtn - "Add" button
+ * @param {HTMLElement} acceptBtn - "Accept" button
+ * @param {HTMLElement} clearBtn - "Clear" button
+ * @param {HTMLElement} divider - Divider line
+ * @param {boolean} show - true: show accept/clear, false: show Add
  */
 function toggleEditButtons(addBtn, acceptBtn, clearBtn, divider, show) {
   addBtn.classList.toggle("d-none", show);
@@ -80,7 +80,7 @@ function toggleEditButtons(addBtn, acceptBtn, clearBtn, divider, show) {
 }
 
 /**
- * Prüft den Wert des Edit-Subtask-Inputs und passt die Buttons an.
+ * Checks the value of the edit-subtask input and adjusts the buttons accordingly.
  */
 function changeEditButtons() {
   const acceptBtn = document.getElementById("editAcceptButton");
@@ -146,9 +146,9 @@ function handleEditSubtaskClick(event, li) {
 
 
 /**
- * Ersetzt den Text-Span durch ein Input-Feld und fokussiert es.
- * @param {HTMLElement} li - List Item
- * @returns {HTMLInputElement} Das erstellte Input-Feld
+ * Replaces the text span with an input field and focuses it.
+ * @param {HTMLElement} li - List item
+ * @returns {HTMLInputElement} The created input field
  */
 function replaceTextWithInput(li) {
   const span = li.querySelector(".subtask-text.list");
@@ -170,7 +170,7 @@ function replaceTextWithInput(li) {
 
 
 /**
- * Ändert das Edit-Icon zu einem Check und verschiebt Buttons.
+ * Changes the edit icon to a check and repositions the buttons.
  * @param {HTMLElement} li - List Item
  */
 function updateEditButtonToCheck(li) {
@@ -189,7 +189,7 @@ function updateEditButtonToCheck(li) {
 
 
 /**
- * Aktiviert den Edit-Modus für eine Subtask-Liste.
+ * Enables edit mode for a subtask list.
  * @param {HTMLElement} li - List Item
  */
 function startEditSubtaskEditMode(li) {
@@ -251,10 +251,10 @@ function deleteEditSubtask(button) {
 } 
 
 /**
- * Passt die maximale Höhe der Edit-Subtask-Liste an.
- * Wenn mehr als 3 Subtasks vorhanden sind, wird die Liste scrollbar,
- * ansonsten wird die Höhe automatisch angepasst.
- */
+* Adjusts the maximum height of the edit subtask list.
+* If there are more than 3 subtasks, the list becomes scrollable.
+* Otherwise, the height is adjusted automatically.
+*/
 function updateEditSubtaskScroll() {
   const list = document.getElementById("editMyList");
   const items = list.querySelectorAll("li");
@@ -271,9 +271,9 @@ function updateEditSubtaskScroll() {
 
 
 /**
- * Holt die aktuell ausgewählten Benutzer aus dem Edit-User-Dropdown.
- * @returns {string[]} Array der ausgewählten E-Mails.
- */
+* Gets the currently selected users from the Edit User dropdown.
+* @returns {string[]} Array of selected emails.
+*/
 function getAssignedUsers() {
   const assignedCheckboxes = document.querySelectorAll(
     '#edit-user-dropdown input[type="checkbox"]:checked'
@@ -283,10 +283,10 @@ function getAssignedUsers() {
 
 
 /**
- * Erstellt ein Array von Subtask-Objekten basierend auf der Edit-Liste.
- * @param {Object} task - Original-Task für den Vergleich.
- * @returns {Array} Array von Subtask-Objekten.
- */
+* Creates an array of subtask objects based on the edit list.
+* @param {Object} task - Original task for comparison.
+* @returns {Array} Array of subtask objects.
+*/
 function getEditedSubtasks(task) {
   const subtaskElements = [];
   document.querySelectorAll("#editMyList .subtask-text.list").forEach((item, index) => {
@@ -301,10 +301,10 @@ function getEditedSubtasks(task) {
 
 
 /**
- * Speichert die bearbeitete Aufgabe, aktualisiert HTML und schließt das Overlay.
- * @param {string} taskId - ID der Task.
- * @returns {Promise<void>}
- */
+* Saves the edited task, updates the HTML, and closes the overlay.
+* @param {string} taskId - ID of the task.
+* @returns {Promise<void>}
+*/
 async function saveEditedTask(taskId) {
   const task = allTasks.find(t => t.id === taskId);
   if (!task) return;
