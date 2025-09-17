@@ -97,7 +97,6 @@
     justify-content: space-between;
     align-items: end;
     width: 100%;
-    margin-top: 60px;
 }
 
 .add-task-buttons {
@@ -384,7 +383,7 @@ input[type="date"]::placeholder {
 }
 
 .input-with-subtasks {
-    height: 200px;
+    height: 168px;
 }
 
 
@@ -423,6 +422,10 @@ input[type="date"]::placeholder {
     .vl-add-task {
             display: none;
     }
+
+    .input-with-subtasks {
+    height: 128px;
+}
 
     .create-btns {
         width: 100%;

@@ -70,7 +70,8 @@
     flex-wrap: wrap;
     margin-right: 0 !important;
     gap: 8px;
-    margin-bottom: 24px;
+    /* margin-bottom: 24px; */
+    height: 46px; /* lassen ja nein? */
 }
 
 .mt-8 {
