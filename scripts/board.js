@@ -6,17 +6,17 @@ let contactsMap = {};
  * Initializes live search for boards and responds to input events.
  */
 function liveSearchBoards() {
-    let input = document.getElementById('searchInputBoards');
+  let input = document.getElementById('searchInputBoards');
 
-    input.addEventListener('input', async () => {
-        const query = input.value.trim().toLowerCase();
-        if (query.length < 2) {
-            await loadTasks();
-            updateHTML();
-        } else {
-            await filterTasks(query);
-        }
-    });
+  input.addEventListener('input', async () => {
+      const query = input.value.trim().toLowerCase();
+      if (query.length < 2) {
+          await loadTasks();
+          updateHTML();
+      } else {
+          await filterTasks(query);
+      }
+  });
 }
 
 
@@ -118,7 +118,6 @@ function clearAndAddPlaceholder(container, containerId, isEmpty) {
 }
 
 
-
 /**
  * Adjusts the maximum height of the subtask container
  * so that only 3 subtasks are visible, with the rest scrollable.
@@ -181,9 +180,6 @@ function getEmptyText(containerId) {
     };
     return texts[containerId] || `No Tasks ${containerId}`;
 }
-
-
-
 
 
 /**
