@@ -264,16 +264,13 @@ function setActiveNavigation() {
 
   const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
-  // remove active classes
   navLinks.forEach((link) => {
     link.classList.remove("active");
   });
 
-  // find matching link and add active class
   navLinks.forEach((link) => {
     const href = link.getAttribute("href");
 
-    // check if link matches current page
     if (
       href === currentPage ||
       (currentPage === "" && href === "index.html") ||
@@ -283,22 +280,3 @@ function setActiveNavigation() {
     }
   });
 }
-
-
-/**
- * Closes the add task overlay with animation and resets form state.
- * Clears inputs and validation states before hiding the overlay.
- */
-function closeAddTaskOverlay() {
-  const overlay = document.getElementById("add-task-overlay");
-  const container = document.getElementById("add-task-container");
-  container.classList.add("closing");
-  overlay.classList.remove("visible");
-  clearInputs();
-  resetValidationState();
-  setTimeout(() => {
-    overlay.classList.add("d-none");
-    document.body.style.overflow = "auto";
-    container.classList.remove("closing");
-  }, 500);
-} 
