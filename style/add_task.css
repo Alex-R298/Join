@@ -97,6 +97,7 @@
     justify-content: space-between;
     align-items: end;
     width: 100%;
+    margin-top: 5px;
 }
 
 .add-task-buttons {
@@ -333,6 +334,7 @@ input[type="date"]::placeholder {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    cursor: pointer;
 }
 
 .check_icon_subtask {
