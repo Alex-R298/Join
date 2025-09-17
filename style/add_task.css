@@ -319,7 +319,7 @@ input[type="date"]::placeholder {
     list-style: disc;
     display: list-item;
     margin-left: 16px;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 .check_icon_subtask {
