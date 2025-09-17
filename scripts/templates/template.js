@@ -384,7 +384,7 @@ function getAddPageTemplate(task, usersArray = []) {
               <span id="category-error-message" class="input-invalid d-none">This field is required</span>
               </div>
 
-      <div class="input-with-label">
+      <div class="input-with-label input-with-subtasks">
         <label for="subtask_input">Subtasks</label>
         <div class="input-with-button">
           <input oninput="changeButtons()" class="input-btn" type="text" id="subtask_input" placeholder="Add new subtask">
