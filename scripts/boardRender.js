@@ -1,11 +1,11 @@
 /**
- * Rendert die Tasks als DocumentFragment.
- * @param {Object[]} tasks - Array von Task-Objekten.
- * @returns {DocumentFragment} Fragment mit allen Task-Elementen.
+ * Renders the tasks as a DocumentFragment.
+ * @param {Object[]} tasks - Array of task objects.
+ * @returns {DocumentFragment} Fragment with all task elements.
  */
 function renderTasksFragment(tasks) {
   const frag = document.createDocumentFragment();
-  tasks.forEach(task => {
+  tasks.forEach((task) => {
     frag.appendChild(createFragmentFromHTML(taskOnBoardTemplate(task)));
   });
   updateSubtaskScroll();
@@ -14,24 +14,26 @@ function renderTasksFragment(tasks) {
 
 
 /**
- * Rendert die Avatare für alle Tasks im Container.
- * @param {Object[]} tasks - Array von Task-Objekten.
- */
+* Renders the avatars for all tasks in the container.
+* @param {Object[]} tasks - Array of task objects.
+*/
 function renderAssignedUsersForTasks(tasks) {
-  tasks.forEach(task => {
+  tasks.forEach((task) => {
     if (Array.isArray(task.assignedTo)) {
-      task.assignedTo.forEach(email => renderAssignedUserData(email, task.id));
+      task.assignedTo.forEach((email) =>
+        renderAssignedUserData(email, task.id)
+      );
     }
   });
 }
 
 
 /**
- * Rendert einen Container mit Tasks oder einem leeren Platzhalter.
- * @param {HTMLElement} container - Spalten-Container.
- * @param {Object[]} tasksForContainer - Tasks für diesen Container.
- * @param {string} containerId - ID des Containers.
- */
+* Renders a container with tasks or an empty placeholder.
+* @param {HTMLElement} container - Column container.
+* @param {Object[]} tasksForContainer - Tasks for this container.
+* @param {string} containerId - ID of the container.
+*/
 function renderContainer(container, tasksForContainer, containerId) {
   const isEmpty = !tasksForContainer.length;
   const placeholder = clearAndAddPlaceholder(container, containerId, isEmpty);
@@ -52,19 +54,19 @@ function renderContainer(container, tasksForContainer, containerId) {
  * @param {Object[]} tasks - List of tasks to render.
  */
 function renderTasksInContainer(container, tasks) {
-    const placeholder = container.querySelector('.drag-placeholder');
-    container.innerHTML = '';
-    tasks.forEach(task => {
-        container.insertAdjacentHTML('beforeend', taskOnBoardTemplate(task));
-        if (task.assignedTo) {
-            const editorContainer = document.getElementById(`editor-${task.id}`);
-            if (editorContainer) {
-                editorContainer.innerHTML = "";
-                renderAssignedUserData(task.assignedTo, task.id);
-            }
-        }
-    });
-    if (placeholder) container.appendChild(placeholder);
+  const placeholder = container.querySelector(".drag-placeholder");
+  container.innerHTML = "";
+  tasks.forEach((task) => {
+    container.insertAdjacentHTML("beforeend", taskOnBoardTemplate(task));
+    if (task.assignedTo) {
+      const editorContainer = document.getElementById(`editor-${task.id}`);
+      if (editorContainer) {
+        editorContainer.innerHTML = "";
+        renderAssignedUserData(task.assignedTo, task.id);
+      }
+    }
+  });
+  if (placeholder) container.appendChild(placeholder);
 }
 
 
@@ -77,9 +79,8 @@ async function renderTasks() {
     const tasks = await loadTasks();
     allTasks = tasks;
     updateHTML();
-    if (typeof updateDashboardCounts === 'function') {
+    if (typeof updateDashboardCounts === "function") {
       updateDashboardCounts();
     }
-  } catch (error) {
-  }
+  } catch (error) {}
 }

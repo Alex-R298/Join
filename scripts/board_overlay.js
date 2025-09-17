@@ -115,10 +115,10 @@ function formatDate(dateStr) {
 
 
 /**
- * Ruft Initialen und Farbe eines Benutzers ab.
- * @param {string} email - E-Mail des Benutzers.
- * @returns {{initials: string, color: string}} Initialen und Farbe.
- */
+* Retrieves a user's initials and color.
+* @param {string} email - User's email.
+* @returns {{initials: string, color: string}} Initials and color.
+*/
 function getAssignedUserData(email) {
   if (typeof email !== 'string' || !email) return { initials: '', color: '#666' };
   return renderAssignedUser(email);
@@ -126,11 +126,11 @@ function getAssignedUserData(email) {
 
 
 /**
- * Fügt ein Avatar-Element in den Container ein.
- * @param {HTMLElement} container - Container für die Avatare.
- * @param {string} initials - Initialen des Benutzers.
- * @param {string} color - Hintergrundfarbe.
- */
+* Inserts an avatar element into the container.
+* @param {HTMLElement} container - Container for the avatars.
+* @param {string} initials - User's initials.
+* @param {string} color - Background color.
+*/
 function addAvatar(container, initials, color) {
   container.insertAdjacentHTML('beforeend', 
     `<div class="editor-avatar" style="background-color:${color}">${initials}</div>`
@@ -139,9 +139,9 @@ function addAvatar(container, initials, color) {
 
 
 /**
- * Fügt oder aktualisiert das "+x"-Avatar im Container.
- * @param {HTMLElement} container - Container für die Avatare.
- */
+* Adds or updates the "+x" avatar in the container.
+* @param {HTMLElement} container - Container for the avatars.
+*/
 function addOrUpdateMoreAvatar(container) {
   const more = container.querySelector('.more-users');
   if (more) {
@@ -156,11 +156,11 @@ function addOrUpdateMoreAvatar(container) {
 
 
 /**
- * Rendert die Avatare eines Benutzers im Task-Editor,
- * maximal 3 Avatare plus "+x" für weitere Nutzer.
- * @param {string} email - E-Mail des Benutzers.
- * @param {string} taskId - ID der Aufgabe.
- */
+* Renders a user's avatars in the task editor.
+* A maximum of 3 avatars plus "+x" for additional users.
+* @param {string} email - User's email address.
+* @param {string} taskId - Task ID.
+*/
 function renderAssignedUserData(email, taskId) {
   const { initials, color } = getAssignedUserData(email);
   const container = document.getElementById(`editor-${taskId}`);
@@ -173,11 +173,11 @@ function renderAssignedUserData(email, taskId) {
 
 
 /**
- * Rendert ein einzelnes Avatar-Element in einen Container.
- * @param {HTMLElement} container - Container für die Avatare.
- * @param {string} initials - Initialen des Benutzers.
- * @param {string} color - Hintergrundfarbe des Avatars.
- */
+* Renders a single avatar element into a container.
+* @param {HTMLElement} container - Container for the avatars.
+* @param {string} initials - User's initials.
+* @param {string} color - Background color of the avatar.
+*/
 function renderAvatar(container, initials, color) {
   container.insertAdjacentHTML('beforeend', 
     `<div class="editor-avatar" style="background-color:${color}">${initials}</div>`
@@ -186,10 +186,10 @@ function renderAvatar(container, initials, color) {
 
 
 /**
- * Rendert das "+x"-Avatar für weitere Benutzer.
- * @param {HTMLElement} container - Container für die Avatare.
- * @param {number} count - Anzahl zusätzlicher Benutzer.
- */
+* Renders the "+x" avatar for additional users.
+* @param {HTMLElement} container - Container for the avatars.
+* @param {number} count - Number of additional users.
+*/
 function renderMoreAvatar(container, count) {
   container.insertAdjacentHTML('beforeend', 
     `<div class="editor-avatar more-users" style="background-color:#666">+${count}</div>`
@@ -198,11 +198,11 @@ function renderMoreAvatar(container, count) {
 
 
 /**
- * Rendert die Avatare mehrerer Benutzer in einem Task-Editor,
- * maximal 3 Avatare plus "+x" für die restlichen.
- * @param {Array<string>} assignedUsers - Array der Benutzer-E-Mails.
- * @param {string} taskId - ID der Aufgabe.
- */
+* Renders the avatars of multiple users in a task editor,
+* a maximum of 3 avatars plus "+x" for the remaining ones.
+* @param {Array<string>} assignedUsers - Array of user emails.
+* @param {string} taskId - ID of the task.
+*/
 function renderAllAssignedUsers(assignedUsers, taskId) {
   const container = document.getElementById(`editor-${taskId}`);
   if (!container) return;
@@ -259,10 +259,10 @@ function normalizeSubtasks(subtaskElements) {
 
 
 /**
- * Wandelt Text-Subtasks in Objekte um, falls noch Strings vorhanden sind.
- * @param {Array} subtasks - Array der Subtasks.
- * @returns {Array} Array von Subtask-Objekten.
- */
+* Converts text subtasks to objects if strings still exist.
+* @param {Array} subtasks - Array of subtasks.
+* @returns {Array} Array of subtask objects.
+*/
 function initializeSubtasks(subtasks) {
   if (typeof subtasks[0] === 'string') {
     return subtasks.map(text => ({ text, completed: false }));
@@ -272,10 +272,10 @@ function initializeSubtasks(subtasks) {
 
 
 /**
- * Toggelt den abgeschlossenen Status einer Subtask.
- * @param {Array} subtasks - Array der Subtask-Objekte.
- * @param {number} index - Index der Subtask zum toggeln.
- */
+* Toggles the completed status of a subtask.
+* @param {array} subtasks - Array of subtask objects.
+* @param {number} index - Index of the subtask to toggle.
+*/
 function toggleSubtaskCompletion(subtasks, index) {
   if (!subtasks[index]) return;
   subtasks[index].completed = !subtasks[index].completed;
@@ -283,10 +283,10 @@ function toggleSubtaskCompletion(subtasks, index) {
 
 
 /**
- * Aktualisiert den Fortschrittsbalken und Text im UI.
- * @param {string} taskId - ID der Aufgabe.
- * @param {Object} progressData - Fortschrittsinformationen.
- */
+* Updates the progress bar and text in the UI.
+* @param {string} taskId - ID of the task.
+* @param {Object} progressData - Progress information.
+*/
 function updateProgressUI(taskId, progressData) {
   const progressBar = document.querySelector(`[id="task-${taskId}"] .progress`);
   const progressText = document.querySelector(`[id="task-${taskId}"] .subtasks`);
@@ -299,12 +299,12 @@ function updateProgressUI(taskId, progressData) {
 
 
 /**
- * Toggles den Completion-Status einer Subtask, speichert die Änderung
- * und aktualisiert den Fortschritt im UI.
- * @param {string} taskId - ID der Aufgabe.
- * @param {number} subtaskIndex - Index der Subtask.
- * @returns {Promise<void>}
- */
+* Toggles the completion status of a subtask, saves the change
+*, and updates the progress in the UI.
+* @param {string} taskId - ID of the task.
+* @param {number} subtaskIndex - Index of the subtask.
+* @returns {Promise<void>}
+*/
 async function toggleSubtask(taskId, subtaskIndex) {
   const task = allTasks.find(t => t.id === taskId);
   if (!task) return;
@@ -343,4 +343,3 @@ function updateTaskProgress(task) {
     progressText.textContent = progressData.progressText;
   }
 }
-
