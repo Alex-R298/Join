@@ -302,7 +302,7 @@
 
 /* Alex */
 .subtasks {
-  max-height: 150px; 
+  max-height: 108px; 
   overflow-y: auto;  
   padding-right: 4px; 
 }
