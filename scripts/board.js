@@ -105,10 +105,10 @@ function getTasksForContainer(tasks, containerId) {
 
 
 /**
- * Leert den Container und fügt ggf. einen leeren Platzhalter hinzu.
- * @param {HTMLElement} container - Spalten-Container.
- * @param {string} containerId - ID des Containers.
- * @param {boolean} isEmpty - Ob der Container keine Tasks hat.
+ * Clears the container and adds an empty placeholder if necessary.
+ * @param {HTMLElement} container - Column container.
+ * @param {string} containerId - ID of the container.
+ * @param {boolean} isEmpty - Whether the container has no tasks.
  */
 function clearAndAddPlaceholder(container, containerId, isEmpty) {
   const placeholder = container.querySelector('.drag-placeholder');
@@ -120,9 +120,9 @@ function clearAndAddPlaceholder(container, containerId, isEmpty) {
 
 
 /**
- * Passt die maximale Höhe des Subtask-Containers an,
- * sodass bei mehr als 3 Subtasks nur 3 sichtbar sind und der Rest scrollbar wird.
- * @param {string} taskId - ID der Aufgabe, deren Subtasks angepasst werden.
+ * Adjusts the maximum height of the subtask container
+ * so that only 3 subtasks are visible, with the rest scrollable.
+ * @param {string} taskId - ID of the task whose subtasks are adjusted.
  */
 function updateSubtaskScroll(taskId) {
   const container = document.getElementById(`subtasks-${taskId}`);
