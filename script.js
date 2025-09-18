@@ -131,21 +131,15 @@ function datetimer() {
  */
 function showOverlay(greet, userName) {
   const overlay = document.getElementById("welcome-overlay");
-  if (!overlay) {
-    return;
-  }
-  const overlayContent = overlay.querySelector(".overlay-content");
-  if (!overlayContent) {
-    return;
-  }
+  const overlayContent = overlay?.querySelector(".overlay-content");
+  if (!overlayContent) return;
+
   overlayContent.innerHTML = userName
     ? `<h2>${greet},</h2><p class="greet_name">${userName}</p>`
     : `<h2>${greet}!</h2>`;
 
   overlay.classList.remove("d-none");
-  setTimeout(() => {
-    overlay.classList.add("d-none");
-  }, 3000);
+  setTimeout(() => overlay.classList.add("d-none"), 3000);
 }
 
 
@@ -182,21 +176,14 @@ async function loadAddPage(task = {}) {
     const res = await fetch(BASE_URL + "/user.json");
     const data = await res.json();
     const usersArray = Object.values(data).filter((user) => user.name);
-
-    let addPageContainer = document.getElementById("add_task_template");
-    let addBoardOverlay = document.getElementById("add-task-container");
-
-    if (addPageContainer) {
-      addPageContainer.innerHTML = getAddPageTemplate(task, usersArray);
-    } else if (addBoardOverlay) {
-      addBoardOverlay.innerHTML = getAddPageTemplate(task, usersArray);
+    const container = document.getElementById("add_task_template") || document.getElementById("add-task-container");
+    
+    if (container) {
+      container.innerHTML = getAddPageTemplate(task, usersArray);
     }
-
     updateAssigneeAvatars();
-
     return usersArray;
   } catch (error) {
-    
     return [];
   }
   }
@@ -207,22 +194,11 @@ async function loadAddPage(task = {}) {
  * Redirects users to login page if accessing protected pages without valid session.
  */
 (function() {
+    const protectedPages = ['board.html', 'contacts.html', 'index.html', 'legal_notice.html', 'help.html', 'privacy_policy.html', 'add_task.html'];
     const currentPage = window.location.pathname;
-    const protectedPages = [
-        'board.html', 
-        'contacts.html', 
-        'index.html',
-        'legal_notice.html',
-        'help.html',
-        'privacy_policy.html',
-        'add_task.html'
-    ];
-    const isProtectedPage = protectedPages.some(page => 
-        currentPage.endsWith(page) || currentPage.includes(page)
-    );
-    const hasValidSession = sessionStorage.getItem('currentUser') || sessionStorage.getItem('guestUser');
     
-    if (isProtectedPage && !hasValidSession) {
+    if (protectedPages.some(page => currentPage.includes(page)) && 
+        !(sessionStorage.getItem('currentUser') || sessionStorage.getItem('guestUser'))) {
         document.documentElement.style.display = 'none';
         window.location.replace("log_in.html");
     }
@@ -261,22 +237,13 @@ function logOut() {
  */
 function setActiveNavigation() {
   const navLinks = document.querySelectorAll(".sidebar a");
-
   const currentPage = window.location.pathname.split("/").pop() || "index.html";
-
-  navLinks.forEach((link) => {
-    link.classList.remove("active");
-  });
-
-  navLinks.forEach((link) => {
+  
+  navLinks.forEach(link => {
     const href = link.getAttribute("href");
-
-    if (
-      href === currentPage ||
-      (currentPage === "" && href === "index.html") ||
+    link.classList.toggle("active", 
+      href === currentPage || 
       (currentPage === "index.html" && href === "index.html")
-    ) {
-      link.classList.add("active");
-    }
+    );
   });
 }
