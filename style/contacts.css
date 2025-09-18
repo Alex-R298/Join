@@ -657,8 +657,8 @@
             justify-content: flex-end;
             margin-top: auto;
             position: sticky;
-            bottom: 154px;
-            margin-right: 232px;
+            bottom: 40px;
+            margin-right: 228px;
     }
 
     .button-drop-style {
@@ -696,7 +696,7 @@
 
     #button-drop-menu {
         position: fixed;
-        bottom: 136px;
+        bottom: 40px;
         right: 12.7rem;
     }
 
@@ -763,7 +763,8 @@
     }
 
     .button-drop {
-            margin-right: 0px;
+        margin-right: 7px;
+        bottom: 100px;
     }
 
     .button-back {
@@ -789,7 +790,7 @@
 
         #button-drop-menu {
         margin-right: 0px;
-        bottom: 56px;
+        bottom: 20px;
         right: 1rem;
     }
     }
