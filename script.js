@@ -1,24 +1,50 @@
 /**
- * Initializes the application
+ * Calls all setup functions that are defined in the `functionNames` array.
  */
-async function init() {
+function runInitialSetupFunctions() {
     const functionNames = [
-        'datetimer', 'loadHeader', 'loadSidebar', 'loadAddPage', 
-        'setActiveNavigation', 'clearAllContainers'
+        'datetimer',
+        'loadHeader',
+        'loadSidebar',
+        'loadAddPage',
+        'setActiveNavigation',
+        'clearAllContainers'
     ];
+
     functionNames.forEach(name => {
         if (typeof window[name] === 'function') {
             window[name]();
         }
     });
+}
+
+
+/**
+ * Loads optional data such as contacts and tasks if the corresponding functions exist.
+ * @returns {Promise<void>} Resolves once all optional data is loaded.
+ */
+async function loadOptionalData() {
     if (typeof loadContacts === 'function') {
         await loadContacts();
-    }if (typeof renderTasks === 'function') {
+    }
+    if (typeof renderTasks === 'function') {
         await renderTasks();
-    }if (typeof updateHTML === 'function') {
+    }
+    if (typeof updateHTML === 'function') {
         updateHTML();
     }
-setupFirebaseListener();
+}
+
+
+/**
+ * Initializes the application by running setup functions,
+ * loading optional data, and starting the Firebase listener.
+ * @returns {Promise<void>} Resolves when initialization is complete.
+ */
+async function init() {
+    runInitialSetupFunctions();
+    await loadOptionalData();
+    setupFirebaseListener();
 }
 
 
@@ -34,24 +60,47 @@ async function executeIfExists(fn) {
 
 
 /**
- * Sets up Firebase real-time listener for tasks
+ * Transforms raw Firebase snapshot data into an array of task objects.
+ * @param {Object} data - Raw data object from Firebase snapshot.
+ * @returns {Array<Object>} Array of task objects with `id` and task properties.
+ */
+function transformTaskData(data) {
+    return Object.entries(data)
+        .filter(([id, task]) => task.category)
+        .map(([id, task]) => ({ id, ...task }));
+}
+
+
+/**
+ * Handles updates received from the Firebase task reference.
+ * Updates the global task list and triggers UI updates if available.
+ * @param {firebase.database.DataSnapshot} snapshot - Firebase snapshot of task data.
+ * @returns {Promise<void>} Resolves once the update is processed.
+ */
+async function handleTaskSnapshot(snapshot) {
+    const data = snapshot.val();
+    if (!data) return;
+
+    allTasks = transformTaskData(data);
+
+    if (typeof updateHTML === 'function') {
+        updateHTML();
+    }
+    if (typeof updateDashboardCounts === 'function') {
+        updateDashboardCounts();
+    }
+}
+
+
+/**
+ * Sets up a Firebase real-time listener for tasks.
+ * Listens for changes in the `/task` reference and updates the app state accordingly.
  */
 function setupFirebaseListener() {
     if (typeof firebase === 'undefined') return;
+
     const taskRef = firebase.database().ref('/task');
-    taskRef.on('value', async (snapshot) => {
-        const data = snapshot.val();
-        if (!data) return;
-        const tasks = Object.entries(data)
-            .filter(([id, task]) => task.category)
-            .map(([id, task]) => ({ id, ...task }));
-        allTasks = tasks;
-        if (typeof updateHTML === 'function') {
-            updateHTML();
-        }if (typeof updateDashboardCounts === 'function') {
-            updateDashboardCounts();
-        }
-    });
+    taskRef.on('value', handleTaskSnapshot);
 }
 
 
