@@ -158,7 +158,7 @@ function updateGreetingLabel() {
 function showGreetingOverlay() {
   const greet = getTimeGreeting();
   if (sessionStorage.getItem("overlayShown") || !window.matchMedia("(max-width: 970px)").matches) return;
-  showOverlay(greet, null); // Name null → only time greeting
+  showOverlay(greet, null);
   sessionStorage.setItem("overlayShown", "true");
 }
 
