@@ -133,12 +133,13 @@
     gap: 8px;
 }
 
-
 .task-description-container {
     width: 100%;
     margin: 16px 0;
     overflow: auto;
     max-height: 140px;
+    min-height: 60px;
+    height: auto;
 }
 
 .task-description-container p {
@@ -151,4 +152,13 @@
 
 #assignee-input::placeholder {
     color:black;
+}
+
+
+@media (max-width: 428px) {
+    
+    .task-description-container p {
+        font-size: 16px;
+}
+
 }
