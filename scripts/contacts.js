@@ -79,6 +79,10 @@ async function handleSuccessfulContactSave(contactId, contact) {
 async function deleteContact(contactId) {
     await removeContact(contactId);
     await fetchContacts();
+    const contactsHeadline = document.querySelector(".contacts-headline.active");
+    if (contactsHeadline) {
+        contactsHeadline.classList.remove("active");
+    }
     clearContactDetailsView();
     closeAddContactQuick();
 }

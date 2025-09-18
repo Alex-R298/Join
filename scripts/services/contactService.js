@@ -65,10 +65,5 @@ async function updateContactData(contactId, contactData) {
  * @returns {Promise<Object>} Response data
  */
 async function removeContact(contactId) {
-    const response = await apiRequest(`/user/${contactId}`, "DELETE");
-    const contactsHeadline = document.querySelector(".contacts-headline.active");
-    if (contactsHeadline) {
-        contactsHeadline.classList.remove("active");
-    }
-    return response;
+    return await apiRequest(`/user/${contactId}`, "DELETE");
 }
