@@ -195,24 +195,44 @@ function parseHTML(html) {
 
 
 /**
- * Updates all containers to show empty states or removes placeholders as needed.
+ * Creates and returns an empty container element for a given container ID.
+ * @param {string} containerId - ID of the container.
+ * @returns {HTMLElement} The created empty container element.
+ */
+function createEmptyContainer(containerId) {
+    const emptyDiv = document.createElement('div');
+    emptyDiv.className = 'empty-container';
+    emptyDiv.innerHTML = `<p class="empty-container-text">${getEmptyText(containerId)}</p>`;
+    return emptyDiv;
+}
+
+
+/**
+ * Updates a single container to show empty state or remove it as needed.
+ * @param {HTMLElement} container - The container element to update.
+ * @param {string} containerId - ID of the container.
+ */
+function updateSingleContainer(container, containerId) {
+    const hasTasks = container.querySelector('.task-container');
+    const emptyContainer = container.querySelector('.empty-container');
+
+    if (!hasTasks && !emptyContainer) {
+        container.appendChild(createEmptyContainer(containerId));
+    } else if (!hasTasks && emptyContainer) {
+        emptyContainer.style.display = 'flex';
+    } else if (hasTasks && emptyContainer) {
+        emptyContainer.remove();
+    }
+}
+
+
+/**
+ * Updates all task containers to show empty states or remove placeholders.
  */
 function updateEmptyContainers() {
     ["toDo", "inProgress", "awaitFeedback", "done"].forEach(containerId => {
         const container = document.getElementById(containerId);
-        if (!container) return;
-        const hasTasks = container.querySelector('.task-container');
-        const emptyContainer = container.querySelector('.empty-container');
-        if (!hasTasks && !emptyContainer) {
-            const emptyDiv = document.createElement('div');
-            emptyDiv.className = 'empty-container';
-            emptyDiv.innerHTML = `<p class="empty-container-text">${getEmptyText(containerId)}</p>`;
-            container.appendChild(emptyDiv);
-        } else if (!hasTasks && emptyContainer) {
-            emptyContainer.style.display = 'flex';
-        } else if (hasTasks && emptyContainer) {
-            emptyContainer.remove();
-        }
+        if (container) updateSingleContainer(container, containerId);
     });
 }
 

@@ -108,18 +108,13 @@ function setupDragImage(event, taskElement, id) {
  * @param {number} height - Height of the placeholder
  */
 function createPlaceholder(taskElement, height) {
-    // Remove existing placeholder if present
     if (placeholderElement?.parentNode) {
         placeholderElement.parentNode.removeChild(placeholderElement);
     }
-
-    // Create new placeholder
     placeholderElement = document.createElement('div');
     placeholderElement.id = `placeholder-${currentDraggedElement}`;
     placeholderElement.classList.add('drag-placeholder');
-    placeholderElement.style.height = height + 'px'; // dynamic height
-
-    // Insert after the original task
+    placeholderElement.style.height = height + 'px';
     taskElement.parentNode.insertBefore(placeholderElement, taskElement.nextSibling);
 }
 
@@ -312,21 +307,6 @@ function cleanupDragState() {
 
 
 /**
- * Updates task status and saves to Firebase
- * @param {string} taskId - Task ID
- * @param {string} status - New status
- */
-async function updateTaskStatus(taskId, status) {
-    const taskIndex = allTasks.findIndex(task => task.id === taskId);
-    if (taskIndex !== -1) {
-        allTasks[taskIndex].status = status;
-        await saveTaskToFirebase(allTasks[taskIndex]);
-        updateHTML();
-    }
-}
-
-
-/**
  * Saves task with new status to Firebase
  * @param {string} taskId - Task ID
  * @param {string} status - New status
@@ -341,25 +321,10 @@ async function saveTask(taskId, status) {
 
 
 /**
- * Updates all tasks from current DOM structure
+ * Saves all tasks to Firebase.
+ * @returns {Promise<void>}
  */
-async function updateAllTasksFromDOM() {
-    const containers = ["toDo", "inProgress", "awaitFeedback", "done"];
-    let newAllTasks = [];
-    containers.forEach(containerId => {
-        const container = document.getElementById(containerId);
-        const tasksInContainer = [...container.querySelectorAll('.task-container')];
-        tasksInContainer.forEach((taskElement, index) => {
-            const taskId = taskElement.id.replace('task-', '');
-            const task = allTasks.find(t => t.id === taskId);
-            if (task) {
-                task.status = containerId;
-                task.order = index;
-                newAllTasks.push(task);
-            }
-        });
-    });
-    allTasks = newAllTasks;
+async function saveAllTasksToFirebase() {
     for (const task of allTasks) {
         await saveTaskToFirebase(task);
     }

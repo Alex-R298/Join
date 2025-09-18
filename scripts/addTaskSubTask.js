@@ -215,38 +215,52 @@ function replaceSpanWithInput(li) {
 
 
 /**
- * Attaches event listeners to handle Enter key press and blur events for input.
+ * Handles Enter and Escape key events for an input element.
+ * @param {KeyboardEvent} e - The keyboard event.
+ * @param {HTMLLIElement} li - The list item containing the input.
+ * @param {HTMLInputElement} input - The input element.
+ */
+function handleInputKeydown(e, li, input) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        stopEditMode(li);
+    }
+    if (e.key === "Escape") {
+        e.preventDefault();
+        li.classList.remove("edit-mode");
+        const span = li.querySelector(".subtask-text");
+        if (span) {
+            input.value = span.textContent;
+            replaceInputWithSpan(input, li);
+            resetEditButtons(li);
+        }
+    }
+}
+
+
+/**
+ * Handles blur event for the input element to exit edit mode if necessary.
+ * @param {HTMLLIElement} li - The list item containing the input.
+ */
+function handleInputBlur(li) {
+    setTimeout(() => {
+        if (!li.classList.contains("edit-mode")) return;
+        const active = document.activeElement;
+        if (!active || (!active.closest(".icon-btn.edit-btn") && !active.closest(".icon-btn.delete-btn"))) {
+            stopEditMode(li);
+        }
+    }, 10);
+}
+
+
+/**
+ * Attaches keyboard and blur event listeners to an input element.
  * @param {HTMLInputElement} input - The input element to attach events to.
  * @param {HTMLLIElement} li - The list item containing the input.
  */
 function attachInputEvents(input, li) {
-  input.addEventListener("keydown", e => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      stopEditMode(li);
-    }
-    if (e.key === "Escape") {
-      e.preventDefault();
-      li.classList.remove("edit-mode");
-      const span = li.querySelector(".subtask-text");
-      if (span) {
-        const originalText = span.textContent;
-        input.value = originalText;
-        replaceInputWithSpan(input, li);
-        resetEditButtons(li);
-      }
-    }
-  });
-  
-  input.addEventListener("blur", () => {
-    setTimeout(() => {
-      if (!li.classList.contains("edit-mode")) return;
-      const active = document.activeElement;
-      if (!active || (!active.closest(".icon-btn.edit-btn") && !active.closest(".icon-btn.delete-btn"))) {
-        stopEditMode(li);
-      }
-    }, 10);
-  });
+    input.addEventListener("keydown", e => handleInputKeydown(e, li, input));
+    input.addEventListener("blur", () => handleInputBlur(li));
 }
 
 
