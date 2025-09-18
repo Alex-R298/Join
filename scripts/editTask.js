@@ -79,6 +79,7 @@ function toggleEditButtons(addBtn, acceptBtn, clearBtn, divider, show) {
   clearBtn.classList.toggle("d-none", !show);
 }
 
+
 /**
  * Checks the value of the edit-subtask input and adjusts the buttons accordingly.
  */
@@ -160,7 +161,6 @@ function replaceTextWithInput(li) {
   input.className = "edit-input";
   li.replaceChild(input, span);
   input.focus();
-
   input.addEventListener("keydown", e => {
     if (e.key === "Enter") saveEditSubtaskEdit(input, li);
   });
@@ -249,6 +249,7 @@ function deleteEditSubtask(button) {
   if (li) li.remove();
   updateEditSubtaskScroll();
 } 
+
 
 /**
 * Adjusts the maximum height of the edit subtask list.

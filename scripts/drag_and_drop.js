@@ -168,7 +168,6 @@ function getDragAfterElement(container, y) {
 }
 
 
-
 /**
  * Validates drag event and updates task position
  * @param {string} taskId - Task ID

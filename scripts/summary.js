@@ -14,7 +14,6 @@ function updateDashboardCounts() {
   
   const earliestDate = findEarliestDueDate(urgentTasks);
   const totalCount = allTasks.length;
-  
   updateDashboardElements(todoCount, inProgressCount, awaitFeedbackCount, doneCount, urgentCount, earliestDate, totalCount);
 }
 

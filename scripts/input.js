@@ -1,26 +1,55 @@
 /**
- * Validates name input field
- * @param {HTMLElement} nameInput - Name input element
- * @returns {boolean} True if name is valid (contains first and last name)
+ * Shows name input error with message and red border.
+ * @param {HTMLElement} input - Name input element.
+ * @param {string} message - Error message to display.
+ */
+function showNameError(input, message) {
+    input.style.borderColor = 'red';
+    showValidationError(input.id + '-error', message);
+}
+
+
+/**
+ * Clears name input error and removes red border.
+ * @param {HTMLElement} input - Name input element.
+ */
+function clearNameError(input) {
+    input.style.borderColor = '';
+    hideValidationError(input.id + '-error');
+}
+
+
+/**
+ * Formats a name string: capitalizes first letter of each part.
+ * @param {string} name - Raw name string.
+ * @returns {string} Formatted name string.
+ */
+function formatName(name) {
+    return name
+        .trim()
+        .split(' ')
+        .map(part => part.length > 0
+            ? part.charAt(0).toUpperCase() + part.slice(1).toLowerCase()
+            : part
+        )
+        .join(' ');
+}
+
+
+/**
+ * Validates the name input: must contain first and last name.
+ * Formats the name and updates the input value if valid.
+ * @param {HTMLElement} nameInput - Name input element.
+ * @returns {boolean} True if valid, false otherwise.
  */
 function validateName(nameInput) {
     if (!nameInput.value.trim() || !nameInput.value.includes(' ')) {
-        nameInput.style.borderColor = 'red';
-        showValidationError(nameInput.id + '-error', 'Please enter your first and last name');
+        showNameError(nameInput, 'Please enter your first and last name');
         return false;
-    } else {
-        const nameParts = nameInput.value.trim().split(' ');
-        const formattedName = nameParts.map(part => {
-            if (part.length > 0) {
-                return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
-            }
-            return part;
-        }).join(' ');
-        nameInput.value = formattedName;
-        nameInput.style.borderColor = '';
-        hideValidationError(nameInput.id + '-error');
-        return true;
     }
+    nameInput.value = formatName(nameInput.value);
+    clearNameError(nameInput);
+    return true;
 }
 
 
@@ -53,7 +82,6 @@ function validatePhone(phoneInput) {
         hideValidationError(phoneInput.id + '-error');
         return true;
     }
-    
     const phoneRegex = /^(\+)?\d[\d\s]{9,14}$/;
     if (!phoneRegex.test(phoneInput.value.replace(/\s/g, ''))) {
         phoneInput.style.borderColor = 'red';
@@ -88,28 +116,69 @@ function validatePassword(passwordInput) {
 
 
 /**
- * Validates password confirmation field
- * @param {HTMLElement} confirmPasswordInput - Confirm password input element
- * @param {HTMLElement} passwordInput - Original password input element
- * @returns {boolean} True if confirmation password matches original password
+ * Highlights the confirm password input with error styling and message.
+ * @param {HTMLElement} input - Confirm password input element.
+ * @param {string} message - Error message to display.
+ */
+function showConfirmPasswordError(input, message) {
+    input.style.borderColor = 'red';
+    showValidationError(input.id + '-error', message);
+}
+
+
+/**
+ * Clears error styling and hides validation error for confirm password.
+ * @param {HTMLElement} input - Confirm password input element.
+ */
+function clearConfirmPasswordError(input) {
+    input.style.borderColor = '';
+    hideValidationError(input.id + '-error');
+}
+
+
+/**
+ * Validates that confirm password is not empty.
+ * @param {HTMLElement} input - Confirm password input element.
+ * @returns {boolean} True if valid, false otherwise.
+ */
+function validateConfirmPasswordNotEmpty(input) {
+    if (!input.value.trim()) {
+        showConfirmPasswordError(input, 'Please confirm your password');
+        return false;
+    }
+    return true;
+}
+
+
+/**
+ * Validates that confirm password matches original password.
+ * @param {HTMLElement} confirmInput - Confirm password input element.
+ * @param {HTMLElement} passwordInput - Original password input element.
+ * @returns {boolean} True if match, false otherwise.
+ */
+function validateConfirmPasswordMatch(confirmInput, passwordInput) {
+    if (confirmInput.value !== passwordInput.value) {
+        showConfirmPasswordError(
+            confirmInput, 
+            'Your passwords don’t match. Please try again.'
+        );
+        return false;
+    }
+    return true;
+}
+
+
+/**
+ * Validates confirm password input against the original password.
+ * @param {HTMLElement} confirmPasswordInput - Confirm password input element.
+ * @param {HTMLElement} passwordInput - Original password input element.
+ * @returns {boolean} True if confirmation is valid.
  */
 function validateConfirmPassword(confirmPasswordInput, passwordInput) {
-    const confirmPassword = confirmPasswordInput.value;
-    const password = passwordInput.value;
-    
-    if (!confirmPassword.trim()) {
-        confirmPasswordInput.style.borderColor = 'red';
-        showValidationError(confirmPasswordInput.id + '-error', 'Please confirm your password');
-        return false;
-    } else if (confirmPassword !== password) {
-        confirmPasswordInput.style.borderColor = 'red';
-        showValidationError(confirmPasswordInput.id + '-error', 'Your passwords don´t match. Please try again.');
-        return false;
-    } else {
-        confirmPasswordInput.style.borderColor = '';
-        hideValidationError(confirmPasswordInput.id + '-error');
-        return true;
-    }
+    if (!validateConfirmPasswordNotEmpty(confirmPasswordInput)) return false;
+    if (!validateConfirmPasswordMatch(confirmPasswordInput, passwordInput)) return false;
+    clearConfirmPasswordError(confirmPasswordInput);
+    return true;
 }
 
 
@@ -130,28 +199,49 @@ function validateAccept(acceptInput) {
 
 
 /**
- * Shows validation error message below input field
- * @param {string} errorId - ID of the error element
- * @param {string} message - Error message to display
+ * Creates a validation error element for the given input.
+ * @param {string} errorId - ID of the error element.
+ * @returns {HTMLElement|null} The created element or null if no container found.
+ */
+function createValidationErrorElement(errorId) {
+    const el = document.createElement('div');
+    el.id = errorId;
+    el.className = 'validation-error';
+
+    const inputId = errorId.replace('-error', '');
+    const input = document.getElementById(inputId);
+    const container = input?.closest('.input-with-icon, .sign-up-checkbox');
+
+    if (container) {
+        container.style.position = 'relative';
+        container.appendChild(el);
+        return el;
+    }
+    return null;
+}
+
+
+/**
+ * Returns an existing error element or creates one if missing.
+ * @param {string} errorId - ID of the error element.
+ * @returns {HTMLElement|null} The error element.
+ */
+function getOrCreateErrorElement(errorId) {
+    return document.getElementById(errorId) || createValidationErrorElement(errorId);
+}
+
+
+/**
+ * Displays a validation error message below the input field.
+ * @param {string} errorId - ID of the error element.
+ * @param {string} message - Error message to display.
  */
 function showValidationError(errorId, message) {
-    let errorElement = document.getElementById(errorId);
-    if (!errorElement) {
-        errorElement = document.createElement('div');
-        errorElement.id = errorId;
-        errorElement.className = 'validation-error';
-        const inputId = errorId.replace('-error', '');
-        const inputElement = document.getElementById(inputId);
-        if (inputElement) {
-            const inputContainer = inputElement.closest('.input-with-icon, .sign-up-checkbox');
-            if (inputContainer) {
-                inputContainer.style.position = 'relative';
-                inputContainer.appendChild(errorElement);
-            }
-        }
+    const errorElement = getOrCreateErrorElement(errorId);
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
     }
-    errorElement.textContent = message;
-    errorElement.style.display = 'block';
 }
 
 
