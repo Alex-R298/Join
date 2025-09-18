@@ -17,24 +17,68 @@ function allowDrop(event) {
 
 
 /**
- * Starts the dragging operation for a task
- * @param {string} id - Task ID
- * @param {DragEvent} event - Drag start event
+ * Sets the current dragged element and its status.
+ * @param {string} id - Task ID.
+ * @returns {boolean} True if task exists, false otherwise.
  */
-function startDragging(id, event) {
+function setDraggedTaskStatus(id) {
     currentDraggedElement = id;
     const taskIndex = allTasks.findIndex(task => task.id === id);
-    if (taskIndex !== -1) taskStatus = allTasks[taskIndex].status;
-    else return;
-    const taskElement = event.target.closest('.task-container');
-    if (!taskElement) return;
+    if (taskIndex === -1) return false;
+    taskStatus = allTasks[taskIndex].status;
+    return true;
+}
+
+
+/**
+ * Retrieves the DOM element of the task being dragged.
+ * @param {EventTarget} target - Event target from drag event.
+ * @returns {HTMLElement|null} Task element or null if not found.
+ */
+function getTaskElement(target) {
+    return target.closest('.task-container');
+}
+
+
+/**
+ * Prepares the placeholder and drag image for dragging.
+ * @param {HTMLElement} taskElement - Task element being dragged.
+ * @param {DragEvent} event - Drag start event.
+ */
+function prepareDragging(taskElement, event) {
     draggedTaskHeight = taskElement.offsetHeight;
-    createPlaceholder(taskElement, draggedTaskHeight, taskElement.offsetWidth);
-    setupDragImage(event, taskElement, id);
+    createPlaceholder(taskElement, draggedTaskHeight);
+    setupDragImage(event, taskElement, currentDraggedElement);
+}
+
+
+/**
+ * Adds visual feedback classes to the task and placeholder.
+ * @param {HTMLElement} taskElement - Task element being dragged.
+ */
+function showDraggingVisuals(taskElement) {
     requestAnimationFrame(() => {
         taskElement.classList.add('dragging');
-        if (placeholderElement) setTimeout(() => placeholderElement.classList.add('visible'), 100);
+        if (placeholderElement) {
+            setTimeout(() => placeholderElement.classList.add('visible'), 100);
+        }
     });
+}
+
+
+/**
+ * Starts the dragging operation for a task.
+ * @param {string} id - Task ID.
+ * @param {DragEvent} event - Drag start event.
+ */
+function startDragging(id, event) {
+    if (!setDraggedTaskStatus(id)) return;
+
+    const taskElement = getTaskElement(event.target);
+    if (!taskElement) return;
+
+    prepareDragging(taskElement, event);
+    showDraggingVisuals(taskElement);
 }
 
 
@@ -50,7 +94,7 @@ function setupDragImage(event, taskElement, id) {
     const clone = taskElement.cloneNode(true);
     document.body.appendChild(clone);
     clone.style.position = 'absolute';
-    clone.style.top = '-9999px';
+    clone.style.top = '-2000px';
     event.dataTransfer.setDragImage(clone, event.clientX - rect.left, event.clientY - rect.top);
     event.dataTransfer.setData('text/plain', id);
     setTimeout(() => document.body.removeChild(clone), 0);
@@ -58,30 +102,50 @@ function setupDragImage(event, taskElement, id) {
 
 
 /**
- * Creates a visual placeholder for the dragged task
+ * Creates a visual placeholder for the dragged task.
+ * Uses the CSS class 'drag-placeholder' for styling.
  * @param {HTMLElement} taskElement - Original task element
  * @param {number} height - Height of the placeholder
- * @param {number} width - Width of the placeholder
  */
-function createPlaceholder(taskElement, height, width) {
-    if (placeholderElement && placeholderElement.parentNode) {
+function createPlaceholder(taskElement, height) {
+    // Remove existing placeholder if present
+    if (placeholderElement?.parentNode) {
         placeholderElement.parentNode.removeChild(placeholderElement);
     }
+
+    // Create new placeholder
     placeholderElement = document.createElement('div');
-    placeholderElement.className = 'drag-placeholder';
     placeholderElement.id = `placeholder-${currentDraggedElement}`;
-    placeholderElement.style.width = '246px';
-    placeholderElement.style.border = '1px dashed #a8a8a8';
-    placeholderElement.style.borderRadius = '24px';
-    placeholderElement.style.backgroundColor = '#e7e7e7';
-    placeholderElement.style.margin = '0 0 16px 0';
-    placeholderElement.style.height = height + 'px';
-    placeholderElement.style.display = 'flex';
-    placeholderElement.style.justifyContent = 'center';
-    placeholderElement.style.alignItems = 'center';
-    placeholderElement.style.pointerEvents = 'none';
+    placeholderElement.classList.add('drag-placeholder');
+    placeholderElement.style.height = height + 'px'; // dynamic height
+
+    // Insert after the original task
     taskElement.parentNode.insertBefore(placeholderElement, taskElement.nextSibling);
 }
+
+/**
+ * Removes the current placeholder if it exists.
+ */
+function removePlaceholder() {
+    if (placeholderElement?.parentNode) {
+        placeholderElement.parentNode.removeChild(placeholderElement);
+        placeholderElement = null;
+    }
+}
+
+/**
+ * Toggles the placeholder: creates it if not present, removes if present.
+ * @param {HTMLElement} taskElement - Original task element
+ * @param {number} height - Height of the placeholder
+ */
+function togglePlaceholder(taskElement, height) {
+    if (placeholderElement) {
+        removePlaceholder();
+    } else {
+        createPlaceholder(taskElement, height);
+    }
+}
+
 
 
 /**
@@ -166,7 +230,6 @@ function getDragAfterElement(container, y) {
         }
     }, { offset: Number.NEGATIVE_INFINITY }).element;
 }
-
 
 
 /**
