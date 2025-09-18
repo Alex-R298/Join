@@ -78,7 +78,7 @@ async function handleSuccessfulContactSave(contactId, contact) {
  */
 async function deleteContact(contactId) {
     await removeContact(contactId);
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 200));
     await fetchContacts();
     const contactsHeadline = document.querySelector(".contacts-headline.active");
     if (contactsHeadline) {
