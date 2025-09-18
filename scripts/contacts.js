@@ -18,12 +18,8 @@ function onloadFunc() {
  * Fetches contacts and updates UI
  */
 async function fetchContacts() {
-    try {
-        const data = await loadContacts();
-        updateContactsUI(data);
-    } catch (error) {
-        // Handle error silently
-    }
+    const data = await loadContacts();
+    updateContactsUI(data);
 }
 
 
@@ -47,11 +43,7 @@ async function createdContact() {
     }
     const newContact = createContactObject(inputs);
     closeAddContactQuick();
-    try {
-        await saveContactToFirebase(newContact);
-    } catch (error) {
-        // Handle error silently
-    }
+    await saveContactToFirebase(newContact);
 }
 
 
@@ -60,13 +52,9 @@ async function createdContact() {
  * @param {Object} contact - Contact data
  */
 async function saveContactToFirebase(contact) {
-    try {
-        const data = await createContact(contact);
-        const newContactId = data.name;
-        handleSuccessfulContactSave(newContactId, contact);
-    } catch (error) {
-        throw error;
-    }
+    const data = await createContact(contact);
+    const newContactId = data.name;
+    await handleSuccessfulContactSave(newContactId, contact);
 }
 
 
@@ -89,14 +77,10 @@ async function handleSuccessfulContactSave(contactId, contact) {
  * @param {string} contactId - ID of contact to delete
  */
 async function deleteContact(contactId) {
-    try {
-        await removeContact(contactId);
-        await fetchContacts();
-        clearContactDetailsView();
-        closeAddContactQuick();
-    } catch (error) {
-        // Handle error silently
-    }
+    await removeContact(contactId);
+    await fetchContacts();
+    clearContactDetailsView();
+    closeAddContactQuick();
 }
 
 
@@ -111,12 +95,8 @@ async function updateContact(contactId) {
     }
     const updatedContact = createUpdatedContactObject(inputs);
     closeAddContactQuick();
-    try {
-        await sendUpdatedContactToFirebase(contactId, updatedContact);
-        finalizeContactUpdate(contactId, updatedContact);
-    } catch (error) {
-        // Handle error silently
-    }
+    await sendUpdatedContactToFirebase(contactId, updatedContact);
+    finalizeContactUpdate(contactId, updatedContact);
 }
 
 
@@ -126,15 +106,11 @@ async function updateContact(contactId) {
  * @param {Object} updatedFields - Fields to update
  */
 async function sendUpdatedContactToFirebase(contactId, updatedFields) {
-    try {
-        const currentContact = await getCurrentContactData(contactId);
-        const updatedContact = { ...currentContact, ...updatedFields };
-        await updateContactData(contactId, updatedContact);
-        updateSelectedContactData(contactId, updatedContact);
-        await fetchContacts();
-    } catch (error) {
-        throw error;
-    }
+    const currentContact = await getCurrentContactData(contactId);
+    const updatedContact = { ...currentContact, ...updatedFields };
+    await updateContactData(contactId, updatedContact);
+    updateSelectedContactData(contactId, updatedContact);
+    await fetchContacts();
 }
 
 
@@ -144,11 +120,7 @@ async function sendUpdatedContactToFirebase(contactId, updatedFields) {
  * @returns {Object} Current contact data
  */
 async function getCurrentContactData(contactId) {
-    try {
-        return await loadContact(contactId);
-    } catch (error) {
-        throw error;
-    }
+    return await loadContact(contactId);
 }
 
 
