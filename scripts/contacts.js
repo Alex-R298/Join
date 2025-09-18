@@ -59,7 +59,7 @@ async function saveContactToFirebase(contact) {
 
 
 /**
- * Handles successful contact save
+ * Handles successful contact save operations
  * @param {string} contactId - New contact ID
  * @param {Object} contact - Contact data
  */
@@ -67,8 +67,11 @@ async function handleSuccessfulContactSave(contactId, contact) {
     showSuccessMessage();
     await fetchContacts();
     setTimeout(() => markContactCard(contactId), 100);
+    setCurrentSelectedContact(contactId, contact.name, contact.email, contact.phone, getInitials(contact.name), getAvatarColor(contact.name));
     displayContactDetails(contactId, contact, getInitials(contact.name), getAvatarColor(contact.name), false);
-    handleMobileContactView();
+    setTimeout(() => {
+        handleMobileContactView();
+    }, 50);
 }
 
 
@@ -78,8 +81,9 @@ async function handleSuccessfulContactSave(contactId, contact) {
  */
 async function deleteContact(contactId) {
     await removeContact(contactId);
-    await new Promise(resolve => setTimeout(resolve, 200));
+    await new Promise(resolve => setTimeout(resolve, 100));
     await fetchContacts();
+    currentSelectedContact = null;
     const contactsHeadline = document.querySelector(".contacts-headline.active");
     if (contactsHeadline) {
         contactsHeadline.classList.remove("active");

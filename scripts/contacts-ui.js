@@ -2,6 +2,9 @@
  * Toggles contact dropdown menu
  */
 function toggleContact() {
+    if (!currentSelectedContact) {
+        return;
+    }
     const buttonDropMenu = document.getElementById("button-drop-menu");
     const buttonDrop = document.querySelector(".button-drop");
     
