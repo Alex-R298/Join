@@ -401,7 +401,6 @@ function saveEdit(input, li) {
     span.textContent = newValue;
     li.replaceChild(span, input);
     li.classList.remove("edit-mode");
-
     editImg.classList.remove("check_icon_subtask");
   } else {
     li.remove();
