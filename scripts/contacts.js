@@ -1,7 +1,3 @@
-/**
- * Refactored Contact Functions - Uses centralized API
- */
-
 let currentSelectedContact = null;
 let isSuccessMessageShown = false;
 

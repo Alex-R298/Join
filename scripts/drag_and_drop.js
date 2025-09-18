@@ -118,6 +118,7 @@ function createPlaceholder(taskElement, height) {
     taskElement.parentNode.insertBefore(placeholderElement, taskElement.nextSibling);
 }
 
+
 /**
  * Removes the current placeholder if it exists.
  */
@@ -127,6 +128,7 @@ function removePlaceholder() {
         placeholderElement = null;
     }
 }
+
 
 /**
  * Toggles the placeholder: creates it if not present, removes if present.
@@ -140,7 +142,6 @@ function togglePlaceholder(taskElement, height) {
         createPlaceholder(taskElement, height);
     }
 }
-
 
 
 /**

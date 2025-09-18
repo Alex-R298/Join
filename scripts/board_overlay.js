@@ -215,7 +215,6 @@ function renderAllAssignedUsers(assignedUsers, taskId) {
     const { initials, color } = renderAssignedUser(email);
     renderAvatar(container, initials, color);
   });
-
   const remainingCount = assignedUsers.length - 3;
   if (remainingCount > 0) renderMoreAvatar(container, remainingCount);
 }
@@ -231,7 +230,6 @@ function renderAssignedUser(email) {
         console.warn('Invalid or missing email:', email);
         return { initials: '??', color: '#ccc', name: 'Unknown' };
     }
-    
     const userName = contactsMap[email] ? contactsMap[email].name : email.split('@')[0];
     const name = getName(userName);
     const initials = getInitials(name);

@@ -123,10 +123,8 @@ function editContact(contactId, name, email, phone, initials, avatarColor) {
 function showSuccessMessage() {
     if (isSuccessMessageShown) return;
     isSuccessMessageShown = true;
-    
     const createdContact = document.getElementById("created-contact");
     const addOverlay = document.getElementById("overlay-add-contact");
-
     createdContact.classList.remove('d-none');
     createdContact.classList.add("visible");
     
