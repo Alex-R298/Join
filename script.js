@@ -226,7 +226,6 @@ async function loadAddPage(task = {}) {
     const data = await res.json();
     const usersArray = Object.values(data).filter((user) => user.name);
     const container = document.getElementById("add_task_template") || document.getElementById("add-task-container");
-    
     if (container) {
       container.innerHTML = getAddPageTemplate(task, usersArray);
     }
