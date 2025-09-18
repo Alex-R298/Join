@@ -130,4 +130,3 @@ function showEditButtonsOnHover(subtaskElement) {
   const editButtons = subtaskElement.querySelector(".subtask-edit-btns");
   if (editButtons) editButtons.classList.remove("d-none");
 }
-

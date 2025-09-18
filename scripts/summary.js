@@ -142,4 +142,3 @@ async function initializeDashboard() {
   await loadTasksFromFirebase();
   updateDashboardCounts();
 }
-

@@ -379,7 +379,3 @@ function markContactCard(contactId) {
     const card = document.querySelector(`[data-contact-id="${contactId}"]`);
     if (card) card.classList.add('selected');
 }
-
-
-
-
