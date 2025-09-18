@@ -115,36 +115,6 @@ function selectPriority(button) {
 
 
 /**
- * Shows a success popup after adding a task.
- */
-function showPopup() {
-    const popup = document.getElementById("taskPopup");
-    const overlay = document.getElementById("popupOverlay");
-
-    popup.classList.remove("d-none");
-    overlay.classList.remove("d-none");
-    document.body.style.overflow = "hidden";
-
-    setTimeout(() => {
-        closePopup();
-        window.location.href = "board.html";
-    }, 1500);
-}
-
-
-/**
- * Closes the task popup and hides the overlay.
- */
-function closePopup() {
-    const popup = document.getElementById("taskPopup");
-    const overlay = document.getElementById("popupOverlay");
-    popup.classList.add("d-none");
-    overlay.classList.add("d-none");
-    document.body.style.overflow = "auto";
-}
-
-
-/**
  * Returns today's date in YYYY-MM-DD format.
  * @returns {string} Today's date as a string.
  */

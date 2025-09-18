@@ -89,7 +89,6 @@ function changeEditButtons() {
   const clearBtn = document.getElementById("editClearButton");
   const input = document.getElementById("edit-subtask-input");
   const divider = document.getElementById("vertical-divider");
-
   toggleEditButtons(addBtn, acceptBtn, clearBtn, divider, input.value.trim() !== "");
 }
 
@@ -102,7 +101,6 @@ function addEditSubtask() {
   let input = document.getElementById("edit-subtask-input");
   let list = document.getElementById("editMyList");
   let value = input.value.trim();
-
   if (value) {
     list.innerHTML += createListItemTemplate(value);
     input.value = "";
@@ -145,7 +143,6 @@ function handleEditSubtaskClick(event, li) {
   }
 }
 
-
 /**
  * Replaces the text span with an input field and focuses it.
  * @param {HTMLElement} li - List item
@@ -168,7 +165,6 @@ function replaceTextWithInput(li) {
   return input;
 }
 
-
 /**
  * Changes the edit icon to a check and repositions the buttons.
  * @param {HTMLElement} li - List Item
@@ -181,7 +177,6 @@ function updateEditButtonToCheck(li) {
   const editImg = editBtn.querySelector("img");
   editImg.src = "./assets/icons/check_subtask.svg";
   editImg.alt = "Check";
-
   const parent = editBtn.parentNode;
   parent.insertBefore(deleteBtn, editBtn);
   parent.insertBefore(separator, editBtn);
@@ -218,7 +213,6 @@ function stopEditSubtaskEditMode(li) {
   let input = li.querySelector(".edit-input");
   if (input) saveEditSubtaskEdit(input, li);
 }
-
 
 /**
 * Saves the changes to a subtask list item.
