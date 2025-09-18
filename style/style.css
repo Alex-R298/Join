@@ -590,6 +590,6 @@ a {
 
 @media (max-width: 428px) {
     .main-content {
-        padding: 6px;
+        padding: 16px 6px;
     }
 }
