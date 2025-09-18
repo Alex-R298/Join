@@ -136,8 +136,9 @@
 
 .task-description-container {
     width: 100%;
-    /* overflow: hidden; */
     margin: 16px 0;
+    overflow: auto;
+    max-height: 140px;
 }
 
 .task-description-container p {
