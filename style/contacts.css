@@ -18,15 +18,18 @@
 
 
 .button-contact {
-    width: 352px;
+    width: 100%;
     font-size: 21px;
     font-weight: 700;
+    height: 56px;
 }
 
 .button-contact-wrapper {
     position: sticky;
     top: 0;
     z-index: 100;
+    display: flex;
+    justify-content: center;
 }
 
 .more-avatar {
@@ -130,30 +133,31 @@
 
 .contacts-list-wrapper {
     margin-top: 20px;
-    margin-bottom: 30px;
+    scrollbar-width: thin;
+    scrollbar-color: #A8A8A8 #ffffff;
+    overflow-y: auto;
 }
 
-.contacts-container::-webkit-scrollbar {
+.contacts-list-wrapper::-webkit-scrollbar {
     width: 8px;
 }
 
-.contacts-container::-webkit-scrollbar-track {
+.contacts-list-wrapper::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 4px;
 }
 
-.contacts-container::-webkit-scrollbar-thumb {
+.contacts-list-wrapper::-webkit-scrollbar-thumb {
     background: var(--grey);
     border-radius: 4px;
 }
 
-.contacts-container::-webkit-scrollbar-thumb:hover {
+.contacts-list-wrapper::-webkit-scrollbar-thumb:hover {
     background: var(--primary);
 }
 
 .contacts-container {
-    scrollbar-width: thin;
-    scrollbar-color: #A8A8A8 #ffffff;
+    overflow-y: hidden;
 }
 
 .contacts-headline {
@@ -461,7 +465,6 @@
     }
 
     .button-contact {
-        width: 255px;
         font-size: 18px;
         font-weight: 700;
     }
